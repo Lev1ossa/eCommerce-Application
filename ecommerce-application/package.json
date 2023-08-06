@@ -13,7 +13,8 @@
     "preview": "vite preview",
     "prepare": "cd .. && husky install ecommerce-application/.husky",
     "test": "vitest",
-    "test-coverage": "vitest --coverage"
+    "test-coverage": "vitest --coverage",
+    "format": "prettier --write \"src/**/*.{js,ts,tsx}\""
   },
   "dependencies": {
     "eslint-config-airbnb-typescript": "^17.1.0",
