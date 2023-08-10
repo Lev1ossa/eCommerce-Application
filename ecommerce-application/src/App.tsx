@@ -1,9 +1,12 @@
+import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+
 import { MainPage } from './components/Pages/MainPage/MainPage';
 import { LoginPage } from './components/Pages/LoginPage/LoginPage';
-import { RegistrationPage } from './components/Pages/RegistrationPage/RegistrationPage';
-import './App.css';
 import { NotFoundPage } from './components/Pages/NotFoundPage/NotFoundPage';
+import { RegistrationPage } from './components/Pages/RegistrationPage/RegistrationPage';
+
+import './App.css';
 
 const router = createBrowserRouter([
   {
@@ -17,7 +20,7 @@ const router = createBrowserRouter([
   },
 ]);
 
-function App(): JSX.Element {
+function App(): React.ReactElement {
   return <RouterProvider router={router} />;
 }
 
