@@ -1,44 +1,27 @@
-import { useState } from 'react';
+import React from 'react';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+
+import { MainPage } from './components/Pages/MainPage/MainPage';
+import { LoginPage } from './components/Pages/LoginPage/LoginPage';
+import { NotFoundPage } from './components/Pages/NotFoundPage/NotFoundPage';
+import { RegistrationPage } from './components/Pages/RegistrationPage/RegistrationPage';
+
 import './App.css';
-import reactLogo from './assets/react.svg';
-import viteLogo from './assets/vite.svg';
 
-function App(): JSX.Element {
-  const [count, setCount] = useState(0);
+const router = createBrowserRouter([
+  {
+    path: '/',
+    errorElement: <NotFoundPage />,
+    children: [
+      { path: '', element: <MainPage /> },
+      { path: 'login', element: <LoginPage /> },
+      { path: 'registration', element: <RegistrationPage /> },
+    ],
+  },
+]);
 
-  return (
-    <>
-      <div>
-        <h1>{import.meta.env.VITE_APP_TITLE}</h1>
-        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-        <a href="https://react.dev" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button
-          type="button"
-          onClick={(): void => {
-            setCount(count + 1);
-          }}
-        >
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  );
+function App(): React.ReactElement {
+  return <RouterProvider router={router} />;
 }
 
 export default App;

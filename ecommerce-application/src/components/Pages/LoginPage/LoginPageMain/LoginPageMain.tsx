@@ -1,7 +1,7 @@
 function LoginPageMain(): React.ReactElement {
   return (
     <main>
-      <h1>Login page content</h1>
+      <h3>Login page content</h3>
     </main>
   );
 }

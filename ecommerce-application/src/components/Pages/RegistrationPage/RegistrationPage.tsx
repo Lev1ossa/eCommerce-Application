@@ -1,11 +1,11 @@
+import { Header } from '../../common/Header/Header';
 import RegistrationPageMain from './RegistrationPageMain/RegistrationPageMain';
 
-function RegistrationPage(): React.ReactElement {
+export function RegistrationPage(): React.ReactElement {
   return (
     <div>
+      <Header />
       <RegistrationPageMain />
     </div>
   );
 }
-
-export default RegistrationPage;
