@@ -13,7 +13,7 @@ export function Header(): React.ReactElement {
             <a href="/#">Registration</a>
           </li>
           <li>
-            <a href="/#">Exit</a>
+            <a href="/#">Logout</a>
           </li>
         </ul>
       </nav>
