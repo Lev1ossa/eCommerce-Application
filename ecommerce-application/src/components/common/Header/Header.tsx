@@ -1,6 +1,6 @@
 import styles from './Header.module.css';
 
-function Header(): React.ReactElement {
+export function Header(): React.ReactElement {
   return (
     <header className={styles.header}>
       <h1>Ecommerce-application</h1>
@@ -20,4 +20,3 @@ function Header(): React.ReactElement {
     </header>
   );
 }
-export { Header };
