@@ -1,11 +1,11 @@
+import { Header } from '../../common/Header/Header';
 import { MainPageMain } from './MainPageMain/MainPageMain';
 
-function MainPage(): React.ReactElement {
+export function MainPage(): React.ReactElement {
   return (
-    <main>
+    <div>
+      <Header />
       <MainPageMain />
-    </main>
+    </div>
   );
 }
-
-export { MainPage };
