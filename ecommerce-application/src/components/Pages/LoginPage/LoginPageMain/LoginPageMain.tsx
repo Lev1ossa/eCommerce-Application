@@ -1,8 +1,8 @@
 function LoginPageMain(): React.ReactElement {
   return (
-    <div>
+    <main>
       <h1>Login page content</h1>
-    </div>
+    </main>
   );
 }
 

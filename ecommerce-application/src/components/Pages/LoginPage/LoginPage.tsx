@@ -2,9 +2,9 @@ import LoginPageMain from './LoginPageMain/LoginPageMain';
 
 function LoginPage(): React.ReactElement {
   return (
-    <main>
+    <div>
       <LoginPageMain />
-    </main>
+    </div>
   );
 }
 
