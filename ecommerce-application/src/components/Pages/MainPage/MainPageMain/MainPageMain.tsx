@@ -1,7 +1,7 @@
 export function MainPageMain(): React.ReactElement {
   return (
-    <div>
+    <main>
       <h3>Main page content</h3>
-    </div>
+    </main>
   );
 }
