@@ -1,21 +1,22 @@
+import { Link } from 'react-router-dom';
 import styles from './Header.module.css';
 
 export function Header(): React.ReactElement {
   return (
     <header className={styles.header}>
-      <a href="/#">
+      <Link to="/">
         <h1>Ecommerce-application</h1>
-      </a>
+      </Link>
       <nav>
         <ul>
           <li>
-            <a href="/#">Login</a>
+            <Link to="/login">Login</Link>
           </li>
           <li>
-            <a href="/#">Registration</a>
+            <Link to="/registration">Registration</Link>
           </li>
           <li>
-            <a href="/#">Logout</a>
+            <button type="button">Logout</button>
           </li>
         </ul>
       </nav>

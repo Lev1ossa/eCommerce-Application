@@ -1,11 +1,11 @@
+import { Header } from '../../common/Header/Header';
 import LoginPageMain from './LoginPageMain/LoginPageMain';
 
-function LoginPage(): React.ReactElement {
+export function LoginPage(): React.ReactElement {
   return (
     <div>
+      <Header />
       <LoginPageMain />
     </div>
   );
 }
-
-export default LoginPage;

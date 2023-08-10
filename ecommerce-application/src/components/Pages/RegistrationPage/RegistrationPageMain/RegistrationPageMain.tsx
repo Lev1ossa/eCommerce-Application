@@ -1,7 +1,7 @@
 function RegistrationPageMain(): React.ReactElement {
   return (
     <main>
-      <h1>Registration page content</h1>
+      <h3>Registration page content</h3>
     </main>
   );
 }
