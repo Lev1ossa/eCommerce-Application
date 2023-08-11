@@ -1,18 +1,10 @@
 import { useState } from 'react';
 import styles from './LoginPageMain.module.css';
+import { handleFormSubmit } from './functions/handleFormSubmit';
+import { handleInputChange } from './functions/handleInputChange';
 
-// eslint-disable-next-line max-lines-per-function
 export function LoginPageMain(): React.ReactElement {
   const [data, setData] = useState({ username: '', password: '' });
-  function handleFormSubmit(event: React.FormEvent): void {
-    event.preventDefault();
-  }
-  function handleInputChange(event: React.ChangeEvent, text: string): void {
-    const { target } = event;
-    if (target instanceof HTMLInputElement) {
-      setData({ ...data, [text]: target.value });
-    }
-  }
   return (
     <main className={styles.loginPage__main}>
       <div className={styles.container}>
@@ -24,7 +16,9 @@ export function LoginPageMain(): React.ReactElement {
               id="usernameInput"
               type="text"
               value={data.username}
-              onChange={(e): void => handleInputChange(e, 'username')}
+              onChange={(e): void =>
+                handleInputChange(e, 'username', setData, data)
+              }
             />
             <div />
           </label>
@@ -34,7 +28,9 @@ export function LoginPageMain(): React.ReactElement {
               id="passwordInput"
               type="password"
               value={data.password}
-              onChange={(e): void => handleInputChange(e, 'password')}
+              onChange={(e): void =>
+                handleInputChange(e, 'password', setData, data)
+              }
             />
             <div />
           </label>
