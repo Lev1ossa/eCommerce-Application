@@ -9,12 +9,27 @@ export function LoginPageMain(): React.ReactElement {
     formState: { errors },
     handleSubmit,
   } = useForm<ILoginData>({ mode: 'onChange' });
-  const onSubmit: SubmitHandler<ILoginData> = (data): void => {
+  const onSubmit: SubmitHandler<ILoginData> = (data: ILoginData): void => {
     console.log('RESULT', data);
   };
   const passwordRegExp =
     /^(?=.{8,})(((?=.*[a-z])(?=.*[A-Z]))((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})/;
 
+  const login = register('login', {
+    onChange: (keyEvent) => {
+      const event = keyEvent;
+      const { value } = keyEvent.target;
+      event.target.value = value.replace(/[^a-zA-Z]/, '');
+    },
+    required: 'Required field',
+    minLength: 1,
+  });
+
+  const password = register('password', {
+    required: 'Required field',
+    minLength: 8,
+    pattern: passwordRegExp,
+  });
   return (
     <main className={styles.loginPage__main}>
       <div className={styles.container}>
@@ -23,19 +38,10 @@ export function LoginPageMain(): React.ReactElement {
           <label htmlFor="usernameInput">
             Username:
             <input
-              id="usernameInput"
               type="text"
-              placeholder="name"
-              // eslint-disable-next-line react/jsx-props-no-spreading
-              {...register('login', {
-                onChange: (keyEvent) => {
-                  const event = keyEvent;
-                  const { value } = keyEvent.target;
-                  event.target.value = value.replace(/[^a-zA-Z]/, '');
-                },
-                required: 'Required field',
-                minLength: 1,
-              })}
+              placeholder="username"
+              name={login.name}
+              onChange={login.onChange}
             />
           </label>
           <div>
@@ -49,12 +55,7 @@ export function LoginPageMain(): React.ReactElement {
             <input
               type="password"
               placeholder="password"
-              // eslint-disable-next-line react/jsx-props-no-spreading
-              {...register('password', {
-                required: true,
-                minLength: 8,
-                pattern: passwordRegExp,
-              })}
+              name={password.name}
             />
           </label>
           <div>
