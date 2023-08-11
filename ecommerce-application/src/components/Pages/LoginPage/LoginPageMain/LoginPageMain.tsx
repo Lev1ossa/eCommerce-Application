@@ -1,39 +1,66 @@
-import { useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { ILoginData } from '../../../../interfaces/login.interface';
 import styles from './LoginPageMain.module.css';
-import { handleFormSubmit } from './functions/handleFormSubmit';
-import { handleInputChange } from './functions/handleInputChange';
 
+// eslint-disable-next-line max-lines-per-function
 export function LoginPageMain(): React.ReactElement {
-  const [data, setData] = useState({ username: '', password: '' });
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<ILoginData>({ mode: 'onChange' });
+  const onSubmit: SubmitHandler<ILoginData> = (data): void => {
+    console.log('RESULT', data);
+  };
+  const passwordRegExp =
+    /^(?=.{8,})(((?=.*[a-z])(?=.*[A-Z]))((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})/;
+
   return (
     <main className={styles.loginPage__main}>
       <div className={styles.container}>
         <h2>Login</h2>
-        <form onSubmit={handleFormSubmit}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <label htmlFor="usernameInput">
-            Username
+            Username:
             <input
               id="usernameInput"
               type="text"
-              value={data.username}
-              onChange={(e): void =>
-                handleInputChange(e, 'username', setData, data)
-              }
+              placeholder="name"
+              // eslint-disable-next-line react/jsx-props-no-spreading
+              {...register('login', {
+                onChange: (keyEvent) => {
+                  const event = keyEvent;
+                  const { value } = keyEvent.target;
+                  event.target.value = value.replace(/[^a-zA-Z]/, '');
+                },
+                required: 'Required field',
+                minLength: 1,
+              })}
             />
-            <div />
           </label>
+          <div>
+            {errors?.login && <p>{errors?.login?.message?.toString()} </p>}
+          </div>
           <label htmlFor="passwordInput">
-            Password
             <input
-              id="passwordInput"
               type="password"
-              value={data.password}
-              onChange={(e): void =>
-                handleInputChange(e, 'password', setData, data)
-              }
+              placeholder="password"
+              // eslint-disable-next-line react/jsx-props-no-spreading
+              {...register('password', {
+                required: true,
+                minLength: 8,
+                pattern: passwordRegExp,
+              })}
             />
-            <div />
           </label>
+          <div>
+            {errors?.password && (
+              <p>
+                Minimum 8 characters, at least 1 uppercase letter, 1 lowercase
+                letter, and 1 number
+              </p>
+            )}
+          </div>
           <button type="submit">Log in</button>
         </form>
         <p>Don&apos;t have an account yet?</p>
