@@ -39,7 +39,11 @@ export function LoginPageMain(): React.ReactElement {
             />
           </label>
           <div>
-            {errors?.login && <p>{errors?.login?.message?.toString()} </p>}
+            {errors?.login && (
+              <span className={styles.error}>
+                {errors?.login?.message?.toString()}
+              </span>
+            )}
           </div>
           <label htmlFor="passwordInput">
             <input
@@ -55,10 +59,10 @@ export function LoginPageMain(): React.ReactElement {
           </label>
           <div>
             {errors?.password && (
-              <p>
+              <span className={styles.error}>
                 Minimum 8 characters, at least 1 uppercase letter, 1 lowercase
                 letter, and 1 number
-              </p>
+              </span>
             )}
           </div>
           <button type="submit">Log in</button>
