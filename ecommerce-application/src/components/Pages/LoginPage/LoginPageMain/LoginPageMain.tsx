@@ -1,4 +1,5 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
+// import { ChangeEvent } from 'react';
 import { ILoginData } from '../../../../interfaces/login.interface';
 import styles from './LoginPageMain.module.css';
 
@@ -12,17 +13,15 @@ export function LoginPageMain(): React.ReactElement {
   const onSubmit: SubmitHandler<ILoginData> = (data: ILoginData): void => {
     console.log('RESULT', data);
   };
+  const emailRegExp =
+    /^(([^!@#$%^&*<>()[\]\\/|.,;:\s@"]+(\.[^!@#$%^&*<>()[\]\\/|.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   const passwordRegExp =
     /^(?=.{8,})(((?=.*[a-z])(?=.*[A-Z]))((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})/;
 
-  const login = register('login', {
-    onChange: (keyEvent) => {
-      const event = keyEvent;
-      const { value } = keyEvent.target;
-      event.target.value = value.replace(/[^a-zA-Z]/, '');
-    },
+  const email = register('email', {
     required: 'Required field',
     minLength: 1,
+    pattern: emailRegExp,
   });
 
   const password = register('password', {
@@ -34,28 +33,34 @@ export function LoginPageMain(): React.ReactElement {
     <main className={styles.loginPage__main}>
       <div className={styles.container}>
         <h2>Login</h2>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <label htmlFor="usernameInput">
-            Username:
+            Email:
             <input
-              type="text"
-              placeholder="username"
-              name={login.name}
-              onChange={login.onChange}
+              id="usernameInput"
+              type="email"
+              onChange={email.onChange}
+              onBlur={email.onBlur}
+              name={email.name}
+              ref={email.ref}
             />
           </label>
           <div>
-            {errors?.login && (
+            {errors?.email && (
               <span className={styles.error}>
-                {errors?.login?.message?.toString()}
+                {errors?.email?.message?.toString()}
               </span>
             )}
           </div>
           <label htmlFor="passwordInput">
+            Password:
             <input
+              id="passwordInput"
               type="password"
-              placeholder="password"
+              onChange={password.onChange}
+              onBlur={password.onBlur}
               name={password.name}
+              ref={password.ref}
             />
           </label>
           <div>
