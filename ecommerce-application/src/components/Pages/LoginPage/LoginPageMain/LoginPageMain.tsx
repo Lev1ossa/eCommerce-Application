@@ -28,6 +28,7 @@ export function LoginPageMain(): React.ReactElement {
         inputValue.length > 3 || 'shoud be more than 3 symbols',
       maxLength: (inputValue) =>
         inputValue.length < 5 || 'shoud be less than 5 symbols',
+      lang: (inputValue) => !inputValue.match(/[а-яА-Я]/g) || 'must be en',
     },
     required: 'Required field',
     minLength: {
