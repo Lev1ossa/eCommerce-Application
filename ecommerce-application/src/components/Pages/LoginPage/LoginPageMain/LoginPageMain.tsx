@@ -1,4 +1,3 @@
-/* eslint-disable consistent-return */
 import { ErrorMessage } from '@hookform/error-message';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ILoginData } from '../../../../interfaces/login.interface';
@@ -65,7 +64,9 @@ export function LoginPageMain(): React.ReactElement {
           <ErrorMessage
             errors={errors}
             name="multipleErrorInput"
-            render={({ messages }): JSX.Element | JSX.Element[] | undefined => {
+            render={({
+              messages,
+            }): React.ReactElement | React.ReactElement[] | null => {
               if (messages) {
                 return Object.entries(messages).map(([type, item]) => (
                   <p className={styles.error} key={type}>
@@ -73,6 +74,7 @@ export function LoginPageMain(): React.ReactElement {
                   </p>
                 ));
               }
+              return null;
             }}
           />
           <label htmlFor="passwordInput">
