@@ -1,5 +1,6 @@
+/* eslint-disable consistent-return */
 import { SubmitHandler, useForm } from 'react-hook-form';
-// import { ChangeEvent } from 'react';
+import { ErrorMessage } from '@hookform/error-message';
 import { ILoginData } from '../../../../interfaces/login.interface';
 import styles from './LoginPageMain.module.css';
 
@@ -9,7 +10,9 @@ export function LoginPageMain(): React.ReactElement {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm<ILoginData>({ mode: 'onChange' });
+  } = useForm<ILoginData>({
+    mode: 'onChange',
+  });
   const onSubmit: SubmitHandler<ILoginData> = (data: ILoginData): void => {
     console.log('RESULT', data);
   };
@@ -18,10 +21,16 @@ export function LoginPageMain(): React.ReactElement {
   const passwordRegExp =
     /^(?=.{8,})(((?=.*[a-z])(?=.*[A-Z]))((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})/;
 
-  const email = register('email', {
+  const multipleErrorInput = register('multipleErrorInput', {
     required: 'Required field',
-    minLength: 1,
-    pattern: emailRegExp,
+    minLength: {
+      value: 8,
+      message: 'This input exceed minLength.',
+    },
+    pattern: {
+      value: emailRegExp,
+      message: 'invalid email',
+    },
   });
 
   const password = register('password', {
@@ -39,19 +48,31 @@ export function LoginPageMain(): React.ReactElement {
             <input
               id="usernameInput"
               type="email"
-              onChange={email.onChange}
-              onBlur={email.onBlur}
-              name={email.name}
-              ref={email.ref}
+              onChange={multipleErrorInput.onChange}
+              onBlur={multipleErrorInput.onBlur}
+              name={multipleErrorInput.name}
+              ref={multipleErrorInput.ref}
             />
           </label>
-          <div>
-            {errors?.email && (
-              <span className={styles.error}>
-                {errors?.email?.message?.toString()}
-              </span>
-            )}
-          </div>
+          <ErrorMessage
+            errors={errors}
+            name="multipleErrorInput"
+            render={({
+              message,
+              messages,
+            }): JSX.Element | JSX.Element[] | undefined => {
+              if (message) {
+                return <p className={styles.error}>{message}</p>;
+              }
+              if (messages) {
+                return Object.entries(messages).map(([type, item]) => (
+                  <p className={styles.error} key={type}>
+                    {item}
+                  </p>
+                ));
+              }
+            }}
+          />
           <label htmlFor="passwordInput">
             Password:
             <input
