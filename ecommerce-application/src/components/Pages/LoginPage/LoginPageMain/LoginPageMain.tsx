@@ -1,6 +1,6 @@
 /* eslint-disable consistent-return */
-import { SubmitHandler, useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { ILoginData } from '../../../../interfaces/login.interface';
 import styles from './LoginPageMain.module.css';
 
@@ -12,6 +12,7 @@ export function LoginPageMain(): React.ReactElement {
     handleSubmit,
   } = useForm<ILoginData>({
     mode: 'onChange',
+    criteriaMode: 'all',
   });
   const onSubmit: SubmitHandler<ILoginData> = (data: ILoginData): void => {
     console.log('RESULT', data);
@@ -22,6 +23,12 @@ export function LoginPageMain(): React.ReactElement {
     /^(?=.{8,})(((?=.*[a-z])(?=.*[A-Z]))((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})/;
 
   const multipleErrorInput = register('multipleErrorInput', {
+    validate: {
+      minLength: (inputValue) =>
+        inputValue.length > 3 || 'shoud be more than 3 symbols',
+      maxLength: (inputValue) =>
+        inputValue.length < 5 || 'shoud be less than 5 symbols',
+    },
     required: 'Required field',
     minLength: {
       value: 8,
@@ -57,13 +64,7 @@ export function LoginPageMain(): React.ReactElement {
           <ErrorMessage
             errors={errors}
             name="multipleErrorInput"
-            render={({
-              message,
-              messages,
-            }): JSX.Element | JSX.Element[] | undefined => {
-              if (message) {
-                return <p className={styles.error}>{message}</p>;
-              }
+            render={({ messages }): JSX.Element | JSX.Element[] | undefined => {
               if (messages) {
                 return Object.entries(messages).map(([type, item]) => (
                   <p className={styles.error} key={type}>
