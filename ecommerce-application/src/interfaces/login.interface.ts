@@ -1,4 +1,10 @@
 export interface ILoginData {
   password: string;
-  multipleErrorInput: string;
+  email: string;
+  userFirstName: string;
+  userSecondName: string;
+  birthDate: string;
+  street: string;
+  city: string;
+  postalCode: string;
 }
