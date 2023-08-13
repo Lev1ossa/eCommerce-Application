@@ -1,3 +1,5 @@
+import { MINIMAL_ACCESS_AGE } from '../data/constants';
+
 export const getFullYears = (date: string): number => {
   const birthDate = new Date(date);
   const currentDate = new Date();
@@ -12,5 +14,5 @@ export const checkDateValidity = (date: string): boolean | string => {
   if (new Date(date) > new Date()) {
     return "You can't be born in the future";
   }
-  return getFullYears(date) >= 13 || `Sorry, you are under 13`;
+  return getFullYears(date) >= MINIMAL_ACCESS_AGE || `Sorry, you are under 13`;
 };
