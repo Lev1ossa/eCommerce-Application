@@ -1,4 +1,3 @@
-import { ErrorMessage } from '@hookform/error-message';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ILoginData } from '../../../../interfaces/login.interface';
 import { Error } from '../../../common/Error/Error';
@@ -90,23 +89,7 @@ export function RegistrationPageMain(): React.ReactElement {
               ref={email.ref}
             />
           </label>
-          <Error /* errors={errors} name="email" */ />
-          <ErrorMessage
-            errors={errors}
-            name="email"
-            render={({
-              messages,
-            }): React.ReactElement | React.ReactElement[] | null => {
-              if (messages) {
-                return Object.entries(messages).map(([type, item]) => (
-                  <p className={styles.error} key={type}>
-                    {item}
-                  </p>
-                ));
-              }
-              return null;
-            }}
-          />
+          <Error errors={errors} name="email" />
           <label htmlFor="passwordInput">
             Password:
             <input
@@ -118,14 +101,7 @@ export function RegistrationPageMain(): React.ReactElement {
               ref={password.ref}
             />
           </label>
-          <div>
-            {errors?.password && (
-              <span className={styles.error}>
-                Minimum 8 characters, at least 1 uppercase letter, 1 lowercase
-                letter, and 1 number
-              </span>
-            )}
-          </div>
+          <Error errors={errors} name="password" />
           <label htmlFor="userFirstNameInput">
             First Name:
             <input
@@ -137,22 +113,7 @@ export function RegistrationPageMain(): React.ReactElement {
               ref={userFirstName.ref}
             />
           </label>
-          <ErrorMessage
-            errors={errors}
-            name="userFirstName"
-            render={({
-              messages,
-            }): React.ReactElement | React.ReactElement[] | null => {
-              if (messages) {
-                return Object.entries(messages).map(([type, item]) => (
-                  <p className={styles.error} key={type}>
-                    {item}
-                  </p>
-                ));
-              }
-              return null;
-            }}
-          />
+          <Error errors={errors} name="userFirstName" />
           <label htmlFor="userSecondNameInput">
             Second Name:
             <input
@@ -164,22 +125,7 @@ export function RegistrationPageMain(): React.ReactElement {
               ref={userSecondName.ref}
             />
           </label>
-          <ErrorMessage
-            errors={errors}
-            name="userSecondName"
-            render={({
-              messages,
-            }): React.ReactElement | React.ReactElement[] | null => {
-              if (messages) {
-                return Object.entries(messages).map(([type, item]) => (
-                  <p className={styles.error} key={type}>
-                    {item}
-                  </p>
-                ));
-              }
-              return null;
-            }}
-          />
+          <Error errors={errors} name="userSecondName" />
           <label htmlFor="birthDateInput">
             Date of birth:
             <input
@@ -191,22 +137,7 @@ export function RegistrationPageMain(): React.ReactElement {
               ref={birthDate.ref}
             />
           </label>
-          <ErrorMessage
-            errors={errors}
-            name="birthDate"
-            render={({
-              messages,
-            }): React.ReactElement | React.ReactElement[] | null => {
-              if (messages) {
-                return Object.entries(messages).map(([type, item]) => (
-                  <p className={styles.error} key={type}>
-                    {item}
-                  </p>
-                ));
-              }
-              return null;
-            }}
-          />
+          <Error errors={errors} name="birthDate" />
           <label htmlFor="streetInput">
             Street:
             <select>
@@ -222,22 +153,7 @@ export function RegistrationPageMain(): React.ReactElement {
               ref={street.ref}
             />
           </label>
-          <ErrorMessage
-            errors={errors}
-            name="street"
-            render={({
-              messages,
-            }): React.ReactElement | React.ReactElement[] | null => {
-              if (messages) {
-                return Object.entries(messages).map(([type, item]) => (
-                  <p className={styles.error} key={type}>
-                    {item}
-                  </p>
-                ));
-              }
-              return null;
-            }}
-          />
+          <Error errors={errors} name="street" />
           <label htmlFor="cityInput">
             City:
             <input
@@ -249,22 +165,7 @@ export function RegistrationPageMain(): React.ReactElement {
               ref={city.ref}
             />
           </label>
-          <ErrorMessage
-            errors={errors}
-            name="city"
-            render={({
-              messages,
-            }): React.ReactElement | React.ReactElement[] | null => {
-              if (messages) {
-                return Object.entries(messages).map(([type, item]) => (
-                  <p className={styles.error} key={type}>
-                    {item}
-                  </p>
-                ));
-              }
-              return null;
-            }}
-          />
+          <Error errors={errors} name="city" />
           <label htmlFor="postalCodeInput">
             Postal Code:
             <input
@@ -276,22 +177,7 @@ export function RegistrationPageMain(): React.ReactElement {
               ref={postalCode.ref}
             />
           </label>
-          <ErrorMessage
-            errors={errors}
-            name="postalCode"
-            render={({
-              messages,
-            }): React.ReactElement | React.ReactElement[] | null => {
-              if (messages) {
-                return Object.entries(messages).map(([type, item]) => (
-                  <p className={styles.error} key={type}>
-                    {item}
-                  </p>
-                ));
-              }
-              return null;
-            }}
-          />
+          <Error errors={errors} name="postalCode" />
           <h5>Country</h5>
           <select>
             <option>Belarus</option>
