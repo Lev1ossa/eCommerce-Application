@@ -1,61 +1,71 @@
 .loginPage__main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #f0f3f8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f0f3f8;
 }
 
 .container {
-    background-color: #ffffff;
-    border-radius: 10px;
-    padding: 20px 10px;
-    margin: 20px 0;
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 20px 10px;
+  margin: 20px 0;
 }
 
-.loginPage__main  h2 {
-    font-size: calc(27px + (28 - 27) * ((100vw - 320px) / (1920 - 320)));
-    margin-bottom: calc(20px + (30 - 20) * ((100vw - 320px) / (1920 - 320)));
-    color: #e22454;
+.loginPage__main h2 {
+  font-size: calc(27px + (28 - 27) * ((100vw - 320px) / (1920 - 320)));
+  margin-bottom: calc(20px + (30 - 20) * ((100vw - 320px) / (1920 - 320)));
+  color: #e22454;
 }
 
 form button {
-    padding: 5px;
-    font-size: 18px;
-    color: #fff;
-    border-radius: 5px;
-    border: 0;
-    margin-bottom: 10px;
-    width: 100%;
-    background-color: #e22454;
+  padding: 5px;
+  font-size: 18px;
+  color: #fff;
+  border-radius: 5px;
+  border: 0;
+  margin-bottom: 10px;
+  width: 100%;
+  background-color: #e22454;
 }
-  
+
 form {
-    font-size: 30px;
+  font-size: 30px;
 }
-  
+
 .loginPage__main input {
-    width: 100%;
-    font-size: 20px;
-    margin-top: 10px;
+  width: 100%;
+  font-size: 20px;
+  margin-top: 10px;
 }
 
 .loginPage__main p {
-    display: inline-block;
-    color: grey;
-    font-size: 16px;
-    margin-right: 5px;
+  display: inline-block;
+  color: grey;
+  font-size: 16px;
+  margin-right: 5px;
 }
-  
+
 label {
-    display: flex;
-    flex-direction: column;
-    font-size: 18px;
-    margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  font-size: 18px;
+  margin-bottom: 10px;
 }
 
 .container > button {
-    border: none;
-    background-color: inherit;
-    color: #e22454;
-    font-size: 18px;
+  border: none;
+  background-color: inherit;
+  color: #e22454;
+  font-size: 18px;
+}
+
+.error {
+  color: #e22454;
+  font-size: 16px;
+}
+
+.error::before {
+  display: inline;
+  content: '⚠ ';
 }
