@@ -14,5 +14,8 @@ export const checkDateValidity = (date: string): boolean | string => {
   if (new Date(date) > new Date()) {
     return "You can't be born in the future";
   }
-  return getFullYears(date) >= MINIMAL_ACCESS_AGE || `Sorry, you are under 13`;
+  return (
+    getFullYears(date) >= MINIMAL_ACCESS_AGE ||
+    `Sorry, you are under ${MINIMAL_ACCESS_AGE}`
+  );
 };
