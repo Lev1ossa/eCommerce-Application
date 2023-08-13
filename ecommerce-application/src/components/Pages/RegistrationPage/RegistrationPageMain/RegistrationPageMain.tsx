@@ -18,8 +18,7 @@ export function RegistrationPageMain(): React.ReactElement {
   };
   const emailRegExp =
     /^(([^!@#$%^&*<>()[\]\\/|.,;:\s@"]+(\.[^!@#$%^&*<>()[\]\\/|.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  const passwordRegExp =
-    /^(?=.{8,})(((?=.*[a-z])(?=.*[A-Z]))((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})/;
+
   const nameRegExp = /[а-яА-Я]/g;
 
   const email = register('email', {
@@ -38,9 +37,19 @@ export function RegistrationPageMain(): React.ReactElement {
   });
 
   const password = register('password', {
+    validate: {
+      number: (inputValue) =>
+        !!inputValue.match(/[0-9]/g) || 'At least one number',
+      uppercase: (inputValue) =>
+        !!inputValue.match(/[A-Z]/g) || 'At least one uppercase letter',
+      lowercase: (inputValue) =>
+        !!inputValue.match(/[a-z]/g) || 'At least one lowercase letter',
+    },
     required: 'Required field',
-    minLength: 8,
-    pattern: passwordRegExp,
+    minLength: {
+      value: 8,
+      message: 'Minimum 8 characters',
+    },
   });
 
   const userFirstName = register('userFirstName', {
