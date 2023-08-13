@@ -53,15 +53,29 @@ export function RegistrationPageMain(): React.ReactElement {
   });
 
   const userFirstName = register('userFirstName', {
+    pattern: {
+      value: /^[a-zA-Z]+[a-zA-Z']?$/,
+      message: 'No special characters or numbers',
+    },
     required: 'Required field',
-    minLength: 1,
-    pattern: nameRegExp,
+    minLength: {
+      value: 1,
+      message: 'Minimun 1 character',
+    },
   });
+
   const userSecondName = register('userSecondName', {
+    pattern: {
+      value: /^[a-zA-Z]+[a-zA-Z']?$/,
+      message: 'No special characters or numbers',
+    },
     required: 'Required field',
-    minLength: 1,
-    pattern: nameRegExp,
+    minLength: {
+      value: 1,
+      message: 'Minimun 1 character',
+    },
   });
+
   const birthDate = register('birthDate', {
     required: 'Required field',
     minLength: 1,
