@@ -7,3 +7,10 @@ export const getFullYears = (date: string): number => {
   if (currentDate.getMonth() < birthDate.getMonth()) return years - 1;
   return currentDate.getDate() >= birthDate.getDate() ? years : years - 1;
 };
+
+export const checkDateValidity = (date: string): boolean | string => {
+  if (new Date(date) > new Date()) {
+    return "You can't be born in the future";
+  }
+  return getFullYears(date) >= 13 || `Sorry, you are under 13`;
+};
