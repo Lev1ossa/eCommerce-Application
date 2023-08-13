@@ -1,6 +1,7 @@
 import { ErrorMessage } from '@hookform/error-message';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ILoginData } from '../../../../interfaces/login.interface';
+import { Error } from '../../../common/Error/Error';
 import styles from './RegistrationPageMain.module.css';
 
 // eslint-disable-next-line max-lines-per-function
@@ -89,6 +90,7 @@ export function RegistrationPageMain(): React.ReactElement {
               ref={email.ref}
             />
           </label>
+          <Error /* errors={errors} name="email" */ />
           <ErrorMessage
             errors={errors}
             name="email"
