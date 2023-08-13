@@ -22,7 +22,7 @@ export function RegistrationPageMain(): React.ReactElement {
     /^(?=.{8,})(((?=.*[a-z])(?=.*[A-Z]))((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})/;
   const nameRegExp = /[а-яА-Я]/g;
 
-  const multipleErrorInput = register('multipleErrorInput', {
+  const email = register('email', {
     validate: {
       minLength: (inputValue) =>
         inputValue.length > 3 || 'shoud be more than 3 symbols',
@@ -31,10 +31,6 @@ export function RegistrationPageMain(): React.ReactElement {
       lang: (inputValue) => !inputValue.match(/[а-яА-Я]/g) || 'must be en',
     },
     required: 'Required field',
-    minLength: {
-      value: 8,
-      message: 'This input exceed minLength.',
-    },
     pattern: {
       value: emailRegExp,
       message: 'invalid email',
@@ -87,15 +83,15 @@ export function RegistrationPageMain(): React.ReactElement {
             <input
               id="emailInput"
               type="email"
-              onChange={multipleErrorInput.onChange}
-              onBlur={multipleErrorInput.onBlur}
-              name={multipleErrorInput.name}
-              ref={multipleErrorInput.ref}
+              onChange={email.onChange}
+              onBlur={email.onBlur}
+              name={email.name}
+              ref={email.ref}
             />
           </label>
           <ErrorMessage
             errors={errors}
-            name="multipleErrorInput"
+            name="email"
             render={({
               messages,
             }): React.ReactElement | React.ReactElement[] | null => {
@@ -141,7 +137,7 @@ export function RegistrationPageMain(): React.ReactElement {
           </label>
           <ErrorMessage
             errors={errors}
-            name="multipleErrorInput"
+            name="userFirstName"
             render={({
               messages,
             }): React.ReactElement | React.ReactElement[] | null => {
@@ -168,7 +164,7 @@ export function RegistrationPageMain(): React.ReactElement {
           </label>
           <ErrorMessage
             errors={errors}
-            name="multipleErrorInput"
+            name="userSecondName"
             render={({
               messages,
             }): React.ReactElement | React.ReactElement[] | null => {
@@ -195,7 +191,7 @@ export function RegistrationPageMain(): React.ReactElement {
           </label>
           <ErrorMessage
             errors={errors}
-            name="multipleErrorInput"
+            name="birthDate"
             render={({
               messages,
             }): React.ReactElement | React.ReactElement[] | null => {
@@ -226,7 +222,7 @@ export function RegistrationPageMain(): React.ReactElement {
           </label>
           <ErrorMessage
             errors={errors}
-            name="multipleErrorInput"
+            name="street"
             render={({
               messages,
             }): React.ReactElement | React.ReactElement[] | null => {
@@ -253,7 +249,7 @@ export function RegistrationPageMain(): React.ReactElement {
           </label>
           <ErrorMessage
             errors={errors}
-            name="multipleErrorInput"
+            name="city"
             render={({
               messages,
             }): React.ReactElement | React.ReactElement[] | null => {
@@ -280,7 +276,7 @@ export function RegistrationPageMain(): React.ReactElement {
           </label>
           <ErrorMessage
             errors={errors}
-            name="multipleErrorInput"
+            name="postalCode"
             render={({
               messages,
             }): React.ReactElement | React.ReactElement[] | null => {
