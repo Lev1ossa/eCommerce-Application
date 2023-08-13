@@ -1,5 +1,6 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ILoginData } from '../../../../interfaces/login.interface';
+import { getFullYears } from '../../../../utils/utils';
 import { Error } from '../../../common/Error/Error';
 import styles from './RegistrationPageMain.module.scss';
 
@@ -77,10 +78,17 @@ export function RegistrationPageMain(): React.ReactElement {
   });
 
   const birthDate = register('birthDate', {
+    validate: {
+      invalidDate: (inputValue) => {
+        if (new Date(inputValue) > new Date()) {
+          return 'Invalid date';
+        }
+        return getFullYears(inputValue) >= 13 || `Sorry, you are under 13`;
+      },
+    },
     required: 'Required field',
-    minLength: 1,
-    pattern: nameRegExp,
   });
+
   const street = register('street', {
     required: 'Required field',
     minLength: 1,

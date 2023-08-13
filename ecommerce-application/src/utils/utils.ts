@@ -1,4 +1,5 @@
-export const getFullYears = (birthDate: Date): number => {
+export const getFullYears = (date: string): number => {
+  const birthDate = new Date(date);
   const currentDate = new Date();
   const years = currentDate.getFullYear() - birthDate.getFullYear();
   if (!years) return 0;
