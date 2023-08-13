@@ -1,7 +1,7 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ILoginData } from '../../../../interfaces/login.interface';
 import { Error } from '../../../common/Error/Error';
-import styles from './RegistrationPageMain.module.css';
+import styles from './RegistrationPageMain.module.scss';
 
 // eslint-disable-next-line max-lines-per-function
 export function RegistrationPageMain(): React.ReactElement {
@@ -75,12 +75,13 @@ export function RegistrationPageMain(): React.ReactElement {
   });
   return (
     <main className={styles.main_block}>
-      <div className={styles.container}>
-        <h2>Register</h2>
+      <div className={styles.wrapper}>
+        <h2 className={styles.title}>Register</h2>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
-          <label htmlFor="emailInput">
+          <label className={styles.label} htmlFor="emailInput">
             Email:
             <input
+              className={styles.input}
               id="emailInput"
               type="email"
               onChange={email.onChange}
@@ -90,9 +91,10 @@ export function RegistrationPageMain(): React.ReactElement {
             />
           </label>
           <Error errors={errors} name="email" />
-          <label htmlFor="passwordInput">
+          <label className={styles.label} htmlFor="passwordInput">
             Password:
             <input
+              className={styles.input}
               id="passwordInput"
               type="password"
               onChange={password.onChange}
@@ -102,9 +104,10 @@ export function RegistrationPageMain(): React.ReactElement {
             />
           </label>
           <Error errors={errors} name="password" />
-          <label htmlFor="userFirstNameInput">
+          <label className={styles.label} htmlFor="userFirstNameInput">
             First Name:
             <input
+              className={styles.input}
               id="userFirstNameInput"
               type="text"
               onChange={userFirstName.onChange}
@@ -114,9 +117,10 @@ export function RegistrationPageMain(): React.ReactElement {
             />
           </label>
           <Error errors={errors} name="userFirstName" />
-          <label htmlFor="userSecondNameInput">
+          <label className={styles.label} htmlFor="userSecondNameInput">
             Second Name:
             <input
+              className={styles.input}
               id="userSecondNameInput"
               type="text"
               onChange={userSecondName.onChange}
@@ -126,9 +130,10 @@ export function RegistrationPageMain(): React.ReactElement {
             />
           </label>
           <Error errors={errors} name="userSecondName" />
-          <label htmlFor="birthDateInput">
+          <label className={styles.label} htmlFor="birthDateInput">
             Date of birth:
             <input
+              className={styles.input}
               id="birthDateInput"
               type="date"
               onChange={birthDate.onChange}
@@ -138,25 +143,29 @@ export function RegistrationPageMain(): React.ReactElement {
             />
           </label>
           <Error errors={errors} name="birthDate" />
-          <label htmlFor="streetInput">
+          <label className={styles.label} htmlFor="streetInput">
             Street:
-            <select>
-              <option>str.</option>
-              <option>prosp.</option>
-            </select>
-            <input
-              id="streetInput"
-              type="text"
-              onChange={street.onChange}
-              onBlur={street.onBlur}
-              name={street.name}
-              ref={street.ref}
-            />
+            <div className={styles.container}>
+              <select className={styles.select_street}>
+                <option>str.</option>
+                <option>prosp.</option>
+              </select>
+              <input
+                className={styles.input_street}
+                id="streetInput"
+                type="text"
+                onChange={street.onChange}
+                onBlur={street.onBlur}
+                name={street.name}
+                ref={street.ref}
+              />
+            </div>
           </label>
           <Error errors={errors} name="street" />
-          <label htmlFor="cityInput">
+          <label className={styles.label} htmlFor="cityInput">
             City:
             <input
+              className={styles.input}
               id="cityInput"
               type="text"
               onChange={city.onChange}
@@ -166,9 +175,10 @@ export function RegistrationPageMain(): React.ReactElement {
             />
           </label>
           <Error errors={errors} name="city" />
-          <label htmlFor="postalCodeInput">
+          <label className={styles.label} htmlFor="postalCodeInput">
             Postal Code:
             <input
+              className={styles.input}
               id="postalCodeInput"
               type="text"
               onChange={postalCode.onChange}
@@ -178,15 +188,21 @@ export function RegistrationPageMain(): React.ReactElement {
             />
           </label>
           <Error errors={errors} name="postalCode" />
-          <h5>Country</h5>
-          <select>
+          <p className={styles.label}>Country:</p>
+          <select className={styles.select_country}>
             <option>Belarus</option>
             <option>Russia</option>
           </select>
-          <button type="submit">Sign up</button>
+          <button className={styles.submit_button} type="submit">
+            Sign up
+          </button>
         </form>
-        <p>Already have an account?</p>
-        <button type="button">Log in now</button>
+        <div className={styles.container}>
+          <p className={styles.text}>Already have an account?</p>
+          <button className={styles.button_login} type="button">
+            Log in now
+          </button>
+        </div>
       </div>
     </main>
   );
