@@ -90,9 +90,12 @@ export function RegistrationPageMain(): React.ReactElement {
     pattern: nameRegExp,
   });
   const city = register('city', {
+    pattern: {
+      value: /^[a-zA-Z]+[a-zA-Z']?$/,
+      message: 'No special characters or numbers',
+    },
     required: 'Required field',
     minLength: 1,
-    pattern: nameRegExp,
   });
   const postalCode = register('postalCode', {
     required: 'Required field',
