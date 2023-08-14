@@ -1,7 +1,7 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IRegistrationData } from '../../../../interfaces/types';
 import { checkDateValidity } from '../../../../utils/utils';
-import { FormInput } from '../../../UI/FormInput/Forminput';
+import { FormInput } from '../../../UI/FormInput/FormInput';
 import { Error } from '../../../common/Error/Error';
 import styles from './RegistrationPageMain.module.scss';
 
