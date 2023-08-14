@@ -1,6 +1,7 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IRegistrationData } from '../../../../interfaces/types';
 import { checkDateValidity } from '../../../../utils/utils';
+import { FormInput } from '../../../UI/FormInput/Forminput';
 import { Error } from '../../../common/Error/Error';
 import styles from './RegistrationPageMain.module.scss';
 
@@ -22,7 +23,7 @@ export function RegistrationPageMain(): React.ReactElement {
   const emailRegExp =
     /^(([^!@#$%^&*<>()[\]\\/|.,;:\s@"]+(\.[^!@#$%^&*<>()[\]\\/|.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-  const nameRegExp = /[а-яА-Я]/g;
+  // const nameRegExp = /[а-яА-Я]/g;
 
   const email = register('email', {
     validate: {
@@ -89,7 +90,6 @@ export function RegistrationPageMain(): React.ReactElement {
   const street = register('street', {
     required: 'Required field',
     minLength: 1,
-    pattern: nameRegExp,
   });
   const city = register('city', {
     pattern: {
@@ -102,14 +102,38 @@ export function RegistrationPageMain(): React.ReactElement {
   const postalCode = register('postalCode', {
     required: 'Required field',
     minLength: 1,
-    pattern: nameRegExp,
   });
+
   return (
     <main className={styles.main_block}>
       <div className={styles.wrapper}>
         <h2 className={styles.title}>Register</h2>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
-          <label className={styles.label} htmlFor="emailInput">
+          <FormInput input={email} type="email" />
+          <Error errors={errors} name="email" />
+
+          <FormInput input={password} type="password" />
+          <Error errors={errors} name="password" />
+
+          <FormInput input={userFirstName} type="text" />
+          <Error errors={errors} name="userFirstName" />
+
+          <FormInput input={userSecondName} type="text" />
+          <Error errors={errors} name="userSecondName" />
+
+          <FormInput input={birthDate} type="date" />
+          <Error errors={errors} name="birthDate" />
+
+          <FormInput input={street} type="text" />
+          <Error errors={errors} name="street" />
+
+          <FormInput input={city} type="text" />
+          <Error errors={errors} name="city" />
+
+          <FormInput input={postalCode} type="text" />
+          <Error errors={errors} name="postalCode" />
+
+          {/* <label className={styles.label} htmlFor="emailInput">
             Email:
             <input
               className={styles.input}
@@ -217,7 +241,7 @@ export function RegistrationPageMain(): React.ReactElement {
               name={postalCode.name}
               ref={postalCode.ref}
             />
-          </label>
+          </label> */}
           <Error errors={errors} name="postalCode" />
           <p className={styles.label}>Country:</p>
           <select className={styles.select_country}>
@@ -238,3 +262,81 @@ export function RegistrationPageMain(): React.ReactElement {
     </main>
   );
 }
+
+// const FormInputs = {
+//   email: register('email', {
+//     validate: {
+//       minLength: (inputValue) =>
+//         inputValue.length > 3 || 'shoud be more than 3 symbols',
+//       maxLength: (inputValue) =>
+//         inputValue.length < 5 || 'shoud be less than 5 symbols',
+//       lang: (inputValue) => !inputValue.match(/[а-яА-Я]/g) || 'must be en',
+//     },
+//     required: 'Required field',
+//     pattern: {
+//       value: emailRegExp,
+//       message: 'invalid email',
+//     },
+//   }),
+//   password: register('password', {
+//     validate: {
+//       number: (inputValue) =>
+//         !!inputValue.match(/[0-9]/g) || 'At least one number',
+//       uppercase: (inputValue) =>
+//         !!inputValue.match(/[A-Z]/g) || 'At least one uppercase letter',
+//       lowercase: (inputValue) =>
+//         !!inputValue.match(/[a-z]/g) || 'At least one lowercase letter',
+//     },
+//     required: 'Required field',
+//     minLength: {
+//       value: 8,
+//       message: 'Minimum 8 characters',
+//     },
+//   }),
+//   userFirstName: register('userFirstName', {
+//     pattern: {
+//       value: /^[a-zA-Z]+[a-zA-Z']?$/,
+//       message: 'No special characters or numbers',
+//     },
+//     required: 'Required field',
+//     minLength: {
+//       value: 1,
+//       message: 'Minimun 1 character',
+//     },
+//   }),
+//   userSecondName: register('userSecondName', {
+//     pattern: {
+//       value: /^[a-zA-Z]+[a-zA-Z']?$/,
+//       message: 'No special characters or numbers',
+//     },
+//     required: 'Required field',
+//     minLength: {
+//       value: 1,
+//       message: 'Minimun 1 character',
+//     },
+//   }),
+//   birthDate: register('birthDate', {
+//     validate: {
+//       invalidDate: (inputValue) => checkDateValidity(inputValue),
+//     },
+//     required: 'Required field',
+//   }),
+//   street: register('street', {
+//     required: 'Required field',
+//     minLength: 1,
+//     pattern: nameRegExp,
+//   }),
+//   city: register('city', {
+//     pattern: {
+//       value: /^[a-zA-Z]+[a-zA-Z']?$/,
+//       message: 'No special characters or numbers',
+//     },
+//     required: 'Required field',
+//     minLength: 1,
+//   }),
+//   postalCode: register('postalCode', {
+//     required: 'Required field',
+//     minLength: 1,
+//     pattern: nameRegExp,
+//   }),
+// };
