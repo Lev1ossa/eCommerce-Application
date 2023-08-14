@@ -14,7 +14,7 @@ export interface IRegistrationData extends ILoginData {
   postalCode: string;
 }
 
-export interface IParamRegistrationPage {
+export interface IRegistrationPageParam {
   type: string;
   name: keyof IRegistrationData;
   options: RegisterOptions<IRegistrationData, keyof IRegistrationData>;

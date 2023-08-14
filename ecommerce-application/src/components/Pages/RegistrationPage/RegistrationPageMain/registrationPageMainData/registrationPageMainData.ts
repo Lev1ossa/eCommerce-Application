@@ -1,8 +1,8 @@
 import { emailRegExp } from '../../../../../data/constants';
-import { IParamRegistrationPage } from '../../../../../types/types';
+import { IRegistrationPageParam } from '../../../../../types/types';
 import { checkDateValidity } from '../../../../../utils/utils';
 
-export const dataRegistrationPage: IParamRegistrationPage[] = [
+export const registrationPageMainData: IRegistrationPageParam[] = [
   {
     type: 'email',
     name: 'email',

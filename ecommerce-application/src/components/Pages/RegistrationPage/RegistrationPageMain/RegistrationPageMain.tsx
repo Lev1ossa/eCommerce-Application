@@ -3,7 +3,7 @@ import { IRegistrationData } from '../../../../types/types';
 import { FormInput } from '../../../UI/FormInput/FormInput';
 import { Error } from '../../../common/Error/Error';
 import styles from './RegistrationPageMain.module.scss';
-import { dataRegistrationPage } from './registrationPageMainData/registrationPageMainData';
+import { registrationPageMainData } from './registrationPageMainData/registrationPageMainData';
 
 // eslint-disable-next-line max-lines-per-function
 export function RegistrationPageMain(): React.ReactElement {
@@ -20,7 +20,7 @@ export function RegistrationPageMain(): React.ReactElement {
   ): void => {
     console.log('RESULT', data);
   };
-  const formInputs = dataRegistrationPage.map((el) => {
+  const formInputs = registrationPageMainData.map((el) => {
     return {
       type: el.type,
       value: register(el.name, el.options),
