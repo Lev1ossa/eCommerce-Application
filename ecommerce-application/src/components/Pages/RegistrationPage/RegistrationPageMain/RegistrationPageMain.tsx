@@ -5,6 +5,30 @@ import { FormInput } from '../../../UI/FormInput/FormInput';
 import { Error } from '../../../common/Error/Error';
 import styles from './RegistrationPageMain.module.scss';
 
+const emailRegExp =
+  /^(([^!@#$%^&*<>()[\]\\/|.,;:\s@"]+(\.[^!@#$%^&*<>()[\]\\/|.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+const arr = [
+  {
+    name: 'email',
+    options: {
+      validate: {
+        minLength: (inputValue: string): string | boolean =>
+          inputValue.length > 3 || 'shoud be more than 3 symbols',
+        maxLength: (inputValue: string): string | boolean =>
+          inputValue.length < 5 || 'shoud be less than 5 symbols',
+        lang: (inputValue: string): string | boolean =>
+          !inputValue.match(/[а-яА-Я]/g) || 'must be en',
+      },
+      required: 'Required field',
+      pattern: {
+        value: emailRegExp,
+        message: 'invalid email',
+      },
+    },
+  },
+];
+
 // eslint-disable-next-line max-lines-per-function
 export function RegistrationPageMain(): React.ReactElement {
   const {
@@ -20,12 +44,27 @@ export function RegistrationPageMain(): React.ReactElement {
   ): void => {
     console.log('RESULT', data);
   };
-  const emailRegExp =
-    /^(([^!@#$%^&*<>()[\]\\/|.,;:\s@"]+(\.[^!@#$%^&*<>()[\]\\/|.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  // const emailRegExp =
+  //  /^(([^!@#$%^&*<>()[\]\\/|.,;:\s@"]+(\.[^!@#$%^&*<>()[\]\\/|.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   // const nameRegExp = /[а-яА-Я]/g;
-
-  const email = register('email', {
+  const result = [];
+  result.push(
+    register(
+      arr[0].name as
+        | 'email'
+        | 'userFirstName'
+        | 'userSecondName'
+        | 'birthDate'
+        | 'street'
+        | 'city'
+        | 'postalCode'
+        | 'password',
+      arr[0].options,
+    ),
+  );
+  console.log(result);
+  /* const email = register('email', {
     validate: {
       minLength: (inputValue) =>
         inputValue.length > 3 || 'shoud be more than 3 symbols',
@@ -38,7 +77,7 @@ export function RegistrationPageMain(): React.ReactElement {
       value: emailRegExp,
       message: 'invalid email',
     },
-  });
+  }); */
 
   const password = register('password', {
     validate: {
@@ -109,7 +148,7 @@ export function RegistrationPageMain(): React.ReactElement {
       <div className={styles.wrapper}>
         <h2 className={styles.title}>Register</h2>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
-          <FormInput input={email} type="email" />
+          <FormInput input={result[0]} type="email" />
           <Error errors={errors} name="email" />
 
           <FormInput input={password} type="password" />
