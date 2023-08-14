@@ -14,7 +14,7 @@ export const registrationPageMainData: IRegistrationPageParam[] = [
       required: 'Required field',
       pattern: {
         value: emailRegExp,
-        message: 'invalid email',
+        message: 'Email address must be properly formatted',
       },
     },
   },
