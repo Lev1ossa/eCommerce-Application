@@ -8,27 +8,6 @@ import styles from './RegistrationPageMain.module.scss';
 const emailRegExp =
   /^(([^!@#$%^&*<>()[\]\\/|.,;:\s@"]+(\.[^!@#$%^&*<>()[\]\\/|.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-const arr = [
-  {
-    name: 'email',
-    options: {
-      validate: {
-        minLength: (inputValue: string): string | boolean =>
-          inputValue.length > 3 || 'shoud be more than 3 symbols',
-        maxLength: (inputValue: string): string | boolean =>
-          inputValue.length < 5 || 'shoud be less than 5 symbols',
-        lang: (inputValue: string): string | boolean =>
-          !inputValue.match(/[а-яА-Я]/g) || 'must be en',
-      },
-      required: 'Required field',
-      pattern: {
-        value: emailRegExp,
-        message: 'invalid email',
-      },
-    },
-  },
-];
-
 // eslint-disable-next-line max-lines-per-function
 export function RegistrationPageMain(): React.ReactElement {
   const {
@@ -48,106 +27,200 @@ export function RegistrationPageMain(): React.ReactElement {
   //  /^(([^!@#$%^&*<>()[\]\\/|.,;:\s@"]+(\.[^!@#$%^&*<>()[\]\\/|.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   // const nameRegExp = /[а-яА-Я]/g;
-  const result = [];
-  result.push(
-    register(
-      arr[0].name as
-        | 'email'
-        | 'userFirstName'
-        | 'userSecondName'
-        | 'birthDate'
-        | 'street'
-        | 'city'
-        | 'postalCode'
-        | 'password',
-      arr[0].options,
-    ),
-  );
-  console.log(result);
-  /* const email = register('email', {
-    validate: {
-      minLength: (inputValue) =>
-        inputValue.length > 3 || 'shoud be more than 3 symbols',
-      maxLength: (inputValue) =>
-        inputValue.length < 5 || 'shoud be less than 5 symbols',
-      lang: (inputValue) => !inputValue.match(/[а-яА-Я]/g) || 'must be en',
+  const formInputs = [
+    {
+      type: 'email',
+      value: register('email', {
+        validate: {
+          minLength: (inputValue) =>
+            inputValue.length > 3 || 'shoud be more than 3 symbols',
+          maxLength: (inputValue) =>
+            inputValue.length < 5 || 'shoud be less than 5 symbols',
+          lang: (inputValue) => !inputValue.match(/[а-яА-Я]/g) || 'must be en',
+        },
+        required: 'Required field',
+        pattern: {
+          value: emailRegExp,
+          message: 'invalid email',
+        },
+      }),
     },
-    required: 'Required field',
-    pattern: {
-      value: emailRegExp,
-      message: 'invalid email',
+    {
+      type: 'password',
+      value: register('password', {
+        validate: {
+          number: (inputValue) =>
+            !!inputValue.match(/[0-9]/g) || 'At least one number',
+          uppercase: (inputValue) =>
+            !!inputValue.match(/[A-Z]/g) || 'At least one uppercase letter',
+          lowercase: (inputValue) =>
+            !!inputValue.match(/[a-z]/g) || 'At least one lowercase letter',
+        },
+        required: 'Required field',
+        minLength: {
+          value: 8,
+          message: 'Minimum 8 characters',
+        },
+      }),
     },
-  }); */
+    {
+      type: 'text',
+      value: register('userFirstName', {
+        pattern: {
+          value: /^[a-zA-Z]+[a-zA-Z']?$/,
+          message: 'No special characters or numbers',
+        },
+        required: 'Required field',
+        minLength: {
+          value: 1,
+          message: 'Minimun 1 character',
+        },
+      }),
+    },
+    {
+      type: 'text',
+      value: register('userSecondName', {
+        pattern: {
+          value: /^[a-zA-Z]+[a-zA-Z']?$/,
+          message: 'No special characters or numbers',
+        },
+        required: 'Required field',
+        minLength: {
+          value: 1,
+          message: 'Minimun 1 character',
+        },
+      }),
+    },
+    {
+      type: 'date',
+      value: register('birthDate', {
+        validate: {
+          invalidDate: (inputValue) => checkDateValidity(inputValue),
+        },
+        required: 'Required field',
+      }),
+    },
+    {
+      type: 'text',
+      value: register('street', {
+        required: 'Required field',
+        minLength: 1,
+      }),
+    },
+    {
+      type: 'text',
+      value: register('city', {
+        pattern: {
+          value: /^[a-zA-Z]+[a-zA-Z']?$/,
+          message: 'No special characters or numbers',
+        },
+        required: 'Required field',
+        minLength: 1,
+      }),
+    },
+    {
+      type: 'text',
+      value: register('postalCode', {
+        required: 'Required field',
+        minLength: 1,
+      }),
+    },
+  ];
+  // const email = register('email', {
+  //   validate: {
+  //     minLength: (inputValue) =>
+  //       inputValue.length > 3 || 'shoud be more than 3 symbols',
+  //     maxLength: (inputValue) =>
+  //       inputValue.length < 5 || 'shoud be less than 5 symbols',
+  //     lang: (inputValue) => !inputValue.match(/[а-яА-Я]/g) || 'must be en',
+  //   },
+  //   required: 'Required field',
+  //   pattern: {
+  //     value: emailRegExp,
+  //     message: 'invalid email',
+  //   },
+  // });
 
-  const password = register('password', {
-    validate: {
-      number: (inputValue) =>
-        !!inputValue.match(/[0-9]/g) || 'At least one number',
-      uppercase: (inputValue) =>
-        !!inputValue.match(/[A-Z]/g) || 'At least one uppercase letter',
-      lowercase: (inputValue) =>
-        !!inputValue.match(/[a-z]/g) || 'At least one lowercase letter',
-    },
-    required: 'Required field',
-    minLength: {
-      value: 8,
-      message: 'Minimum 8 characters',
-    },
-  });
+  // const password = register('password', {
+  //   validate: {
+  //     number: (inputValue) =>
+  //       !!inputValue.match(/[0-9]/g) || 'At least one number',
+  //     uppercase: (inputValue) =>
+  //       !!inputValue.match(/[A-Z]/g) || 'At least one uppercase letter',
+  //     lowercase: (inputValue) =>
+  //       !!inputValue.match(/[a-z]/g) || 'At least one lowercase letter',
+  //   },
+  //   required: 'Required field',
+  //   minLength: {
+  //     value: 8,
+  //     message: 'Minimum 8 characters',
+  //   },
+  // });
 
-  const userFirstName = register('userFirstName', {
-    pattern: {
-      value: /^[a-zA-Z]+[a-zA-Z']?$/,
-      message: 'No special characters or numbers',
-    },
-    required: 'Required field',
-    minLength: {
-      value: 1,
-      message: 'Minimun 1 character',
-    },
-  });
+  // const userFirstName = register('userFirstName', {
+  //   pattern: {
+  //     value: /^[a-zA-Z]+[a-zA-Z']?$/,
+  //     message: 'No special characters or numbers',
+  //   },
+  //   required: 'Required field',
+  //   minLength: {
+  //     value: 1,
+  //     message: 'Minimun 1 character',
+  //   },
+  // });
 
-  const userSecondName = register('userSecondName', {
-    pattern: {
-      value: /^[a-zA-Z]+[a-zA-Z']?$/,
-      message: 'No special characters or numbers',
-    },
-    required: 'Required field',
-    minLength: {
-      value: 1,
-      message: 'Minimun 1 character',
-    },
-  });
+  // const userSecondName = register('userSecondName', {
+  //   pattern: {
+  //     value: /^[a-zA-Z]+[a-zA-Z']?$/,
+  //     message: 'No special characters or numbers',
+  //   },
+  //   required: 'Required field',
+  //   minLength: {
+  //     value: 1,
+  //     message: 'Minimun 1 character',
+  //   },
+  // });
 
-  const birthDate = register('birthDate', {
-    validate: {
-      invalidDate: (inputValue) => checkDateValidity(inputValue),
-    },
-    required: 'Required field',
-  });
+  // const birthDate = register('birthDate', {
+  //   validate: {
+  //     invalidDate: (inputValue) => checkDateValidity(inputValue),
+  //   },
+  //   required: 'Required field',
+  // });
 
-  const street = register('street', {
-    required: 'Required field',
-    minLength: 1,
-  });
-  const city = register('city', {
-    pattern: {
-      value: /^[a-zA-Z]+[a-zA-Z']?$/,
-      message: 'No special characters or numbers',
-    },
-    required: 'Required field',
-    minLength: 1,
-  });
-  const postalCode = register('postalCode', {
-    required: 'Required field',
-    minLength: 1,
-  });
+  // const street = register('street', {
+  //   required: 'Required field',
+  //   minLength: 1,
+  // });
+  // const city = register('city', {
+  //   pattern: {
+  //     value: /^[a-zA-Z]+[a-zA-Z']?$/,
+  //     message: 'No special characters or numbers',
+  //   },
+  //   required: 'Required field',
+  //   minLength: 1,
+  // });
+  // const postalCode = register('postalCode', {
+  //   required: 'Required field',
+  //   minLength: 1,
+  // });
 
   return (
     <main className={styles.main_block}>
       <div className={styles.wrapper}>
         <h2 className={styles.title}>Register</h2>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
+          {formInputs.map((item) => (
+            <>
+              <FormInput
+                key={item.value.name}
+                input={item.value}
+                type={item.type}
+              />
+              <Error errors={errors} name={item.value.name} />
+            </>
+          ))}
+          {/*           
           <FormInput input={result[0]} type="email" />
           <Error errors={errors} name="email" />
 
@@ -170,7 +243,7 @@ export function RegistrationPageMain(): React.ReactElement {
           <Error errors={errors} name="city" />
 
           <FormInput input={postalCode} type="text" />
-          <Error errors={errors} name="postalCode" />
+          <Error errors={errors} name="postalCode" /> */}
 
           {/* <label className={styles.label} htmlFor="emailInput">
             Email:
