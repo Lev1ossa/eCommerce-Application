@@ -1,11 +1,11 @@
 import { ErrorMessage } from '@hookform/error-message';
 import { FieldErrors } from 'react-hook-form';
-import { ILoginData } from '../../../interfaces/login.interface';
+import { IRegistrationData } from '../../../interfaces/types';
 import styles from './Error.module.css';
 
 export function Error(props: {
-  errors: FieldErrors<ILoginData>;
-  name: keyof ILoginData;
+  errors: FieldErrors<IRegistrationData>;
+  name: keyof IRegistrationData;
 }): React.ReactElement {
   const { errors, name } = props;
   return (

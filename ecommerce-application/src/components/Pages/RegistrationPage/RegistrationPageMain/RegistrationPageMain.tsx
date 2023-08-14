@@ -1,5 +1,5 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { ILoginData } from '../../../../interfaces/login.interface';
+import { IRegistrationData } from '../../../../interfaces/types';
 import { checkDateValidity } from '../../../../utils/utils';
 import { Error } from '../../../common/Error/Error';
 import styles from './RegistrationPageMain.module.scss';
@@ -10,11 +10,13 @@ export function RegistrationPageMain(): React.ReactElement {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm<ILoginData>({
+  } = useForm<IRegistrationData>({
     mode: 'onChange',
     criteriaMode: 'all',
   });
-  const onSubmit: SubmitHandler<ILoginData> = (data: ILoginData): void => {
+  const onSubmit: SubmitHandler<IRegistrationData> = (
+    data: IRegistrationData,
+  ): void => {
     console.log('RESULT', data);
   };
   const emailRegExp =
