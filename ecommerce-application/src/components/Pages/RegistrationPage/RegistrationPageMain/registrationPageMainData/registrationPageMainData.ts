@@ -8,10 +8,6 @@ export const registrationPageMainData: IRegistrationPageParam[] = [
     name: 'email',
     options: {
       validate: {
-        checkMinLength: (inputValue: string): string | boolean =>
-          inputValue.length > 3 || 'shoud be more than 3 symbols',
-        checkMaxLength: (inputValue: string): string | boolean =>
-          inputValue.length < 5 || 'shoud be less than 5 symbols',
         lang: (inputValue: string): string | boolean =>
           !inputValue.match(/[а-яА-Я]/g) || 'must be en',
       },
