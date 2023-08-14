@@ -9,7 +9,8 @@ export const registrationPageMainData: IRegistrationPageParam[] = [
     options: {
       validate: {
         lang: (inputValue: string): string | boolean =>
-          !inputValue.match(/[а-яА-Я]/g) || 'must be en',
+          !inputValue.match(/[^a-zA-Z0-9@.]/g) ||
+          'The email contains an invalid character',
       },
       required: 'Required field',
       pattern: {
