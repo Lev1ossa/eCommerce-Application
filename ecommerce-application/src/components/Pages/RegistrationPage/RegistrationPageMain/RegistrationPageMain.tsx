@@ -1,9 +1,9 @@
-import { SubmitHandler, Validate, useForm } from 'react-hook-form';
-import { IRegistrationData } from '../../../../interfaces/types';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { IRegistrationData } from '../../../../types/types';
 import { FormInput } from '../../../UI/FormInput/FormInput';
 import { Error } from '../../../common/Error/Error';
 import styles from './RegistrationPageMain.module.scss';
-import { dataRegistrationPage } from './data/dataRegistrationPageMain';
+import { dataRegistrationPage } from './registrationPageMainData/registrationPageMainData';
 
 // eslint-disable-next-line max-lines-per-function
 export function RegistrationPageMain(): React.ReactElement {
@@ -23,21 +23,7 @@ export function RegistrationPageMain(): React.ReactElement {
   const formInputs = dataRegistrationPage.map((el) => {
     return {
       type: el.type,
-      value: register(
-        el.name as
-          | 'email'
-          | 'userFirstName'
-          | 'userSecondName'
-          | 'birthDate'
-          | 'street'
-          | 'city'
-          | 'postalCode'
-          | 'password',
-        el.options as unknown as Record<
-          string,
-          Validate<string, IRegistrationData>
-        >,
-      ),
+      value: register(el.name, el.options),
     };
   });
   return (

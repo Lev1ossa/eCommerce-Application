@@ -1,15 +1,16 @@
 import { emailRegExp } from '../../../../../data/constants';
+import { IParamRegistrationPage } from '../../../../../types/types';
 import { checkDateValidity } from '../../../../../utils/utils';
 
-export const dataRegistrationPage = [
+export const dataRegistrationPage: IParamRegistrationPage[] = [
   {
     type: 'email',
     name: 'email',
     options: {
       validate: {
-        minLength: (inputValue: string): string | boolean =>
+        checkMinLength: (inputValue: string): string | boolean =>
           inputValue.length > 3 || 'shoud be more than 3 symbols',
-        maxLength: (inputValue: string): string | boolean =>
+        checkMaxLength: (inputValue: string): string | boolean =>
           inputValue.length < 5 || 'shoud be less than 5 symbols',
         lang: (inputValue: string): string | boolean =>
           !inputValue.match(/[а-яА-Я]/g) || 'must be en',

@@ -1,6 +1,6 @@
 import { ErrorMessage } from '@hookform/error-message';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { ILoginData } from '../../../../interfaces/types';
+import { ILoginData } from '../../../../types/types';
 import styles from './LoginPageMain.module.css';
 
 // eslint-disable-next-line max-lines-per-function
