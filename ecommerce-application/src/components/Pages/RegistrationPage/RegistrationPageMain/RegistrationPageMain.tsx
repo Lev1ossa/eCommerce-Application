@@ -28,6 +28,7 @@ export function RegistrationPageMain(): React.ReactElement {
           {InputService.createPasswordInput(register, errors)}
           {InputService.createTextInput(register, errors, 'userFirstName')}
           {InputService.createTextInput(register, errors, 'userSecondName')}
+          {InputService.createDateInput(register, errors)}
           <p className={styles.label}>Country:</p>
           <select className={styles.select_country}>
             <option>Belarus</option>

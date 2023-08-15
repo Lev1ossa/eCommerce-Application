@@ -3,6 +3,7 @@ import { FormInput } from '../components/UI/FormInput/FormInput';
 import { Error } from '../components/common/Error/Error';
 import { emailRegExp } from '../data/constants';
 import { IRegistrationData, IRegistrationPageParam } from '../types/types';
+import { checkDateValidity } from '../utils/utils';
 
 export function createEmailInput(
   register: UseFormRegister<IRegistrationData>,
@@ -104,6 +105,32 @@ export function createTextInput(
     <>
       <FormInput input={textInput.value} type={textInput.type} />
       <Error errors={errors} name={text.name} />
+    </>
+  );
+}
+export function createDateInput(
+  register: UseFormRegister<IRegistrationData>,
+  errors: FieldErrors<IRegistrationData>,
+): React.ReactElement {
+  const date: IRegistrationPageParam = {
+    type: 'date',
+    name: 'birthDate',
+    options: {
+      validate: {
+        invalidDate: (inputValue: string): string | boolean =>
+          checkDateValidity(inputValue),
+      },
+      required: 'Required field',
+    },
+  };
+  const dateInput = {
+    type: date.type,
+    value: register(date.name, date.options),
+  };
+  return (
+    <>
+      <FormInput input={dateInput.value} type={dateInput.type} />
+      <Error errors={errors} name={date.name} />
     </>
   );
 }
