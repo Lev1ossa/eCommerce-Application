@@ -1,9 +1,7 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
+import * as InputService from '../../../../services/inputService';
 import { IRegistrationData } from '../../../../types/types';
-import { FormInput } from '../../../UI/FormInput/FormInput';
-import { Error } from '../../../common/Error/Error';
 import styles from './RegistrationPageMain.module.scss';
-import { registrationPageMainData } from './registrationPageMainData/registrationPageMainData';
 
 // eslint-disable-next-line max-lines-per-function
 export function RegistrationPageMain(): React.ReactElement {
@@ -20,28 +18,13 @@ export function RegistrationPageMain(): React.ReactElement {
   ): void => {
     console.log('RESULT', data);
   };
-  const formInputs = registrationPageMainData.map((el) => {
-    return {
-      type: el.type,
-      value: register(el.name, el.options),
-    };
-  });
+
   return (
     <main className={styles.main_block}>
       <div className={styles.wrapper}>
         <h2 className={styles.title}>Register</h2>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
-          {formInputs.map((item) => (
-            <>
-              <FormInput
-                key={item.value.name}
-                input={item.value}
-                type={item.type}
-              />
-              <Error errors={errors} name={item.value.name} />
-            </>
-          ))}
-          <Error errors={errors} name="postalCode" />
+          {InputService.createEmailInput(register, errors)}
           <p className={styles.label}>Country:</p>
           <select className={styles.select_country}>
             <option>Belarus</option>
