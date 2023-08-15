@@ -75,3 +75,35 @@ export function createPasswordInput(
     </>
   );
 }
+
+export function createTextInput(
+  register: UseFormRegister<IRegistrationData>,
+  errors: FieldErrors<IRegistrationData>,
+  name: keyof IRegistrationData,
+): React.ReactElement {
+  const text: IRegistrationPageParam = {
+    type: 'text',
+    name,
+    options: {
+      pattern: {
+        value: /^[a-zA-Z]+[a-zA-Z']?$/,
+        message: 'No special characters or numbers',
+      },
+      required: 'Required field',
+      minLength: {
+        value: 1,
+        message: 'Minimun 1 character',
+      },
+    },
+  };
+  const textInput = {
+    type: text.type,
+    value: register(text.name, text.options),
+  };
+  return (
+    <>
+      <FormInput input={textInput.value} type={textInput.type} />
+      <Error errors={errors} name={text.name} />
+    </>
+  );
+}

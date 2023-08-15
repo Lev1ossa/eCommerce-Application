@@ -26,6 +26,8 @@ export function RegistrationPageMain(): React.ReactElement {
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           {InputService.createEmailInput(register, errors)}
           {InputService.createPasswordInput(register, errors)}
+          {InputService.createTextInput(register, errors, 'userFirstName')}
+          {InputService.createTextInput(register, errors, 'userSecondName')}
           <p className={styles.label}>Country:</p>
           <select className={styles.select_country}>
             <option>Belarus</option>
