@@ -12,6 +12,7 @@ export interface IRegistrationData extends ILoginData {
   street: string;
   city: string;
   postalCode: string;
+  country: string;
 }
 
 export interface IRegistrationPageParam {

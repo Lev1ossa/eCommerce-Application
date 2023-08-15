@@ -29,11 +29,10 @@ export function RegistrationPageMain(): React.ReactElement {
           {InputService.createTextInput(register, errors, 'userFirstName')}
           {InputService.createTextInput(register, errors, 'userSecondName')}
           {InputService.createDateInput(register, errors)}
-          <p className={styles.label}>Country:</p>
-          <select className={styles.select_country}>
-            <option>Belarus</option>
-            <option>Russia</option>
-          </select>
+          {InputService.createTextInput(register, errors, 'street')}
+          {InputService.createTextInput(register, errors, 'city')}
+          {InputService.createTextInput(register, errors, 'country')}
+          {InputService.createTextInput(register, errors, 'postalCode')}
           <button className={styles.submit_button} type="submit">
             Sign up
           </button>
