@@ -15,10 +15,14 @@ export function createEmailInput(
     options: {
       validate: {
         lang: (inputValue: string): string | boolean =>
-          !inputValue.match(/[^a-zA-Z0-9@.]/g) ||
+          !inputValue.match(/[^ a-zA-Z0-9@.]/g) ||
           'The email contains an invalid character',
         space: (inputValue: string): string | boolean =>
-          !inputValue.match(/\s+/g) || 'The email contains space character',
+          inputValue.trim() === inputValue ||
+          'Email address must not contain leading or trailing whitespace',
+        insideSpace: (inputValue: string): string | boolean =>
+          !inputValue.trim().match(/\s+/g) ||
+          'Email address must not contain inside whitespace',
         at: (inputValue: string): string | boolean =>
           !!inputValue.match(/@/g) ||
           'Email address must contain an "@" symbol',
