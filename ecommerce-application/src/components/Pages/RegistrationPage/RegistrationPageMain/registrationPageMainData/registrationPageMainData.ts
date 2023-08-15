@@ -13,6 +13,9 @@ export const registrationPageMainData: IRegistrationPageParam[] = [
           'The email contains an invalid character',
         space: (inputValue: string): string | boolean =>
           !inputValue.match(/\s+/g) || 'The email contains space character',
+        at: (inputValue: string): string | boolean =>
+          !!inputValue.match(/@/g) ||
+          'Email address must contain an "@" symbol',
       },
       required: 'Required field',
       pattern: {
