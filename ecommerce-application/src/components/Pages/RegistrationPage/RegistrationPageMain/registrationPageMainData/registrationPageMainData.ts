@@ -4,13 +4,15 @@ import { checkDateValidity } from '../../../../../utils/utils';
 
 export const registrationPageMainData: IRegistrationPageParam[] = [
   {
-    type: 'email',
+    type: 'text',
     name: 'email',
     options: {
       validate: {
         lang: (inputValue: string): string | boolean =>
           !inputValue.match(/[^a-zA-Z0-9@.]/g) ||
           'The email contains an invalid character',
+        space: (inputValue: string): string | boolean =>
+          !inputValue.match(/\s+/g) || 'The email contains space character',
       },
       required: 'Required field',
       pattern: {
