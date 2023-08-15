@@ -40,3 +40,38 @@ export function createEmailInput(
     </>
   );
 }
+
+export function createPasswordInput(
+  register: UseFormRegister<IRegistrationData>,
+  errors: FieldErrors<IRegistrationData>,
+): React.ReactElement {
+  const password: IRegistrationPageParam = {
+    type: 'password',
+    name: 'password',
+    options: {
+      validate: {
+        number: (inputValue: string): string | boolean =>
+          !!inputValue.match(/[0-9]/g) || 'At least one number',
+        uppercase: (inputValue: string): string | boolean =>
+          !!inputValue.match(/[A-Z]/g) || 'At least one uppercase letter',
+        lowercase: (inputValue: string): string | boolean =>
+          !!inputValue.match(/[a-z]/g) || 'At least one lowercase letter',
+      },
+      required: 'Required field',
+      minLength: {
+        value: 8,
+        message: 'Minimum 8 characters',
+      },
+    },
+  };
+  const passwordInput = {
+    type: password.type,
+    value: register(password.name, password.options),
+  };
+  return (
+    <>
+      <FormInput input={passwordInput.value} type={passwordInput.type} />
+      <Error errors={errors} name={password.name} />
+    </>
+  );
+}
