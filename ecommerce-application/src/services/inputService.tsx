@@ -5,6 +5,7 @@ import { emailRegExp } from '../data/constants';
 import { IRegistrationData, IRegistrationPageParam } from '../types/types';
 import { checkDateValidity } from '../utils/utils';
 
+// eslint-disable-next-line max-lines-per-function
 export function createEmailInput(
   register: UseFormRegister<IRegistrationData>,
   errors: FieldErrors<IRegistrationData>,
@@ -26,6 +27,9 @@ export function createEmailInput(
         at: (inputValue: string): string | boolean =>
           !!inputValue.match(/@/g) ||
           'Email address must contain an "@" symbol',
+        domain: (inputValue: string): string | boolean =>
+          !!inputValue.match(/@(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})$/) ||
+          'Email address must contain an domain',
       },
       required: 'Required field',
       pattern: {
