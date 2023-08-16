@@ -11,7 +11,8 @@ export function RegistrationPageMain(): React.ReactElement {
     handleSubmit,
   } = useForm<IRegistrationData>({
     mode: 'onChange',
-    criteriaMode: 'all',
+    // criteriaMode: 'firstError',
+    // criteriaMode: 'all',
   });
   const onSubmit: SubmitHandler<IRegistrationData> = (
     data: IRegistrationData,

@@ -1,6 +1,7 @@
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
 import { FormInput } from '../components/UI/FormInput/FormInput';
 import { Error } from '../components/common/Error/Error';
+// import { emailRegExp } from '../data/constants';
 import { emailRegExp } from '../data/constants';
 import { IRegistrationData, IRegistrationPageParam } from '../types/types';
 import { checkDateValidity } from '../utils/utils';
@@ -30,12 +31,15 @@ export function createEmailInput(
         domain: (inputValue: string): string | boolean =>
           !!inputValue.match(/@(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})$/) ||
           'Email address must contain a domain name',
+        format: (inputValue: string): string | boolean =>
+          !!inputValue.match(emailRegExp) ||
+          'Email address must be properly formatted',
       },
       required: 'Required field',
-      pattern: {
-        value: emailRegExp,
-        message: 'Email address must be properly formatted',
-      },
+      // pattern: {
+      //   value: emailRegExp,
+      //   message: 'Email address must be properly formatted',
+      // },
     },
   };
   const emailInput = {
@@ -64,24 +68,27 @@ export function createPasswordInput(
           !inputValue.match(
             /[^a-zA-Z0-9!@#$%^&*+-=?<>(){}[\]\\/|.,;:\s@"']/g,
           ) || 'Password contains an invalid character',
-        number: (inputValue: string): string | boolean =>
-          !!inputValue.match(/[0-9]/g) || 'At least one number',
-        uppercase: (inputValue: string): string | boolean =>
-          !!inputValue.match(/[A-Z]/g) || 'At least one uppercase letter',
-        lowercase: (inputValue: string): string | boolean =>
-          !!inputValue.match(/[a-z]/g) || 'At least one lowercase letter',
         space: (inputValue: string): string | boolean =>
           inputValue.trim() === inputValue ||
           'Password address must not contain leading or trailing whitespace',
         insideSpace: (inputValue: string): string | boolean =>
           !inputValue.trim().match(/\s+/g) ||
           'Password address must not contain inside whitespace',
+        number: (inputValue: string): string | boolean =>
+          !!inputValue.match(/[0-9]/g) || 'At least one number',
+        uppercase: (inputValue: string): string | boolean =>
+          !!inputValue.match(/[A-Z]/g) || 'At least one uppercase letter',
+        lowercase: (inputValue: string): string | boolean =>
+          !!inputValue.match(/[a-z]/g) || 'At least one lowercase letter',
+
+        length: (inputValue: string): string | boolean =>
+          inputValue.length >= 8 || 'Minimum 8 characters',
       },
       required: 'Required field',
-      minLength: {
-        value: 8,
-        message: 'Minimum 8 characters',
-      },
+      // minLength: {
+      //   value: 8,
+      //   message: 'Minimum 8 characters',
+      // },
     },
   };
   const passwordInput = {
