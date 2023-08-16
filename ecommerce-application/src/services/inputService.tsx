@@ -50,6 +50,7 @@ export function createEmailInput(
   );
 }
 
+// eslint-disable-next-line max-lines-per-function
 export function createPasswordInput(
   register: UseFormRegister<IRegistrationData>,
   errors: FieldErrors<IRegistrationData>,
@@ -59,6 +60,10 @@ export function createPasswordInput(
     name: 'password',
     options: {
       validate: {
+        validCharacters: (inputValue: string): string | boolean =>
+          !inputValue.match(
+            /[^a-zA-Z0-9!@#$%^&*+-=?<>(){}[\]\\/|.,;:\s@"']/g,
+          ) || 'Password contains an invalid character',
         number: (inputValue: string): string | boolean =>
           !!inputValue.match(/[0-9]/g) || 'At least one number',
         uppercase: (inputValue: string): string | boolean =>
