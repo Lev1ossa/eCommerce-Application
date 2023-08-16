@@ -6,6 +6,42 @@ import { emailRegExp } from '../data/constants';
 import { IRegistrationData, IRegistrationPageParam } from '../types/types';
 import { checkDateValidity } from '../utils/utils';
 
+export class InputParameters {
+  validate: Record<string, (inputValue: string) => string | boolean>;
+  type: Record<string, string>;
+  name: Record<string, string>;
+
+  constructor() {
+    this.type = {
+      text: 'text',
+      password: 'password',
+      date: 'date',
+    };
+    this.name = {
+      email: 'email',
+      password: 'password',
+    };
+    this.validate = {
+      lang: (inputValue: string): string | boolean =>
+        !inputValue.match(/[^ a-zA-Z0-9@.]/g) ||
+        'The email contains an invalid character',
+      space: (inputValue: string): string | boolean =>
+        inputValue.trim() === inputValue ||
+        'Email address must not contain leading or trailing whitespace',
+      insideSpace: (inputValue: string): string | boolean =>
+        !inputValue.trim().match(/\s+/g) ||
+        'Email address must not contain inside whitespace',
+      at: (inputValue: string): string | boolean =>
+        !!inputValue.match(/@/g) || 'Email address must contain an "@" symbol',
+      domain: (inputValue: string): string | boolean =>
+        !!inputValue.match(/@(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})$/) ||
+        'Email address must contain a domain name',
+      format: (inputValue: string): string | boolean =>
+        !!inputValue.match(emailRegExp) ||
+        'Email address must be properly formatted',
+    };
+  }
+}
 // eslint-disable-next-line max-lines-per-function
 export function createEmailInput(
   register: UseFormRegister<IRegistrationData>,
