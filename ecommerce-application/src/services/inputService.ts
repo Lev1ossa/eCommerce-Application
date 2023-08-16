@@ -1,36 +1,35 @@
-import { FieldErrors, UseFormRegister } from 'react-hook-form';
-import { FormInput } from '../components/UI/FormInput/FormInput';
-import { Error } from '../components/common/Error/Error';
-// import { emailRegExp } from '../data/constants';
 import { emailRegExp } from '../data/constants';
-import { IRegistrationData, IRegistrationPageParam } from '../types/types';
+import { IRegistrationPageParam } from '../types/types';
 import { checkDateValidity } from '../utils/utils';
 
-export class InputParameters {
-  validate: Record<string, (inputValue: string) => string | boolean>;
+export class ServiceInputParameters {
+  validation: Record<string, (inputValue: string) => string | boolean>;
   type: Record<string, string>;
-  name: Record<string, string>;
+  nameField: Record<string, string>;
+  inputParameters: null | IRegistrationPageParam;
 
+  // eslint-disable-next-line max-lines-per-function
   constructor() {
     this.type = {
       text: 'text',
       password: 'password',
       date: 'date',
     };
-    this.name = {
+    this.nameField = {
       email: 'email',
       password: 'password',
+      text: 'text',
     };
-    this.validate = {
+    this.validation = {
       lang: (inputValue: string): string | boolean =>
         !inputValue.match(/[^ a-zA-Z0-9@.]/g) ||
         'The email contains an invalid character',
       space: (inputValue: string): string | boolean =>
         inputValue.trim() === inputValue ||
-        'Email address must not contain leading or trailing whitespace',
+        'Field must not contain leading or trailing whitespace',
       insideSpace: (inputValue: string): string | boolean =>
         !inputValue.trim().match(/\s+/g) ||
-        'Email address must not contain inside whitespace',
+        'Field must not contain inside whitespace',
       at: (inputValue: string): string | boolean =>
         !!inputValue.match(/@/g) || 'Email address must contain an "@" symbol',
       domain: (inputValue: string): string | boolean =>
@@ -39,11 +38,92 @@ export class InputParameters {
       format: (inputValue: string): string | boolean =>
         !!inputValue.match(emailRegExp) ||
         'Email address must be properly formatted',
+      validCharacters: (inputValue: string): string | boolean =>
+        !inputValue.match(/[^a-zA-Z0-9!@#$%^&*+-=?<>(){}[\]\\/|.,;:\s@"']/g) ||
+        'Password contains an invalid character',
+      number: (inputValue: string): string | boolean =>
+        !!inputValue.match(/[0-9]/g) || 'At least one number',
+      uppercase: (inputValue: string): string | boolean =>
+        !!inputValue.match(/[A-Z]/g) || 'At least one uppercase letter',
+      lowercase: (inputValue: string): string | boolean =>
+        !!inputValue.match(/[a-z]/g) || 'At least one lowercase letter',
+      length: (inputValue: string): string | boolean =>
+        inputValue.length >= 8 || 'Minimum 8 characters',
+      invalidDate: (inputValue: string): string | boolean =>
+        checkDateValidity(inputValue),
+      invalidText: (inputValue: string): string | boolean =>
+        !inputValue.match(/^[a-zA-Z]+[a-zA-Z']?$/) ||
+        'Field contains an invalid character',
     };
+    this.inputParameters = null;
+  }
+  createParameters(
+    type: string,
+    name: string,
+    validation: Record<string, (inputValue: string) => string | boolean>,
+    validationKeys: string[],
+  ): void {
+    const validationParametersArr = validationKeys.map((el) => {
+      return [el, validation[el]];
+    });
+    const parameters: IRegistrationPageParam = {
+      type,
+      name,
+      options: {
+        validate: Object.fromEntries(validationParametersArr),
+        required: 'The field cannot be empty',
+      },
+    };
+    this.inputParameters = parameters;
+  }
+  getEmailInputParameters(): IRegistrationPageParam | null {
+    this.createParameters(
+      this.type.text,
+      this.nameField.email,
+      this.validation,
+      ['lang', 'space', 'insideSpace', 'at', 'domain', 'format'],
+    );
+    return this.inputParameters;
+  }
+  getEmailPasswordParameters(): IRegistrationPageParam | null {
+    this.createParameters(
+      this.type.password,
+      this.nameField.password,
+      this.validation,
+      [
+        'validCharacters',
+        'space',
+        'insideSpace',
+        'number',
+        'uppercase',
+        'lowercase',
+        'length',
+      ],
+    );
+    return this.inputParameters;
+  }
+  getTextInputParameters(): IRegistrationPageParam | null {
+    this.createParameters(
+      this.type.text,
+      this.nameField.text,
+      this.validation,
+      ['invalidDate'],
+    );
+    return this.inputParameters;
+  }
+  getDateInputParameters(): IRegistrationPageParam | null {
+    this.createParameters(
+      this.type.date,
+      this.nameField.birthDate,
+      this.validation,
+      ['invalidText'],
+    );
+    return this.inputParameters;
   }
 }
+
 // eslint-disable-next-line max-lines-per-function
-export function createEmailInput(
+/* export function createEmailInput(
   register: UseFormRegister<IRegistrationData>,
   errors: FieldErrors<IRegistrationData>,
 ): React.ReactElement {
@@ -196,3 +276,4 @@ export function createDateInput(
     </>
   );
 }
+*/

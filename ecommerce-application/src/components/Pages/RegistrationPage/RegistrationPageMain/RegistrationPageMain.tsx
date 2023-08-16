@@ -1,7 +1,7 @@
-import { SubmitHandler, useForm } from 'react-hook-form';
-import * as InputService from '../../../../services/inputService';
+/* import { SubmitHandler, useForm } from 'react-hook-form';
 import { IRegistrationData } from '../../../../types/types';
 import styles from './RegistrationPageMain.module.scss';
+import { ServiceInputParameters } from '../../../../services/inputService';
 
 // eslint-disable-next-line max-lines-per-function
 export function RegistrationPageMain(): React.ReactElement {
@@ -19,6 +19,7 @@ export function RegistrationPageMain(): React.ReactElement {
   ): void => {
     console.log('RESULT', data);
   };
+  const serviceInputParameters = new ServiceInputParameters();
 
   return (
     <main className={styles.main_block}>
@@ -47,4 +48,4 @@ export function RegistrationPageMain(): React.ReactElement {
       </div>
     </main>
   );
-}
+} */

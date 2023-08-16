@@ -17,6 +17,6 @@ export interface IRegistrationData extends ILoginData {
 
 export interface IRegistrationPageParam {
   type: string;
-  name: keyof IRegistrationData;
+  name: string;
   options: RegisterOptions<IRegistrationData, keyof IRegistrationData>;
 }
