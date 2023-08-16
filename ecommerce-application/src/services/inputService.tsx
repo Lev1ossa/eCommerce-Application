@@ -29,7 +29,7 @@ export function createEmailInput(
           'Email address must contain an "@" symbol',
         domain: (inputValue: string): string | boolean =>
           !!inputValue.match(/@(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})$/) ||
-          'Email address must contain an domain',
+          'Email address must contain a domain name',
       },
       required: 'Required field',
       pattern: {
@@ -67,10 +67,10 @@ export function createPasswordInput(
           !!inputValue.match(/[a-z]/g) || 'At least one lowercase letter',
         space: (inputValue: string): string | boolean =>
           inputValue.trim() === inputValue ||
-          'Email address must not contain leading or trailing whitespace',
+          'Password address must not contain leading or trailing whitespace',
         insideSpace: (inputValue: string): string | boolean =>
           !inputValue.trim().match(/\s+/g) ||
-          'Email address must not contain inside whitespace',
+          'Password address must not contain inside whitespace',
       },
       required: 'Required field',
       minLength: {
