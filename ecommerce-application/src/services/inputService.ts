@@ -1,19 +1,26 @@
 import { UseFormRegister, UseFormRegisterReturn } from 'react-hook-form';
 import { emailRegExp } from '../data/constants';
-import { IRegistrationData } from '../types/types';
+import {
+  IInputParams,
+  IRegistrationData,
+  IValidationRules,
+} from '../types/types';
 import { checkDateValidity } from '../utils/utils';
 
 export class ServiceInputParameters {
   validation: Record<string, (inputValue: string) => string | boolean>;
   type: Record<string, string>;
   nameField: Record<string, keyof IRegistrationData>;
+  register: UseFormRegister<IRegistrationData>;
   inputParameters: null | {
     type: string;
-    value: UseFormRegisterReturn<keyof IRegistrationData>;
+    input: UseFormRegisterReturn<keyof IRegistrationData>;
   };
+  validationRules: IValidationRules;
 
   // eslint-disable-next-line max-lines-per-function
-  constructor() {
+  constructor(register: UseFormRegister<IRegistrationData>) {
+    this.register = register;
     this.type = {
       text: 'text',
       password: 'password',
@@ -60,51 +67,10 @@ export class ServiceInputParameters {
         'Field contains an invalid character',
     };
     this.inputParameters = null;
-  }
-  createParameters(
-    type: string,
-    name: keyof IRegistrationData,
-    validation: Record<string, (inputValue: string) => string | boolean>,
-    validationKeys: string[],
-    register: UseFormRegister<IRegistrationData>,
-  ): void {
-    const validationParametersArr = validationKeys.map((el) => {
-      return [el, validation[el]];
-    });
-    const parameters = {
-      type,
-      value: register(name, {
-        validate: Object.fromEntries(validationParametersArr),
-        required: 'The field cannot be empty',
-      }),
-    };
-    this.inputParameters = parameters;
-  }
 
-  getEmailInputParameters(
-    register: UseFormRegister<IRegistrationData>,
-  ): null | {
-    type: string;
-    value: UseFormRegisterReturn<keyof IRegistrationData>;
-  } {
-    this.createParameters(
-      this.type.text,
-      this.nameField.email,
-      this.validation,
-      ['lang', 'space', 'insideSpace', 'at', 'domain', 'format'],
-      register,
-    );
-    return this.inputParameters;
-  }
-  getPasswordParameters(register: UseFormRegister<IRegistrationData>): null | {
-    type: string;
-    value: UseFormRegisterReturn<keyof IRegistrationData>;
-  } {
-    this.createParameters(
-      this.type.password,
-      this.nameField.password,
-      this.validation,
-      [
+    this.validationRules = {
+      email: ['lang', 'space', 'insideSpace', 'at', 'domain', 'format'],
+      password: [
         'validCharacters',
         'space',
         'insideSpace',
@@ -113,36 +79,104 @@ export class ServiceInputParameters {
         'lowercase',
         'length',
       ],
-      register,
-    );
-    return this.inputParameters;
+    };
   }
-  getTextInputParameters(register: UseFormRegister<IRegistrationData>): null | {
-    type: string;
-    value: UseFormRegisterReturn<keyof IRegistrationData>;
-  } {
-    this.createParameters(
+
+  // createInputParams(
+  //   inputName: keyof IRegistrationData,
+  //   // inputType: keyof IRegistrationData,
+  // ): IInputParams {
+  //   const validationParametersArr = this.validationRules[inputName].map(
+  //     (el) => [el, this.validation[el]],
+  //   );
+  //   console.log(validationParametersArr);
+
+  //   return {
+  //     type: this.nameField[inputName],
+  //     input: this.register(inputName, {
+  //       validate: Object.fromEntries(validationParametersArr),
+  //       required: 'The field cannot be empty',
+  //     }),
+  //   };
+  // }
+  createParameters(
+    type: string,
+    name: keyof IRegistrationData,
+    validation: Record<string, (inputValue: string) => string | boolean>,
+    validationKeys: string[],
+    register: UseFormRegister<IRegistrationData>,
+  ): IInputParams {
+    const validationParametersArr = validationKeys.map((el) => {
+      return [el, validation[el]];
+    });
+    const parameters = {
+      type,
+      input: register(name, {
+        validate: Object.fromEntries(validationParametersArr),
+        required: 'The field cannot be empty',
+      }),
+    };
+    this.inputParameters = parameters;
+    return parameters;
+  }
+
+  email(): IInputParams {
+    const params = this.createParameters(
       this.type.text,
-      this.nameField.text,
+      this.nameField.email,
       this.validation,
-      ['invalidDate'],
-      register,
+      ['lang', 'space', 'insideSpace', 'at', 'domain', 'format'],
+      this.register,
     );
-    return this.inputParameters;
+    return params;
   }
-  getDateInputParameters(register: UseFormRegister<IRegistrationData>): null | {
-    type: string;
-    value: UseFormRegisterReturn<keyof IRegistrationData>;
-  } {
-    this.createParameters(
-      this.type.date,
-      this.nameField.birthDate,
-      this.validation,
-      ['invalidText'],
-      register,
-    );
-    return this.inputParameters;
-  }
+  //   getPasswordParameters(register: UseFormRegister<IRegistrationData>): null | {
+  //     type: string;
+  //     input: UseFormRegisterReturn<keyof IRegistrationData>;
+  //   } {
+  //     this.createParameters(
+  //       this.type.password,
+  //       this.nameField.password,
+  //       this.validation,
+  //       [
+  //         'validCharacters',
+  //         'space',
+  //         'insideSpace',
+  //         'number',
+  //         'uppercase',
+  //         'lowercase',
+  //         'length',
+  //       ],
+  //       register,
+  //     );
+  //     return this.inputParameters;
+  //   }
+  //   getTextInputParameters(register: UseFormRegister<IRegistrationData>): null | {
+  //     type: string;
+  //     value: UseFormRegisterReturn<keyof IRegistrationData>;
+  //   } {
+  //     this.createParameters(
+  //       this.type.text,
+  //       this.nameField.text,
+  //       this.validation,
+  //       ['invalidDate'],
+  //       register,
+  //     );
+  //     return this.inputParameters;
+  //   }
+  //   getDateInputParameters(register: UseFormRegister<IRegistrationData>): null | {
+  //     type: string;
+  //     value: UseFormRegisterReturn<keyof IRegistrationData>;
+  //   } {
+  //     this.createParameters(
+  //       this.type.date,
+  //       this.nameField.birthDate,
+  //       this.validation,
+  //       ['invalidText'],
+  //       register,
+  //     );
+  //     return this.inputParameters;
+  //   }
 }
 
 // eslint-disable-next-line max-lines-per-function
