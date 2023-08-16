@@ -2,6 +2,7 @@
 import { IRegistrationData } from '../../../../types/types';
 import styles from './RegistrationPageMain.module.scss';
 import { ServiceInputParameters } from '../../../../services/inputService';
+import { FormInput } from '../../../UI/FormInput/FormInput';
 
 // eslint-disable-next-line max-lines-per-function
 export function RegistrationPageMain(): React.ReactElement {
@@ -26,6 +27,11 @@ export function RegistrationPageMain(): React.ReactElement {
       <div className={styles.wrapper}>
         <h2 className={styles.title}>Register</h2>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
+          <FormInput
+            input={serviceInputParameters.getEmailInputParameters(register)}
+            type={serviceInputParameters.getEmailInputParameters(register).type}
+          />
+          <Error errors={errors} name={email.name} />
           {InputService.createEmailInput(register, errors)}
           {InputService.createPasswordInput(register, errors)}
           {InputService.createTextInput(register, errors, 'userFirstName')}

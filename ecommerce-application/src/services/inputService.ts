@@ -1,12 +1,16 @@
+import { UseFormRegister, UseFormRegisterReturn } from 'react-hook-form';
 import { emailRegExp } from '../data/constants';
-import { IRegistrationPageParam } from '../types/types';
+import { IRegistrationData } from '../types/types';
 import { checkDateValidity } from '../utils/utils';
 
 export class ServiceInputParameters {
   validation: Record<string, (inputValue: string) => string | boolean>;
   type: Record<string, string>;
-  nameField: Record<string, string>;
-  inputParameters: null | IRegistrationPageParam;
+  nameField: Record<string, keyof IRegistrationData>;
+  inputParameters: null | {
+    type: string;
+    value: UseFormRegisterReturn<keyof IRegistrationData>;
+  };
 
   // eslint-disable-next-line max-lines-per-function
   constructor() {
@@ -59,33 +63,43 @@ export class ServiceInputParameters {
   }
   createParameters(
     type: string,
-    name: string,
+    name: keyof IRegistrationData,
     validation: Record<string, (inputValue: string) => string | boolean>,
     validationKeys: string[],
+    register: UseFormRegister<IRegistrationData>,
   ): void {
     const validationParametersArr = validationKeys.map((el) => {
       return [el, validation[el]];
     });
-    const parameters: IRegistrationPageParam = {
+    const parameters = {
       type,
-      name,
-      options: {
+      value: register(name, {
         validate: Object.fromEntries(validationParametersArr),
         required: 'The field cannot be empty',
-      },
+      }),
     };
     this.inputParameters = parameters;
   }
-  getEmailInputParameters(): IRegistrationPageParam | null {
+
+  getEmailInputParameters(
+    register: UseFormRegister<IRegistrationData>,
+  ): null | {
+    type: string;
+    value: UseFormRegisterReturn<keyof IRegistrationData>;
+  } {
     this.createParameters(
       this.type.text,
       this.nameField.email,
       this.validation,
       ['lang', 'space', 'insideSpace', 'at', 'domain', 'format'],
+      register,
     );
     return this.inputParameters;
   }
-  getEmailPasswordParameters(): IRegistrationPageParam | null {
+  getPasswordParameters(register: UseFormRegister<IRegistrationData>): null | {
+    type: string;
+    value: UseFormRegisterReturn<keyof IRegistrationData>;
+  } {
     this.createParameters(
       this.type.password,
       this.nameField.password,
@@ -99,24 +113,33 @@ export class ServiceInputParameters {
         'lowercase',
         'length',
       ],
+      register,
     );
     return this.inputParameters;
   }
-  getTextInputParameters(): IRegistrationPageParam | null {
+  getTextInputParameters(register: UseFormRegister<IRegistrationData>): null | {
+    type: string;
+    value: UseFormRegisterReturn<keyof IRegistrationData>;
+  } {
     this.createParameters(
       this.type.text,
       this.nameField.text,
       this.validation,
       ['invalidDate'],
+      register,
     );
     return this.inputParameters;
   }
-  getDateInputParameters(): IRegistrationPageParam | null {
+  getDateInputParameters(register: UseFormRegister<IRegistrationData>): null | {
+    type: string;
+    value: UseFormRegisterReturn<keyof IRegistrationData>;
+  } {
     this.createParameters(
       this.type.date,
       this.nameField.birthDate,
       this.validation,
       ['invalidText'],
+      register,
     );
     return this.inputParameters;
   }

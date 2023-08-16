@@ -6,17 +6,18 @@ export interface ILoginData {
 }
 
 export interface IRegistrationData extends ILoginData {
-  userFirstName: string;
+  name: string;
   userSecondName: string;
   birthDate: string;
   street: string;
   city: string;
   postalCode: string;
   country: string;
+  text: string;
 }
 
 export interface IRegistrationPageParam {
   type: string;
-  name: string;
+  name: keyof IRegistrationData;
   options: RegisterOptions<IRegistrationData, keyof IRegistrationData>;
 }
