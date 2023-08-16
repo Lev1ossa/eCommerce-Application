@@ -65,6 +65,12 @@ export function createPasswordInput(
           !!inputValue.match(/[A-Z]/g) || 'At least one uppercase letter',
         lowercase: (inputValue: string): string | boolean =>
           !!inputValue.match(/[a-z]/g) || 'At least one lowercase letter',
+        space: (inputValue: string): string | boolean =>
+          inputValue.trim() === inputValue ||
+          'Email address must not contain leading or trailing whitespace',
+        insideSpace: (inputValue: string): string | boolean =>
+          !inputValue.trim().match(/\s+/g) ||
+          'Email address must not contain inside whitespace',
       },
       required: 'Required field',
       minLength: {
