@@ -13,6 +13,7 @@ export class ServiceInputParameters {
   nameField: Record<string, string>;
   register: UseFormRegister<IRegistrationData>;
   validationRules: IValidationRules;
+  labels: Record<string, string>;
 
   // eslint-disable-next-line max-lines-per-function
   constructor(register: UseFormRegister<IRegistrationData>) {
@@ -80,6 +81,17 @@ export class ServiceInputParameters {
       postalCode: [],
       country: ['invalidText'],
     };
+    this.labels = {
+      email: 'Email:',
+      password: 'Password:',
+      userFirstName: 'First Name:',
+      userLastName: 'Last Name:',
+      birthDate: 'Date of Birth:',
+      street: 'Street:',
+      city: 'City:',
+      postalCode: 'Postal code:',
+      country: 'Country:',
+    };
   }
 
   createInputParams(inputName: keyof IRegistrationData): IInputParams {
@@ -87,6 +99,7 @@ export class ServiceInputParameters {
       (el: string) => [el, this.validation[el]],
     );
     return {
+      label: this.labels[inputName],
       type: this.type[inputName],
       input: this.register(inputName, {
         validate: Object.fromEntries(validationParametersArr),

@@ -22,9 +22,11 @@ export interface IRegistrationPageParam {
 }
 
 export interface IInputParams {
+  label: string;
   type: string;
   input: UseFormRegisterReturn;
 }
+
 export interface IValidationRules {
   email: string[];
   password: string[];

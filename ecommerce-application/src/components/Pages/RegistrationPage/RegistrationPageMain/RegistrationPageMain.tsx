@@ -31,46 +31,55 @@ export function RegistrationPageMain(): React.ReactElement {
           <FormInput
             input={inputService.createInputParams('email').input}
             type={inputService.createInputParams('email').type}
+            label={inputService.createInputParams('email').label}
           />
           <Error errors={errors} name="email" />
           <FormInput
             input={inputService.createInputParams('password').input}
             type={inputService.createInputParams('password').type}
+            label={inputService.createInputParams('password').label}
           />
           <Error errors={errors} name="password" />
           <FormInput
             input={inputService.createInputParams('userFirstName').input}
             type={inputService.createInputParams('userFirstName').type}
+            label={inputService.createInputParams('userFirstName').label}
           />
           <Error errors={errors} name="userFirstName" />
           <FormInput
             input={inputService.createInputParams('userLastName').input}
             type={inputService.createInputParams('userLastName').type}
+            label={inputService.createInputParams('userLastName').label}
           />
           <Error errors={errors} name="userLastName" />
           <FormInput
             input={inputService.createInputParams('birthDate').input}
             type={inputService.createInputParams('birthDate').type}
+            label={inputService.createInputParams('birthDate').label}
           />
           <Error errors={errors} name="birthDate" />
           <FormInput
             input={inputService.createInputParams('street').input}
             type={inputService.createInputParams('street').type}
+            label={inputService.createInputParams('street').label}
           />
           <Error errors={errors} name="street" />
           <FormInput
             input={inputService.createInputParams('city').input}
             type={inputService.createInputParams('city').type}
+            label={inputService.createInputParams('city').label}
           />
           <Error errors={errors} name="city" />
           <FormInput
             input={inputService.createInputParams('country').input}
             type={inputService.createInputParams('country').type}
+            label={inputService.createInputParams('country').label}
           />
           <Error errors={errors} name="country" />
           <FormInput
             input={inputService.createInputParams('postalCode').input}
             type={inputService.createInputParams('postalCode').type}
+            label={inputService.createInputParams('postalCode').label}
           />
           <Error errors={errors} name="postalCode" />
           <button className={styles.submit_button} type="submit">

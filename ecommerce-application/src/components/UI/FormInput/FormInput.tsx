@@ -2,15 +2,16 @@ import { UseFormRegisterReturn } from 'react-hook-form';
 import styles from './FormInput.module.scss';
 
 export function FormInput(props: {
+  label: string;
   input: UseFormRegisterReturn;
   type: string;
 }): React.ReactElement {
-  const { input, type } = props;
+  const { label, input, type } = props;
   const { onChange, onBlur, name, ref } = input;
   const id = `${name}Input`;
   return (
     <label htmlFor={id}>
-      {name}:
+      {label}
       <input
         className={styles.input}
         id={id}
