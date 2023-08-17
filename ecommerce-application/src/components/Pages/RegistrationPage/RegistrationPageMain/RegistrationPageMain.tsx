@@ -38,6 +38,41 @@ export function RegistrationPageMain(): React.ReactElement {
             type={inputService.createInputParams('password').type}
           />
           <Error errors={errors} name="password" />
+          <FormInput
+            input={inputService.createInputParams('userFirstName').input}
+            type={inputService.createInputParams('userFirstName').type}
+          />
+          <Error errors={errors} name="userFirstName" />
+          <FormInput
+            input={inputService.createInputParams('userLastName').input}
+            type={inputService.createInputParams('userLastName').type}
+          />
+          <Error errors={errors} name="userLastName" />
+          <FormInput
+            input={inputService.createInputParams('birthDate').input}
+            type={inputService.createInputParams('birthDate').type}
+          />
+          <Error errors={errors} name="birthDate" />
+          <FormInput
+            input={inputService.createInputParams('street').input}
+            type={inputService.createInputParams('street').type}
+          />
+          <Error errors={errors} name="street" />
+          <FormInput
+            input={inputService.createInputParams('city').input}
+            type={inputService.createInputParams('city').type}
+          />
+          <Error errors={errors} name="city" />
+          <FormInput
+            input={inputService.createInputParams('country').input}
+            type={inputService.createInputParams('country').type}
+          />
+          <Error errors={errors} name="country" />
+          <FormInput
+            input={inputService.createInputParams('postalCode').input}
+            type={inputService.createInputParams('postalCode').type}
+          />
+          <Error errors={errors} name="postalCode" />
           <button className={styles.submit_button} type="submit">
             Sign up
           </button>

@@ -73,7 +73,7 @@ export class ServiceInputParameters {
         'passwordLength',
       ],
       userFirstName: ['invalidText'],
-      userSecondName: ['invalidText'],
+      userLastName: ['invalidText'],
       birthDate: ['invalidDate'],
       street: ['invalidText'],
       city: ['invalidText'],

@@ -7,7 +7,7 @@ export interface ILoginData {
 
 export interface IRegistrationData extends ILoginData {
   userFirstName: string;
-  userSecondName: string;
+  userLastName: string;
   birthDate: string;
   street: string;
   city: string;
@@ -29,7 +29,7 @@ export interface IValidationRules {
   email: string[];
   password: string[];
   userFirstName: string[];
-  userSecondName: string[];
+  userLastName: string[];
   birthDate: string[];
   street: string[];
   city: string[];
