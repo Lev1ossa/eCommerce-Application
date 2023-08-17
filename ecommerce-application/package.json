@@ -48,6 +48,7 @@
     "husky": "^8.0.3",
     "jsdom": "^22.1.0",
     "lint-staged": "^13.2.3",
+    "postcode-validator": "^3.8.14",
     "prettier": "^3.0.1",
     "sass": "^1.65.1",
     "typescript": "^5.0.2",

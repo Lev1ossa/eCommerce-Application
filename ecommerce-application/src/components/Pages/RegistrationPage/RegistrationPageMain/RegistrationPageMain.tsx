@@ -1,16 +1,21 @@
+import { postcodeValidator } from 'postcode-validator';
+import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ServiceInputParameters } from '../../../../services/inputService';
 import { IRegistrationData } from '../../../../types/types';
+import { CountryInput } from '../../../UI/FormCounrtySelect/FormCountrySelect';
+import { FormDateInput } from '../../../UI/FormDateInput/FormDateInput';
 import { FormInput } from '../../../UI/FormInput/FormInput';
+import { FormPasswordInput } from '../../../UI/FormPasswordInput/FormPasswordInput';
 import { Error } from '../../../common/Error/Error';
 import styles from './RegistrationPageMain.module.scss';
-import { FormPasswordInput } from '../../../UI/FormPasswordInput/FormPasswordInput';
-import { FormDateInput } from '../../../UI/FormDateInput/FormDateInput';
 
 // eslint-disable-next-line max-lines-per-function
 export function RegistrationPageMain(): React.ReactElement {
+  const [country, setCountry] = useState('');
   const {
     register,
+    unregister,
     formState: { errors },
     handleSubmit,
   } = useForm<IRegistrationData>({
@@ -23,6 +28,26 @@ export function RegistrationPageMain(): React.ReactElement {
   ): void => {
     console.log('RESULT', data);
   };
+
+  const handleCountryChange = (
+    e: React.ChangeEvent<HTMLSelectElement>,
+  ): void => {
+    setCountry((e.target as HTMLSelectElement).value);
+  };
+
+  useEffect(() => {
+    console.log(country);
+    unregister('postalCode');
+    register('postalCode', {
+      // disabled: true,
+      validate: {
+        postalCode: (inputValue: string): string | boolean =>
+          postcodeValidator(inputValue, country) || 'erererererweqrqerqerror',
+      },
+      required: 'empty be cannot field',
+    });
+  }, [country, register, unregister]);
+
   const inputService = new ServiceInputParameters(register);
 
   return (
@@ -72,9 +97,16 @@ export function RegistrationPageMain(): React.ReactElement {
             label={inputService.createInputParams('city').label}
           />
           <Error errors={errors} name="city" />
-          <FormInput
+          {/* <FormInput
             input={inputService.createInputParams('country').input}
             type={inputService.createInputParams('country').type}
+            label={inputService.createInputParams('country').label}
+          />
+          <Error errors={errors} name="country" /> */}
+          <CountryInput
+            value={country}
+            onSelect={handleCountryChange}
+            input={inputService.createInputParams('country').input}
             label={inputService.createInputParams('country').label}
           />
           <Error errors={errors} name="country" />
