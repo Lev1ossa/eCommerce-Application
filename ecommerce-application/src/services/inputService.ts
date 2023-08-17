@@ -59,7 +59,7 @@ export class ServiceInputParameters {
       invalidDate: (inputValue: string): string | boolean =>
         checkDateValidity(inputValue),
       invalidText: (inputValue: string): string | boolean =>
-        !inputValue.match(/^[a-zA-Z]+[a-zA-Z']?$/) ||
+        !!inputValue.match(/^[a-zA-Z]+[a-zA-Z']?$/) ||
         'Field contains an invalid character',
     };
     this.validationRules = {
