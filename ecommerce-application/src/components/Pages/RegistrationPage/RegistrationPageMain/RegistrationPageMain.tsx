@@ -5,6 +5,7 @@ import { FormInput } from '../../../UI/FormInput/FormInput';
 import { Error } from '../../../common/Error/Error';
 import styles from './RegistrationPageMain.module.scss';
 import { FormPasswordInput } from '../../../UI/FormPasswordInput/FormPasswordInput';
+import { FormDateInput } from '../../../UI/FormDateInput/FormDateInput';
 
 // eslint-disable-next-line max-lines-per-function
 export function RegistrationPageMain(): React.ReactElement {
@@ -53,7 +54,7 @@ export function RegistrationPageMain(): React.ReactElement {
             label={inputService.createInputParams('userLastName').label}
           />
           <Error errors={errors} name="userLastName" />
-          <FormInput
+          <FormDateInput
             input={inputService.createInputParams('birthDate').input}
             type={inputService.createInputParams('birthDate').type}
             label={inputService.createInputParams('birthDate').label}

@@ -1,0 +1,10 @@
+.input[type="date"]:not(.has-value):before {
+    content: attr(placeholder);
+    width: 100%;
+    font: 14px "Gilroy-Extrabold", sans-serif;
+  }
+.input[type="date"]:not(:valid):before {
+    content: attr(placeholder);
+    width: 100%;
+    font: 14px "Gilroy-Extrabold", sans-serif;
+  }
