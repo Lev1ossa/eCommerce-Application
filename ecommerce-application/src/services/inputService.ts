@@ -10,7 +10,6 @@ import { checkDateValidity } from '../utils/utils';
 export class ServiceInputParameters {
   validation: Record<string, (inputValue: string) => string | boolean>;
   type: Record<string, string>;
-  nameField: Record<string, string>;
   register: UseFormRegister<IRegistrationData>;
   validationRules: IValidationRules;
   labels: Record<string, string>;
@@ -19,14 +18,15 @@ export class ServiceInputParameters {
   constructor(register: UseFormRegister<IRegistrationData>) {
     this.register = register;
     this.type = {
-      password: 'password',
-      date: 'date',
       email: 'text',
-    };
-    this.nameField = {
-      email: 'email',
-      password: 'password',
-      text: 'text',
+      password: 'password:',
+      userFirstName: 'text',
+      userLastName: 'text',
+      birthDate: 'date',
+      street: 'text',
+      city: 'text',
+      postalCode: 'text',
+      country: 'text',
     };
     this.validation = {
       lang: (inputValue: string): string | boolean =>
