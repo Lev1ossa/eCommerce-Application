@@ -98,7 +98,6 @@ export class ServiceInputParameters {
     const validationParametersArr = this.validationRules[inputName].map(
       (el: string) => [el, this.validation[el]],
     );
-    console.log(Object.fromEntries(validationParametersArr));
     return {
       label: this.labels[inputName],
       type: this.type[inputName],

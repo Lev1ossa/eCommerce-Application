@@ -7,7 +7,7 @@ export function FormDateInput(props: {
   type: string;
 }): React.ReactElement {
   const { label, input, type } = props;
-  const { onBlur, name, ref } = input;
+  const { onChange, onBlur, name, ref } = input;
   const id = `${name}Input`;
   return (
     <label htmlFor={id}>
@@ -17,7 +17,7 @@ export function FormDateInput(props: {
         className="input"
         id={id}
         type={type}
-        onChange={(event): void => {
+        onFocus={(event): void => {
           const ev = event;
           if (ev.target.value !== '') {
             ev.target.className = 'has-value';
@@ -25,6 +25,7 @@ export function FormDateInput(props: {
             ev.target.className = 'input';
           }
         }}
+        onChange={onChange}
         onBlur={onBlur}
         name={name}
         ref={ref}

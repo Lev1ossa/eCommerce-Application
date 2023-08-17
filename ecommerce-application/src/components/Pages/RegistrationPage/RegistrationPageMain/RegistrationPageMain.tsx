@@ -12,11 +12,10 @@ import styles from './RegistrationPageMain.module.scss';
 
 // eslint-disable-next-line max-lines-per-function
 export function RegistrationPageMain(): React.ReactElement {
-  const [country, setCountry] = useState('');
+  const [country, setCountry] = useState('AX');
   const {
     register,
     unregister,
-    watch,
     formState: { errors },
     handleSubmit,
   } = useForm<IRegistrationData>({
@@ -27,16 +26,12 @@ export function RegistrationPageMain(): React.ReactElement {
   ): void => {
     console.log('RESULT', data);
   };
-
   const handleCountryChange = (
     e: React.ChangeEvent<HTMLSelectElement>,
   ): void => {
     setCountry((e.target as HTMLSelectElement).value);
     unregister('postalCode');
   };
-
-  const countryWatch = watch('country');
-
   const inputService = new ServiceInputParameters(register);
 
   return (
@@ -93,7 +88,7 @@ export function RegistrationPageMain(): React.ReactElement {
             label={inputService.createInputParams('country').label}
           />
           <Error errors={errors} name="country" />
-          {countryWatch && (
+          {country && (
             <FormInput
               input={register('postalCode', {
                 validate: {
@@ -107,11 +102,6 @@ export function RegistrationPageMain(): React.ReactElement {
               label="PostalCode"
             />
           )}
-          {/* <FormInput
-            input={inputService.createInputParams('postalCode').input}
-            type={inputService.createInputParams('postalCode').type}
-            label={inputService.createInputParams('postalCode').label}
-          /> */}
           <Error errors={errors} name="postalCode" />
           <button className={styles.submit_button} type="submit">
             Sign up
