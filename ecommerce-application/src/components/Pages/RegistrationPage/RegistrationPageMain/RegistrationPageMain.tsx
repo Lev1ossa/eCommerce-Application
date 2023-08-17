@@ -1,5 +1,5 @@
 import { postcodeValidator } from 'postcode-validator';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ServiceInputParameters } from '../../../../services/inputService';
 import { IRegistrationData } from '../../../../types/types';
@@ -16,12 +16,11 @@ export function RegistrationPageMain(): React.ReactElement {
   const {
     register,
     unregister,
+    watch,
     formState: { errors },
     handleSubmit,
   } = useForm<IRegistrationData>({
     mode: 'onChange',
-    // criteriaMode: 'firstError',
-    // criteriaMode: 'all',
   });
   const onSubmit: SubmitHandler<IRegistrationData> = (
     data: IRegistrationData,
@@ -33,20 +32,10 @@ export function RegistrationPageMain(): React.ReactElement {
     e: React.ChangeEvent<HTMLSelectElement>,
   ): void => {
     setCountry((e.target as HTMLSelectElement).value);
+    unregister('postalCode');
   };
 
-  useEffect(() => {
-    console.log(country);
-    unregister('postalCode');
-    register('postalCode', {
-      // disabled: true,
-      validate: {
-        postalCode: (inputValue: string): string | boolean =>
-          postcodeValidator(inputValue, country) || 'erererererweqrqerqerror',
-      },
-      required: 'empty be cannot field',
-    });
-  }, [country, register, unregister]);
+  const countryWatch = watch('country');
 
   const inputService = new ServiceInputParameters(register);
 
@@ -97,12 +86,6 @@ export function RegistrationPageMain(): React.ReactElement {
             label={inputService.createInputParams('city').label}
           />
           <Error errors={errors} name="city" />
-          {/* <FormInput
-            input={inputService.createInputParams('country').input}
-            type={inputService.createInputParams('country').type}
-            label={inputService.createInputParams('country').label}
-          />
-          <Error errors={errors} name="country" /> */}
           <CountryInput
             value={country}
             onSelect={handleCountryChange}
@@ -110,11 +93,25 @@ export function RegistrationPageMain(): React.ReactElement {
             label={inputService.createInputParams('country').label}
           />
           <Error errors={errors} name="country" />
-          <FormInput
+          {countryWatch && (
+            <FormInput
+              input={register('postalCode', {
+                validate: {
+                  postalCode: (inputValue: string): string | boolean =>
+                    postcodeValidator(inputValue, country) ||
+                    'incorrect postal code',
+                },
+                required: 'empty be cannot field',
+              })}
+              type="text"
+              label="PostalCode"
+            />
+          )}
+          {/* <FormInput
             input={inputService.createInputParams('postalCode').input}
             type={inputService.createInputParams('postalCode').type}
             label={inputService.createInputParams('postalCode').label}
-          />
+          /> */}
           <Error errors={errors} name="postalCode" />
           <button className={styles.submit_button} type="submit">
             Sign up

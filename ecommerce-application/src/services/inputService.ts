@@ -1,4 +1,3 @@
-import { postcodeValidator } from 'postcode-validator';
 import { UseFormRegister } from 'react-hook-form';
 import { emailRegExp } from '../data/constants';
 import {
@@ -62,8 +61,6 @@ export class ServiceInputParameters {
       invalidText: (inputValue: string): string | boolean =>
         !!inputValue.match(/^[a-zA-Z]+[a-zA-Z']?$/) ||
         'Field contains an invalid character',
-      postalCode: (inputValue: string): string | boolean =>
-        postcodeValidator(inputValue, 'BY') || 'incorrect postal code',
     };
     this.validationRules = {
       email: ['lang', 'space', 'insideSpace', 'at', 'domain', 'format'],
@@ -81,7 +78,7 @@ export class ServiceInputParameters {
       birthDate: ['invalidDate'],
       street: ['invalidText'],
       city: ['invalidText'],
-      postalCode: ['postalCode'],
+      postalCode: [],
       country: [],
     };
     this.labels = {
