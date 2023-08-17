@@ -33,9 +33,11 @@ export function RegistrationPageMain(): React.ReactElement {
             type={inputService.createInputParams('email').type}
           />
           <Error errors={errors} name="email" />
-          {/* <FormInput inputParams={inputService.createInputParams('password')} /> */}
+          <FormInput
+            input={inputService.createInputParams('password').input}
+            type={inputService.createInputParams('password').type}
+          />
           <Error errors={errors} name="password" />
-
           <button className={styles.submit_button} type="submit">
             Sign up
           </button>

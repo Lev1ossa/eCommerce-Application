@@ -6,14 +6,13 @@ export interface ILoginData {
 }
 
 export interface IRegistrationData extends ILoginData {
-  name: string;
+  userFirstName: string;
   userSecondName: string;
   birthDate: string;
   street: string;
   city: string;
   postalCode: string;
   country: string;
-  text: string;
 }
 
 export interface IRegistrationPageParam {
@@ -29,12 +28,11 @@ export interface IInputParams {
 export interface IValidationRules {
   email: string[];
   password: string[];
-  name: string[];
+  userFirstName: string[];
   userSecondName: string[];
   birthDate: string[];
   street: string[];
   city: string[];
   postalCode: string[];
   country: string[];
-  text: string[];
 }
