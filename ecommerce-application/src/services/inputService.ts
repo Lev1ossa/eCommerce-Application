@@ -1,5 +1,11 @@
 import { UseFormRegister } from 'react-hook-form';
-import { emailRegExp } from '../data/constants';
+import {
+  domainRegExp,
+  emailRegExp,
+  langRegExp,
+  passwordRegExp,
+  textRegExp,
+} from '../data/constants';
 import {
   IInputParams,
   IRegistrationData,
@@ -30,8 +36,7 @@ export class ServiceInputParameters {
     };
     this.validation = {
       lang: (inputValue: string): string | boolean =>
-        !inputValue.match(/[^ a-zA-Z0-9@.]/g) ||
-        'Field contains an invalid character',
+        !inputValue.match(langRegExp) || 'Field contains an invalid character',
       space: (inputValue: string): string | boolean =>
         inputValue.trim() === inputValue ||
         'Field must not contain leading or trailing whitespace',
@@ -41,14 +46,12 @@ export class ServiceInputParameters {
       at: (inputValue: string): string | boolean =>
         !!inputValue.match(/@/g) || 'Field must contain an "@" symbol',
       domain: (inputValue: string): string | boolean =>
-        !!inputValue.match(/@(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})$/) ||
-        'Field must contain a domain name',
+        !!inputValue.match(domainRegExp) || 'Field must contain a domain name',
       format: (inputValue: string): string | boolean =>
         !!inputValue.match(emailRegExp) || 'Field must be properly formatted',
       validCharacters: (inputValue: string): string | boolean =>
-        !inputValue.match(
-          /[^a-zA-Z0-9!@#№$%^&*~`+-=_?<>(){}[\]\\/|.,;:\s@"']/g,
-        ) || 'Field contains an invalid character',
+        !inputValue.match(passwordRegExp) ||
+        'Field contains an invalid character',
       number: (inputValue: string): string | boolean =>
         !!inputValue.match(/[0-9]/g) || 'At least one number',
       uppercase: (inputValue: string): string | boolean =>
@@ -60,8 +63,7 @@ export class ServiceInputParameters {
       invalidDate: (inputValue: string): string | boolean =>
         checkDateValidity(inputValue),
       invalidText: (inputValue: string): string | boolean =>
-        !!inputValue.match(/^[a-zA-Z]+[a-zA-Z']?$/) ||
-        'Field contains an invalid character',
+        !!inputValue.match(textRegExp) || 'Field contains an invalid character',
     };
     this.validationRules = {
       email: ['lang', 'space', 'insideSpace', 'at', 'domain', 'format'],
