@@ -15,7 +15,6 @@ export function RegistrationPageMain(): React.ReactElement {
   const [country, setCountry] = useState('AX');
   const {
     register,
-    unregister,
     formState: { errors },
     handleSubmit,
   } = useForm<IRegistrationData>({
@@ -30,10 +29,8 @@ export function RegistrationPageMain(): React.ReactElement {
     e: React.ChangeEvent<HTMLSelectElement>,
   ): void => {
     setCountry((e.target as HTMLSelectElement).value);
-    unregister('postalCode');
   };
   const inputService = new ServiceInputParameters(register);
-
   return (
     <main className={styles.main_block}>
       <div className={styles.wrapper}>
