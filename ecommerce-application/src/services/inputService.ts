@@ -39,7 +39,7 @@ export class ServiceInputParameters {
         !inputValue.trim().match(/\s+/g) ||
         'Field must not contain inside whitespace',
       at: (inputValue: string): string | boolean =>
-        !!inputValue.match(/@/g) || 'Field address must contain an "@" symbol',
+        !!inputValue.match(/@/g) || 'Field must contain an "@" symbol',
       domain: (inputValue: string): string | boolean =>
         !!inputValue.match(/@(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})$/) ||
         'Field must contain a domain name',
