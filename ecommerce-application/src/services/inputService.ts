@@ -46,8 +46,9 @@ export class ServiceInputParameters {
       format: (inputValue: string): string | boolean =>
         !!inputValue.match(emailRegExp) || 'Field must be properly formatted',
       validCharacters: (inputValue: string): string | boolean =>
-        !inputValue.match(/[^a-zA-Z0-9!@#$%^&*+-=?<>(){}[\]\\/|.,;:\s@"']/g) ||
-        'Field contains an invalid character',
+        !inputValue.match(
+          /[^a-zA-Z0-9!@#№$%^&*~`+-=_?<>(){}[\]\\/|.,;:\s@"']/g,
+        ) || 'Field contains an invalid character',
       number: (inputValue: string): string | boolean =>
         !!inputValue.match(/[0-9]/g) || 'At least one number',
       uppercase: (inputValue: string): string | boolean =>
