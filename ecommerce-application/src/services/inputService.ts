@@ -30,10 +30,14 @@ export class ServiceInputParameters {
       userFirstName: 'text',
       userLastName: 'text',
       birthDate: 'date',
-      street: 'text',
-      city: 'text',
-      postalCode: 'text',
-      country: 'text',
+      shippingStreet: 'text',
+      shippingCity: 'text',
+      shippingPostalCode: 'text',
+      shippingCountry: 'text',
+      billingStreet: 'text',
+      billingCity: 'text',
+      billingPostalCode: 'text',
+      billingCountry: 'text',
     };
     this.validation = {
       lang: (inputValue: string): string | boolean =>
@@ -83,10 +87,14 @@ export class ServiceInputParameters {
       userFirstName: ['invalidText'],
       userLastName: ['invalidText'],
       birthDate: ['invalidDate'],
-      street: ['street'],
-      city: ['invalidText'],
-      postalCode: [],
-      country: [],
+      shippingStreet: ['street'],
+      shippingCity: ['invalidText'],
+      shippingPostalCode: [],
+      shippingCountry: [],
+      billingStreet: ['street'],
+      billingCity: ['invalidText'],
+      billingPostalCode: [],
+      billingCountry: [],
     };
     this.labels = {
       email: 'Email:',
@@ -94,10 +102,14 @@ export class ServiceInputParameters {
       userFirstName: 'First Name:',
       userLastName: 'Last Name:',
       birthDate: 'Date of Birth:',
-      street: 'Street:',
-      city: 'City:',
-      postalCode: 'Postal code:',
-      country: 'Country:',
+      shippingStreet: 'Street:',
+      shippingCity: 'City:',
+      shippingPostalCode: 'Postal code:',
+      shippingCountry: 'Country:',
+      billingStreet: 'Street:',
+      billingCity: 'City:',
+      billingPostalCode: 'Postal code:',
+      billingCountry: 'Country:',
     };
   }
 
