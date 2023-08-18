@@ -17,18 +17,21 @@ export function FormDateInput(props: {
         className="input"
         id={id}
         type={type}
-        onFocus={(event): void => {
+        onChange={(event): void => {
           const ev = event;
           if (ev.target.value !== '') {
             ev.target.className = 'has-value';
           } else {
             ev.target.className = 'input';
           }
+          onChange(event);
         }}
-        onChange={onChange}
         onBlur={onBlur}
         name={name}
         ref={ref}
+        onKeyDown={(event): void => {
+          event.preventDefault();
+        }}
       />
     </label>
   );
