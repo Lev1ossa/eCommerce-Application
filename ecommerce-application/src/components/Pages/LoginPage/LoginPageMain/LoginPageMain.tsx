@@ -4,8 +4,9 @@ import { ILoginData, IRegistrationData } from '../../../../types/types';
 import { FormInput } from '../../../UI/FormInput/FormInput';
 import { FormPasswordInput } from '../../../UI/FormPasswordInput/FormPasswordInput';
 import { Error } from '../../../common/Error/Error';
-import styles from './LoginPageMain.module.css';
+import styles from './LoginPageMain.module.scss';
 
+// eslint-disable-next-line max-lines-per-function
 export function LoginPageMain(): React.ReactElement {
   const {
     register,
@@ -18,10 +19,14 @@ export function LoginPageMain(): React.ReactElement {
   const inputService = new ServiceInputParameters(register);
 
   return (
-    <main className={styles.loginPage__main}>
+    <main className={styles.main}>
       <div className={styles.container}>
-        <h2>Login</h2>
-        <form onSubmit={handleSubmit(onSubmit)} noValidate>
+        <h2 className={styles.title}>Login</h2>
+        <form
+          className={styles.form}
+          onSubmit={handleSubmit(onSubmit)}
+          noValidate
+        >
           <FormInput
             input={inputService.createInputParams('email').input}
             type={inputService.createInputParams('email').type}
@@ -34,10 +39,14 @@ export function LoginPageMain(): React.ReactElement {
             label={inputService.createInputParams('password').label}
           />
           <Error errors={errors} name="password" />
-          <button type="submit">Log in</button>
+          <button className={styles.login_btn} type="submit">
+            Log in
+          </button>
         </form>
         <p>Don&apos;t have an account yet?</p>
-        <button type="button">Sign up now</button>
+        <button className={styles.signup_btn} type="button">
+          Sign up now
+        </button>
       </div>
     </main>
   );
