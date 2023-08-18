@@ -4,6 +4,7 @@ import {
   emailRegExp,
   langRegExp,
   passwordRegExp,
+  streetRegExp,
   textRegExp,
 } from '../data/constants';
 import {
@@ -64,6 +65,9 @@ export class ServiceInputParameters {
         checkDateValidity(inputValue),
       invalidText: (inputValue: string): string | boolean =>
         !!inputValue.match(textRegExp) || 'Field contains an invalid character',
+      street: (inputValue: string): string | boolean =>
+        !inputValue.match(streetRegExp) ||
+        'Field contains an invalid character',
     };
     this.validationRules = {
       email: ['lang', 'space', 'insideSpace', 'at', 'domain', 'format'],
@@ -79,7 +83,7 @@ export class ServiceInputParameters {
       userFirstName: ['invalidText'],
       userLastName: ['invalidText'],
       birthDate: ['invalidDate'],
-      street: ['invalidText'],
+      street: ['street'],
       city: ['invalidText'],
       postalCode: [],
       country: [],

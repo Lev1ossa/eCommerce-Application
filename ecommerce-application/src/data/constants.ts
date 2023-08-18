@@ -12,6 +12,8 @@ export const textRegExp = /^[a-zA-Z]+[a-zA-Z']?$/;
 
 export const langRegExp = /[^ a-zA-Z0-9@.]/g;
 
+export const streetRegExp = /[^ a-zA-Z0-9.-]/g;
+
 export const countriesData = [
   { code: 'AX', name: 'AALAND ISLANDS' },
   { code: 'DZ', name: 'ALGERIA' },
