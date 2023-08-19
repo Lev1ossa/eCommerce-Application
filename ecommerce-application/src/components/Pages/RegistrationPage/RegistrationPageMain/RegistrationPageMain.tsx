@@ -78,13 +78,10 @@ export function RegistrationPageMain(): React.ReactElement {
         ...billingAddress,
         [name.replace('shipping', 'billing')]: value,
       });
-      if (name === 'shippingStreet') {
-        setValue('billingStreet', value);
-      } else if (name === 'shippingCity') {
-        setValue('billingCity', value);
-      } else if (name === 'shippingPostalCode') {
-        setValue('billingPostalCode', value);
-      }
+      setValue(
+        `${name.replace('shipping', 'billing')}` as keyof IRegistrationData,
+        value,
+      );
     }
   };
   const handleShippingCountryChanging = (
