@@ -3,9 +3,10 @@ export function FormBillingAddressInput(props: {
   type: string;
   id: string;
   value: string;
+  isMatching: boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }): React.ReactElement {
-  const { label, type, id, value, onChange } = props;
+  const { label, type, id, value, isMatching, onChange } = props;
   return (
     <label htmlFor={id}>
       {label}
@@ -14,6 +15,7 @@ export function FormBillingAddressInput(props: {
         value={value}
         type={type}
         onChange={onChange}
+        disabled={isMatching}
       />
     </label>
   );

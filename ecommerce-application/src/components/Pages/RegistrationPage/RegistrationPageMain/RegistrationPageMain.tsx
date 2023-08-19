@@ -3,26 +3,20 @@ import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ServiceInputParameters } from '../../../../services/inputService';
 import { IRegistrationData } from '../../../../types/types';
+import { FormBillingAddressInput } from '../../../UI/FormBillingAddressInput/FormBillingAddressInput';
 import { CountryInput } from '../../../UI/FormCounrtySelect/FormCountrySelect';
 import { FormDateInput } from '../../../UI/FormDateInput/FormDateInput';
 import { FormInput } from '../../../UI/FormInput/FormInput';
 import { FormPasswordInput } from '../../../UI/FormPasswordInput/FormPasswordInput';
+import { FormShippingStreetInput } from '../../../UI/FormShippingAddressInput/FormShippingAddressInput';
 import { Error } from '../../../common/Error/Error';
 import styles from './RegistrationPageMain.module.scss';
-import { FormShippingStreetInput } from '../../../UI/FormShippingAddressInput/FormShippingAddressInput';
-import { FormBillingAddressInput } from '../../../UI/FormBillingAddressInput/FormBillingAddressInput';
 
 // eslint-disable-next-line max-lines-per-function
 export function RegistrationPageMain(): React.ReactElement {
   const [country, setCountry] = useState('AX');
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-  } = useForm<IRegistrationData>({
-    mode: 'onChange',
-  });
-  const [shippinAddress, setShippingAddress] = useState({
+  const [matchingAddress, setMatchingAddress] = useState(false);
+  const [shippingAddress, setShippingAddress] = useState({
     shippingStreet: '',
     shippingCity: '',
     shippinCountry: '',
@@ -34,26 +28,53 @@ export function RegistrationPageMain(): React.ReactElement {
     billingCountry: '',
     billingPostalCode: '',
   });
-  const handleBillingStreetField = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ): void => {
-    (e.target as HTMLInputElement).value = billingAddress.billingStreet;
-    setBillingAddress(billingAddress);
-  };
-  const [matchingAddress, setMatchingAddress] = useState(false);
-  const handleShippingStreetField = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ): void => {
-    shippinAddress.shippingStreet = (e.target as HTMLInputElement).value;
-    setShippingAddress(shippinAddress);
-    billingAddress.billingStreet = shippinAddress.shippingStreet;
-  };
+
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<IRegistrationData>({
+    mode: 'onChange',
+  });
 
   const handleMatchingCheckbox = (): void => {
     setMatchingAddress(!matchingAddress);
+    setBillingAddress({
+      ...billingAddress,
+      billingStreet: shippingAddress.shippingStreet,
+    });
+  };
+
+  const handleBillingStreetChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ): void => {
+    console.log((e.target as HTMLInputElement).value);
+    setBillingAddress({
+      ...billingAddress,
+      billingStreet: (e.target as HTMLInputElement).value,
+    });
+  };
+
+  const handleShippingStreetChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ): void => {
+    const street = (e.target as HTMLInputElement).value;
+    setShippingAddress({
+      ...shippingAddress,
+      shippingStreet: street,
+    });
     if (matchingAddress) {
-      billingAddress.billingStreet = shippinAddress.shippingStreet;
+      setBillingAddress({
+        ...billingAddress,
+        billingStreet: street,
+      });
     }
+  };
+
+  const handleCountryChange = (
+    e: React.ChangeEvent<HTMLSelectElement>,
+  ): void => {
+    setCountry((e.target as HTMLSelectElement).value);
   };
 
   const onSubmit: SubmitHandler<IRegistrationData> = (
@@ -61,12 +82,9 @@ export function RegistrationPageMain(): React.ReactElement {
   ): void => {
     console.log('RESULT', data);
   };
-  const handleCountryChange = (
-    e: React.ChangeEvent<HTMLSelectElement>,
-  ): void => {
-    setCountry((e.target as HTMLSelectElement).value);
-  };
+
   const inputService = new ServiceInputParameters(register);
+
   return (
     <main className={styles.main_block}>
       <div className={styles.wrapper}>
@@ -116,7 +134,7 @@ export function RegistrationPageMain(): React.ReactElement {
                 input={inputService.createInputParams('shippingStreet').input}
                 type={inputService.createInputParams('shippingStreet').type}
                 label={inputService.createInputParams('shippingStreet').label}
-                handleShippingStreetField={handleShippingStreetField}
+                onInput={handleShippingStreetChange}
               />
               <Error errors={errors} name="shippingStreet" />
               <FormInput
@@ -165,7 +183,8 @@ export function RegistrationPageMain(): React.ReactElement {
                   label={inputService.createInputParams('billingStreet').label}
                   id="id1"
                   value={billingAddress.billingStreet}
-                  onChange={handleBillingStreetField}
+                  isMatching={matchingAddress}
+                  onChange={handleBillingStreetChange}
                 />
               ) : (
                 <FormInput
