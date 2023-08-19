@@ -185,9 +185,9 @@ export function RegistrationPageMain(): React.ReactElement {
                     validate: {
                       postalCode: (inputValue: string): string | boolean =>
                         postcodeValidator(inputValue, shippingCountry) ||
-                        'incorrect postal code',
+                        'Incorrect postal code',
                     },
-                    required: 'empty be cannot field',
+                    required: 'Field cannot be empty',
                   })}
                   type={
                     inputService.createInputParams('shippingPostalCode').type
@@ -253,7 +253,7 @@ export function RegistrationPageMain(): React.ReactElement {
                     validate: {
                       postalCode: (inputValue: string): string | boolean =>
                         postcodeValidator(inputValue, billingCountry) ||
-                        'incorrect postal code',
+                        'Incorrect postal code',
                     },
                   })}
                   value={billingAddress.billingPostalCode}
