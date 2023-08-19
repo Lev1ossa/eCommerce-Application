@@ -53,7 +53,7 @@ export function RegistrationPageMain(): React.ReactElement {
     setValue('billingCountry', shippingCountry);
   };
 
-  const handleBillingAddressChanging = (
+  const handleBillingAddressChange = (
     e: React.ChangeEvent<HTMLInputElement>,
   ): void => {
     const { value } = e.target as HTMLInputElement;
@@ -64,7 +64,7 @@ export function RegistrationPageMain(): React.ReactElement {
     });
   };
 
-  const handleShippingAddressChanging = (
+  const handleShippingAddressChange = (
     e: React.ChangeEvent<HTMLInputElement>,
   ): void => {
     const { value } = e.target as HTMLInputElement;
@@ -74,17 +74,19 @@ export function RegistrationPageMain(): React.ReactElement {
       [name]: value,
     });
     if (matchingAddress) {
+      const inputName = name.replace(
+        'shipping',
+        'billing',
+      ) as keyof IRegistrationData;
       setBillingAddress({
         ...billingAddress,
-        [name.replace('shipping', 'billing')]: value,
+        [inputName]: value,
       });
-      setValue(
-        `${name.replace('shipping', 'billing')}` as keyof IRegistrationData,
-        value,
-      );
+      setValue(inputName, value);
     }
   };
-  const handleShippingCountryChanging = (
+
+  const handleShippingCountryChange = (
     e: React.ChangeEvent<HTMLSelectElement>,
   ): void => {
     const { value } = e.target as HTMLSelectElement;
@@ -95,7 +97,7 @@ export function RegistrationPageMain(): React.ReactElement {
     }
   };
 
-  const handleBillingCountryChanging = (
+  const handleBillingCountryChange = (
     e: React.ChangeEvent<HTMLSelectElement>,
   ): void => {
     setBillingCountry((e.target as HTMLSelectElement).value);
@@ -158,19 +160,19 @@ export function RegistrationPageMain(): React.ReactElement {
                 input={inputService.createInputParams('shippingStreet').input}
                 type={inputService.createInputParams('shippingStreet').type}
                 label={inputService.createInputParams('shippingStreet').label}
-                onInput={handleShippingAddressChanging}
+                onInput={handleShippingAddressChange}
               />
               <Error errors={errors} name="shippingStreet" />
               <FormShippingAddressInput
                 input={inputService.createInputParams('shippingCity').input}
                 type={inputService.createInputParams('shippingCity').type}
                 label={inputService.createInputParams('shippingCity').label}
-                onInput={handleShippingAddressChanging}
+                onInput={handleShippingAddressChange}
               />
               <Error errors={errors} name="shippingCity" />
               <CountryInput
                 value={shippingCountry}
-                onSelect={handleShippingCountryChanging}
+                onSelect={handleShippingCountryChange}
                 input={inputService.createInputParams('shippingCountry').input}
                 label={inputService.createInputParams('shippingCountry').label}
                 isMatching={false}
@@ -192,7 +194,7 @@ export function RegistrationPageMain(): React.ReactElement {
                   label={
                     inputService.createInputParams('shippingPostalCode').label
                   }
-                  onInput={handleShippingAddressChanging}
+                  onInput={handleShippingAddressChange}
                 />
               )}
               <Error errors={errors} name="shippingPostalCode" />
@@ -214,7 +216,7 @@ export function RegistrationPageMain(): React.ReactElement {
                 input={inputService.createInputParams('billingStreet').input}
                 value={billingAddress.billingStreet}
                 isMatching={matchingAddress}
-                onInput={handleBillingAddressChanging}
+                onInput={handleBillingAddressChange}
               />
               {!matchingAddress && (
                 <Error errors={errors} name="billingStreet" />
@@ -225,12 +227,12 @@ export function RegistrationPageMain(): React.ReactElement {
                 input={inputService.createInputParams('billingCity').input}
                 value={billingAddress.billingCity}
                 isMatching={matchingAddress}
-                onInput={handleBillingAddressChanging}
+                onInput={handleBillingAddressChange}
               />
               {!matchingAddress && <Error errors={errors} name="billingCity" />}
               <CountryInput
                 value={billingCountry}
-                onSelect={handleBillingCountryChanging}
+                onSelect={handleBillingCountryChange}
                 input={inputService.createInputParams('billingCountry').input}
                 label={inputService.createInputParams('billingCountry').label}
                 isMatching={matchingAddress}
@@ -255,7 +257,7 @@ export function RegistrationPageMain(): React.ReactElement {
                   })}
                   value={billingAddress.billingPostalCode}
                   isMatching={matchingAddress}
-                  onInput={handleBillingAddressChanging}
+                  onInput={handleBillingAddressChange}
                 />
               )}
               {!matchingAddress && (
