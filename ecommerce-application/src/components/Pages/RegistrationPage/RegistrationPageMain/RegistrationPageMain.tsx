@@ -21,18 +21,17 @@ export function RegistrationPageMain(): React.ReactElement {
   const [shippingAddress, setShippingAddress] = useState({
     shippingStreet: '',
     shippingCity: '',
-    shippinCountry: '',
     shippingPostalCode: '',
   });
   const [billingAddress, setBillingAddress] = useState({
     billingStreet: '',
     billingCity: '',
-    billingCountry: '',
     billingPostalCode: '',
   });
 
   const {
     register,
+    setValue,
     formState: { errors },
     handleSubmit,
   } = useForm<IRegistrationData>({
@@ -47,6 +46,11 @@ export function RegistrationPageMain(): React.ReactElement {
       billingCity: shippingAddress.shippingCity,
       billingPostalCode: shippingAddress.shippingPostalCode,
     });
+    setBillingCountry(shippingCountry);
+    setValue('billingStreet', shippingAddress.shippingStreet);
+    setValue('billingCity', shippingAddress.shippingCity);
+    setValue('billingPostalCode', shippingAddress.shippingPostalCode);
+    setValue('billingCountry', shippingCountry);
   };
 
   const handleBillingAddressChanging = (
@@ -74,13 +78,24 @@ export function RegistrationPageMain(): React.ReactElement {
         ...billingAddress,
         [name.replace('shipping', 'billing')]: value,
       });
+      if (name === 'shippingStreet') {
+        setValue('billingStreet', value);
+      } else if (name === 'shippingCity') {
+        setValue('billingCity', value);
+      } else if (name === 'shippingPostalCode') {
+        setValue('billingPostalCode', value);
+      }
     }
   };
-
   const handleShippingCountryChanging = (
     e: React.ChangeEvent<HTMLSelectElement>,
   ): void => {
-    setShippingCountry((e.target as HTMLSelectElement).value);
+    const { value } = e.target as HTMLSelectElement;
+    setShippingCountry(value);
+    if (matchingAddress) {
+      setValue('billingCountry', value);
+      setBillingCountry(value);
+    }
   };
 
   const handleBillingCountryChanging = (
@@ -196,62 +211,44 @@ export function RegistrationPageMain(): React.ReactElement {
                 />
                 Bill to Shipping Address
               </label>
-              {matchingAddress ? (
-                <FormBillingAddressInput
-                  type={inputService.createInputParams('billingStreet').type}
-                  label={inputService.createInputParams('billingStreet').label}
-                  input={inputService.createInputParams('billingStreet').input}
-                  value={billingAddress.billingStreet}
-                  isMatching={matchingAddress}
-                  onChange={handleBillingAddressChanging}
-                />
-              ) : (
-                <FormInput
-                  input={inputService.createInputParams('billingStreet').input}
-                  type={inputService.createInputParams('billingStreet').type}
-                  label={inputService.createInputParams('billingStreet').label}
-                />
+              <FormBillingAddressInput
+                type={inputService.createInputParams('billingStreet').type}
+                label={inputService.createInputParams('billingStreet').label}
+                input={inputService.createInputParams('billingStreet').input}
+                value={billingAddress.billingStreet}
+                isMatching={matchingAddress}
+                onInput={handleBillingAddressChanging}
+              />
+              {!matchingAddress && (
+                <Error errors={errors} name="billingStreet" />
               )}
-              <Error errors={errors} name="billingStreet" />
-              {matchingAddress ? (
-                <FormBillingAddressInput
-                  type={inputService.createInputParams('billingCity').type}
-                  label={inputService.createInputParams('billingCity').label}
-                  input={inputService.createInputParams('billingCity').input}
-                  value={billingAddress.billingCity}
-                  isMatching={matchingAddress}
-                  onChange={handleBillingAddressChanging}
-                />
-              ) : (
-                <FormInput
-                  input={inputService.createInputParams('billingCity').input}
-                  type={inputService.createInputParams('billingCity').type}
-                  label={inputService.createInputParams('billingCity').label}
-                />
+              <FormBillingAddressInput
+                type={inputService.createInputParams('billingCity').type}
+                label={inputService.createInputParams('billingCity').label}
+                input={inputService.createInputParams('billingCity').input}
+                value={billingAddress.billingCity}
+                isMatching={matchingAddress}
+                onInput={handleBillingAddressChanging}
+              />
+              {!matchingAddress && <Error errors={errors} name="billingCity" />}
+              <CountryInput
+                value={billingCountry}
+                onSelect={handleBillingCountryChanging}
+                input={inputService.createInputParams('billingCountry').input}
+                label={inputService.createInputParams('billingCountry').label}
+                isMatching={matchingAddress}
+              />
+              {!matchingAddress && (
+                <Error errors={errors} name="billingCountry" />
               )}
-              <Error errors={errors} name="billingCity" />
-              {matchingAddress ? (
-                <CountryInput
-                  value={shippingCountry}
-                  onSelect={handleBillingCountryChanging}
-                  input={inputService.createInputParams('billingCountry').input}
-                  label={inputService.createInputParams('billingCountry').label}
-                  isMatching={matchingAddress}
-                />
-              ) : (
-                <CountryInput
-                  value={billingCountry}
-                  onSelect={handleBillingCountryChanging}
-                  input={inputService.createInputParams('billingCountry').input}
-                  label={inputService.createInputParams('billingCountry').label}
-                  isMatching={matchingAddress}
-                />
-              )}
-              <Error errors={errors} name="billingCountry" />
-              {billingCountry && matchingAddress && (
+              {billingCountry && (
                 <FormBillingAddressInput
-                  type={inputService.createInputParams('billingCity').type}
-                  label={inputService.createInputParams('billingCity').label}
+                  type={
+                    inputService.createInputParams('billingPostalCode').type
+                  }
+                  label={
+                    inputService.createInputParams('billingPostalCode').label
+                  }
                   input={register('billingPostalCode', {
                     validate: {
                       postalCode: (inputValue: string): string | boolean =>
@@ -261,24 +258,12 @@ export function RegistrationPageMain(): React.ReactElement {
                   })}
                   value={billingAddress.billingPostalCode}
                   isMatching={matchingAddress}
-                  onChange={handleBillingAddressChanging}
+                  onInput={handleBillingAddressChanging}
                 />
               )}
-              {billingCountry && !matchingAddress && (
-                <FormInput
-                  input={register('billingPostalCode', {
-                    validate: {
-                      postalCode: (inputValue: string): string | boolean =>
-                        postcodeValidator(inputValue, billingCountry) ||
-                        'incorrect postal code',
-                    },
-                    required: 'empty be cannot field',
-                  })}
-                  type="text"
-                  label="Postal Code:"
-                />
+              {!matchingAddress && (
+                <Error errors={errors} name="billingPostalCode" />
               )}
-              <Error errors={errors} name="billingPostalCode" />
             </div>
           </div>
           <button className={styles.submit_button} type="submit">
