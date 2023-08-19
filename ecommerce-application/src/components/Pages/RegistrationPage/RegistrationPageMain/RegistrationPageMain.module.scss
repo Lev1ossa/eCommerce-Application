@@ -1,6 +1,6 @@
 $main_block-background-color: #f0f3f8;
 $container-background-color: #ffffff;
-$main-color-rose: #e22454;
+$main-color-rose: #51983c;
 
 .main_block {
   display: flex;
@@ -12,16 +12,41 @@ $main-color-rose: #e22454;
     margin-bottom: calc(20px + (30 - 20) * ((100vw - 320px) / (1920 - 320)));
     color: $main-color-rose;
   }
-  .label {
+  .info_container {
+    flex: 1 0 45%;
     display: flex;
     flex-direction: column;
-    font-size: 18px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+    margin-right: 10px;
   }
-  .input {
-    width: 100%;
-    font-size: 20px;
-    margin-top: 10px;
+  .info_container:first-child {
+    border: 1px solid $main-color-rose;
+    border-radius: 10px;
+    padding: 10px;
+    position: relative;
+  }
+  .address_container {
+    border: 1px solid $main-color-rose;
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  .address_container:not(:last-child) {
+    margin-bottom: 20px;
+  }
+  .address_title {
+    position: absolute;
+    top: -10px;
+    left: 30px;
+    font-size: 14px;
+    background-color: $container-background-color;
+    color: $main-color-rose;
+  }
+  .form {
+    display: flex;
+    flex-wrap: wrap;
   }
   .input_street {
     font-size: 20px;
@@ -44,7 +69,6 @@ $main-color-rose: #e22454;
     background-color: $main-color-rose;
   }
   .select_country {
-    width: 100%;
     font-size: 20px;
     font-family: inherit;
     margin-bottom: 20px;
@@ -60,6 +84,13 @@ $main-color-rose: #e22454;
     justify-content: space-around;
     align-items: center;
   }
+  .checkbox_label {
+    display: flex;
+    flex-direction: row;
+  }
+  .checkbox_input {
+    margin-right: 10px;
+  }
 }
   
 .wrapper {
@@ -67,8 +98,7 @@ $main-color-rose: #e22454;
   border-radius: 10px;
   padding: 20px 20px;
   margin: 20px 0;
-  width: 100%;
-  max-width: 460px;
+  width: 70%;
   .button_login {
     border: none;
     background-color: inherit;
