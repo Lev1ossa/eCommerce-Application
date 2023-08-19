@@ -164,7 +164,7 @@ export function RegistrationPageMain(): React.ReactElement {
               />
               <Error errors={errors} name="shippingCountry" />
               {shippingCountry && (
-                <FormInput
+                <FormShippingAddressInput
                   input={register('shippingPostalCode', {
                     validate: {
                       postalCode: (inputValue: string): string | boolean =>
@@ -173,8 +173,13 @@ export function RegistrationPageMain(): React.ReactElement {
                     },
                     required: 'empty be cannot field',
                   })}
-                  type="text"
-                  label="Postal Code:"
+                  type={
+                    inputService.createInputParams('shippingPostalCode').type
+                  }
+                  label={
+                    inputService.createInputParams('shippingPostalCode').label
+                  }
+                  onInput={handleShippingAddressChanging}
                 />
               )}
               <Error errors={errors} name="shippingPostalCode" />
@@ -243,17 +248,19 @@ export function RegistrationPageMain(): React.ReactElement {
               )}
               <Error errors={errors} name="billingCountry" />
               {billingCountry && matchingAddress && (
-                <FormInput
+                <FormBillingAddressInput
+                  type={inputService.createInputParams('billingCity').type}
+                  label={inputService.createInputParams('billingCity').label}
                   input={register('billingPostalCode', {
                     validate: {
                       postalCode: (inputValue: string): string | boolean =>
                         postcodeValidator(inputValue, billingCountry) ||
                         'incorrect postal code',
                     },
-                    required: 'empty be cannot field',
                   })}
-                  type="text"
-                  label="Postal Code:"
+                  value={billingAddress.billingPostalCode}
+                  isMatching={matchingAddress}
+                  onChange={handleBillingAddressChanging}
                 />
               )}
               {billingCountry && !matchingAddress && (
