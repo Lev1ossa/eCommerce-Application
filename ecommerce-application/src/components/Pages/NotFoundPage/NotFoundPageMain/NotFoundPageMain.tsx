@@ -18,15 +18,15 @@ export function NotFoundPageMain(): React.ReactElement {
               <div className={styles.logo}>Logo</div>
               <nav className={styles.nav}>
                 <ul className={styles.links}>
-                  <li>
-                    <Link to="/">Home</Link>
-                  </li>
-                  <li>
-                    <Link to="/login">Login</Link>
-                  </li>
-                  <li>
-                    <Link to="/registration">Registration</Link>
-                  </li>
+                  <Link to="/">
+                    <li>Home</li>
+                  </Link>
+                  <Link to="/login">
+                    <li>Login</li>
+                  </Link>
+                  <Link to="/registration">
+                    <li>Registration</li>
+                  </Link>
                 </ul>
               </nav>
             </div>
@@ -35,9 +35,11 @@ export function NotFoundPageMain(): React.ReactElement {
                 <div className={styles.message_content}>
                   <div className={styles.error}>404</div>
                   <div className={styles.title}>Something went wrong!</div>
-                  <button className={styles.button} type="button">
-                    Back to Homepage
-                  </button>
+                  <Link to="/">
+                    <button className={styles.button} type="button">
+                      Back to Homepage
+                    </button>
+                  </Link>
                 </div>
               </div>
               <div className={styles.image} />
