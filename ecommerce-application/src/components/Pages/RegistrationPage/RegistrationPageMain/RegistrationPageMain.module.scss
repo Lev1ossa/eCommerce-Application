@@ -100,9 +100,13 @@ $main-color-rose: #51983c;
   margin: 20px 0;
   width: 70%;
   .button_login {
-    border: none;
-    background-color: inherit;
-    color: $main-color-rose;
-    font-size: 18px;
+    
+    * {
+      border: none;
+      background-color: inherit;
+      color: $main-color-rose;
+      font-size: 18px;
+    }
+
   }
 }
