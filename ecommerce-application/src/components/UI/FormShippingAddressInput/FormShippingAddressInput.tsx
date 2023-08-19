@@ -1,6 +1,6 @@
 import { UseFormRegisterReturn } from 'react-hook-form';
 
-export function FormShippingStreetInput(props: {
+export function FormShippingAddressInput(props: {
   label: string;
   input: UseFormRegisterReturn;
   type: string;

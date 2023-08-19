@@ -8,13 +8,14 @@ import { CountryInput } from '../../../UI/FormCounrtySelect/FormCountrySelect';
 import { FormDateInput } from '../../../UI/FormDateInput/FormDateInput';
 import { FormInput } from '../../../UI/FormInput/FormInput';
 import { FormPasswordInput } from '../../../UI/FormPasswordInput/FormPasswordInput';
-import { FormShippingStreetInput } from '../../../UI/FormShippingAddressInput/FormShippingAddressInput';
+import { FormShippingAddressInput } from '../../../UI/FormShippingAddressInput/FormShippingAddressInput';
 import { Error } from '../../../common/Error/Error';
 import styles from './RegistrationPageMain.module.scss';
 
 // eslint-disable-next-line max-lines-per-function
 export function RegistrationPageMain(): React.ReactElement {
-  const [country, setCountry] = useState('AX');
+  const [shippingCountry, setShippingCountry] = useState('AX');
+  const [billingCountry, setBillingCountry] = useState('AX');
   const [matchingAddress, setMatchingAddress] = useState(false);
   const [shippingAddress, setShippingAddress] = useState({
     shippingStreet: '',
@@ -42,39 +43,49 @@ export function RegistrationPageMain(): React.ReactElement {
     setBillingAddress({
       ...billingAddress,
       billingStreet: shippingAddress.shippingStreet,
+      billingCity: shippingAddress.shippingCity,
+      billingPostalCode: shippingAddress.shippingPostalCode,
     });
   };
 
-  const handleBillingStreetChange = (
+  const handleBillingAddressChanging = (
     e: React.ChangeEvent<HTMLInputElement>,
   ): void => {
-    console.log((e.target as HTMLInputElement).value);
+    const { value } = e.target as HTMLInputElement;
+    const { name } = e.target as HTMLInputElement;
     setBillingAddress({
       ...billingAddress,
-      billingStreet: (e.target as HTMLInputElement).value,
+      [name]: value,
     });
   };
 
-  const handleShippingStreetChange = (
+  const handleShippingAddressChanging = (
     e: React.ChangeEvent<HTMLInputElement>,
   ): void => {
-    const street = (e.target as HTMLInputElement).value;
+    const { value } = e.target as HTMLInputElement;
+    const { name } = e.target as HTMLInputElement;
     setShippingAddress({
       ...shippingAddress,
-      shippingStreet: street,
+      [name]: value,
     });
     if (matchingAddress) {
       setBillingAddress({
         ...billingAddress,
-        billingStreet: street,
+        [name.replace('shipping', 'billing')]: value,
       });
     }
   };
 
-  const handleCountryChange = (
+  const handleShippingCountryChanging = (
     e: React.ChangeEvent<HTMLSelectElement>,
   ): void => {
-    setCountry((e.target as HTMLSelectElement).value);
+    setShippingCountry((e.target as HTMLSelectElement).value);
+  };
+
+  const handleBillingCountryChanging = (
+    e: React.ChangeEvent<HTMLSelectElement>,
+  ): void => {
+    setBillingCountry((e.target as HTMLSelectElement).value);
   };
 
   const onSubmit: SubmitHandler<IRegistrationData> = (
@@ -130,32 +141,34 @@ export function RegistrationPageMain(): React.ReactElement {
           <div className={styles.info_container}>
             <div className={styles.address_container}>
               <p className={styles.address_title}>Shipping Address</p>
-              <FormShippingStreetInput
+              <FormShippingAddressInput
                 input={inputService.createInputParams('shippingStreet').input}
                 type={inputService.createInputParams('shippingStreet').type}
                 label={inputService.createInputParams('shippingStreet').label}
-                onInput={handleShippingStreetChange}
+                onInput={handleShippingAddressChanging}
               />
               <Error errors={errors} name="shippingStreet" />
-              <FormInput
+              <FormShippingAddressInput
                 input={inputService.createInputParams('shippingCity').input}
                 type={inputService.createInputParams('shippingCity').type}
                 label={inputService.createInputParams('shippingCity').label}
+                onInput={handleShippingAddressChanging}
               />
               <Error errors={errors} name="shippingCity" />
               <CountryInput
-                value={country}
-                onSelect={handleCountryChange}
+                value={shippingCountry}
+                onSelect={handleShippingCountryChanging}
                 input={inputService.createInputParams('shippingCountry').input}
                 label={inputService.createInputParams('shippingCountry').label}
+                isMatching={false}
               />
               <Error errors={errors} name="shippingCountry" />
-              {country && (
+              {shippingCountry && (
                 <FormInput
                   input={register('shippingPostalCode', {
                     validate: {
                       postalCode: (inputValue: string): string | boolean =>
-                        postcodeValidator(inputValue, country) ||
+                        postcodeValidator(inputValue, shippingCountry) ||
                         'incorrect postal code',
                     },
                     required: 'empty be cannot field',
@@ -181,10 +194,10 @@ export function RegistrationPageMain(): React.ReactElement {
                 <FormBillingAddressInput
                   type={inputService.createInputParams('billingStreet').type}
                   label={inputService.createInputParams('billingStreet').label}
-                  id="id1"
+                  input={inputService.createInputParams('billingStreet').input}
                   value={billingAddress.billingStreet}
                   isMatching={matchingAddress}
-                  onChange={handleBillingStreetChange}
+                  onChange={handleBillingAddressChanging}
                 />
               ) : (
                 <FormInput
@@ -194,25 +207,61 @@ export function RegistrationPageMain(): React.ReactElement {
                 />
               )}
               <Error errors={errors} name="billingStreet" />
-              <FormInput
-                input={inputService.createInputParams('billingCity').input}
-                type={inputService.createInputParams('billingCity').type}
-                label={inputService.createInputParams('billingCity').label}
-              />
+              {matchingAddress ? (
+                <FormBillingAddressInput
+                  type={inputService.createInputParams('billingCity').type}
+                  label={inputService.createInputParams('billingCity').label}
+                  input={inputService.createInputParams('billingCity').input}
+                  value={billingAddress.billingCity}
+                  isMatching={matchingAddress}
+                  onChange={handleBillingAddressChanging}
+                />
+              ) : (
+                <FormInput
+                  input={inputService.createInputParams('billingCity').input}
+                  type={inputService.createInputParams('billingCity').type}
+                  label={inputService.createInputParams('billingCity').label}
+                />
+              )}
               <Error errors={errors} name="billingCity" />
-              <CountryInput
-                value={country}
-                onSelect={handleCountryChange}
-                input={inputService.createInputParams('billingCountry').input}
-                label={inputService.createInputParams('billingCountry').label}
-              />
+              {matchingAddress ? (
+                <CountryInput
+                  value={shippingCountry}
+                  onSelect={handleBillingCountryChanging}
+                  input={inputService.createInputParams('billingCountry').input}
+                  label={inputService.createInputParams('billingCountry').label}
+                  isMatching={matchingAddress}
+                />
+              ) : (
+                <CountryInput
+                  value={billingCountry}
+                  onSelect={handleBillingCountryChanging}
+                  input={inputService.createInputParams('billingCountry').input}
+                  label={inputService.createInputParams('billingCountry').label}
+                  isMatching={matchingAddress}
+                />
+              )}
               <Error errors={errors} name="billingCountry" />
-              {country && (
+              {billingCountry && matchingAddress && (
                 <FormInput
                   input={register('billingPostalCode', {
                     validate: {
                       postalCode: (inputValue: string): string | boolean =>
-                        postcodeValidator(inputValue, country) ||
+                        postcodeValidator(inputValue, billingCountry) ||
+                        'incorrect postal code',
+                    },
+                    required: 'empty be cannot field',
+                  })}
+                  type="text"
+                  label="Postal Code:"
+                />
+              )}
+              {billingCountry && !matchingAddress && (
+                <FormInput
+                  input={register('billingPostalCode', {
+                    validate: {
+                      postalCode: (inputValue: string): string | boolean =>
+                        postcodeValidator(inputValue, billingCountry) ||
                         'incorrect postal code',
                     },
                     required: 'empty be cannot field',
