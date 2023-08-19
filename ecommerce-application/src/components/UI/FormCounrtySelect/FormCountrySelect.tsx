@@ -10,10 +10,10 @@ export function CountryInput(props: {
   const { value, onSelect, label, input } = props;
   const { onBlur, name, ref } = input;
   return (
-    <label htmlFor="select">
+    <label htmlFor={name}>
       {label}
       <select
-        id="select"
+        id={name}
         value={value}
         onChange={onSelect}
         onBlur={onBlur}

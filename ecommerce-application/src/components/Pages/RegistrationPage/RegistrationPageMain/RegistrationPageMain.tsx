@@ -9,7 +9,8 @@ import { FormInput } from '../../../UI/FormInput/FormInput';
 import { FormPasswordInput } from '../../../UI/FormPasswordInput/FormPasswordInput';
 import { Error } from '../../../common/Error/Error';
 import styles from './RegistrationPageMain.module.scss';
-import { streetRegExp } from '../../../../data/constants';
+import { FormShippingStreetInput } from '../../../UI/FormShippingAddressInput/FormShippingAddressInput';
+import { FormBillingAddressInput } from '../../../UI/FormBillingAddressInput/FormBillingAddressInput';
 
 // eslint-disable-next-line max-lines-per-function
 export function RegistrationPageMain(): React.ReactElement {
@@ -21,16 +22,40 @@ export function RegistrationPageMain(): React.ReactElement {
   } = useForm<IRegistrationData>({
     mode: 'onChange',
   });
-  /* const [shippinAddress, changeShippingAddress] = useState({
+  const [shippinAddress, setShippingAddress] = useState({
     shippingStreet: '',
     shippingCity: '',
     shippinCountry: '',
     shippingPostalCode: '',
   });
-  const changeAddressField = (valueInput: string, field: string): void => {
-    shippinAddress[field] = valueInput;
-    changeShippingAddress(shippinAddress);
-  }; */
+  const [billingAddress, setBillingAddress] = useState({
+    billingStreet: '',
+    billingCity: '',
+    billingCountry: '',
+    billingPostalCode: '',
+  });
+  const handleBillingStreetField = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ): void => {
+    (e.target as HTMLInputElement).value = billingAddress.billingStreet;
+    setBillingAddress(billingAddress);
+  };
+  const [matchingAddress, setMatchingAddress] = useState(false);
+  const handleShippingStreetField = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ): void => {
+    shippinAddress.shippingStreet = (e.target as HTMLInputElement).value;
+    setShippingAddress(shippinAddress);
+    billingAddress.billingStreet = shippinAddress.shippingStreet;
+  };
+
+  const handleMatchingCheckbox = (): void => {
+    setMatchingAddress(!matchingAddress);
+    if (matchingAddress) {
+      billingAddress.billingStreet = shippinAddress.shippingStreet;
+    }
+  };
+
   const onSubmit: SubmitHandler<IRegistrationData> = (
     data: IRegistrationData,
   ): void => {
@@ -87,17 +112,11 @@ export function RegistrationPageMain(): React.ReactElement {
           <div className={styles.info_container}>
             <div className={styles.address_container}>
               <p className={styles.address_title}>Shipping Address</p>
-              <FormInput
-                input={register('shippingStreet', {
-                  validate: {
-                    street: (inputValue: string): string | boolean =>
-                      !inputValue.match(streetRegExp) ||
-                      'Field contains an invalid character',
-                  },
-                  required: 'empty be cannot field',
-                })}
-                type="text"
-                label="Street:"
+              <FormShippingStreetInput
+                input={inputService.createInputParams('shippingStreet').input}
+                type={inputService.createInputParams('shippingStreet').type}
+                label={inputService.createInputParams('shippingStreet').label}
+                handleShippingStreetField={handleShippingStreetField}
               />
               <Error errors={errors} name="shippingStreet" />
               <FormInput
@@ -136,14 +155,25 @@ export function RegistrationPageMain(): React.ReactElement {
                   className={styles.checkbox_input}
                   id="sameAddress"
                   type="checkbox"
+                  onClick={handleMatchingCheckbox}
                 />
                 Bill to Shipping Address
               </label>
-              <FormInput
-                input={inputService.createInputParams('billingStreet').input}
-                type={inputService.createInputParams('billingStreet').type}
-                label={inputService.createInputParams('billingStreet').label}
-              />
+              {matchingAddress ? (
+                <FormBillingAddressInput
+                  type={inputService.createInputParams('billingStreet').type}
+                  label={inputService.createInputParams('billingStreet').label}
+                  id="id1"
+                  value={billingAddress.billingStreet}
+                  onChange={handleBillingStreetField}
+                />
+              ) : (
+                <FormInput
+                  input={inputService.createInputParams('billingStreet').input}
+                  type={inputService.createInputParams('billingStreet').type}
+                  label={inputService.createInputParams('billingStreet').label}
+                />
+              )}
               <Error errors={errors} name="billingStreet" />
               <FormInput
                 input={inputService.createInputParams('billingCity').input}
