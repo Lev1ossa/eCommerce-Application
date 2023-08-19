@@ -9,10 +9,14 @@ export interface IRegistrationData extends ILoginData {
   userFirstName: string;
   userLastName: string;
   birthDate: string;
-  street: string;
-  city: string;
-  postalCode: string;
-  country: string;
+  shippingStreet: string;
+  shippingCity: string;
+  shippingPostalCode: string;
+  shippingCountry: string;
+  billingStreet: string;
+  billingCity: string;
+  billingPostalCode: string;
+  billingCountry: string;
 }
 
 export interface IRegistrationPageParam {
@@ -33,8 +37,12 @@ export interface IValidationRules {
   userFirstName: string[];
   userLastName: string[];
   birthDate: string[];
-  street: string[];
-  city: string[];
-  postalCode: string[];
-  country: string[];
+  shippingStreet: string[];
+  shippingCity: string[];
+  shippingPostalCode: string[];
+  shippingCountry: string[];
+  billingStreet: string[];
+  billingCity: string[];
+  billingPostalCode: string[];
+  billingCountry: string[];
 }

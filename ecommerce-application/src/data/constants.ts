@@ -19,7 +19,6 @@ export const countriesData = [
   { code: 'DZ', name: 'ALGERIA' },
   { code: 'AS', name: 'AMERICAN SAMOA' },
   { code: 'AD', name: 'ANDORRA' },
-  { code: 'AG', name: 'ANTIGUA AND BARBUDA' },
   { code: 'AR', name: 'ARGENTINA' },
   { code: 'AM', name: 'ARMENIA' },
   { code: 'AU', name: 'AUSTRALIA' },
