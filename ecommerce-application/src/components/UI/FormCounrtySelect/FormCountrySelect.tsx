@@ -6,19 +6,21 @@ export function CountryInput(props: {
   label: string;
   input: UseFormRegisterReturn;
   onSelect: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  isMatching: boolean;
 }): React.ReactElement {
-  const { value, onSelect, label, input } = props;
+  const { value, onSelect, label, input, isMatching } = props;
   const { onBlur, name, ref } = input;
   return (
-    <label htmlFor="select">
+    <label htmlFor={name}>
       {label}
       <select
-        id="select"
+        id={name}
         value={value}
         onChange={onSelect}
         onBlur={onBlur}
         name={name}
         ref={ref}
+        disabled={isMatching}
       >
         {countriesData.map((countryData) => {
           return (
