@@ -10,7 +10,8 @@ export const passwordRegExp =
 
 // export const domainRegExp = /@(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})$/;
 
-export const textRegExp = /^[a-zA-Z]+[a-zA-Z']?$/;
+export const textRegExp = /[^^!?@#$%^&*<>()[\]}{\\/|.,'`~;:+-=_@""]$/;
+// export const textRegExp = /^[a-zA-Z]+[a-zA-Z']?$/;
 
 export const langRegExp = /[^ a-zA-Z0-9@.]/g;
 
