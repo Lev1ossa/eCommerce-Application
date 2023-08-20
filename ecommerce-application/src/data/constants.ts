@@ -3,18 +3,9 @@ import { ToastOptions } from 'react-toastify';
 export const MINIMAL_ACCESS_AGE = 13;
 
 export const emailRegExp =
-  /^(([^!@#$%^&*<>()[\]\\/|.,;:\s@"]+(\.[^!@#$%^&*<>()[\]\\/|.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-export const passwordRegExp =
-  /[^a-zA-Z0-9!@#№$%^&*~`+-=_?<>(){}[\]\\/|.,;:\s@"']/g;
-
-export const domainRegExp = /@(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})$/;
-
-export const textRegExp = /^[a-zA-Z]+[a-zA-Z']?$/;
-
-export const langRegExp = /[^ a-zA-Z0-9@.]/g;
-
-export const streetRegExp = /[^ a-zA-Z0-9.-]/g;
+export const textRegExp = /[^^!?@№#$%^&*<>()[\]}{\\/|.,'`~;:+-=_@""]$/;
 
 export const countriesData = [
   { code: 'AX', name: 'AALAND ISLANDS' },

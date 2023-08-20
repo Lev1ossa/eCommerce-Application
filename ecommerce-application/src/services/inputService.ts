@@ -1,12 +1,5 @@
 import { UseFormRegister } from 'react-hook-form';
-import {
-  domainRegExp,
-  emailRegExp,
-  langRegExp,
-  passwordRegExp,
-  streetRegExp,
-  textRegExp,
-} from '../data/constants';
+import { emailRegExp, textRegExp } from '../data/constants';
 import {
   IInputParams,
   IRegistrationData,
@@ -40,58 +33,41 @@ export class ServiceInputParameters {
       billingCountry: 'text',
     };
     this.validation = {
-      lang: (inputValue: string): string | boolean =>
-        !inputValue.match(langRegExp) || 'Field contains an invalid character',
       space: (inputValue: string): string | boolean =>
         inputValue.trim() === inputValue ||
         'Field must not contain leading or trailing whitespace',
       insideSpace: (inputValue: string): string | boolean =>
         !inputValue.trim().match(/\s+/g) ||
-        'Field must not contain inside whitespace',
-      at: (inputValue: string): string | boolean =>
-        !!inputValue.match(/@/g) || 'Field must contain an "@" symbol',
-      domain: (inputValue: string): string | boolean =>
-        !!inputValue.match(domainRegExp) || 'Field must contain a domain name',
+        'Email address must be properly formatted (e.g., user@example.com)',
       format: (inputValue: string): string | boolean =>
-        !!inputValue.match(emailRegExp) || 'Field must be properly formatted',
-      validCharacters: (inputValue: string): string | boolean =>
-        !inputValue.match(passwordRegExp) ||
-        'Field contains an invalid character',
+        !!inputValue.match(emailRegExp) ||
+        'Email address must be properly formatted (e.g., user@example.com)',
       number: (inputValue: string): string | boolean =>
         !!inputValue.match(/[0-9]/g) || 'At least one number',
       uppercase: (inputValue: string): string | boolean =>
-        !!inputValue.match(/[A-Z]/g) || 'At least one uppercase letter',
+        !!inputValue.match(/[A-Z]/g) ||
+        'Password must contain at least one uppercase letter (A-Z)',
       lowercase: (inputValue: string): string | boolean =>
-        !!inputValue.match(/[a-z]/g) || 'At least one lowercase letter',
+        !!inputValue.match(/[a-z]/g) ||
+        'Password must contain at least one lowercase letter (a-z)',
       passwordLength: (inputValue: string): string | boolean =>
         inputValue.length >= 8 || 'Minimum 8 characters',
       invalidDate: (inputValue: string): string | boolean =>
         checkDateValidity(inputValue),
       invalidText: (inputValue: string): string | boolean =>
         !!inputValue.match(textRegExp) || 'Field contains an invalid character',
-      street: (inputValue: string): string | boolean =>
-        !inputValue.match(streetRegExp) ||
-        'Field contains an invalid character',
     };
     this.validationRules = {
-      email: ['lang', 'space', 'insideSpace', 'at', 'domain', 'format'],
-      password: [
-        'validCharacters',
-        'space',
-        'insideSpace',
-        'number',
-        'uppercase',
-        'lowercase',
-        'passwordLength',
-      ],
+      email: ['space', 'insideSpace', 'format'],
+      password: ['space', 'number', 'uppercase', 'lowercase', 'passwordLength'],
       userFirstName: ['invalidText'],
       userLastName: ['invalidText'],
       birthDate: ['invalidDate'],
-      shippingStreet: ['street'],
+      shippingStreet: [],
       shippingCity: ['invalidText'],
       shippingPostalCode: [],
       shippingCountry: [],
-      billingStreet: ['street'],
+      billingStreet: [],
       billingCity: ['invalidText'],
       billingPostalCode: [],
       billingCountry: [],
