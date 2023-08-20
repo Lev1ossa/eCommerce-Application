@@ -71,6 +71,8 @@ export class ServiceInputParameters {
       billingCity: ['invalidText'],
       billingPostalCode: [],
       billingCountry: [],
+      isShippingAddressDefault: [],
+      isBillingAddressDefault: [],
     };
     this.labels = {
       email: 'Email:',
