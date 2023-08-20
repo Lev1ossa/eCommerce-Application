@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import styles from './Header.module.css';
+import { handleLogout } from '../../../utils/authHandlers';
 
 export function Header(): React.ReactElement {
   return (
@@ -16,7 +17,9 @@ export function Header(): React.ReactElement {
             <Link to="/registration">Registration</Link>
           </li>
           <li>
-            <button type="button">Logout</button>
+            <button type="button" onClick={handleLogout}>
+              Logout
+            </button>
           </li>
         </ul>
       </nav>
