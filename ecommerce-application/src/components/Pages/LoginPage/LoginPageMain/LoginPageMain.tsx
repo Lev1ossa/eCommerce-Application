@@ -5,6 +5,8 @@ import { FormInput } from '../../../UI/FormInput/FormInput';
 import { FormPasswordInput } from '../../../UI/FormPasswordInput/FormPasswordInput';
 import { Error } from '../../../common/Error/Error';
 import styles from './LoginPageMain.module.scss';
+import { getUser } from '../../../../utils/requests';
+import { CustomTokenCache } from '../../../../utils/tokenCache';
 
 // eslint-disable-next-line max-lines-per-function
 export function LoginPageMain(): React.ReactElement {
@@ -13,8 +15,16 @@ export function LoginPageMain(): React.ReactElement {
     formState: { errors },
     handleSubmit,
   } = useForm<IRegistrationData>({ mode: 'onChange' });
-  const onSubmit: SubmitHandler<ILoginData> = (data: ILoginData): void => {
-    console.log('RESULT', data);
+  const onSubmit: SubmitHandler<ILoginData> = (loginData: ILoginData): void => {
+    console.log('RESULT', loginData);
+    const tokenCache = new CustomTokenCache();
+    getUser(loginData, tokenCache).then(
+      (result) => {
+        console.log(result);
+        console.log(tokenCache.get());
+      }, // TODO save refresh token to local host (from tokenCache.get())
+      (error) => console.log(error), // TODO add toast
+    );
   };
   const inputService = new ServiceInputParameters(register);
 

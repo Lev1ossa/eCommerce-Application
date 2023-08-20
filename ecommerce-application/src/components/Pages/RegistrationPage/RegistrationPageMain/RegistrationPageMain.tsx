@@ -9,6 +9,7 @@ import { FormInput } from '../../../UI/FormInput/FormInput';
 import { FormPasswordInput } from '../../../UI/FormPasswordInput/FormPasswordInput';
 import { Error } from '../../../common/Error/Error';
 import styles from './RegistrationPageMain.module.scss';
+import { createUser } from '../../../../utils/requests';
 
 // eslint-disable-next-line max-lines-per-function
 export function RegistrationPageMain(): React.ReactElement {
@@ -21,9 +22,13 @@ export function RegistrationPageMain(): React.ReactElement {
     mode: 'onChange',
   });
   const onSubmit: SubmitHandler<IRegistrationData> = (
-    data: IRegistrationData,
+    registrationData: IRegistrationData,
   ): void => {
-    console.log('RESULT', data);
+    console.log('RESULT', registrationData);
+    createUser(registrationData).then(
+      (result) => console.log(result), // TODO save token to local host
+      (error) => console.log(error), // TODO add toast
+    );
   };
   const handleCountryChange = (
     e: React.ChangeEvent<HTMLSelectElement>,
