@@ -1,6 +1,5 @@
 import { UseFormRegister } from 'react-hook-form';
 import {
-  // domainRegExp,
   emailRegExp,
   langRegExp,
   passwordRegExp,
@@ -50,8 +49,6 @@ export class ServiceInputParameters {
         'Field must not contain inside whitespace',
       at: (inputValue: string): string | boolean =>
         !!inputValue.match(/@/g) || 'Field must contain an "@" symbol',
-      // domain: (inputValue: string): string | boolean =>
-      //   !!inputValue.match(domainRegExp) || 'Field must contain a domain name',
       format: (inputValue: string): string | boolean =>
         !!inputValue.match(emailRegExp) ||
         'Email address must be properly formatted (e.g., user@example.com)',
@@ -61,9 +58,11 @@ export class ServiceInputParameters {
       number: (inputValue: string): string | boolean =>
         !!inputValue.match(/[0-9]/g) || 'At least one number',
       uppercase: (inputValue: string): string | boolean =>
-        !!inputValue.match(/[A-Z]/g) || 'At least one uppercase letter',
+        !!inputValue.match(/[A-Z]/g) ||
+        'Password must contain at least one uppercase letter (A-Z)',
       lowercase: (inputValue: string): string | boolean =>
-        !!inputValue.match(/[a-z]/g) || 'At least one lowercase letter',
+        !!inputValue.match(/[a-z]/g) ||
+        'Password must contain at least one lowercase letter (a-z)',
       passwordLength: (inputValue: string): string | boolean =>
         inputValue.length >= 8 || 'Minimum 8 characters',
       invalidDate: (inputValue: string): string | boolean =>
@@ -76,15 +75,7 @@ export class ServiceInputParameters {
     };
     this.validationRules = {
       email: ['space', 'insideSpace', 'format'],
-      password: [
-        'validCharacters',
-        'space',
-        'insideSpace',
-        'number',
-        'uppercase',
-        'lowercase',
-        'passwordLength',
-      ],
+      password: ['space', 'number', 'uppercase', 'lowercase', 'passwordLength'],
       userFirstName: ['invalidText'],
       userLastName: ['invalidText'],
       birthDate: ['invalidDate'],

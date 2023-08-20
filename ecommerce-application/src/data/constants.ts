@@ -8,7 +8,6 @@ export const emailRegExp =
 export const passwordRegExp =
   /[^a-zA-Z0-9!@#№$%^&*~`+-=_?<>(){}[\]\\/|.,;:\s@"']/g;
 
-// export const domainRegExp = /@(({2,}+\.)+{2,})$/;
 // export const domainRegExp = /@(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})$/;
 
 export const textRegExp = /^[a-zA-Z]+[a-zA-Z']?$/;
