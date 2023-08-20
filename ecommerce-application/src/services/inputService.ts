@@ -1,11 +1,5 @@
 import { UseFormRegister } from 'react-hook-form';
-import {
-  emailRegExp,
-  langRegExp,
-  passwordRegExp,
-  streetRegExp,
-  textRegExp,
-} from '../data/constants';
+import { emailRegExp, textRegExp } from '../data/constants';
 import {
   IInputParams,
   IRegistrationData,
@@ -39,22 +33,15 @@ export class ServiceInputParameters {
       billingCountry: 'text',
     };
     this.validation = {
-      lang: (inputValue: string): string | boolean =>
-        !inputValue.match(langRegExp) || 'Field contains an invalid character',
       space: (inputValue: string): string | boolean =>
         inputValue.trim() === inputValue ||
         'Field must not contain leading or trailing whitespace',
       insideSpace: (inputValue: string): string | boolean =>
         !inputValue.trim().match(/\s+/g) ||
         'Email address must be properly formatted (e.g., user@example.com)',
-      at: (inputValue: string): string | boolean =>
-        !!inputValue.match(/@/g) || 'Field must contain an "@" symbol',
       format: (inputValue: string): string | boolean =>
         !!inputValue.match(emailRegExp) ||
         'Email address must be properly formatted (e.g., user@example.com)',
-      validCharacters: (inputValue: string): string | boolean =>
-        !inputValue.match(passwordRegExp) ||
-        'Field contains an invalid character',
       number: (inputValue: string): string | boolean =>
         !!inputValue.match(/[0-9]/g) || 'At least one number',
       uppercase: (inputValue: string): string | boolean =>
@@ -69,9 +56,6 @@ export class ServiceInputParameters {
         checkDateValidity(inputValue),
       invalidText: (inputValue: string): string | boolean =>
         !!inputValue.match(textRegExp) || 'Field contains an invalid character',
-      street: (inputValue: string): string | boolean =>
-        !inputValue.match(streetRegExp) ||
-        'Field contains an invalid character',
     };
     this.validationRules = {
       email: ['space', 'insideSpace', 'format'],
