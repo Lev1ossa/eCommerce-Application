@@ -1,7 +1,7 @@
 import { postcodeValidator } from 'postcode-validator';
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ServiceInputParameters } from '../../../../services/inputService';
 import { IRegistrationData } from '../../../../types/types';
 import { CountryInput } from '../../../UI/FormCounrtySelect/FormCountrySelect';
@@ -120,9 +120,9 @@ export function RegistrationPageMain(): React.ReactElement {
         </form>
         <div className={styles.container}>
           <p className={styles.text}>Already have an account?</p>
-          <button className={styles.button_login} type="button">
-            Log in now
-          </button>
+          <p className={styles.button_login}>
+            <Link to="/login">Log in now</Link>
+          </p>
         </div>
       </div>
     </main>
