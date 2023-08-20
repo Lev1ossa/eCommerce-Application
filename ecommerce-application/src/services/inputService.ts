@@ -46,7 +46,7 @@ export class ServiceInputParameters {
         'Field must not contain leading or trailing whitespace',
       insideSpace: (inputValue: string): string | boolean =>
         !inputValue.trim().match(/\s+/g) ||
-        'Field must not contain inside whitespace',
+        'Email address must be properly formatted (e.g., user@example.com)',
       at: (inputValue: string): string | boolean =>
         !!inputValue.match(/@/g) || 'Field must contain an "@" symbol',
       format: (inputValue: string): string | boolean =>
