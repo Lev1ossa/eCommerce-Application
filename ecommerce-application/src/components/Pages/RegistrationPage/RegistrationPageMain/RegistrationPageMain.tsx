@@ -198,6 +198,11 @@ export function RegistrationPageMain(): React.ReactElement {
                 />
               )}
               <Error errors={errors} name="shippingPostalCode" />
+              <FormInput
+                input={register('isShippingAddressDefault')}
+                type="checkbox"
+                label="Set as default address"
+              />
             </div>
             <div className={styles.address_container}>
               <p className={styles.address_title}>Billing Address</p>

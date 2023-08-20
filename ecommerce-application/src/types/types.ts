@@ -17,6 +17,7 @@ export interface IRegistrationData extends ILoginData {
   billingCity: string;
   billingPostalCode: string;
   billingCountry: string;
+  isShippingAddressDefault: boolean;
 }
 
 export interface IRegistrationPageParam {
