@@ -1,6 +1,7 @@
 import { postcodeValidator } from 'postcode-validator';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { ServiceInputParameters } from '../../../../services/inputService';
 import { IRegistrationData } from '../../../../types/types';
 import { CountryInput } from '../../../UI/FormCounrtySelect/FormCountrySelect';
@@ -9,10 +10,17 @@ import { FormInput } from '../../../UI/FormInput/FormInput';
 import { FormPasswordInput } from '../../../UI/FormPasswordInput/FormPasswordInput';
 import { Error } from '../../../common/Error/Error';
 import styles from './RegistrationPageMain.module.scss';
-import { createUser } from '../../../../utils/requests';
+import { handleRegistration } from '../../../../utils/authHandlers';
 
 // eslint-disable-next-line max-lines-per-function
 export function RegistrationPageMain(): React.ReactElement {
+  const navigate = useNavigate();
+  const handleRedirect = (): void => {
+    if (localStorage.getItem('AAA-Ecom-refreshToken')) {
+      navigate('/');
+    }
+  };
+
   const [country, setCountry] = useState('AX');
   const {
     register,
@@ -25,10 +33,8 @@ export function RegistrationPageMain(): React.ReactElement {
     registrationData: IRegistrationData,
   ): void => {
     console.log('RESULT', registrationData);
-    createUser(registrationData).then(
-      (result) => console.log(result), // TODO save token to local host
-      (error) => console.log(error), // TODO add toast
-    );
+    handleRegistration(registrationData);
+    handleRedirect();
   };
   const handleCountryChange = (
     e: React.ChangeEvent<HTMLSelectElement>,
@@ -36,6 +42,9 @@ export function RegistrationPageMain(): React.ReactElement {
     setCountry((e.target as HTMLSelectElement).value);
   };
   const inputService = new ServiceInputParameters(register);
+
+  useEffect(handleRedirect);
+
   return (
     <main className={styles.main_block}>
       <div className={styles.wrapper}>

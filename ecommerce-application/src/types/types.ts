@@ -38,3 +38,10 @@ export interface IValidationRules {
   postalCode: string[];
   country: string[];
 }
+
+export enum ToastTypes {
+  success = 'success',
+  error = 'error',
+  info = 'info',
+  warning = 'warning',
+}

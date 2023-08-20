@@ -1,32 +1,43 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { ToastContainer } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import { ServiceInputParameters } from '../../../../services/inputService';
 import { ILoginData, IRegistrationData } from '../../../../types/types';
 import { FormInput } from '../../../UI/FormInput/FormInput';
 import { FormPasswordInput } from '../../../UI/FormPasswordInput/FormPasswordInput';
 import { Error } from '../../../common/Error/Error';
 import styles from './LoginPageMain.module.scss';
-import { getUser } from '../../../../utils/requests';
-import { CustomTokenCache } from '../../../../utils/tokenCache';
+import { handleLogin } from '../../../../utils/authHandlers';
 
 // eslint-disable-next-line max-lines-per-function
 export function LoginPageMain(): React.ReactElement {
+  // const [, setPageForbidden] = useState(false);
+  const navigate = useNavigate();
+  const handleRedirect = (): void => {
+    console.log(localStorage.getItem('AAA-Ecom-refreshToken'));
+    if (localStorage.getItem('AAA-Ecom-refreshToken')) {
+      navigate('/');
+    }
+  };
+
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm<IRegistrationData>({ mode: 'onChange' });
-  const onSubmit: SubmitHandler<ILoginData> = (loginData: ILoginData): void => {
+  const onSubmit: SubmitHandler<ILoginData> = async (
+    loginData: ILoginData,
+  ): Promise<void> => {
     console.log('RESULT', loginData);
-    const tokenCache = new CustomTokenCache();
-    getUser(loginData, tokenCache).then(
-      (result) => {
-        console.log(result);
-        console.log(tokenCache.get());
-      }, // TODO save refresh token to local host (from tokenCache.get())
-      (error) => console.log(error), // TODO add toast
-    );
+    await handleLogin(loginData);
+    console.log(4);
+    console.log(localStorage.getItem('AAA-Ecom-refreshToken'));
+    handleRedirect();
   };
   const inputService = new ServiceInputParameters(register);
+
+  useEffect(handleRedirect);
 
   return (
     <main className={styles.main}>
@@ -58,6 +69,7 @@ export function LoginPageMain(): React.ReactElement {
           Sign up now
         </button>
       </div>
+      <ToastContainer />
     </main>
   );
 }

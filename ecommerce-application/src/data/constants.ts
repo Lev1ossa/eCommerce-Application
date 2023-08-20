@@ -1,3 +1,5 @@
+import { ToastOptions } from 'react-toastify';
+
 export const MINIMAL_ACCESS_AGE = 13;
 
 export const emailRegExp =
@@ -163,3 +165,14 @@ export const countriesData = [
   { code: 'WF', name: 'WALLIS AND FUTUNA ISLANDS' },
   { code: 'ZM', name: 'ZAMBIA' },
 ];
+
+export const toastProps: ToastOptions = {
+  position: 'bottom-center',
+  autoClose: 5000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: false,
+  draggable: false,
+  progress: undefined,
+  theme: 'light',
+};

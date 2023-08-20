@@ -42,7 +42,7 @@ export const getUser = async (
     email,
     password,
   };
-  console.log({ projectKey });
+  console.log(2);
   return apiRoot
     .withProjectKey({ projectKey })
     .me()
