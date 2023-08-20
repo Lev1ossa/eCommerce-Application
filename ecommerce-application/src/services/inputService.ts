@@ -1,6 +1,6 @@
 import { UseFormRegister } from 'react-hook-form';
 import {
-  domainRegExp,
+  // domainRegExp,
   emailRegExp,
   langRegExp,
   passwordRegExp,
@@ -50,10 +50,11 @@ export class ServiceInputParameters {
         'Field must not contain inside whitespace',
       at: (inputValue: string): string | boolean =>
         !!inputValue.match(/@/g) || 'Field must contain an "@" symbol',
-      domain: (inputValue: string): string | boolean =>
-        !!inputValue.match(domainRegExp) || 'Field must contain a domain name',
+      // domain: (inputValue: string): string | boolean =>
+      //   !!inputValue.match(domainRegExp) || 'Field must contain a domain name',
       format: (inputValue: string): string | boolean =>
-        !!inputValue.match(emailRegExp) || 'Field must be properly formatted',
+        !!inputValue.match(emailRegExp) ||
+        'Email address must be properly formatted (e.g., user@example.com)',
       validCharacters: (inputValue: string): string | boolean =>
         !inputValue.match(passwordRegExp) ||
         'Field contains an invalid character',
@@ -74,7 +75,7 @@ export class ServiceInputParameters {
         'Field contains an invalid character',
     };
     this.validationRules = {
-      email: ['lang', 'space', 'insideSpace', 'at', 'domain', 'format'],
+      email: ['space', 'insideSpace', 'format'],
       password: [
         'validCharacters',
         'space',
