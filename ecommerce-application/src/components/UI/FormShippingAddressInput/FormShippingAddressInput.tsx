@@ -1,13 +1,12 @@
-import { FocusEventHandler } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
 
-export function FormShippingStreetInput(props: {
+export function FormShippingAddressInput(props: {
   label: string;
   input: UseFormRegisterReturn;
   type: string;
-  handleShippingStreetField: FocusEventHandler<HTMLInputElement>;
+  onInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }): React.ReactElement {
-  const { label, input, type, handleShippingStreetField } = props;
+  const { label, input, type, onInput } = props;
   const { onChange, name, ref } = input;
   const id = `${name}Input`;
   return (
@@ -17,8 +16,10 @@ export function FormShippingStreetInput(props: {
         /* className={styles.input} */
         id={id}
         type={type}
-        onChange={onChange}
-        onBlur={handleShippingStreetField}
+        onChange={(e): void => {
+          onChange(e);
+          onInput(e);
+        }}
         name={name}
         ref={ref}
       />
