@@ -47,6 +47,8 @@ export interface IValidationRules {
   billingCity: string[];
   billingPostalCode: string[];
   billingCountry: string[];
+  isShippingAddressDefault: string[];
+  isBillingAddressDefault: string[];
 }
 
 export enum ToastTypes {

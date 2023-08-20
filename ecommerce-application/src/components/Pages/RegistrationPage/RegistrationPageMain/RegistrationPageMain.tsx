@@ -6,7 +6,6 @@ import { ServiceInputParameters } from '../../../../services/inputService';
 import { IRegistrationData } from '../../../../types/types';
 import { FormBillingAddressInput } from '../../../UI/FormBillingAddressInput/FormBillingAddressInput';
 import { CountryInput } from '../../../UI/FormCounrtySelect/FormCountrySelect';
-import { FormDateInput } from '../../../UI/FormDateInput/FormDateInput';
 import { FormInput } from '../../../UI/FormInput/FormInput';
 import { FormPasswordInput } from '../../../UI/FormPasswordInput/FormPasswordInput';
 import { FormShippingAddressInput } from '../../../UI/FormShippingAddressInput/FormShippingAddressInput';
@@ -158,7 +157,7 @@ export function RegistrationPageMain(): React.ReactElement {
               label={inputService.createInputParams('userLastName').label}
             />
             <Error errors={errors} name="userLastName" />
-            <FormDateInput
+            <FormInput
               input={inputService.createInputParams('birthDate').input}
               type={inputService.createInputParams('birthDate').type}
               label={inputService.createInputParams('birthDate').label}
