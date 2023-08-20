@@ -1,4 +1,5 @@
 import { UseFormRegisterReturn } from 'react-hook-form';
+import styles from './FormShippingAddressInput.module.scss';
 
 export function FormShippingAddressInput(props: {
   label: string;
@@ -10,10 +11,10 @@ export function FormShippingAddressInput(props: {
   const { onChange, name, ref } = input;
   const id = `${name}Input`;
   return (
-    <label htmlFor={id}>
+    <label className={styles.label} htmlFor={id}>
       {label}
       <input
-        /* className={styles.input} */
+        className={styles.input}
         id={id}
         type={type}
         onChange={(e): void => {
