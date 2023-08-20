@@ -46,3 +46,10 @@ export interface IValidationRules {
   billingPostalCode: string[];
   billingCountry: string[];
 }
+
+export enum ToastTypes {
+  success = 'success',
+  error = 'error',
+  info = 'info',
+  warning = 'warning',
+}

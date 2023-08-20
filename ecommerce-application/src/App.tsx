@@ -7,6 +7,7 @@ import { NotFoundPage } from './components/Pages/NotFoundPage/NotFoundPage';
 import { RegistrationPage } from './components/Pages/RegistrationPage/RegistrationPage';
 
 import './App.css';
+import { Toast } from './components/common/Toast/Toast';
 
 const router = createBrowserRouter([
   {
@@ -21,7 +22,12 @@ const router = createBrowserRouter([
 ]);
 
 function App(): React.ReactElement {
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <RouterProvider router={router} />
+      <Toast />
+    </>
+  );
 }
 
 export default App;

@@ -1,7 +1,7 @@
 import { postcodeValidator } from 'postcode-validator';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ServiceInputParameters } from '../../../../services/inputService';
 import { IRegistrationData } from '../../../../types/types';
 import { FormBillingAddressInput } from '../../../UI/FormBillingAddressInput/FormBillingAddressInput';
@@ -12,9 +12,17 @@ import { FormPasswordInput } from '../../../UI/FormPasswordInput/FormPasswordInp
 import { FormShippingAddressInput } from '../../../UI/FormShippingAddressInput/FormShippingAddressInput';
 import { Error } from '../../../common/Error/Error';
 import styles from './RegistrationPageMain.module.scss';
+import { handleRegistration } from '../../../../utils/authHandlers';
 
 // eslint-disable-next-line max-lines-per-function
 export function RegistrationPageMain(): React.ReactElement {
+  const navigate = useNavigate();
+  const handleRedirect = (): void => {
+    if (localStorage.getItem('AAA-Ecom-refreshToken')) {
+      navigate('/');
+    }
+  };
+
   const [shippingCountry, setShippingCountry] = useState('AX');
   const [billingCountry, setBillingCountry] = useState('AX');
   const [matchingAddress, setMatchingAddress] = useState(false);
@@ -104,12 +112,16 @@ export function RegistrationPageMain(): React.ReactElement {
   };
 
   const onSubmit: SubmitHandler<IRegistrationData> = (
-    data: IRegistrationData,
+    registrationData: IRegistrationData,
   ): void => {
-    console.log('RESULT', data);
+    console.log('RESULT', registrationData);
+    handleRegistration(registrationData);
+    handleRedirect();
   };
 
   const inputService = new ServiceInputParameters(register);
+
+  useEffect(handleRedirect);
 
   return (
     <main className={styles.main_block}>
