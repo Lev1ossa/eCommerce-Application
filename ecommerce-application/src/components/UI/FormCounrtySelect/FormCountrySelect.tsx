@@ -1,5 +1,6 @@
 import { UseFormRegisterReturn } from 'react-hook-form';
 import { countriesData } from '../../../data/constants';
+import styles from './FormCountrySelect.module.scss';
 
 export function CountryInput(props: {
   value: string;
@@ -11,9 +12,10 @@ export function CountryInput(props: {
   const { value, onSelect, label, input, isMatching } = props;
   const { onBlur, name, ref } = input;
   return (
-    <label htmlFor={name}>
+    <label className={styles.label} htmlFor={name}>
       {label}
       <select
+        className={styles.select}
         id={name}
         value={value}
         onChange={onSelect}
@@ -24,7 +26,11 @@ export function CountryInput(props: {
       >
         {countriesData.map((countryData) => {
           return (
-            <option key={countryData.code} value={countryData.code}>
+            <option
+              className={styles.option}
+              key={countryData.code}
+              value={countryData.code}
+            >
               {countryData.name}
             </option>
           );

@@ -210,6 +210,11 @@ export function RegistrationPageMain(): React.ReactElement {
                 />
               )}
               <Error errors={errors} name="shippingPostalCode" />
+              <FormInput
+                input={register('isShippingAddressDefault')}
+                type="checkbox"
+                label="Set Shipping Address as default"
+              />
             </div>
             <div className={styles.address_container}>
               <p className={styles.address_title}>Billing Address</p>
@@ -275,6 +280,11 @@ export function RegistrationPageMain(): React.ReactElement {
               {!matchingAddress && (
                 <Error errors={errors} name="billingPostalCode" />
               )}
+              <FormInput
+                input={register('isBillingAddressDefault')}
+                type="checkbox"
+                label="Set Billing Address as default"
+              />
             </div>
           </div>
           <button className={styles.submit_button} type="submit">
