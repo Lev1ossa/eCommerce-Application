@@ -10,7 +10,7 @@ export function FormInput(props: {
   const { onChange, onBlur, name, ref } = input;
   const id = `${name}Input`;
   return (
-    <label htmlFor={id}>
+    <label className={styles.label} htmlFor={id}>
       {label}
       <input
         className={styles.input}
