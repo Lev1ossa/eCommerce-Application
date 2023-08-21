@@ -9,7 +9,7 @@ import { CountryInput } from '../../../UI/FormCounrtySelect/FormCountrySelect';
 import { FormInput } from '../../../UI/FormInput/FormInput';
 import { FormPasswordInput } from '../../../UI/FormPasswordInput/FormPasswordInput';
 import { FormShippingAddressInput } from '../../../UI/FormShippingAddressInput/FormShippingAddressInput';
-import { Error } from '../../../common/Error/Error';
+import { Error } from '../../../UI/Error/Error';
 import styles from './RegistrationPageMain.module.scss';
 import { handleRegistration } from '../../../../utils/authHandlers';
 
@@ -110,11 +110,11 @@ export function RegistrationPageMain(): React.ReactElement {
     setBillingCountry((e.target as HTMLSelectElement).value);
   };
 
-  const onSubmit: SubmitHandler<IRegistrationData> = (
+  const onSubmit: SubmitHandler<IRegistrationData> = async (
     registrationData: IRegistrationData,
-  ): void => {
-    console.log('RESULT', registrationData);
-    handleRegistration(registrationData);
+  ): Promise<void> => {
+    console.log(registrationData);
+    await handleRegistration(registrationData);
     handleRedirect();
   };
 
@@ -215,17 +215,15 @@ export function RegistrationPageMain(): React.ReactElement {
                 label="Set Shipping Address as default"
               />
             </div>
+
             <div className={styles.address_container}>
               <p className={styles.address_title}>Billing Address</p>
-              <label className={styles.checkbox_label} htmlFor="sameAddress">
-                <input
-                  className={styles.checkbox_input}
-                  id="sameAddress"
-                  type="checkbox"
-                  onClick={handleMatchingCheckbox}
-                />
-                Bill to Shipping Address
-              </label>
+              <FormShippingAddressInput
+                input={register('isSameAddress')}
+                type="checkbox"
+                label="Bill to Shipping Address"
+                onInput={handleMatchingCheckbox}
+              />
               <FormBillingAddressInput
                 type={inputService.createInputParams('billingStreet').type}
                 label={inputService.createInputParams('billingStreet').label}

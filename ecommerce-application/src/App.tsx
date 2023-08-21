@@ -7,7 +7,7 @@ import { NotFoundPage } from './components/Pages/NotFoundPage/NotFoundPage';
 import { RegistrationPage } from './components/Pages/RegistrationPage/RegistrationPage';
 
 import './App.css';
-import { Toast } from './components/common/Toast/Toast';
+import { Toast } from './components/UI/Toast/Toast';
 
 const router = createBrowserRouter([
   {

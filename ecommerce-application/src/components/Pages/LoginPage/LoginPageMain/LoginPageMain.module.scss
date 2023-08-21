@@ -61,3 +61,14 @@ $main-color-rose: #e22454;
   display: inline;
   content: '⚠ ';
 }
+
+.button_registration {
+    
+  * {
+    border: none;
+    background-color: inherit;
+    color: $main-color-rose;
+    font-size: 18px;
+  }
+
+}
