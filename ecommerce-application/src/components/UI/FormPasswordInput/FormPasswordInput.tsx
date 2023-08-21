@@ -27,12 +27,15 @@ export function FormPasswordInput(props: {
           ref={ref}
         />
         <button
-          className={styles.passwordBtn}
+          className={
+            showPassword
+              ? `${styles.password_button} ${styles.password_button__visible}`
+              : `${styles.password_button} ${styles.password_button__secure}`
+          }
           onClick={(): void => setShowPassword(!showPassword)}
           type="button"
-        >
-          {showPassword ? 'Hide' : 'Show'} Password
-        </button>
+          aria-label="show"
+        />
       </div>
     </label>
   );
