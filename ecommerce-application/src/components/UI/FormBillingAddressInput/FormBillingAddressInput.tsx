@@ -14,7 +14,7 @@ export function FormBillingAddressInput(props: {
   const id = `${name}Input`;
   return (
     <label className={styles.label} htmlFor={id}>
-      {label}
+      <span className={styles.label_block}>{label}</span>
       <input
         className={styles.input}
         id={id}
