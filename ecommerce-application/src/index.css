@@ -16,4 +16,7 @@ button {
 a {
   text-decoration: none;
   color: #232323;
+  &:hover{
+    color: orangered;
+  }
 }
