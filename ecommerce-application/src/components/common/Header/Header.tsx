@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import styles from './Header.module.css';
+import styles from './Header.module.scss';
 import { handleLogout } from '../../../utils/authHandlers';
 
 // eslint-disable-next-line max-lines-per-function
@@ -28,18 +28,30 @@ export function Header(): React.ReactElement {
         {isLogin ? (
           <ul>
             <li>
-              <button type="button" onClick={onClick}>
-                Logout
+              <button
+                type="button"
+                className={`${styles.button} ${styles.button_red}`}
+                onClick={onClick}
+              >
+                LOGOUT
               </button>
             </li>
           </ul>
         ) : (
           <ul>
             <li>
-              <Link to="/login">Login</Link>
+              <Link to="/login">
+                <span className={`${styles.button} ${styles.button_green}`}>
+                  LOGIN
+                </span>
+              </Link>
             </li>
             <li>
-              <Link to="/registration">Registration</Link>
+              <Link to="/registration">
+                <span className={`${styles.button} ${styles.button_green}`}>
+                  REGISTRATION
+                </span>
+              </Link>
             </li>
           </ul>
         )}
