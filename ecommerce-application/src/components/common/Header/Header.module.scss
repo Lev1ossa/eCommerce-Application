@@ -29,3 +29,9 @@ li {
   font-weight: bold;
   color: orangered;
 }
+
+@media (width <= 500px) {
+  ul {
+    display: block;
+  }
+}
