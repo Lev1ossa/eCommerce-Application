@@ -1,7 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import styles from './Header.module.scss';
 import { handleLogout } from '../../../utils/authHandlers';
+import logo from '../../../assets/img/logo.png';
+import styles from './Header.module.scss';
 
 // eslint-disable-next-line max-lines-per-function
 export function Header(): React.ReactElement {
@@ -22,7 +23,7 @@ export function Header(): React.ReactElement {
   return (
     <header className={styles.header}>
       <Link to="/">
-        <h1>Ecommerce-application</h1>
+        <img className={styles.logo} src={logo} alt="logo" />
       </Link>
       <nav>
         {userLoggedIn ? (
