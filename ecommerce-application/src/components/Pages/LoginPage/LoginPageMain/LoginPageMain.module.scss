@@ -1,0 +1,74 @@
+$main_block-background-color: #f0f3f8;
+$container-background-color: #ffffff;
+$main-color-rose: #e22454;
+
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: $main_block-background-color;
+}
+
+.container {
+  background-color: $container-background-color;
+  border-radius: 10px;
+  padding: 20px 10px;
+  margin: 20px 0;
+  width: 100%;
+  max-width: 500px;
+}
+
+.title {
+  font-size: calc(27px + (28 - 27) * ((100vw - 320px) / (1920 - 320)));
+  margin-bottom: calc(20px + (30 - 20) * ((100vw - 320px) / (1920 - 320)));
+  color: $main-color-rose;
+}
+
+.form {
+  font-size: 30px;
+}
+
+.login_btn {
+  padding: 5px;
+  font-size: 18px;
+  color: $container-background-color;
+  border-radius: 5px;
+  border: 0;
+  margin-bottom: 10px;
+  width: 100%;
+  background-color: $main-color-rose;
+}
+
+.signup_btn {
+  border: none;
+  background-color: inherit;
+  color: $main-color-rose;
+  font-size: 18px;
+}
+
+.text {
+  display: inline-block;
+  font-size: 16px;
+  margin-right: 5px;
+}
+
+.error {
+  color: $main-color-rose;
+  font-size: 16px;
+}
+
+.error::before {
+  display: inline;
+  content: '⚠ ';
+}
+
+.button_registration {
+    
+  * {
+    border: none;
+    background-color: inherit;
+    color: $main-color-rose;
+    font-size: 18px;
+  }
+
+}
