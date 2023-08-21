@@ -113,6 +113,7 @@ export function RegistrationPageMain(): React.ReactElement {
   const onSubmit: SubmitHandler<IRegistrationData> = async (
     registrationData: IRegistrationData,
   ): Promise<void> => {
+    console.log(registrationData);
     await handleRegistration(registrationData);
     handleRedirect();
   };
@@ -214,17 +215,15 @@ export function RegistrationPageMain(): React.ReactElement {
                 label="Set Shipping Address as default"
               />
             </div>
+
             <div className={styles.address_container}>
               <p className={styles.address_title}>Billing Address</p>
-              <label className={styles.checkbox_label} htmlFor="sameAddress">
-                <input
-                  className={styles.checkbox_input}
-                  id="sameAddress"
-                  type="checkbox"
-                  onClick={handleMatchingCheckbox}
-                />
-                Bill to Shipping Address
-              </label>
+              <FormShippingAddressInput
+                input={register('isSameAddress')}
+                type="checkbox"
+                label="Bill to Shipping Address"
+                onInput={handleMatchingCheckbox}
+              />
               <FormBillingAddressInput
                 type={inputService.createInputParams('billingStreet').type}
                 label={inputService.createInputParams('billingStreet').label}

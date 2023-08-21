@@ -73,6 +73,7 @@ export class ServiceInputParameters {
       billingCountry: [],
       isShippingAddressDefault: [],
       isBillingAddressDefault: [],
+      isSameAddress: [],
     };
     this.labels = {
       email: 'Email:',
