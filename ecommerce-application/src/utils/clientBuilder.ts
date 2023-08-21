@@ -47,7 +47,6 @@ export const getPasswordFlowApiRoot = (
   password: string,
   tokenCache: TokenCache,
 ): ApiRoot => {
-  console.log(1);
   const passwordAuthMiddlewareOptions: PasswordAuthMiddlewareOptions = {
     host: `https://auth.${import.meta.env.VITE_API_REGION}.commercetools.com`,
     projectKey,

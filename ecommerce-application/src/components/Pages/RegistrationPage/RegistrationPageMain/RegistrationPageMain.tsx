@@ -9,7 +9,7 @@ import { CountryInput } from '../../../UI/FormCounrtySelect/FormCountrySelect';
 import { FormInput } from '../../../UI/FormInput/FormInput';
 import { FormPasswordInput } from '../../../UI/FormPasswordInput/FormPasswordInput';
 import { FormShippingAddressInput } from '../../../UI/FormShippingAddressInput/FormShippingAddressInput';
-import { Error } from '../../../common/Error/Error';
+import { Error } from '../../../UI/Error/Error';
 import styles from './RegistrationPageMain.module.scss';
 import { handleRegistration } from '../../../../utils/authHandlers';
 
@@ -110,11 +110,10 @@ export function RegistrationPageMain(): React.ReactElement {
     setBillingCountry((e.target as HTMLSelectElement).value);
   };
 
-  const onSubmit: SubmitHandler<IRegistrationData> = (
+  const onSubmit: SubmitHandler<IRegistrationData> = async (
     registrationData: IRegistrationData,
-  ): void => {
-    console.log('RESULT', registrationData);
-    handleRegistration(registrationData);
+  ): Promise<void> => {
+    await handleRegistration(registrationData);
     handleRedirect();
   };
 

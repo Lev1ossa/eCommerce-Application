@@ -6,7 +6,7 @@ import { ServiceInputParameters } from '../../../../services/inputService';
 import { ILoginData, IRegistrationData } from '../../../../types/types';
 import { FormInput } from '../../../UI/FormInput/FormInput';
 import { FormPasswordInput } from '../../../UI/FormPasswordInput/FormPasswordInput';
-import { Error } from '../../../common/Error/Error';
+import { Error } from '../../../UI/Error/Error';
 import styles from './LoginPageMain.module.scss';
 import { handleLogin } from '../../../../utils/authHandlers';
 
@@ -15,7 +15,6 @@ export function LoginPageMain(): React.ReactElement {
   // const [, setPageForbidden] = useState(false);
   const navigate = useNavigate();
   const handleRedirect = (): void => {
-    console.log(localStorage.getItem('AAA-Ecom-refreshToken'));
     if (localStorage.getItem('AAA-Ecom-refreshToken')) {
       navigate('/');
     }
@@ -29,10 +28,7 @@ export function LoginPageMain(): React.ReactElement {
   const onSubmit: SubmitHandler<ILoginData> = async (
     loginData: ILoginData,
   ): Promise<void> => {
-    console.log('RESULT', loginData);
     await handleLogin(loginData);
-    console.log(4);
-    console.log(localStorage.getItem('AAA-Ecom-refreshToken'));
     handleRedirect();
   };
   const inputService = new ServiceInputParameters(register);

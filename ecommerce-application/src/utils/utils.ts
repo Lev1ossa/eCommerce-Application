@@ -1,4 +1,6 @@
+import { BaseAddress, CustomerDraft } from '@commercetools/platform-sdk';
 import { MINIMAL_ACCESS_AGE } from '../data/constants';
+import { IRegistrationData } from '../types/types';
 
 export const getFullYears = (date: string): number => {
   const birthDate = new Date(date);
@@ -18,4 +20,42 @@ export const checkDateValidity = (date: string): boolean | string => {
     getFullYears(date) >= MINIMAL_ACCESS_AGE ||
     `Sorry, you are under ${MINIMAL_ACCESS_AGE}`
   );
+};
+
+export const getClientData = (
+  registrationData: IRegistrationData,
+): CustomerDraft => {
+  const clientShippingAdress: BaseAddress = {
+    country: registrationData.shippingCountry,
+    city: registrationData.shippingCity,
+    streetName: registrationData.shippingStreet,
+    postalCode: registrationData.shippingPostalCode,
+  };
+  const clientBillingAdress: BaseAddress = {
+    country: registrationData.billingCountry,
+    city: registrationData.billingCity,
+    streetName: registrationData.billingStreet,
+    postalCode: registrationData.billingPostalCode,
+  };
+  const clientAddresses = [clientShippingAdress, clientBillingAdress];
+  const clientShippingAdressID = clientAddresses.indexOf(clientShippingAdress);
+  const clientBillingAdressID = clientAddresses.indexOf(clientBillingAdress);
+  const clientDefaultShippingAddress = registrationData.isShippingAddressDefault
+    ? clientShippingAdressID
+    : undefined;
+  const clientDefaultBillingAddress = registrationData.isBillingAddressDefault
+    ? clientBillingAdressID
+    : undefined;
+  return {
+    email: registrationData.email,
+    password: registrationData.password,
+    firstName: registrationData.userFirstName,
+    lastName: registrationData.userLastName,
+    dateOfBirth: registrationData.birthDate,
+    addresses: clientAddresses,
+    shippingAddresses: [clientShippingAdressID],
+    billingAddresses: [clientBillingAdressID],
+    defaultShippingAddress: clientDefaultShippingAddress,
+    defaultBillingAddress: clientDefaultBillingAddress,
+  };
 };

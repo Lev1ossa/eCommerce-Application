@@ -1,6 +1,5 @@
 import {
   ClientResponse,
-  CustomerDraft,
   CustomerSignInResult,
   MyCustomerSignin,
 } from '@commercetools/platform-sdk';
@@ -10,21 +9,15 @@ import {
   getPasswordFlowApiRoot,
 } from './clientBuilder';
 import { ILoginData, IRegistrationData } from '../types/types';
+import { getClientData } from './utils';
 
 const projectKey: string = import.meta.env.VITE_PROJECT_KEY;
 
 export const createUser = async (
-  data: IRegistrationData,
+  registrationData: IRegistrationData,
 ): Promise<ClientResponse<CustomerSignInResult>> => {
   const apiRoot = getClientCridentialsFlowApiRoot();
-  const clientData: CustomerDraft = {
-    email: data.email,
-    password: data.password,
-    firstName: data.userFirstName,
-    lastName: data.userLastName,
-    dateOfBirth: data.birthDate,
-  };
-  // apiRoot
+  const clientData = getClientData(registrationData);
   return apiRoot
     .withProjectKey({ projectKey })
     .customers()
@@ -33,16 +26,15 @@ export const createUser = async (
 };
 
 export const getUser = async (
-  data: ILoginData,
+  loginData: ILoginData,
   tokenCache: TokenCache,
 ): Promise<ClientResponse<CustomerSignInResult>> => {
-  const { email, password } = data;
+  const { email, password } = loginData;
   const apiRoot = getPasswordFlowApiRoot(email, password, tokenCache);
   const clientData: MyCustomerSignin = {
     email,
     password,
   };
-  console.log(2);
   return apiRoot
     .withProjectKey({ projectKey })
     .me()
