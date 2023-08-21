@@ -13,7 +13,7 @@ export function CountryInput(props: {
   const { onBlur, name, ref } = input;
   return (
     <label className={styles.label} htmlFor={name}>
-      {label}
+      <span className={styles.label_block}>{label}</span>
       <select
         className={styles.select}
         id={name}
