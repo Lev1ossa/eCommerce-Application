@@ -1,6 +1,5 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { ToastContainer } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { ServiceInputParameters } from '../../../../services/inputService';
 import { ILoginData, IRegistrationData } from '../../../../types/types';
@@ -60,12 +59,13 @@ export function LoginPageMain(): React.ReactElement {
             Log in
           </button>
         </form>
-        <p>Don&apos;t have an account yet?</p>
-        <button className={styles.signup_btn} type="button">
-          Sign up now
-        </button>
+        <div>
+          <p className={styles.text}>Don&apos;t have an account yet?</p>
+          <p className={styles.button_registration}>
+            <Link to="/registration">Sign up now</Link>
+          </p>
+        </div>
       </div>
-      <ToastContainer />
     </main>
   );
 }
