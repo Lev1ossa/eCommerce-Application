@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import logo from '../../../../assets/img/logo.png';
 import styles from './NotFoundPageMain.module.scss';
 
 // eslint-disable-next-line max-lines-per-function
@@ -15,7 +16,9 @@ export function NotFoundPageMain(): React.ReactElement {
         <div className={styles.wrapper}>
           <div className={styles.content}>
             <div className={styles.header}>
-              <div className={styles.logo}>Logo</div>
+              <Link to="/">
+                <img className={styles.logo} src={logo} alt="logo" />
+              </Link>
               <nav className={styles.nav}>
                 <ul className={styles.links}>
                   <Link to="/">
