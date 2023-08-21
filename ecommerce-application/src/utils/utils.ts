@@ -22,6 +22,7 @@ export const checkDateValidity = (date: string): boolean | string => {
   );
 };
 
+// eslint-disable-next-line max-lines-per-function
 export const getClientData = (
   registrationData: IRegistrationData,
 ): CustomerDraft => {
@@ -37,9 +38,13 @@ export const getClientData = (
     streetName: registrationData.billingStreet,
     postalCode: registrationData.billingPostalCode,
   };
-  const clientAddresses = [clientShippingAdress, clientBillingAdress];
+  const clientAddresses = registrationData.isSameAddress
+    ? [clientShippingAdress]
+    : [clientShippingAdress, clientBillingAdress];
   const clientShippingAdressID = clientAddresses.indexOf(clientShippingAdress);
-  const clientBillingAdressID = clientAddresses.indexOf(clientBillingAdress);
+  const clientBillingAdressID = registrationData.isSameAddress
+    ? clientShippingAdressID
+    : clientAddresses.indexOf(clientBillingAdress);
   const clientDefaultShippingAddress = registrationData.isShippingAddressDefault
     ? clientShippingAdressID
     : undefined;
