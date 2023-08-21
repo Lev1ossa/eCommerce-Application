@@ -8,28 +8,6 @@ $main-color-rose: #51983c;
   padding: 1rem 3rem;
   background-color: #64e44c;
   background: linear-gradient(to right, #78ffd6, #a8ff78);
-  .button {
-    padding: 10px;
-    border-radius: 10px;
-    color: white;
-    border: 2px solid white;
-  }
-  .button_green {
-    background-color: $main-color-rose;
-    transition: 0.3s;
-    &:hover {
-      box-shadow: 0 0 20px #51983c;
-      transition: 0.3s;
-    }
-  }
-  .button_red {
-    background-color: rgb(194, 38, 38);
-    transition: 0.3s;
-    &:hover {
-      box-shadow: 0 0 20px rgb(194, 38, 38);
-      transition: 0.3s;
-    }
-  }
 }
 
 ul {
@@ -45,4 +23,13 @@ li {
 .logo {
   width: 12rem;
   height: 5rem;
+}
+
+.active {
+  font-weight: bold;
+  color: orangered;
+}
+
+a.inactive:hover {
+  color: orangered;
 }

@@ -1,7 +1,7 @@
-import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { handleLogout } from '../../../utils/authHandlers';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import logo from '../../../assets/img/logo.png';
+import { handleLogout } from '../../../utils/authHandlers';
 import styles from './Header.module.scss';
 
 // eslint-disable-next-line max-lines-per-function
@@ -20,42 +20,49 @@ export function Header(): React.ReactElement {
     setUserLoggedIn(!!localStorage.getItem('AAA-Ecom-refreshToken'));
     handleRedirect();
   };
+  const navLinkClass = ({ isActive }: { isActive: boolean }): string => {
+    return isActive ? styles.active : styles.inactive;
+  };
   return (
     <header className={styles.header}>
       <Link to="/">
         <img className={styles.logo} src={logo} alt="logo" />
       </Link>
       <nav>
-        {userLoggedIn ? (
+        <ul>
           <ul>
             <li>
-              <button
-                type="button"
-                className={`${styles.button} ${styles.button_red}`}
-                onClick={logoutHandler}
-              >
-                LOGOUT
-              </button>
+              <NavLink className={navLinkClass} to="/">
+                Main
+              </NavLink>
             </li>
+            {!userLoggedIn && (
+              <li>
+                <NavLink className={navLinkClass} to="/login">
+                  Login
+                </NavLink>
+              </li>
+            )}
+            {!userLoggedIn && (
+              <li>
+                <NavLink className={navLinkClass} to="/registration">
+                  Registration
+                </NavLink>
+              </li>
+            )}
+            {userLoggedIn && (
+              <li>
+                <NavLink
+                  onClick={logoutHandler}
+                  className={styles.inactive}
+                  to="#"
+                >
+                  Logout
+                </NavLink>
+              </li>
+            )}
           </ul>
-        ) : (
-          <ul>
-            <li>
-              <Link to="/login">
-                <span className={`${styles.button} ${styles.button_green}`}>
-                  LOGIN
-                </span>
-              </Link>
-            </li>
-            <li>
-              <Link to="/registration">
-                <span className={`${styles.button} ${styles.button_green}`}>
-                  REGISTRATION
-                </span>
-              </Link>
-            </li>
-          </ul>
-        )}
+        </ul>
       </nav>
     </header>
   );
