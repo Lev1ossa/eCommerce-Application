@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom';
-import styles from './Header.module.css';
+import logo from '../../../assets/img/logo.png';
 import { handleLogout } from '../../../utils/authHandlers';
+import styles from './Header.module.css';
 
 export function Header(): React.ReactElement {
   return (
     <header className={styles.header}>
       <Link to="/">
-        <h1>Ecommerce-application</h1>
+        <img className={styles.logo} src={logo} alt="logo" />
       </Link>
       <nav>
         <ul>
