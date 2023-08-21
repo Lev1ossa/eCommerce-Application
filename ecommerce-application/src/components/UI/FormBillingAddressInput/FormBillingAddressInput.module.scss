@@ -10,8 +10,12 @@
 }
   
 .input {
+  height: 27px;
   font-size: 18px;
   flex: 1 0 auto;
   margin-left: 5px;
-  min-width: 20px;
+  width: 20px;
+  border-radius: 5px;
+  border: 1px solid rgb(171, 171, 171);
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
