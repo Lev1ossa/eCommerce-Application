@@ -30,38 +30,36 @@ export function Header(): React.ReactElement {
       </Link>
       <nav>
         <ul>
-          <ul>
+          <li>
+            <NavLink className={navLinkClass} to="/">
+              Main
+            </NavLink>
+          </li>
+          {!userLoggedIn && (
             <li>
-              <NavLink className={navLinkClass} to="/">
-                Main
+              <NavLink className={navLinkClass} to="/login">
+                Login
               </NavLink>
             </li>
-            {!userLoggedIn && (
-              <li>
-                <NavLink className={navLinkClass} to="/login">
-                  Login
-                </NavLink>
-              </li>
-            )}
-            {!userLoggedIn && (
-              <li>
-                <NavLink className={navLinkClass} to="/registration">
-                  Registration
-                </NavLink>
-              </li>
-            )}
-            {userLoggedIn && (
-              <li>
-                <NavLink
-                  onClick={logoutHandler}
-                  className={styles.inactive}
-                  to="#"
-                >
-                  Logout
-                </NavLink>
-              </li>
-            )}
-          </ul>
+          )}
+          {!userLoggedIn && (
+            <li>
+              <NavLink className={navLinkClass} to="/registration">
+                Registration
+              </NavLink>
+            </li>
+          )}
+          {userLoggedIn && (
+            <li>
+              <NavLink
+                onClick={logoutHandler}
+                className={styles.inactive}
+                to="#"
+              >
+                Logout
+              </NavLink>
+            </li>
+          )}
         </ul>
       </nav>
     </header>
