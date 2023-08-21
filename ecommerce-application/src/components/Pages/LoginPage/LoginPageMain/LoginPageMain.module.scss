@@ -1,19 +1,21 @@
 $main_block-background-color: #f0f3f8;
 $container-background-color: #ffffff;
-$main-color-rose: #e22454;
+$main-color-rose: #51983c;
 
 .main {
+  height: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: start;
+  padding: 0 1rem;
   background: $main_block-background-color;
 }
 
 .container {
   background-color: $container-background-color;
-  border-radius: 10px;
-  padding: 20px 10px;
-  margin: 20px 0;
+  border-radius: 1rem;
+  padding: 1rem 0.7rem;
+  margin: 2rem 0;
   width: 100%;
   max-width: 500px;
 }
@@ -25,7 +27,9 @@ $main-color-rose: #e22454;
 }
 
 .form {
-  font-size: 30px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
 }
 
 .login_btn {
