@@ -5,7 +5,7 @@ import { handleLogout } from '../../../utils/authHandlers';
 
 // eslint-disable-next-line max-lines-per-function
 export function Header(): React.ReactElement {
-  const [isLogin, changeLoginStatus] = useState(
+  const [userLoggedIn, setUserLoggedIn] = useState(
     !!localStorage.getItem('AAA-Ecom-refreshToken'),
   );
   const navigate = useNavigate();
@@ -14,9 +14,9 @@ export function Header(): React.ReactElement {
       navigate('/');
     }
   };
-  const onClick = (): void => {
+  const logoutHandler = (): void => {
     handleLogout();
-    changeLoginStatus(!!localStorage.getItem('AAA-Ecom-refreshToken'));
+    setUserLoggedIn(!!localStorage.getItem('AAA-Ecom-refreshToken'));
     handleRedirect();
   };
   return (
@@ -25,13 +25,13 @@ export function Header(): React.ReactElement {
         <h1>Ecommerce-application</h1>
       </Link>
       <nav>
-        {isLogin ? (
+        {userLoggedIn ? (
           <ul>
             <li>
               <button
                 type="button"
                 className={`${styles.button} ${styles.button_red}`}
-                onClick={onClick}
+                onClick={logoutHandler}
               >
                 LOGOUT
               </button>
