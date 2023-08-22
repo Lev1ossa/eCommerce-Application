@@ -13,7 +13,7 @@ export const getFullYears = (date: string): number => {
 };
 
 export const checkDateValidity = (date: string): boolean | string => {
-  if (new Date(date) > new Date()) {
+  if (new Date(date).getTime() > new Date().getTime()) {
     return "You can't be born in the future";
   }
   return (

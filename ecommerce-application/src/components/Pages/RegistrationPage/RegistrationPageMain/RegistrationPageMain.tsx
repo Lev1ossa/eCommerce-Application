@@ -113,8 +113,10 @@ export function RegistrationPageMain(): React.ReactElement {
   const onSubmit: SubmitHandler<IRegistrationData> = async (
     registrationData: IRegistrationData,
   ): Promise<void> => {
-    console.log(registrationData);
-    await handleRegistration(registrationData);
+    await handleRegistration(registrationData).then(
+      () => {},
+      () => {},
+    );
     handleRedirect();
   };
 
