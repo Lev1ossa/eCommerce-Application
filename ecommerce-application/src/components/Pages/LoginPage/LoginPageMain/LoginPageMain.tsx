@@ -11,7 +11,6 @@ import styles from './LoginPageMain.module.scss';
 
 // eslint-disable-next-line max-lines-per-function
 export function LoginPageMain(): React.ReactElement {
-  // const [, setPageForbidden] = useState(false);
   const navigate = useNavigate();
   const handleRedirect = (): void => {
     if (localStorage.getItem('AAA-Ecom-refreshToken')) {
@@ -27,7 +26,10 @@ export function LoginPageMain(): React.ReactElement {
   const onSubmit: SubmitHandler<ILoginData> = async (
     loginData: ILoginData,
   ): Promise<void> => {
-    await handleLogin(loginData);
+    await handleLogin(loginData).then(
+      () => {},
+      () => {},
+    );
     handleRedirect();
   };
   const inputService = new ServiceInputParameters(register);

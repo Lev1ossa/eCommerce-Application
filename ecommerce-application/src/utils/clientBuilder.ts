@@ -77,10 +77,3 @@ export const getPasswordFlowApiRoot = (
 
   return createApiBuilderFromCtpClient(client);
 };
-
-// export const createTokenCache = (email, password): void => {
-//   // const { email, password } = data;
-//   const tokenCache: TokenCache = {
-
-//   };
-// }

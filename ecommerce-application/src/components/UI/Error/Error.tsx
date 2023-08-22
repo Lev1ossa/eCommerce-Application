@@ -16,21 +16,5 @@ export function Error(props: {
         <p className={styles.error}>{message}</p>
       )}
     />
-    // <ErrorMessage
-    //   errors={errors}
-    //   name={name}
-    //   render={({
-    //     messages,
-    //   }): React.ReactElement | React.ReactElement[] | null => {
-    //     if (messages) {
-    //       return Object.entries(messages).map(([type, item]) => (
-    //         <p className={styles.error} key={type}>
-    //           {item}
-    //         </p>
-    //       ));
-    //     }
-    //     return null;
-    //   }}
-    // />
   );
 }
