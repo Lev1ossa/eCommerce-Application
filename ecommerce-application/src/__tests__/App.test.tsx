@@ -3,13 +3,19 @@ import { useForm } from 'react-hook-form';
 import { describe, expect, it, test } from 'vitest';
 
 import { useState } from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import App from '../App';
+import { LoginPage } from '../components/Pages/LoginPage/LoginPage';
 import { FormBillingAddressInput } from '../components/UI/FormBillingAddressInput/FormBillingAddressInput';
 import { CountryInput } from '../components/UI/FormCounrtySelect/FormCountrySelect';
 import { FormInput } from '../components/UI/FormInput/FormInput';
 import { FormPasswordInput } from '../components/UI/FormPasswordInput/FormPasswordInput';
 import { FormShippingAddressInput } from '../components/UI/FormShippingAddressInput/FormShippingAddressInput';
+import { Toast } from '../components/UI/Toast/Toast';
 import { IRegistrationData } from '../types/types';
+import { MainPage } from '../components/Pages/MainPage/MainPage';
+import { NotFoundPage } from '../components/Pages/NotFoundPage/NotFoundPage';
+import { RegistrationPage } from '../components/Pages/RegistrationPage/RegistrationPage';
 
 // App
 describe('Renders main page correctly', async () => {
@@ -157,5 +163,56 @@ describe('Renders FormPasswordInput correctly', async () => {
       // expect(password).toBeTypeOf('string');
       expect(label).toBe('Password:');
     });
+  });
+});
+
+// Toast
+describe('Renders Toast correctly', async () => {
+  it('Should render the Toast correctly', async () => {
+    render(<Toast />);
+  });
+});
+
+// LoginPage
+describe('Renders LoginPageMain correctly', async () => {
+  it('Should render the LoginPageMain correctly', async () => {
+    render(
+      <BrowserRouter>
+        <LoginPage />
+      </BrowserRouter>,
+    );
+  });
+});
+
+// MainPage
+describe('Renders MainPage correctly', async () => {
+  it('Should render the MainPage correctly', async () => {
+    render(
+      <BrowserRouter>
+        <MainPage />
+      </BrowserRouter>,
+    );
+  });
+});
+
+// NotFoundPage
+describe('Renders NotFoundPage correctly', async () => {
+  it('Should render the NotFoundPage correctly', async () => {
+    render(
+      <BrowserRouter>
+        <NotFoundPage />
+      </BrowserRouter>,
+    );
+  });
+});
+
+// RegistrationPage
+describe('Renders RegistrationPage correctly', async () => {
+  it('Should render the RegistrationPage correctly', async () => {
+    render(
+      <BrowserRouter>
+        <RegistrationPage />
+      </BrowserRouter>,
+    );
   });
 });
