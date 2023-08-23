@@ -6,6 +6,9 @@ import { useState } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import App from '../App';
 import { LoginPage } from '../components/Pages/LoginPage/LoginPage';
+import { MainPage } from '../components/Pages/MainPage/MainPage';
+import { NotFoundPage } from '../components/Pages/NotFoundPage/NotFoundPage';
+import { RegistrationPage } from '../components/Pages/RegistrationPage/RegistrationPage';
 import { FormBillingAddressInput } from '../components/UI/FormBillingAddressInput/FormBillingAddressInput';
 import { CountryInput } from '../components/UI/FormCounrtySelect/FormCountrySelect';
 import { FormInput } from '../components/UI/FormInput/FormInput';
@@ -13,9 +16,7 @@ import { FormPasswordInput } from '../components/UI/FormPasswordInput/FormPasswo
 import { FormShippingAddressInput } from '../components/UI/FormShippingAddressInput/FormShippingAddressInput';
 import { Toast } from '../components/UI/Toast/Toast';
 import { IRegistrationData } from '../types/types';
-import { MainPage } from '../components/Pages/MainPage/MainPage';
-import { NotFoundPage } from '../components/Pages/NotFoundPage/NotFoundPage';
-import { RegistrationPage } from '../components/Pages/RegistrationPage/RegistrationPage';
+import { checkDateValidity, getFullYears } from '../utils/utils';
 
 // App
 describe('Renders main page correctly', async () => {
@@ -213,6 +214,37 @@ describe('Renders RegistrationPage correctly', async () => {
       <BrowserRouter>
         <RegistrationPage />
       </BrowserRouter>,
+    );
+  });
+});
+
+// getFullYears
+describe('Function getFullYears works correctly', () => {
+  test('expect years count', () => {
+    expect(getFullYears('2023-08-01')).toBe(0);
+    expect(getFullYears('2022-08-01')).toBe(1);
+    expect(getFullYears('2021-08-01')).toBe(2);
+    expect(getFullYears('2012-08-01')).toBe(11);
+    expect(getFullYears('2015-08-01')).toBe(8);
+    expect(getFullYears('2035-08-01')).toBe(-12);
+    expect(getFullYears(new Date().toString())).toBe(0);
+  });
+});
+
+// checkDateValidity
+describe('Function getFullYears works correctly', () => {
+  test('expect years count', () => {
+    expect(checkDateValidity('2023-08-01')).toBe('Sorry, you are under 13');
+    expect(checkDateValidity('2022-08-01')).toBe('Sorry, you are under 13');
+    expect(checkDateValidity('2021-08-01')).toBe('Sorry, you are under 13');
+    expect(checkDateValidity('2012-08-01')).toBe('Sorry, you are under 13');
+    expect(checkDateValidity('2006-08-01')).toBe(true);
+    expect(checkDateValidity('2010-08-01')).toBe(true);
+    expect(checkDateValidity('2031-08-01')).toBe(
+      "You can't be born in the future",
+    );
+    expect(checkDateValidity(new Date().toString())).toBe(
+      'Sorry, you are under 13',
     );
   });
 });
