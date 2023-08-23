@@ -13,7 +13,7 @@ export const handleLogin = async (loginData: ILoginData): Promise<void> => {
         localStorage.setItem('AAA-Ecom-refreshToken', refreshToken);
       }
     },
-    (error) => {
+    (error: Error) => {
       showToast(ToastTypes.error, error.message);
     },
   );
@@ -31,7 +31,7 @@ export const handleRegistration = async (
         password: registrationData.password,
       });
     },
-    (error) => {
+    (error: Error) => {
       showToast(ToastTypes.error, error.message);
     },
   );

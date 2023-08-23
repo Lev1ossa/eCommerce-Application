@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import logo from '../../../assets/img/logo.png';
+
 import { handleLogout } from '../../../utils/authHandlers';
+
+import logo from '../../../assets/img/logo.png';
 import styles from './Header.module.scss';
 
 // eslint-disable-next-line max-lines-per-function

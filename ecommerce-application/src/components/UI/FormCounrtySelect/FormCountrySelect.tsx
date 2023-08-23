@@ -1,5 +1,7 @@
 import { UseFormRegisterReturn } from 'react-hook-form';
+
 import { countriesData } from '../../../data/constants';
+
 import styles from './FormCountrySelect.module.scss';
 
 export function CountryInput(props: {

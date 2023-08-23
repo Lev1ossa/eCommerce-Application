@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
+
 import logo from '../../../../assets/img/logo.png';
+
 import styles from './NotFoundPageMain.module.scss';
 
 // eslint-disable-next-line max-lines-per-function

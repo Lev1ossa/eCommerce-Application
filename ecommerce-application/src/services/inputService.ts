@@ -1,4 +1,5 @@
 import { UseFormRegister } from 'react-hook-form';
+
 import { emailRegExp, textRegExp } from '../data/constants';
 import {
   IInputParams,

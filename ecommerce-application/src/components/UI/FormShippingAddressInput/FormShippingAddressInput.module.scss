@@ -3,10 +3,12 @@
   margin-right: 5px;
   align-items: center;
   margin-bottom: 10px;
+
   .label_block {
     display: inline-block;
     width: 80px;
   }
+
 }
 
 .input {
@@ -35,9 +37,11 @@
 .label:has(.input[type='checkbox']) {
   position: relative;
   padding-left: 20px;
+
   .label_block {
     display: inline-block;
     width: initial;
   }
+  
 }
 

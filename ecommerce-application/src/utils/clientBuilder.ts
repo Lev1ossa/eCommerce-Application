@@ -10,6 +10,7 @@ import {
   createApiBuilderFromCtpClient,
   ApiRoot,
 } from '@commercetools/platform-sdk';
+import fetch from 'node-fetch';
 
 export const projectKey: string = import.meta.env.VITE_PROJECT_KEY;
 

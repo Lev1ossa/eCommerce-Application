@@ -2,6 +2,7 @@ import { postcodeValidator } from 'postcode-validator';
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
+
 import { ServiceInputParameters } from '../../../../services/inputService';
 import { IRegistrationData } from '../../../../types/types';
 import { FormBillingAddressInput } from '../../../UI/FormBillingAddressInput/FormBillingAddressInput';
@@ -10,8 +11,9 @@ import { FormInput } from '../../../UI/FormInput/FormInput';
 import { FormPasswordInput } from '../../../UI/FormPasswordInput/FormPasswordInput';
 import { FormShippingAddressInput } from '../../../UI/FormShippingAddressInput/FormShippingAddressInput';
 import { Error } from '../../../UI/Error/Error';
-import styles from './RegistrationPageMain.module.scss';
 import { handleRegistration } from '../../../../utils/authHandlers';
+
+import styles from './RegistrationPageMain.module.scss';
 
 // eslint-disable-next-line max-lines-per-function
 export function RegistrationPageMain(): React.ReactElement {
