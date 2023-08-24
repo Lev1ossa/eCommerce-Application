@@ -5,12 +5,16 @@ import { defineConfig } from 'vite';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: './',
   test: {
     coverage: {
       provider: 'v8',
       reporter: ['text'],
     },
     environment: 'jsdom',
+  },
+  resolve: {
+    alias: {
+      'node-fetch': 'isomorphic-fetch',
+    },
   },
 });

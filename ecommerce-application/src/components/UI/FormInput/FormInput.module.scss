@@ -1,0 +1,29 @@
+.label:has(.input[type='checkbox']) {
+  position: relative;
+  padding-left: 20px;
+}
+
+.input {
+  padding-left: 5px;
+  height: 27px;
+  width: 100%;
+  font-size: 20px;
+  margin: 10px 0;
+  font-family: inherit;
+  border-radius: 5px;
+  border: 1px solid rgb(171, 171, 171);
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.input[type='checkbox'] {
+  height: initial;
+  width: initial;
+  position: absolute;
+  left: 0;
+  top: 3px;
+  margin-top: 0;
+}
+
+.input[type='date'] {
+  font-size: 18px;
+}

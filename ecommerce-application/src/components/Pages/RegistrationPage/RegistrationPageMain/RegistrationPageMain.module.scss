@@ -1,0 +1,125 @@
+$main_block-background-color: #f0f3f8;
+$container-background-color: #ffffff;
+$main-color-rose: #51983c;
+
+.main_block {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  background: $main_block-background-color;
+  height: 100%;
+
+  .title {
+    font-size: calc(27px + (28 - 27) * ((100vw - 320px) / (1920 - 320)));
+    margin-bottom: calc(20px + (30 - 20) * ((100vw - 320px) / (1920 - 320)));
+    color: $main-color-rose;
+  }
+
+  .info_container {
+    flex: 1 0 47%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    margin-right: 10px;
+
+    @media screen and (max-width: 650px) {
+      flex: 1 0 50%;
+    }
+
+  }
+
+  .info_container:first-child {
+    border: 1px solid $main-color-rose;
+    border-radius: 10px;
+    padding: 10px;
+    position: relative;
+  }
+
+  .address_container {
+    border: 1px solid $main-color-rose;
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  .address_container:not(:last-child) {
+    margin-bottom: 20px;
+  }
+
+  .address_title {
+    position: absolute;
+    top: -10px;
+    left: 30px;
+    font-size: 14px;
+    background-color: $container-background-color;
+    color: $main-color-rose;
+  }
+
+  .form {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .submit_button {
+    padding: 5px;
+    font-size: 18px;
+    color: #fff;
+    border-radius: 5px;
+    border: 0;
+    margin-bottom: 20px;
+    width: 100%;
+    background-color: $main-color-rose;
+  }
+
+  .text {
+    display: inline-block;
+    color: grey;
+    font-size: 16px;
+    margin-right: 5px;
+  }
+
+  .container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .checkbox_label {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .checkbox_input {
+    margin-right: 10px;
+  }
+
+}
+  
+.wrapper {
+  background-color: $container-background-color;
+  border-radius: 10px;
+  padding: 20px 20px;
+  margin: 20px 0;
+  width: 70%;
+
+  @media screen and (max-width: 650px) {
+    width: 90%;
+  }
+
+  .button_login {
+    
+    a:hover {
+      color: #ff4500
+    }
+    
+    * {
+      border: none;
+      background-color: inherit;
+      color: $main-color-rose;
+      font-size: 18px;
+    }
+
+  }
+}
