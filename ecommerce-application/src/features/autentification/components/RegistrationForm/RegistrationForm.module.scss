@@ -1,17 +1,13 @@
-$main_block-background-color: #f0f3f8;
-$container-background-color: #ffffff;
-$main-color-rose: #51983c;
-
 .main_block {
   display: flex;
   justify-content: center;
   align-items: start;
-  background: $main_block-background-color;
+  background: var(--color-background-main-block);
   height: 100%;
   .title {
     font-size: calc(27px + (28 - 27) * ((100vw - 320px) / (1920 - 320)));
     margin-bottom: calc(20px + (30 - 20) * ((100vw - 320px) / (1920 - 320)));
-    color: $main-color-rose;
+    color: var(--color-dark-green);
   }
   .info_container {
     flex: 1 0 47%;
@@ -24,20 +20,18 @@ $main-color-rose: #51983c;
     }
   }
   .info_container:first-child {
-    border: 1px solid $main-color-rose;
+    border: 1px solid var(--color-dark-green);
     border-radius: 10px;
     padding: 10px;
     position: relative;
-    
   }
   .address_container {
-    border: 1px solid $main-color-rose;
+    border: 1px solid var(--color-dark-green);
     border-radius: 10px;
     padding: 10px;
     display: flex;
     flex-direction: column;
     position: relative;
-    
   }
   .address_container:not(:last-child) {
     margin-bottom: 20px;
@@ -47,8 +41,8 @@ $main-color-rose: #51983c;
     top: -10px;
     left: 30px;
     font-size: 14px;
-    background-color: $container-background-color;
-    color: $main-color-rose;
+    background-color: var(--color-background-container);
+    color: var(--color-dark-green);
   }
   .form {
     display: flex;
@@ -57,16 +51,16 @@ $main-color-rose: #51983c;
   .submit_button {
     padding: 5px;
     font-size: 18px;
-    color: #fff;
+    color: var(--color-text-light);
     border-radius: 5px;
     border: 0;
     margin-bottom: 20px;
     width: 100%;
-    background-color: $main-color-rose;
+    background-color: var(--color-dark-green);
   }
   .text {
     display: inline-block;
-    color: grey;
+    color: var(--color-text-gray);
     font-size: 16px;
     margin-right: 5px;
   }
@@ -83,9 +77,9 @@ $main-color-rose: #51983c;
     margin-right: 10px;
   }
 }
-  
+
 .wrapper {
-  background-color: $container-background-color;
+  background-color: var(--color-background-container);
   border-radius: 10px;
   padding: 20px 20px;
   margin: 20px 0;
@@ -95,15 +89,14 @@ $main-color-rose: #51983c;
   }
   .button_login {
     a:hover {
-      color: #ff4500
+      color: var(--color-orange);
     }
-    
+
     * {
       border: none;
       background-color: inherit;
-      color: $main-color-rose;
+      color: var(--color-dark-green);
       font-size: 18px;
     }
-
   }
 }

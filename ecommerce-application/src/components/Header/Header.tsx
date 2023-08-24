@@ -29,7 +29,7 @@ export function Header(): React.ReactElement {
         <img className={styles.logo} src={logo} alt="logo" />
       </Link>
       <nav>
-        <ul>
+        <ul className={styles.links}>
           <li>
             <NavLink className={navLinkClass} to="/">
               Main

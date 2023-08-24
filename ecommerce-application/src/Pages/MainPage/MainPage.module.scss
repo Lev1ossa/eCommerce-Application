@@ -4,9 +4,11 @@
 .links {
   display: flex;
   flex-direction: column;
-
   align-items: start;
   row-gap: 1rem;
+  li {
+    list-style-type: none;
+  }
 }
 .link {
   font-size: 1.5rem;

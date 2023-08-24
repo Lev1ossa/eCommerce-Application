@@ -1,10 +1,9 @@
 .error {
-    color: #e22454;
-    font-size: 16px;
+  color: var(--color-error);
+  font-size: 16px;
 }
-  
+
 .error::before {
-    display: inline;
-    content: '⚠ ';
+  display: inline;
+  content: '⚠ ';
 }
-  

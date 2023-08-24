@@ -1,23 +1,20 @@
-$main-color-rose: #51983c;
-
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   max-height: 6rem;
   padding: 1rem 3rem;
-  background-color: #64e44c;
-  background: linear-gradient(to right, #78ffd6, #a8ff78);
+  background-color: var(--color-light-green);
+  background: var(--gradient-ligth-green);
 }
 
-ul {
+.links {
   display: flex;
   align-items: center;
   column-gap: 2rem;
-}
-
-li {
-  list-style-type: none;
+  li {
+    list-style-type: none;
+  }
 }
 
 .logo {
@@ -27,13 +24,11 @@ li {
 
 .active {
   font-weight: bold;
-  color: orangered;
+  color: var(--color-orange);
 }
 
 @media (width <= 500px) {
-
-  ul {
+  .links {
     display: block;
   }
-  
 }

@@ -1,6 +1,22 @@
 :root {
+  --color-text-light: #ffffff;
+  --color-text-gray: #808080;
   --color-dark: #242424;
   --color-blue: #108ee9;
-  --color-green: #51983c;
-  --color-orange: #ff4500;
+  --color-green: #019362;
+  --color-dark-green: #51983c;
+  --color-light-green: #64e44c;
+  --color-orange: #fd7107;
+  --color-light-orange: #fdb024;
+  --color-light: #ededed;
+  --color-background-orange: #fd682d;
+  --color-error: #e22454;
+
+  --color-background-main-block: #f0f3f8;
+  --color-background-container: #ffffff;
+  --gradient-ligth-green: linear-gradient(to right, #78ffd6, #a8ff78);
+  
+  --shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  --shadow-small: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  --shadow-middle: rgba(0, 0, 0, 0.2) 0px 60px 40px -7px;
 }
