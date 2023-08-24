@@ -14,6 +14,7 @@ This e-commerce application has been developed by **AAA** team.
 
 - React
 - TypeScript
+- SCSS
 - Vite
 - Vitest
 - Husky
@@ -36,7 +37,6 @@ This e-commerce application has been developed by **AAA** team.
 - **build-dev**: build the project in development mode using Vite;
 - **build-prod**: build the project in production mode using Vite;
 - **preview**: start a local server to preview the built project;
-- **deploy**: build the project and deploy it to GitHub Pages;
 - **lint**: run ESLint to check for eslint errors in TypeScript and TypeScript React files;
 - **lint-fix**: run ESLint to fix eslint errors in TypeScript and TypeScript React files;
 - **prepare**: install Husky git hooks in the project;
