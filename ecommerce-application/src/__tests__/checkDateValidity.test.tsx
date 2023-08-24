@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 
-import { checkDateValidity } from '../utils/utils';
+import { checkDateValidity } from '../features/autentification/utils/utils';
 
 describe('Function checkDateValidity works correctly', () => {
   test('expect correct returned value from checkDateValidity', () => {

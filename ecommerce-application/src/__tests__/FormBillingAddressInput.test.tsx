@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { describe, expect, it, test } from 'vitest';
 
 import { useState } from 'react';
-import { FormBillingAddressInput } from '../components/UI/FormBillingAddressInput/FormBillingAddressInput';
+import { FormBillingAddressInput } from '../features/autentification/components/FormInputs/FormBillingAddressInput/FormBillingAddressInput';
 import { IRegistrationData } from '../types/types';
 
 describe('Renders FormBillingAddressInput correctly', async () => {
