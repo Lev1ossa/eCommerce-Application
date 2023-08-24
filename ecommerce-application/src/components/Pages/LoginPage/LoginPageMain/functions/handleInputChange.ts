@@ -1,16 +1,16 @@
-type Data = {
+type InputData = {
   username: string;
   password: string;
 };
 
 export function handleInputChange(
   event: React.ChangeEvent,
-  text: string,
-  setData: React.Dispatch<React.SetStateAction<Data>>,
-  data: Data,
+  inputText: string,
+  setData: React.Dispatch<React.SetStateAction<InputData>>,
+  inputData: InputData,
 ): void {
   const { target } = event;
   if (target instanceof HTMLInputElement) {
-    setData({ ...data, [text]: target.value });
+    setData({ ...inputData, [inputText]: target.value });
   }
 }

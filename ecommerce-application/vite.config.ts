@@ -17,5 +17,4 @@ export default defineConfig({
       'node-fetch': 'isomorphic-fetch',
     },
   },
-  base: './',
 });

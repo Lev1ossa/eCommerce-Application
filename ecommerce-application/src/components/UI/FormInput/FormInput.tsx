@@ -1,4 +1,5 @@
 import { UseFormRegisterReturn } from 'react-hook-form';
+
 import styles from './FormInput.module.scss';
 
 export function FormInput(props: {

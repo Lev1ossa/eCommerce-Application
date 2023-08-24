@@ -1,6 +1,8 @@
 import { ErrorMessage } from '@hookform/error-message';
 import { FieldErrors } from 'react-hook-form';
+
 import { IRegistrationData } from '../../../types/types';
+
 import styles from './Error.module.css';
 
 export function Error(props: {

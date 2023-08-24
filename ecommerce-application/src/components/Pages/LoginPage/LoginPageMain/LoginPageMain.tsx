@@ -1,12 +1,14 @@
 import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
+
 import { ServiceInputParameters } from '../../../../services/inputService';
 import { ILoginData, IRegistrationData } from '../../../../types/types';
 import { handleLogin } from '../../../../utils/authHandlers';
 import { Error } from '../../../UI/Error/Error';
 import { FormInput } from '../../../UI/FormInput/FormInput';
 import { FormPasswordInput } from '../../../UI/FormPasswordInput/FormPasswordInput';
+
 import styles from './LoginPageMain.module.scss';
 
 // eslint-disable-next-line max-lines-per-function

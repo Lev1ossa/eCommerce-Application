@@ -1,6 +1,7 @@
 import { Header } from '../../common/Header/Header';
 import { RegistrationPageMain } from './RegistrationPageMain/RegistrationPageMain';
-import styles from './RegistrationPage.module.css';
+
+import styles from './RegistrationPage.module.scss';
 
 export function RegistrationPage(): React.ReactElement {
   return (

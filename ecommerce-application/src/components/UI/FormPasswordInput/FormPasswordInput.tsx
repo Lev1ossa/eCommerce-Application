@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
+
 import styles from './FormPasswordInput.module.scss';
 
 export function FormPasswordInput(props: {

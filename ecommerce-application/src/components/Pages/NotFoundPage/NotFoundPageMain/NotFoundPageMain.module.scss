@@ -12,23 +12,30 @@
   grid-template-rows: repeat(2, 1fr);
   gap: 0;
   background-color: rgb(237, 237, 237);
+
   li {
     width: 100%;
     height: 100%;
   }
+
   &_one {
     background-color: #fd682d;
   }
+
   &_two {
     background-color: #fdb024;
   }
+
   &_three {
     background-color: #f5f0ec;
   }
+
   &_four {
     background-color: #019362;
   }
+
 }
+
 .page_content {
   position: absolute;
   top: 10%;
@@ -44,6 +51,7 @@
   background-color: #fcf7f3;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 60px 40px -7px;
 }
+
 .wrapper {
   width: 100%;
   height: 100%;
@@ -51,6 +59,7 @@
   position: relative;
   background: linear-gradient(to right, #019362, #fd682d, #fd682d, #fdb024);
 }
+
 .content {
   height: 100%;
   width: 100%;
@@ -60,6 +69,7 @@
   overflow: hidden;
   background: linear-gradient(to right, #78ffd6, #a8ff78);
 }
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -67,29 +77,37 @@
   width: 100%;
   padding-top: 2rem;
   padding: 0 2rem;
+
   .logo {
     width: 10rem;
   }
+
 }
+
 .nav {
   height: 2rem;
   display: flex;
 }
+
 .links {
   display: flex;
   font-size: 18px;
   column-gap: 3rem;
+
   li {
     padding: 0.5rem 1rem;
     border-radius: 1.2rem;
     transition: all 0.2s ease;
+
     &:hover {
       cursor: pointer;
       background-color: #50c12d;
       color: #fff;
       box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
     }
+
   }
+
 }
 
 .main {
@@ -98,25 +116,30 @@
   width: 100%;
   height: 100%;
   padding: 0 1rem;
+
   .message {
     width: 100%;
     display: flex;
     align-items: start;
     justify-content: center;
+
     &_content {
       display: flex;
       flex-direction: column;
       align-items: center;
       row-gap: 1rem;
     }
+
     .error {
       font-size: calc(1rem + 16vw);
       line-height: calc(1rem + 16vw);
     }
+
     .title {
       font-size: calc(1rem + 2vw);
       line-height: calc(1rem + 2vw);
     }
+
     .button {
       border: none;
       padding: 1.2rem 2rem;
@@ -126,11 +149,15 @@
       font-size: 1.1rem;
       transition: all 0.2s ease;
       box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
       &:hover {
         background-color: #fd7107;
       }
+
     }
+
   }
+
   .image {
     width: 100%;
     height: 100%;
@@ -139,9 +166,11 @@
     background-position: center;
     background-size: contain;
   }
+
 }
 
 @media (max-width: 991.98px) {
+
   .main {
     flex-direction: column;
     justify-content: start;
@@ -149,9 +178,11 @@
     padding-top: 0;
     height: 100%;
   }
+
   .message {
     margin-top: 2rem;
   }
+
   .page_content,
   .content,
   .wrapper {
@@ -160,13 +191,18 @@
   }
 
   .header {
+
     justify-content: center;
     padding: 0.5rem;
+
     .logo {
       display: none;
     }
+
     .links {
       column-gap: 5px;
     }
+    
   }
+
 }
