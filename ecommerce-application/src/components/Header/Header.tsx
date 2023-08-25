@@ -3,6 +3,7 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { logout } from '../../features/autentification';
 import logo from '../../assets/img/logo.png';
 import styles from './Header.module.scss';
+import Sidebar from './Sidebar/Sidebar';
 
 // eslint-disable-next-line max-lines-per-function
 export function Header(): React.ReactElement {
@@ -28,6 +29,7 @@ export function Header(): React.ReactElement {
       <Link to="/">
         <img className={styles.logo} src={logo} alt="logo" />
       </Link>
+      <Sidebar />
       <nav>
         <ul className={styles.links}>
           <li>
