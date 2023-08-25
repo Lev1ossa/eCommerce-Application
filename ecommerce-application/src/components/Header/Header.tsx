@@ -25,45 +25,47 @@ export function Header(): React.ReactElement {
     return isActive ? styles.active : styles.inactive;
   };
   return (
-    <header className={styles.header}>
-      <Link to="/">
-        <img className={styles.logo} src={logo} alt="logo" />
-      </Link>
-      <Sidebar />
-      <nav>
-        <ul className={styles.links}>
-          <li>
-            <NavLink className={navLinkClass} to="/">
-              Main
-            </NavLink>
-          </li>
-          {!userLoggedIn && (
+    <>
+      <Sidebar userLoggedIn={userLoggedIn} logoutHandler={logoutHandler} />
+      <header className={styles.header}>
+        <Link to="/">
+          <img className={styles.logo} src={logo} alt="logo" />
+        </Link>
+        <nav>
+          <ul className={styles.links}>
             <li>
-              <NavLink className={navLinkClass} to="/login">
-                Login
+              <NavLink className={navLinkClass} to="/">
+                Main
               </NavLink>
             </li>
-          )}
-          {!userLoggedIn && (
-            <li>
-              <NavLink className={navLinkClass} to="/registration">
-                Registration
-              </NavLink>
-            </li>
-          )}
-          {userLoggedIn && (
-            <li>
-              <NavLink
-                onClick={logoutHandler}
-                className={styles.inactive}
-                to="#"
-              >
-                Logout
-              </NavLink>
-            </li>
-          )}
-        </ul>
-      </nav>
-    </header>
+            {!userLoggedIn && (
+              <li>
+                <NavLink className={navLinkClass} to="/login">
+                  Login
+                </NavLink>
+              </li>
+            )}
+            {!userLoggedIn && (
+              <li>
+                <NavLink className={navLinkClass} to="/registration">
+                  Registration
+                </NavLink>
+              </li>
+            )}
+            {userLoggedIn && (
+              <li>
+                <NavLink
+                  onClick={logoutHandler}
+                  className={styles.inactive}
+                  to="#"
+                >
+                  Logout
+                </NavLink>
+              </li>
+            )}
+          </ul>
+        </nav>
+      </header>
+    </>
   );
 }

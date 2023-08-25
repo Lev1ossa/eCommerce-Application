@@ -3,7 +3,7 @@
 .bm-burger-button {
   display: none;
   @media screen and (max-width: $tablet-width) {
-      display: block;
+      display: inline-block;
       position: fixed;
   width: 36px;
   height: 30px;
@@ -44,7 +44,7 @@ Note: Beware of modifying this element as it can break the animations - you shou
 
 /* General sidebar styles */
 .bm-menu {
-  background: #373a47;
+  background: var(--gradient-ligth-green);
   padding: 2.5em 1.5em 0;
   font-size: 1.15em;
 }
@@ -63,6 +63,8 @@ Note: Beware of modifying this element as it can break the animations - you shou
 /* Individual item */
 .bm-item {
   display: inline-block;
+  font-size: 30px;
+  margin-bottom: 20px;
 }
 
 /* Styling of overlay */
