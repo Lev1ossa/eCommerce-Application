@@ -26,7 +26,11 @@ export function Header(): React.ReactElement {
   };
   return (
     <>
-      <Sidebar userLoggedIn={userLoggedIn} logoutHandler={logoutHandler} />
+      <Sidebar
+        className={navLinkClass}
+        userLoggedIn={userLoggedIn}
+        logoutHandler={logoutHandler}
+      />
       <header className={styles.header}>
         <Link to="/">
           <img className={styles.logo} src={logo} alt="logo" />
