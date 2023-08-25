@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 
-import { getFullYears } from '../utils/utils';
+import { getFullYears } from '../features/autentification/utils/utils';
 
 describe('Function getFullYears works correctly', () => {
   test('expect years count', () => {
