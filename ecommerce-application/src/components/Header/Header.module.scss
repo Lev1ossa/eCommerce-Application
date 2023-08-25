@@ -1,5 +1,3 @@
-@import "/src/App/styles/vars.scss";
-
 .header {
   display: flex;
   justify-content: space-between;
@@ -8,20 +6,6 @@
   padding: 1rem 3rem;
   background-color: var(--color-light-green);
   background: var(--gradient-ligth-green);
-}
-
-.links {
-  display: flex;
-  align-items: center;
-  column-gap: 2rem;
-  
-  @media (max-width: $tablet-width) {
-    display: none;
-  }
-
-  li {
-    list-style-type: none;
-  }
 }
 
 .logo {

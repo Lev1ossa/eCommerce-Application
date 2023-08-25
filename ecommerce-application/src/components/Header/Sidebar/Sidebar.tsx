@@ -3,8 +3,7 @@ import { slide as Menu } from 'react-burger-menu';
 import { NavLink } from 'react-router-dom';
 import './Sidebar.scss';
 
-// eslint-disable-next-line max-lines-per-function
-export default function Sidebar(props: {
+export function Sidebar(props: {
   className: ({ isActive }: { isActive: boolean }) => string;
   userLoggedIn: boolean;
   logoutHandler: React.MouseEventHandler<HTMLAnchorElement>;
