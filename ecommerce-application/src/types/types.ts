@@ -59,3 +59,13 @@ export enum ToastTypes {
   info = 'info',
   warning = 'warning',
 }
+
+export interface IProduct {
+  id: number;
+  name: string;
+  type: string;
+  category: string;
+  price: number;
+  tm: string;
+  img: string;
+}
