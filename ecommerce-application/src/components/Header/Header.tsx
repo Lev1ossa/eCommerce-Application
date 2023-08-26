@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { logout } from '../../features/autentification';
+import { handleLogout } from '../../features/autentification';
 import logo from '../../assets/img/logo.png';
 import styles from './Header.module.scss';
 import { Sidebar } from './Sidebar/Sidebar';
@@ -17,7 +17,7 @@ export function Header(): React.ReactElement {
     }
   };
   const logoutHandler = (): void => {
-    logout();
+    handleLogout();
     setUserLoggedIn(!!localStorage.getItem('AAA-Ecom-refreshToken'));
     handleRedirect();
   };
