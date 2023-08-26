@@ -1,6 +1,4 @@
 .catalog {
-  background-color: #fff;
-  height: 100%;
   display: flex;
   justify-content: center;
   align-items: start;
@@ -11,9 +9,8 @@
   height: 100%;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  grid-auto-rows: 200px;
-  gap: 5px;
-  background-color: aqua;
+  grid-auto-rows: 340px;
+  gap: 1rem;
 }
 .item {
   display: flex;
