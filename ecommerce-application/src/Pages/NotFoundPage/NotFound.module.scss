@@ -160,6 +160,11 @@
     height: 100%;
   }
 
+  .page_content {
+    left: 5%;
+    width: 90%;
+  }
+
   .header {
     justify-content: center;
     padding: 0.5rem;
@@ -169,5 +174,11 @@
     .links {
       column-gap: 5px;
     }
+  }
+}
+
+@media (max-width: 533.98px) {
+  .links {
+    font-size: 12px;
   }
 }

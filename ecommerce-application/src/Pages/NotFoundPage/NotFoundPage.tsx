@@ -24,6 +24,9 @@ export function NotFoundPage(): React.ReactElement {
                   <Link to="/">
                     <li>Home</li>
                   </Link>
+                  <Link to="/catalog">
+                    <li>Catalog</li>
+                  </Link>
                   <Link to="/login">
                     <li>Login</li>
                   </Link>
