@@ -3,6 +3,7 @@ import { slide as Menu } from 'react-burger-menu';
 import { NavLink } from 'react-router-dom';
 import './Sidebar.scss';
 
+// eslint-disable-next-line max-lines-per-function
 export function Sidebar(props: {
   className: ({ isActive }: { isActive: boolean }) => string;
   userLoggedIn: boolean;
@@ -12,6 +13,7 @@ export function Sidebar(props: {
   return (
     <nav>
       <Menu
+        styles={{ bmCrossButton: { width: '40px', height: '40px' } }}
         right
         disableCloseOnEsc
         customBurgerIcon={
