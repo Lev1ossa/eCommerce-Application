@@ -1,10 +1,11 @@
 import { NavLink } from 'react-router-dom';
 import { Header } from '../../components/Header/Header';
 import styles from './MainPage.module.scss';
+import { Footer } from '../../components/Footer/Footer';
 
 export function MainPage(): React.ReactElement {
   return (
-    <div>
+    <div className={styles.main_page}>
       <Header />
       <main className={styles.main}>
         <ul className={styles.links}>
@@ -30,6 +31,7 @@ export function MainPage(): React.ReactElement {
           </li>
         </ul>
       </main>
+      <Footer />
     </div>
   );
 }

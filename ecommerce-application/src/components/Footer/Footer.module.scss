@@ -1,0 +1,13 @@
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-height: 6rem;
+  padding: 1rem 3rem;
+  background-color: var(--color-light-green);
+  background: var(--gradient-ligth-green);
+}
+
+.label {
+  letter-spacing: 0.1rem;
+}
