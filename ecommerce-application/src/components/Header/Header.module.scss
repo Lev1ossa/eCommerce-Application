@@ -8,15 +8,6 @@
   background: var(--gradient-ligth-green);
 }
 
-.links {
-  display: flex;
-  align-items: center;
-  column-gap: 2rem;
-  li {
-    list-style-type: none;
-  }
-}
-
 .logo {
   width: 12rem;
   height: 5rem;
@@ -25,10 +16,4 @@
 .active {
   font-weight: bold;
   color: var(--color-orange);
-}
-
-@media (width <= 500px) {
-  .links {
-    display: block;
-  }
 }

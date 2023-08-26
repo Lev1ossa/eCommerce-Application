@@ -1,0 +1,15 @@
+@import "/src/App/styles/vars.scss";
+
+.links {
+  display: flex;
+  align-items: center;
+  column-gap: 2rem;
+  
+  @media (max-width: $tablet-width) {
+    display: none;
+  }
+
+  li {
+    list-style-type: none;
+  }
+}
