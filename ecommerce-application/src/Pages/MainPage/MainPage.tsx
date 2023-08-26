@@ -23,6 +23,11 @@ export function MainPage(): React.ReactElement {
               Registration
             </NavLink>
           </li>
+          <li>
+            <NavLink className={styles.link} to="/catalog">
+              Catalog
+            </NavLink>
+          </li>
         </ul>
       </main>
     </div>

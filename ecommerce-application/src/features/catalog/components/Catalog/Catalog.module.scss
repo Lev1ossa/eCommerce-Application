@@ -1,0 +1,19 @@
+.catalog {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  padding: 1rem;
+}
+.grid {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-auto-rows: 340px;
+  gap: 1rem;
+}
+.item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
