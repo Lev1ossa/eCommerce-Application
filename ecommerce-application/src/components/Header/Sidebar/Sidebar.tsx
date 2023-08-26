@@ -17,10 +17,10 @@ export function Sidebar(props: {
         right
         disableCloseOnEsc
         customBurgerIcon={
-          <img alt="burger_icon" src="src/assets/img/menu-1-svgrepo-com.png" />
+          <img alt="burger_icon" src="src/assets/img/burger-menu.png" />
         }
         customCrossIcon={
-          <img alt="arrow" src="src/assets/img/arrow-right-1-svgrepo-com.png" />
+          <img alt="arrow" src="src/assets/img/burger-arrow.png" />
         }
       >
         <NavLink className={`menu-item ${className}`} to="/">
