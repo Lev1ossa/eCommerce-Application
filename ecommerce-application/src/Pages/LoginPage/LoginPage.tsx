@@ -1,3 +1,4 @@
+import { Footer } from '../../components/Footer/Footer';
 import { Header } from '../../components/Header/Header';
 import { Login } from '../../features/autentification';
 import styles from './LoginPage.module.css';
@@ -7,6 +8,7 @@ export function LoginPage(): React.ReactElement {
     <div className={styles.loginPage__container}>
       <Header />
       <Login />
+      <Footer />
     </div>
   );
 }
