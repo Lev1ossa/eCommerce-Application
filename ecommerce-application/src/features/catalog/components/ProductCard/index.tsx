@@ -1,10 +1,9 @@
 import { IProduct } from '../../../../types/types';
-import styles from './Card.module.scss';
+import styles from './ProductCard.module.scss';
 
-export function Card(props: { product: IProduct }): JSX.Element {
+export function ProductCard(props: { product: IProduct }): React.ReactElement {
   const { product } = props;
   const { id, name, type, category, price, tm } = product;
-  console.log(id, name);
 
   return (
     <div className={styles.card}>

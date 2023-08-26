@@ -1,4 +1,4 @@
-import { Card } from '../Card';
+import { ProductCard } from '../ProductCard';
 import styles from './Catalog.module.scss';
 
 const testData = [
@@ -52,7 +52,7 @@ const testData = [
 export function Catalog(): React.ReactElement {
   const products = testData.map((product) => (
     <li key={product.id} className={styles.item}>
-      <Card product={product} />
+      <ProductCard product={product} />
     </li>
   ));
 
