@@ -3,20 +3,23 @@ import styles from './Product.module.scss';
 
 export function Product(): React.ReactElement {
   const product = useLocation();
-  console.log(product.state);
+  const { name, price, category, tm, description } = product.state;
 
   return (
     <div className={styles.product}>
       <div className={styles.container}>
         <div className={styles.slider}>SLIDER</div>
         <div className={styles.details}>
-          <div className={styles.name}>Lorem ipsum dolor sit.</div>
-          <div className={styles.price}>$ 1.55</div>
-          <div className={styles.category}>Citrus</div>
-          <div className={styles.trademark}>Victoria</div>
+          <div className={styles.name}>{name}</div>
+          <div className={styles.price}>$ {price}</div>
+          <div className={styles.category}>{category}</div>
+          <div className={styles.trademark}>{tm}</div>
           <button type="button" className={styles.button}>
             Add to cart
           </button>
+          <div className={styles.description}>
+            <strong>Description: </strong> {description}
+          </div>
         </div>
       </div>
     </div>

@@ -18,7 +18,7 @@
   height: 100%;
   display: flex;
   align-items: center;
-  padding: 1rem;
+  padding: 2rem;
   font-size: 2rem;
 }
 
@@ -26,16 +26,23 @@
   justify-content: center;
   background-color: cornsilk;
 }
+
 .details {
+  padding-top: 2rem;
   background-color: lightcyan;
   display: flex;
   flex-direction: column;
+  align-items: start;
   row-gap: 1.5rem;
+  text-align: justify;
+}
+
+.description {
+  font-size: 1rem;
 }
 
 .button {
   width: 100%;
-  max-width: 500px;
   align-self: center;
   display: flex;
   justify-content: center;
