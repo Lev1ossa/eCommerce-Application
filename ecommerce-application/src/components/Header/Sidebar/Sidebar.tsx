@@ -26,6 +26,9 @@ export function Sidebar(props: {
         <NavLink className={`menu-item ${className}`} to="/">
           Main
         </NavLink>
+        <NavLink className={`menu-item ${className}`} to="/catalog">
+          Catalog
+        </NavLink>
         {!userLoggedIn && (
           <NavLink className={`menu-item ${className}`} to="/login">
             Login
