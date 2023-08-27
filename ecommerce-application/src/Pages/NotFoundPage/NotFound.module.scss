@@ -135,7 +135,7 @@
   .image {
     width: 100%;
     height: 100%;
-    background-image: url(../../assets/404.png);
+    background-image: url('../../assets/img/404.png');
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
@@ -160,6 +160,11 @@
     height: 100%;
   }
 
+  .page_content {
+    left: 5%;
+    width: 90%;
+  }
+
   .header {
     justify-content: center;
     padding: 0.5rem;
@@ -169,5 +174,11 @@
     .links {
       column-gap: 5px;
     }
+  }
+}
+
+@media (max-width: 533.98px) {
+  .links {
+    font-size: 12px;
   }
 }

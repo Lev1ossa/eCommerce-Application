@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import styles from './Nav.module.scss';
 
+// eslint-disable-next-line max-lines-per-function
 export function Nav(props: {
   className: ({ isActive }: { isActive: boolean }) => string;
   userLoggedIn: boolean;
@@ -13,6 +14,11 @@ export function Nav(props: {
         <li>
           <NavLink className={className} to="/">
             Main
+          </NavLink>
+        </li>
+        <li>
+          <NavLink className={className} to="/catalog">
+            Catalog
           </NavLink>
         </li>
         {!userLoggedIn && (
