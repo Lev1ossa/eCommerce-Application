@@ -1,6 +1,10 @@
+import { useLocation } from 'react-router-dom';
 import styles from './Product.module.scss';
 
 export function Product(): React.ReactElement {
+  const product = useLocation();
+  console.log(product.state);
+
   return (
     <div className={styles.product}>
       <div className={styles.container}>

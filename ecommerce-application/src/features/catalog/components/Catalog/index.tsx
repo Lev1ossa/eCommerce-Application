@@ -13,7 +13,7 @@ const testData = [
   },
   {
     id: 2,
-    name: 'Orange',
+    name: 'Cherry',
     type: 'fruits',
     category: 'citrus',
     price: 1.04,
@@ -22,7 +22,7 @@ const testData = [
   },
   {
     id: 3,
-    name: 'Orange',
+    name: 'Mango',
     type: 'fruits',
     category: 'citrus',
     price: 1.04,
@@ -31,7 +31,7 @@ const testData = [
   },
   {
     id: 4,
-    name: 'Orange',
+    name: 'Banana',
     type: 'fruits',
     category: 'citrus',
     price: 1.04,
@@ -40,7 +40,7 @@ const testData = [
   },
   {
     id: 5,
-    name: 'Orange',
+    name: 'Strawberry',
     type: 'fruits',
     category: 'citrus',
     price: 1.04,
@@ -49,7 +49,7 @@ const testData = [
   },
   {
     id: 6,
-    name: 'Orange',
+    name: 'Melon',
     type: 'fruits',
     category: 'citrus',
     price: 1.04,
@@ -58,7 +58,7 @@ const testData = [
   },
   {
     id: 7,
-    name: 'Orange',
+    name: 'Apple',
     type: 'fruits',
     category: 'citrus',
     price: 1.04,
@@ -67,7 +67,7 @@ const testData = [
   },
   {
     id: 8,
-    name: 'Orange',
+    name: 'Lemon',
     type: 'fruits',
     category: 'citrus',
     price: 1.04,
