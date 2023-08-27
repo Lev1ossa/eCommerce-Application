@@ -5,7 +5,7 @@ import styles from './LoginPage.module.css';
 
 export function LoginPage(): React.ReactElement {
   return (
-    <div className={styles.loginPage__container}>
+    <div className={styles.login_page}>
       <Header />
       <LoginForm />
       <Footer />

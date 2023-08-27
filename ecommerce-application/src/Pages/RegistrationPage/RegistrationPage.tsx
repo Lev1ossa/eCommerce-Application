@@ -5,7 +5,7 @@ import styles from './RegistrationPage.module.css';
 
 export function RegistrationPage(): React.ReactElement {
   return (
-    <div className={styles.registrationPage__container}>
+    <div className={styles.registration_page}>
       <Header />
       <RegistrationForm />
       <Footer />
