@@ -1,4 +1,4 @@
-export function AccountContent(): React.ReactElement {
+export function Account(): React.ReactElement {
   return (
     <div>
       <h3>Account</h3>
