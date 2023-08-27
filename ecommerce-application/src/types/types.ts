@@ -69,3 +69,22 @@ export interface IProduct {
   tm: string;
   img: string;
 }
+
+export interface IUserData {
+  email: string;
+  firstName: string;
+  lastName: string;
+  dateOfBirth: string;
+  password: string;
+  addresses: {
+    id: string;
+    streetName: string;
+    postalCode: string;
+    city: string;
+    country: string;
+  }[];
+  defaultShippingAddressId: string;
+  defaultBillingAddressId: string;
+  shippingAddressIds: string[];
+  billingAddressIds: string[];
+}

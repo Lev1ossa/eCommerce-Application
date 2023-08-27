@@ -1,12 +1,31 @@
-export function Account(): React.ReactElement {
+import { IUserData } from '../../../../types/types';
+import styles from './Account.module.scss';
+
+export function Account(props: { userData: IUserData }): React.ReactElement {
+  const { userData } = props;
   return (
     <div>
       <h3>Account</h3>
-      <div>first name</div>
-      <div>second name</div>
-      <div>date of birth</div>
-      <div>email</div>
-      <div>password</div>
+      <div className={styles.info_block}>
+        <div className={styles.label}>First name:</div>
+        <div className={styles.text}>{userData.firstName}</div>
+      </div>
+      <div className={styles.info_block}>
+        <div className={styles.label}>Last name:</div>
+        <div className={styles.text}>{userData.lastName}</div>
+      </div>
+      <div className={styles.info_block}>
+        <div className={styles.label}>Date of birth:</div>
+        <div className={styles.text}>{userData.dateOfBirth}</div>
+      </div>
+      <div className={styles.info_block}>
+        <div className={styles.label}>Email:</div>
+        <div className={styles.text}>{userData.email}</div>
+      </div>
+      <div className={styles.info_block}>
+        <div className={styles.label}>Password:</div>
+        <div className={styles.text}>{userData.password}</div>
+      </div>
     </div>
   );
 }
