@@ -3,8 +3,8 @@ import { CatalogPage } from '../../Pages/CatalogPage/CatalogPage';
 import { LoginPage } from '../../Pages/LoginPage/LoginPage';
 import { MainPage } from '../../Pages/MainPage/MainPage';
 import { NotFoundPage } from '../../Pages/NotFoundPage/NotFoundPage';
-import { RegistrationPage } from '../../Pages/RegistrationPage/RegistrationPage';
 import { ProductPage } from '../../Pages/ProductPage/ProductPage';
+import { RegistrationPage } from '../../Pages/RegistrationPage/RegistrationPage';
 
 export const router = createBrowserRouter([
   {
@@ -15,7 +15,10 @@ export const router = createBrowserRouter([
       { path: 'login', element: <LoginPage /> },
       { path: 'registration', element: <RegistrationPage /> },
       { path: 'catalog', element: <CatalogPage /> },
-      { path: 'product', element: <ProductPage /> },
+      {
+        path: 'catalog/category/subcategory/:name',
+        element: <ProductPage />,
+      },
     ],
   },
 ]);
