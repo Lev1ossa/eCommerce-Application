@@ -1,39 +1,58 @@
-import { BiEditAlt } from 'react-icons/bi';
+import { MdOutlineCancel } from 'react-icons/md';
+import { BiEditAlt, BiSave } from 'react-icons/bi';
 import { AiOutlineUser } from 'react-icons/ai';
+import { useState } from 'react';
 import { IUserData } from '../../../../types/types';
 import styles from './Account.module.scss';
+import { AccountContentInactive } from '../AccountContentInactive/AccountContentInactive';
+import { AccountContentActive } from '../AccountContentActive/AccountContentActive';
 
+// eslint-disable-next-line max-lines-per-function
 export function Account(props: { userData: IUserData }): React.ReactElement {
   const { userData } = props;
+  const [editMode, setEditMode] = useState(false);
+  const handleEditButton = (): void => {
+    setEditMode(!editMode);
+  };
   return (
     <div className={styles.article}>
       <h3 className={styles.title}>
         <AiOutlineUser className={styles.icon} /> Account
-        <button className={styles.edit_button} type="button">
-          <BiEditAlt className={styles.edit_button_icon} />
-          Edit
-        </button>
+        {!editMode && (
+          <button
+            className={styles.edit_button}
+            onClick={handleEditButton}
+            type="button"
+          >
+            <BiEditAlt className={styles.edit_button_icon} />
+            Edit
+          </button>
+        )}
+        {editMode && (
+          <>
+            <button
+              className={styles.edit_button}
+              onClick={handleEditButton}
+              type="button"
+            >
+              <BiSave className={styles.edit_button_icon} />
+              Save
+            </button>
+            <button
+              className={styles.edit_button}
+              onClick={handleEditButton}
+              type="button"
+            >
+              <MdOutlineCancel className={styles.edit_button_icon} />
+              Cancel
+            </button>
+          </>
+        )}
       </h3>
-      <div className={styles.info_block}>
-        <div className={styles.label}>First name:</div>
-        <div className={styles.text}>{userData.firstName}</div>
-      </div>
-      <div className={styles.info_block}>
-        <div className={styles.label}>Last name:</div>
-        <div className={styles.text}>{userData.lastName}</div>
-      </div>
-      <div className={styles.info_block}>
-        <div className={styles.label}>Date of birth:</div>
-        <div className={styles.text}>{userData.dateOfBirth}</div>
-      </div>
-      <div className={styles.info_block}>
-        <div className={styles.label}>Email:</div>
-        <div className={styles.text}>{userData.email}</div>
-      </div>
-      <div className={styles.info_block}>
-        <div className={styles.label}>Password:</div>
-        <div className={styles.text}>{userData.password}</div>
-      </div>
+      {!editMode && (
+        <AccountContentInactive styles={styles} userData={userData} />
+      )}
+      {editMode && <AccountContentActive styles={styles} userData={userData} />}
     </div>
   );
 }
