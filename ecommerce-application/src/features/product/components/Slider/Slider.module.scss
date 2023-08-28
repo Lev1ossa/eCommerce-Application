@@ -1,0 +1,23 @@
+.swiper {
+  width: 100%;
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 600px;
+  max-height: 600px;
+}
+
+.swiper_slide {
+  align-self: center;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper_slide img {
+  width: 85%;
+  height: 85%;
+  object-fit: contain;
+}
