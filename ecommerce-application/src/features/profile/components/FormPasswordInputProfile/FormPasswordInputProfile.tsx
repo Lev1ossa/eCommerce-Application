@@ -20,9 +20,9 @@ export function FormPasswordInputProfile(props: {
   return (
     <label className={styles.info_block} htmlFor={id}>
       <p className={styles.label}>{label}</p>
-      <div>
+      <div className={styles.password_input_block}>
         <input
-          className={styles.text}
+          className={styles.input}
           id={id}
           value={currentValue}
           type={type}

@@ -16,7 +16,7 @@ export function FormInputProfile(props: {
     <label className={styles.info_block} htmlFor={id}>
       <p className={styles.label}>{label}</p>
       <input
-        className={styles.text}
+        className={styles.input}
         id={id}
         type={type}
         onChange={(e): void => {

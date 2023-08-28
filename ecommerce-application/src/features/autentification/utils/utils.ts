@@ -64,3 +64,7 @@ export const getClientData = (
     defaultBillingAddress: clientDefaultBillingAddress,
   };
 };
+
+export const changeDateView = (date: string): string => {
+  return date.split('-').reverse().join('. ');
+};
