@@ -1,3 +1,4 @@
+import { Slider } from '../Slider';
 import styles from './Product.module.scss';
 
 export function Product(props: { name: string }): React.ReactElement {
@@ -6,7 +7,9 @@ export function Product(props: { name: string }): React.ReactElement {
   return (
     <div className={styles.product}>
       <div className={styles.container}>
-        <div className={styles.slider}>SLIDER</div>
+        <div className={styles.slider}>
+          <Slider />
+        </div>
         <div className={styles.details}>
           <div className={styles.name}>{name}</div>
           <div className={styles.price}>$ 1.44</div>
