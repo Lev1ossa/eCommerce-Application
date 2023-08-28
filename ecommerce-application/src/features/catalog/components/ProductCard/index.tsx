@@ -9,7 +9,7 @@ export function ProductCard(props: { product: IProduct }): React.ReactElement {
   return (
     <div className={styles.card}>
       <img src={img} className={styles.image} alt="product" />
-      <Link to={`/product/${name}`} state={product}>
+      <Link to={`/catalog/category/subcategory/${name.toLowerCase()}`}>
         <div className={styles.description}>
           <div className={styles.product_info}>
             <strong className={styles.price}>${price}</strong>
