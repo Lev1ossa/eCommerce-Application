@@ -10,8 +10,8 @@ export function ShippingAddress(props: {
     (el) => el.id === shippingAddressIds,
   );
   return (
-    <div>
-      <h3>Shipping Address</h3>
+    <div className={styles.article}>
+      <h3 className={styles.title}>Shipping Address</h3>
       <div className={styles.info_block}>
         <div className={styles.label}>Street:</div>
         <div className={styles.text}>{addressData?.streetName}</div>

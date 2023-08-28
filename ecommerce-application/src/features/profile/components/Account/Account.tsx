@@ -4,8 +4,8 @@ import styles from './Account.module.scss';
 export function Account(props: { userData: IUserData }): React.ReactElement {
   const { userData } = props;
   return (
-    <div>
-      <h3>Account</h3>
+    <div className={styles.article}>
+      <h3 className={styles.title}>Account</h3>
       <div className={styles.info_block}>
         <div className={styles.label}>First name:</div>
         <div className={styles.text}>{userData.firstName}</div>

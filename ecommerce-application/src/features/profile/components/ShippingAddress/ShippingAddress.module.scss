@@ -1,11 +1,27 @@
-.info_block {
+.article {
+    padding-top: 20px;
+    text-align: left;
     display: flex;
+    flex-direction: column;
+    &:first-child {
+        margin-right: 30px;
+    }
+}
+
+.title {
+    margin-bottom: 15px;
+}
+
+.info_block {
+    margin-bottom: 20px;
 }
 
 .label {
-
+    margin-bottom: 5px;
 }
 
 .text{
-    
+    padding: 5px 0 5px 5px;
+    border: 2px solid var(--color-background-main-block);
+    width: 250px;
 }

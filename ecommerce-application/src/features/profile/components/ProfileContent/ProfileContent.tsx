@@ -48,6 +48,7 @@ const userData = {
   authenticationMode: 'Password', */
 };
 
+// eslint-disable-next-line max-lines-per-function
 export function ProfileContent(): React.ReactElement {
   const [activeArticle, setActiveArticle] = useState('account');
   const handleButtonAccount = (): void => {
@@ -61,19 +62,33 @@ export function ProfileContent(): React.ReactElement {
   };
   return (
     <main className={styles.container}>
-      <div>
+      <div className={styles.article}>
         <div>
-          <div clas />
-          <h3>{`${userData.firstName} ${userData.lastName}`}</h3>
+          <div className={styles.image} />
+          <h3
+            className={styles.title}
+          >{`${userData.firstName} ${userData.lastName}`}</h3>
         </div>
         <div className={styles.buttons_container}>
-          <button type="button" onClick={handleButtonAccount}>
+          <button
+            className={styles.button}
+            type="button"
+            onClick={handleButtonAccount}
+          >
             Account
           </button>
-          <button type="button" onClick={handleButtonShippingAddress}>
+          <button
+            className={styles.button}
+            type="button"
+            onClick={handleButtonShippingAddress}
+          >
             Shipping Address
           </button>
-          <button type="button" onClick={handleButtonBillingAddress}>
+          <button
+            className={styles.button}
+            type="button"
+            onClick={handleButtonBillingAddress}
+          >
             Billing Address
           </button>
         </div>
