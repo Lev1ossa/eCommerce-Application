@@ -1,5 +1,4 @@
-import { MdOutlineCancel } from 'react-icons/md';
-import { BiEditAlt, BiSave } from 'react-icons/bi';
+import { BiEditAlt } from 'react-icons/bi';
 import { AiOutlineUser } from 'react-icons/ai';
 import { useState } from 'react';
 import { IUserData } from '../../../../types/types';
@@ -28,31 +27,17 @@ export function Account(props: { userData: IUserData }): React.ReactElement {
             Edit
           </button>
         )}
-        {editMode && (
-          <>
-            <button
-              className={styles.edit_button}
-              onClick={handleEditButton}
-              type="button"
-            >
-              <BiSave className={styles.edit_button_icon} />
-              Save
-            </button>
-            <button
-              className={styles.edit_button}
-              onClick={handleEditButton}
-              type="button"
-            >
-              <MdOutlineCancel className={styles.edit_button_icon} />
-              Cancel
-            </button>
-          </>
-        )}
       </h3>
       {!editMode && (
         <AccountContentInactive styles={styles} userData={userData} />
       )}
-      {editMode && <AccountContentActive styles={styles} userData={userData} />}
+      {editMode && (
+        <AccountContentActive
+          styles={styles}
+          userData={userData}
+          handleEditButton={handleEditButton}
+        />
+      )}
     </div>
   );
 }

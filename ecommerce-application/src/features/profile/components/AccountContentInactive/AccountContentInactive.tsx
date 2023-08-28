@@ -8,15 +8,15 @@ export function AccountContentInactive(props: {
   return (
     <>
       <div className={styles.info_block}>
-        <div className={styles.label}>First name:</div>
+        <div className={styles.label}>First Name:</div>
         <div className={styles.text}>{userData.firstName}</div>
       </div>
       <div className={styles.info_block}>
-        <div className={styles.label}>Last name:</div>
+        <div className={styles.label}>Last Name:</div>
         <div className={styles.text}>{userData.lastName}</div>
       </div>
       <div className={styles.info_block}>
-        <div className={styles.label}>Date of birth:</div>
+        <div className={styles.label}>Date of Birth:</div>
         <div className={styles.text}>{userData.dateOfBirth}</div>
       </div>
       <div className={styles.info_block}>

@@ -35,6 +35,7 @@
 
 .info_block {
     margin-bottom: 20px;
+    position: relative;
 }
 
 .label {
@@ -45,4 +46,31 @@
     padding: 5px 0 5px 5px;
     border: 2px solid var(--color-background-main-block);
     width: 250px;
+    font-family: inherit;
+    font-size: inherit;
+    &:focus {
+        border: 2px solid var(--color-green);
+        outline: none;
+    }
+}
+
+.edit_buttons_container {
+    display: flex;
+    margin-bottom: 15px;
+    .edit_button {
+        margin: 0 10px 0 0;
+    }
+}
+
+.password_button {
+    background-color: inherit;
+    border: none;
+    position: absolute;
+    top: 30px;
+    right: 5px;
+}
+
+.password_icon {
+   width: 20px;
+   height: 20px;
 }
