@@ -35,10 +35,11 @@
 }
 
 .button {
+    display: flex;
     font-family: inherit;
     width: 250px;
     border: none;
-    padding: 10px 0;
+    padding: 10px 10px;
     margin-bottom: 5px;
     position: relative;
     &::after {
@@ -48,4 +49,20 @@
         right: 10px;
         font-size: 20px;
     }
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0px;
+        left: 32px;
+        font-size: 20px;
+        width: 2px;
+        background-color: rgba(166, 170, 170, 0.719);
+        height: 100%;
+    }
+}
+
+.icon {
+    margin-right: 30px;
+    width: 15px;
+    height: 15px;
 }

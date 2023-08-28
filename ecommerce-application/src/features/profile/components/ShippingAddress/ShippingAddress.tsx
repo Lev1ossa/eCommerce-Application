@@ -1,3 +1,5 @@
+import { LiaShippingFastSolid } from 'react-icons/lia';
+import { BiEditAlt } from 'react-icons/bi';
 import { IUserData } from '../../../../types/types';
 import styles from './ShippingAddress.module.scss';
 
@@ -11,7 +13,14 @@ export function ShippingAddress(props: {
   );
   return (
     <div className={styles.article}>
-      <h3 className={styles.title}>Shipping Address</h3>
+      <h3 className={styles.title}>
+        <LiaShippingFastSolid className={styles.icon} />
+        Shipping Address
+        <button className={styles.edit_button} type="button">
+          <BiEditAlt className={styles.edit_button_icon} />
+          Edit
+        </button>
+      </h3>
       <div className={styles.info_block}>
         <div className={styles.label}>Street:</div>
         <div className={styles.text}>{addressData?.streetName}</div>

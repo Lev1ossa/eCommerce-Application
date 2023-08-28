@@ -8,8 +8,29 @@
     }
 }
 
+.icon {
+    margin-right: 10px;
+    width: 30px;
+    height: 30px;
+}
+
 .title {
     margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.edit_button {
+    margin-left: 50px;
+    background-color: var(--color-background-main-block);
+    border: 2px solid var(--color-background-main-block);
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+}
+
+.edit_button_icon {
+    margin-right: 5px;
 }
 
 .info_block {

@@ -1,4 +1,7 @@
+import { AiOutlineUser } from 'react-icons/ai';
+import { BsCreditCard } from 'react-icons/bs';
 import { useState } from 'react';
+import { LiaShippingFastSolid } from 'react-icons/lia';
 import { ProfileInfo } from '../ProfileInfo/ProfileInfo';
 
 import styles from './ProfileContent.module.scss';
@@ -75,6 +78,7 @@ export function ProfileContent(): React.ReactElement {
             type="button"
             onClick={handleButtonAccount}
           >
+            <AiOutlineUser className={styles.icon} />
             Account
           </button>
           <button
@@ -82,6 +86,7 @@ export function ProfileContent(): React.ReactElement {
             type="button"
             onClick={handleButtonShippingAddress}
           >
+            <LiaShippingFastSolid className={styles.icon} />
             Shipping Address
           </button>
           <button
@@ -89,6 +94,7 @@ export function ProfileContent(): React.ReactElement {
             type="button"
             onClick={handleButtonBillingAddress}
           >
+            <BsCreditCard className={styles.icon} />
             Billing Address
           </button>
         </div>

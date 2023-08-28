@@ -1,3 +1,5 @@
+import { BiEditAlt } from 'react-icons/bi';
+import { AiOutlineUser } from 'react-icons/ai';
 import { IUserData } from '../../../../types/types';
 import styles from './Account.module.scss';
 
@@ -5,7 +7,13 @@ export function Account(props: { userData: IUserData }): React.ReactElement {
   const { userData } = props;
   return (
     <div className={styles.article}>
-      <h3 className={styles.title}>Account</h3>
+      <h3 className={styles.title}>
+        <AiOutlineUser className={styles.icon} /> Account
+        <button className={styles.edit_button} type="button">
+          <BiEditAlt className={styles.edit_button_icon} />
+          Edit
+        </button>
+      </h3>
       <div className={styles.info_block}>
         <div className={styles.label}>First name:</div>
         <div className={styles.text}>{userData.firstName}</div>
