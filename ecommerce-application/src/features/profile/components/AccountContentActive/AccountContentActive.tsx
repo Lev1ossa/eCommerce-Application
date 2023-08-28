@@ -1,4 +1,4 @@
-import { /* SubmitHandler, */ useForm } from 'react-hook-form';
+import { /* SubmitHandler, */ SubmitHandler, useForm } from 'react-hook-form';
 import { BiSave } from 'react-icons/bi';
 import { MdOutlineCancel } from 'react-icons/md';
 import { IRegistrationData, IUserData } from '../../../../types/types';
@@ -18,19 +18,18 @@ export function AccountContentActive(props: {
   const {
     register,
     formState: { errors },
-    /* handleSubmit, */
+    handleSubmit,
   } = useForm<IRegistrationData>({
     mode: 'onChange',
   });
   const inputService = new ServiceInputParameters(register);
-  /* const onSubmit: SubmitHandler<IRegistrationData> = (
-    registrationData: IRegistrationData,
+  const onSubmit: SubmitHandler<IRegistrationData> = (
+    data: IRegistrationData,
   ): void => {
-    console.log(registrationData);
-  }; */
-
+    console.log('RESULT', data);
+  };
   return (
-    <>
+    <form className={styles.form} onSubmit={handleSubmit(onSubmit)} noValidate>
       <FormInputProfile
         input={inputService.createInputParams('userFirstName').input}
         type={inputService.createInputParams('userFirstName').type}
@@ -72,7 +71,7 @@ export function AccountContentActive(props: {
       />
       <Error errors={errors} name="password" />
       <div className={styles.edit_buttons_container}>
-        <button className={styles.edit_button} type="button">
+        <button className={styles.edit_button} type="submit">
           <BiSave className={styles.edit_button_icon} />
           Save
         </button>
@@ -85,6 +84,6 @@ export function AccountContentActive(props: {
           Cancel
         </button>
       </div>
-    </>
+    </form>
   );
 }

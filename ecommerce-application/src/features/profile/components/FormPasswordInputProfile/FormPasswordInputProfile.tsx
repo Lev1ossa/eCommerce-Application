@@ -15,6 +15,7 @@ export function FormPasswordInputProfile(props: {
   let { type } = props;
   const { onChange, onBlur, name, ref } = input;
   const id = `${name}Input`;
+  const [currentValue, setCurrentValue] = useState(value);
   type = showPassword ? 'text' : 'password';
   return (
     <label className={styles.info_block} htmlFor={id}>
@@ -23,9 +24,12 @@ export function FormPasswordInputProfile(props: {
         <input
           className={styles.text}
           id={id}
-          value={value}
+          value={currentValue}
           type={type}
-          onChange={onChange}
+          onChange={(e): void => {
+            onChange(e);
+            setCurrentValue(e.target.value);
+          }}
           onBlur={onBlur}
           name={name}
           ref={ref}
@@ -40,7 +44,6 @@ export function FormPasswordInputProfile(props: {
             <PiEyeBold className={styles.password_icon} />
           </button>
         )}
-
         {!showPassword && (
           <button
             className={styles.password_button}
