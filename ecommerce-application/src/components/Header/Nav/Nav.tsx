@@ -21,6 +21,11 @@ export function Nav(props: {
             Profile
           </NavLink>
         </li>
+        <li>
+          <NavLink className={className} to="/catalog">
+            Catalog
+          </NavLink>
+        </li>
         {!userLoggedIn && (
           <li>
             <NavLink className={className} to="/login">

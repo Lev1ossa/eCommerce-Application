@@ -1,3 +1,1 @@
-import { Catalog } from './components/Catalog';
-
-export { Catalog };
+export { Catalog } from './components/Catalog';

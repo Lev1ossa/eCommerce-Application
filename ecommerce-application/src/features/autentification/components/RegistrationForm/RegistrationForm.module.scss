@@ -3,7 +3,7 @@
   justify-content: center;
   align-items: start;
   background: var(--color-background-main-block);
-  height: 100%;
+  flex-grow: 1;
   .title {
     font-size: calc(27px + (28 - 27) * ((100vw - 320px) / (1920 - 320)));
     margin-bottom: calc(20px + (30 - 20) * ((100vw - 320px) / (1920 - 320)));

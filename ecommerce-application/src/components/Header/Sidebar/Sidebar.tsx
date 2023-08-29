@@ -10,21 +10,29 @@ export function Sidebar(props: {
   logoutHandler: React.MouseEventHandler<HTMLAnchorElement>;
 }): React.ReactElement {
   const { className, userLoggedIn, logoutHandler } = props;
+  const burgerIconUrl = new URL(
+    '../../../assets/img/burger-menu.png',
+    import.meta.url,
+  ).href;
+  const burgerArrowUrl = new URL(
+    '../../../assets/img/burger-arrow.png',
+    import.meta.url,
+  ).href;
+
   return (
     <nav>
       <Menu
         styles={{ bmCrossButton: { width: '40px', height: '40px' } }}
         right
         disableCloseOnEsc
-        customBurgerIcon={
-          <img alt="burger_icon" src="src/assets/img/burger-menu.png" />
-        }
-        customCrossIcon={
-          <img alt="arrow" src="src/assets/img/burger-arrow.png" />
-        }
+        customBurgerIcon={<img alt="burger_icon" src={burgerIconUrl} />}
+        customCrossIcon={<img alt="arrow" src={burgerArrowUrl} />}
       >
         <NavLink className={`menu-item ${className}`} to="/">
           Main
+        </NavLink>
+        <NavLink className={`menu-item ${className}`} to="/catalog">
+          Catalog
         </NavLink>
         {!userLoggedIn && (
           <NavLink className={`menu-item ${className}`} to="/login">
