@@ -1,22 +1,20 @@
-import { IUserData } from '../../../../types/types';
+import { IAddressData } from '../../../../types/types';
 import { getCountryName } from '../../../autentification/utils/utils';
 
 // eslint-disable-next-line max-lines-per-function
-export function ShippingAddressInactive(props: {
+export function AddressInactive(props: {
   styles: CSSModuleClasses;
-  userData: IUserData;
+  addressData: IAddressData;
 }): React.ReactElement {
-  const { styles, userData } = props;
-  const shippingAddressIds = userData.shippingAddressIds[0];
-  const addressData = userData.addresses.find(
-    (el) => el.id === shippingAddressIds,
-  );
+  const { styles, addressData } = props;
+
   let countryInputValue;
   if (addressData?.country) {
     countryInputValue = getCountryName(addressData?.country);
   }
   return (
-    <>
+    <div className={styles.info_blocks_container}>
+      <p className={styles.container_subtitle}>Shipping Address</p>
       <div className={styles.info_block}>
         <div className={styles.label}>Street:</div>
         <div className={styles.text}>{addressData?.streetName}</div>
@@ -33,6 +31,6 @@ export function ShippingAddressInactive(props: {
         <div className={styles.label}>Postal Code:</div>
         <div className={styles.text}>{addressData?.postalCode}</div>
       </div>
-    </>
+    </div>
   );
 }

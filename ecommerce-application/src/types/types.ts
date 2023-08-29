@@ -76,15 +76,17 @@ export interface IUserData {
   lastName: string;
   dateOfBirth: string;
   password: string;
-  addresses: {
-    id: string;
-    streetName: string;
-    postalCode: string;
-    city: string;
-    country: string;
-  }[];
+  addresses: IAddressData[];
   defaultShippingAddressId: string;
   defaultBillingAddressId: string;
   shippingAddressIds: string[];
   billingAddressIds: string[];
+}
+
+export interface IAddressData {
+  id: string;
+  streetName: string;
+  postalCode: string;
+  city: string;
+  country: string;
 }
