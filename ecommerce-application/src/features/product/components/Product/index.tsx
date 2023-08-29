@@ -3,6 +3,7 @@ import { Modal } from '../../../modal';
 import { Slider } from '../Slider';
 import styles from './Product.module.scss';
 
+// eslint-disable-next-line max-lines-per-function
 export function Product(props: { name: string }): React.ReactElement {
   const { name } = props;
   const [modalActive, setModalActive] = useState(false);
@@ -34,6 +35,16 @@ export function Product(props: { name: string }): React.ReactElement {
       </div>
       <Modal active={modalActive} setActive={setModalActive}>
         <div className={styles.slider}>
+          <header className={styles.modal_header}>
+            <h3>{name}</h3>
+            <button
+              type="button"
+              className={styles.modal_button}
+              onClick={(): void => setModalActive(false)}
+            >
+              X
+            </button>
+          </header>
           <Slider setActive={setModalActive} />
         </div>
       </Modal>

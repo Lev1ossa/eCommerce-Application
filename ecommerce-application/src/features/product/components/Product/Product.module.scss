@@ -81,7 +81,25 @@
     background-color: var(--color-orange);
   }
 }
-
+.modal_header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.modal_button {
+  border: none;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  font-size: 2rem;
+  &:hover {
+    color: var(--color-orange);
+  }
+}
 @media (max-width: 991.98px) {
   .product {
     padding: 1rem 0;
