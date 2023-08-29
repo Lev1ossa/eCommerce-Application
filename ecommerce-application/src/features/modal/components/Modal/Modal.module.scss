@@ -18,6 +18,8 @@
   pointer-events: all;
 }
 .content {
+  width: 90%;
+  height: 90%;
   padding: 1rem;
   border-radius: 1rem;
   background-color: white;
@@ -27,4 +29,10 @@
 
 .content_active {
   transform: scale(1);
+}
+
+@media (max-width: 991.98px) {
+  .content {
+    padding: 0;
+  }
 }

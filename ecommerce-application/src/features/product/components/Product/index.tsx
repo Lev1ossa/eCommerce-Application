@@ -34,7 +34,7 @@ export function Product(props: { name: string }): React.ReactElement {
         </div>
       </div>
       <Modal active={modalActive} setActive={setModalActive}>
-        <div className={styles.slider}>
+        <div className={styles.slider_modal}>
           <header className={styles.modal_header}>
             <h3>{name}</h3>
             <button
