@@ -11,12 +11,8 @@ export function Product(props: { name: string }): React.ReactElement {
     <>
       <div className={styles.product}>
         <div className={styles.container}>
-          <div
-            className={styles.slider}
-            onClick={(): void => setModalActive(true)}
-            aria-hidden
-          >
-            <Slider />
+          <div className={styles.slider}>
+            <Slider setActive={setModalActive} />
           </div>
           <div className={styles.details}>
             <div className={styles.name}>{name}</div>
@@ -36,7 +32,11 @@ export function Product(props: { name: string }): React.ReactElement {
           </div>
         </div>
       </div>
-      <Modal active={modalActive} setActive={setModalActive} />
+      <Modal active={modalActive} setActive={setModalActive}>
+        <div className={styles.slider}>
+          <Slider setActive={setModalActive} />
+        </div>
+      </Modal>
     </>
   );
 }

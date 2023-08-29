@@ -4,8 +4,9 @@ import styles from './Modal.module.scss';
 export function Modal(props: {
   active: boolean;
   setActive: Dispatch<SetStateAction<boolean>>;
+  children: React.ReactNode;
 }): React.ReactElement {
-  const { active, setActive } = props;
+  const { active, setActive, children } = props;
   return (
     <div
       className={
@@ -21,7 +22,7 @@ export function Modal(props: {
         onClick={(e): void => e.stopPropagation()}
         aria-hidden
       >
-        modal
+        {children}
       </div>
     </div>
   );
