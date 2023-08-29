@@ -10,6 +10,8 @@
 }
 
 .title {
+    display: flex;
+    justify-content: space-between;
     margin-bottom: 15px;
     display: flex;
     align-items: center;
