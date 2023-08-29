@@ -17,6 +17,11 @@ export function Nav(props: {
           </NavLink>
         </li>
         <li>
+          <NavLink className={className} to="/profile">
+            Profile
+          </NavLink>
+        </li>
+        <li>
           <NavLink className={className} to="/catalog">
             Catalog
           </NavLink>

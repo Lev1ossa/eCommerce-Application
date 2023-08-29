@@ -5,6 +5,7 @@ import { MainPage } from '../../Pages/MainPage/MainPage';
 import { NotFoundPage } from '../../Pages/NotFoundPage/NotFoundPage';
 import { ProductPage } from '../../Pages/ProductPage/ProductPage';
 import { RegistrationPage } from '../../Pages/RegistrationPage/RegistrationPage';
+import { ProfilePage } from '../../Pages/ProfilePage/ProfilePage';
 
 export const router = createBrowserRouter([
   {
@@ -12,6 +13,7 @@ export const router = createBrowserRouter([
     errorElement: <NotFoundPage />,
     children: [
       { path: '', element: <MainPage /> },
+      { path: 'profile', element: <ProfilePage /> },
       { path: 'login', element: <LoginPage /> },
       { path: 'registration', element: <RegistrationPage /> },
       { path: 'catalog', element: <CatalogPage /> },

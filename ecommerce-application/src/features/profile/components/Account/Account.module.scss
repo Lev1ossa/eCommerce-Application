@@ -1,0 +1,105 @@
+.article {
+    padding-top: 20px;
+    text-align: left;
+    display: flex;
+    width: 350px;
+    flex-direction: column;
+    &:first-child {
+        margin-right: 30px;
+    }
+}
+
+.info_block {
+    margin-bottom: 20px;
+    position: relative;
+    display: block;
+}
+
+.icon {
+    margin-right: 10px;
+    width: 30px;
+    height: 30px;
+}
+
+.title {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.edit_button {
+    margin-left: 50px;
+    background-color: var(--color-background-main-block);
+    border: 2px solid var(--color-background-main-block);
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+}
+
+.edit_button_icon {
+    margin-right: 5px;
+}
+
+.label {
+    margin-bottom: 5px;
+}
+
+.text{
+    padding: 5px 0 5px 5px;
+    border: 2px solid var(--color-background-main-block);
+    width: 250px;
+    font-family: inherit;
+    font-size: inherit;
+    height: 30px;
+    &:focus {
+        border: 2px solid var(--color-green);
+        outline: none;
+    }
+}
+
+.input{
+    padding: 5px 0 5px 5px;
+    border: 2px solid var(--color-background-main-block);
+    width: 250px;
+    font-family: inherit;
+    font-size: inherit;
+    height: 30px;
+    background-color: var(--color-background-main-block);
+    animation: blink .5s 3;
+    &:focus {
+        border: 2px solid var(--color-green);
+        outline: none;
+    }
+}
+
+@keyframes blink {
+    50% {
+      border-color: var(--color-green);
+    }
+}
+
+
+.edit_buttons_container {
+    display: flex;
+    margin-bottom: 15px;
+    .edit_button {
+        margin: 0 10px 0 0;
+    }
+}
+
+.password_input_block {
+    position: relative;
+}
+
+.password_button {
+    background-color: inherit;
+    border: none;
+    position: absolute;
+    top: 3px;
+    right: 110px;
+}
+
+.password_icon {
+   width: 20px;
+   height: 20px;
+}

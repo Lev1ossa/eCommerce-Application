@@ -1,0 +1,115 @@
+.article {
+    padding-top: 20px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    &:first-child {
+        margin-right: 30px;
+    }
+}
+
+.title {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.edit_button {
+    margin-left: 50px;
+    background-color: var(--color-background-main-block);
+    border: 2px solid var(--color-background-main-block);
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+}
+
+.edit_button_icon {
+    margin-right: 5px;
+}
+
+
+.icon {
+    margin-right: 10px;
+    width: 30px;
+    height: 30px;
+}
+
+.info_block {
+    margin: 0 5px 20px 0;
+    position: relative;
+    display: block;
+    flex: 1 0 45%;
+}
+
+.label {
+    margin-bottom: 5px;
+}
+
+.text{
+    padding: 5px 0 5px 5px;
+    border: 2px solid var(--color-background-main-block);
+    height: 30px;
+}
+
+.input{
+    padding: 5px 0 5px 5px;
+    border: 2px solid var(--color-background-main-block);
+    font-family: inherit;
+    font-size: inherit;
+    height: 30px;
+    width: 151px;
+    background-color: var(--color-background-main-block);
+    animation: blink .5s 3;
+    &:focus {
+        border: 2px solid var(--color-green);
+        outline: none;
+    }
+}
+
+@keyframes blink {
+    50% {
+      border-color: var(--color-green);
+    }
+}
+
+.edit_buttons_container {
+    display: flex;
+    margin-bottom: 15px;
+    .edit_button {
+        margin: 0 10px 0 0;
+    }
+}
+
+.info_blocks_container {
+    display: flex;
+    flex-wrap: wrap;
+    border: 2px solid var(--color-green);
+    padding: 10px 10px 0px;
+    position: relative;
+    margin-bottom: 5px;
+    &.default {
+        border: 2px solid var(--color-blue);
+        margin-bottom: 10px;
+    }
+
+}
+
+.container_subtitle {
+    position: absolute;
+    top: -10px;
+    left: 5px;
+    color: var(--color-green);
+    background-color: var(--color-background-container);
+    padding: 0 5px;
+    font-size: 12px;
+    &.default {
+        color: var(--color-blue);
+    }
+}
+
+.input_block {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}

@@ -1,6 +1,6 @@
 import { BaseAddress, CustomerDraft } from '@commercetools/platform-sdk';
 import { IRegistrationData } from '../../../types/types';
-import { MINIMAL_ACCESS_AGE } from '../constants/constants';
+import { MINIMAL_ACCESS_AGE, countriesData } from '../constants/constants';
 
 export const getFullYears = (date: string): number => {
   const birthDate = new Date(date);
@@ -63,4 +63,13 @@ export const getClientData = (
     defaultShippingAddress: clientDefaultShippingAddress,
     defaultBillingAddress: clientDefaultBillingAddress,
   };
+};
+
+export const changeDateView = (date: string): string => {
+  return date.split('-').reverse().join('. ');
+};
+
+export const getCountryName = (code: string): string | null => {
+  const countryInfo = countriesData.find((el) => el.code === code);
+  return countryInfo?.name ? countryInfo.name : null;
 };
