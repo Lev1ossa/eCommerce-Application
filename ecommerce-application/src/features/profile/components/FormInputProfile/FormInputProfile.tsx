@@ -6,7 +6,7 @@ export function FormInputProfile(props: {
   input: UseFormRegisterReturn;
   type: string;
   styles: CSSModuleClasses;
-  value: string;
+  value: string | undefined;
 }): React.ReactElement {
   const { label, input, type, styles, value } = props;
   const { onChange, name, ref } = input;

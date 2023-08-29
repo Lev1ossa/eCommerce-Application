@@ -37,6 +37,8 @@
 
 .info_block {
     margin-bottom: 20px;
+    position: relative;
+    display: block;
 }
 
 .label {
@@ -47,4 +49,34 @@
     padding: 5px 0 5px 5px;
     border: 2px solid var(--color-background-main-block);
     width: 250px;
+    height: 30px;
+}
+
+.input{
+    padding: 5px 0 5px 5px;
+    border: 2px solid var(--color-background-main-block);
+    width: 250px;
+    font-family: inherit;
+    font-size: inherit;
+    height: 30px;
+    background-color: var(--color-background-main-block);
+    animation: blink .5s 3;
+    &:focus {
+        border: 2px solid var(--color-green);
+        outline: none;
+    }
+}
+
+@keyframes blink {
+    50% {
+      border-color: var(--color-green);
+    }
+}
+
+.edit_buttons_container {
+    display: flex;
+    margin-bottom: 15px;
+    .edit_button {
+        margin: 0 10px 0 0;
+    }
 }
