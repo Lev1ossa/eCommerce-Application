@@ -2,7 +2,9 @@ import { LiaShippingFastSolid } from 'react-icons/lia';
 import { BiEditAlt } from 'react-icons/bi';
 import { IUserData } from '../../../../types/types';
 import styles from './ShippingAddress.module.scss';
+import { getCountryName } from '../../../autentification/utils/utils';
 
+// eslint-disable-next-line max-lines-per-function
 export function ShippingAddress(props: {
   userData: IUserData;
 }): React.ReactElement {
@@ -11,6 +13,10 @@ export function ShippingAddress(props: {
   const addressData = userData.addresses.find(
     (el) => el.id === shippingAddressIds,
   );
+  let countryInputValue;
+  if (addressData?.country) {
+    countryInputValue = getCountryName(addressData?.country);
+  }
   return (
     <div className={styles.article}>
       <h3 className={styles.title}>
@@ -31,7 +37,7 @@ export function ShippingAddress(props: {
       </div>
       <div className={styles.info_block}>
         <div className={styles.label}>Country:</div>
-        <div className={styles.text}>{addressData?.country}</div>
+        <div className={styles.text}>{countryInputValue}</div>
       </div>
       <div className={styles.info_block}>
         <div className={styles.label}>Postal Code:</div>
