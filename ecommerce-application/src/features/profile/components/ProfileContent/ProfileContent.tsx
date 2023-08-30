@@ -1,4 +1,4 @@
-import { AiOutlineUser } from 'react-icons/ai';
+import { AiOutlineLock, AiOutlineUser } from 'react-icons/ai';
 import { BsCreditCard } from 'react-icons/bs';
 import { useState } from 'react';
 import { LiaShippingFastSolid } from 'react-icons/lia';
@@ -57,6 +57,9 @@ export function ProfileContent(): React.ReactElement {
   const handleButtonAccount = (): void => {
     setActiveArticle('account');
   };
+  const handleButtonPassword = (): void => {
+    setActiveArticle('password');
+  };
   const handleButtonShippingAddress = (): void => {
     setActiveArticle('shippingAddress');
   };
@@ -80,6 +83,14 @@ export function ProfileContent(): React.ReactElement {
           >
             <AiOutlineUser className={styles.icon} />
             Account
+          </button>
+          <button
+            className={styles.button}
+            type="button"
+            onClick={handleButtonPassword}
+          >
+            <AiOutlineLock className={styles.icon} />
+            Password
           </button>
           <button
             className={styles.button}
