@@ -25,10 +25,6 @@ export function AccountContentInactive(props: {
         <div className={styles.label}>Email:</div>
         <div className={styles.text}>{userData.email}</div>
       </div>
-      <div className={styles.info_block}>
-        <div className={styles.label}>Password:</div>
-        <div className={styles.text}>{userData.password}</div>
-      </div>
     </>
   );
 }

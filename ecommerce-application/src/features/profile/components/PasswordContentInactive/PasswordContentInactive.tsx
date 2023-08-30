@@ -1,34 +1,20 @@
-import { useState } from 'react';
-import { UseFormRegisterReturn } from 'react-hook-form';
-
 import { PiEyeBold, PiEyeClosedBold } from 'react-icons/pi';
-import styles from './FormPasswordInput.module.scss';
+import { useState } from 'react';
+import { IUserData } from '../../../../types/types';
 
-// eslint-disable-next-line max-lines-per-function
-export function FormPasswordInput(props: {
-  label: string;
-  input: UseFormRegisterReturn;
-  type: string;
+export function PasswordContentInactive(props: {
+  styles: CSSModuleClasses;
+  userData: IUserData;
 }): React.ReactElement {
+  const { styles, userData } = props;
   const [showPassword, setShowPassword] = useState(false);
-  const { label, input } = props;
-  let { type } = props;
-  const { onChange, onBlur, name, ref } = input;
-  const id = `${name}Input`;
-  type = showPassword ? 'text' : 'password';
+  const passwordSecure = userData.password.replace(/./g, '•');
+  const text = showPassword ? userData.password : passwordSecure;
   return (
-    <label htmlFor={id}>
-      {label}
-      <div className={styles.container}>
-        <input
-          className={styles.input}
-          id={id}
-          type={type}
-          onChange={onChange}
-          onBlur={onBlur}
-          name={name}
-          ref={ref}
-        />
+    <div className={styles.info_block}>
+      <div className={styles.label}>Password:</div>
+      <div className={styles.password_input_block}>
+        <div className={styles.text}>{text}</div>
         {showPassword && (
           <button
             className={styles.password_button}
@@ -50,6 +36,6 @@ export function FormPasswordInput(props: {
           </button>
         )}
       </div>
-    </label>
+    </div>
   );
 }

@@ -1,12 +1,12 @@
-import { BiEditAlt } from 'react-icons/bi';
-import { AiOutlineUser } from 'react-icons/ai';
 import { useState } from 'react';
+import { AiOutlineLock } from 'react-icons/ai';
+import { BiEditAlt } from 'react-icons/bi';
 import { IUserData } from '../../../../types/types';
-import styles from './Account.module.scss';
-import { AccountContentInactive } from '../AccountContentInactive/AccountContentInactive';
-import { AccountContentActive } from '../AccountContentActive/AccountContentActive';
+import styles from './Password.module.scss';
+import { PasswordContentInactive } from '../PasswordContentInactive/PasswordContentInactive';
+import { PasswordContentActive } from '../PasswordContentActive/PasswordContentActive';
 
-export function Account(props: { userData: IUserData }): React.ReactElement {
+export function Password(props: { userData: IUserData }): React.ReactElement {
   const { userData } = props;
   const [editMode, setEditMode] = useState(false);
   const handleEditButton = (): void => {
@@ -15,7 +15,7 @@ export function Account(props: { userData: IUserData }): React.ReactElement {
   return (
     <div className={styles.article}>
       <h3 className={styles.title}>
-        <AiOutlineUser className={styles.icon} /> Account
+        <AiOutlineLock className={styles.icon} /> Password
         {!editMode && (
           <button
             className={styles.edit_button}
@@ -28,10 +28,10 @@ export function Account(props: { userData: IUserData }): React.ReactElement {
         )}
       </h3>
       {!editMode && (
-        <AccountContentInactive styles={styles} userData={userData} />
+        <PasswordContentInactive styles={styles} userData={userData} />
       )}
       {editMode && (
-        <AccountContentActive
+        <PasswordContentActive
           styles={styles}
           userData={userData}
           handleEditButton={handleEditButton}
