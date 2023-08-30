@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
 
+import { PiEyeBold, PiEyeClosedBold } from 'react-icons/pi';
 import styles from './FormPasswordInput.module.scss';
 
+// eslint-disable-next-line max-lines-per-function
 export function FormPasswordInput(props: {
   label: string;
   input: UseFormRegisterReturn;
@@ -27,16 +29,26 @@ export function FormPasswordInput(props: {
           name={name}
           ref={ref}
         />
-        <button
-          className={
-            showPassword
-              ? `${styles.password_button} ${styles.password_button__visible}`
-              : `${styles.password_button} ${styles.password_button__secure}`
-          }
-          onClick={(): void => setShowPassword(!showPassword)}
-          type="button"
-          aria-label="show"
-        />
+        {showPassword && (
+          <button
+            className={styles.password_button}
+            onClick={(): void => setShowPassword(!showPassword)}
+            type="button"
+            aria-label="show"
+          >
+            <PiEyeBold className={styles.password_icon} />
+          </button>
+        )}
+        {!showPassword && (
+          <button
+            className={styles.password_button}
+            onClick={(): void => setShowPassword(!showPassword)}
+            type="button"
+            aria-label="show"
+          >
+            <PiEyeClosedBold className={styles.password_icon} />
+          </button>
+        )}
       </div>
     </label>
   );
