@@ -5,6 +5,8 @@ import {
   HttpMiddlewareOptions,
   PasswordAuthMiddlewareOptions,
   TokenCache,
+  AnonymousAuthMiddlewareOptions,
+  RefreshAuthMiddlewareOptions,
 } from '@commercetools/sdk-client-v2';
 import {
   createApiBuilderFromCtpClient,
@@ -72,6 +74,67 @@ export const getPasswordFlowApiRoot = (
   const client: Client = new ClientBuilder()
     .withProjectKey(projectKey)
     .withPasswordFlow(passwordAuthMiddlewareOptions)
+    .withHttpMiddleware(httpMiddlewareOptions)
+    .withLoggerMiddleware()
+    .build();
+
+  return createApiBuilderFromCtpClient(client);
+};
+
+// Anonymous session flow api root
+export const getAnonymousFlowApiRoot = (tokenCache: TokenCache): ApiRoot => {
+  const anonymousAuthMiddlewareOptions: AnonymousAuthMiddlewareOptions = {
+    host: `https://auth.${import.meta.env.VITE_API_REGION}.commercetools.com`,
+    projectKey,
+    credentials: {
+      clientId: import.meta.env.VITE_CLIENT_ID,
+      clientSecret: import.meta.env.VITE_CLIENT_SECRET,
+    },
+    scopes: [import.meta.env.VITE_SCOPE],
+    tokenCache,
+    fetch,
+  };
+
+  const httpMiddlewareOptions: HttpMiddlewareOptions = {
+    host: `https://api.${import.meta.env.VITE_API_REGION}.commercetools.com`,
+    fetch,
+  };
+
+  const client: Client = new ClientBuilder()
+    .withProjectKey(projectKey)
+    .withAnonymousSessionFlow(anonymousAuthMiddlewareOptions)
+    .withHttpMiddleware(httpMiddlewareOptions)
+    .withLoggerMiddleware()
+    .build();
+
+  return createApiBuilderFromCtpClient(client);
+};
+
+// Refresh token flow api root
+export const getRefreshTokenFlowApiRoot = (
+  tokenCache: TokenCache,
+  refreshToken: string,
+): ApiRoot => {
+  const refreshAuthMiddlewareOptions: RefreshAuthMiddlewareOptions = {
+    host: `https://auth.${import.meta.env.VITE_API_REGION}.commercetools.com`,
+    projectKey,
+    credentials: {
+      clientId: import.meta.env.VITE_CLIENT_ID,
+      clientSecret: import.meta.env.VITE_CLIENT_SECRET,
+    },
+    refreshToken,
+    tokenCache,
+    fetch,
+  };
+
+  const httpMiddlewareOptions: HttpMiddlewareOptions = {
+    host: `https://api.${import.meta.env.VITE_API_REGION}.commercetools.com`,
+    fetch,
+  };
+
+  const client: Client = new ClientBuilder()
+    .withProjectKey(projectKey)
+    .withRefreshTokenFlow(refreshAuthMiddlewareOptions)
     .withHttpMiddleware(httpMiddlewareOptions)
     .withLoggerMiddleware()
     .build();
