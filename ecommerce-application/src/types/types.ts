@@ -90,3 +90,8 @@ export interface IAddressData {
   city: string;
   country: string;
 }
+
+export type UserLogin = {
+  token: string;
+  isLogin: boolean;
+};

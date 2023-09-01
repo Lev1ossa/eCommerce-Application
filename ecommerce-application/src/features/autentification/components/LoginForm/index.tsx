@@ -8,12 +8,13 @@ import { Error } from '../FormInputs/Error/Error';
 import { FormInput } from '../FormInputs/FormInput/FormInput';
 import { FormPasswordInput } from '../FormInputs/FormPasswordInput/FormPasswordInput';
 import styles from './LoginForm.module.scss';
+import { isUserLoggedIn } from '../../../../api/tokenHandlers';
 
 // eslint-disable-next-line max-lines-per-function
 export function LoginForm(): React.ReactElement {
   const navigate = useNavigate();
   const handleRedirect = (): void => {
-    if (localStorage.getItem('AAA-Ecom-refreshToken')) {
+    if (isUserLoggedIn()) {
       navigate('/');
     }
   };

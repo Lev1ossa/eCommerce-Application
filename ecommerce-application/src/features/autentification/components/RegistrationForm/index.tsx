@@ -12,12 +12,13 @@ import { FormInput } from '../FormInputs/FormInput/FormInput';
 import { FormPasswordInput } from '../FormInputs/FormPasswordInput/FormPasswordInput';
 import { FormShippingAddressInput } from '../FormInputs/FormShippingAddressInput/FormShippingAddressInput';
 import styles from './RegistrationForm.module.scss';
+import { isUserLoggedIn } from '../../../../api/tokenHandlers';
 
 // eslint-disable-next-line max-lines-per-function
 export function RegistrationForm(): React.ReactElement {
   const navigate = useNavigate();
   const handleRedirect = (): void => {
-    if (localStorage.getItem('AAA-Ecom-refreshToken')) {
+    if (isUserLoggedIn()) {
       navigate('/');
     }
   };
@@ -113,10 +114,7 @@ export function RegistrationForm(): React.ReactElement {
   const onSubmit: SubmitHandler<IRegistrationData> = async (
     registrationData: IRegistrationData,
   ): Promise<void> => {
-    await handleRegistration(registrationData).then(
-      () => {},
-      () => {},
-    );
+    await handleRegistration(registrationData);
     handleRedirect();
   };
 

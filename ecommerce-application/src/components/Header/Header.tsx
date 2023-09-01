@@ -5,20 +5,19 @@ import logo from '../../assets/img/logo.png';
 import styles from './Header.module.scss';
 import { Sidebar } from './Sidebar/Sidebar';
 import { Nav } from './Nav/Nav';
+import { isUserLoggedIn } from '../../api/tokenHandlers';
 
 export function Header(): React.ReactElement {
-  const [userLoggedIn, setUserLoggedIn] = useState(
-    !!localStorage.getItem('AAA-Ecom-refreshToken'),
-  );
+  const [userLoggedIn, setUserLoggedIn] = useState(isUserLoggedIn());
   const navigate = useNavigate();
   const handleRedirect = (): void => {
-    if (localStorage.getItem('AAA-Ecom-refreshToken')) {
+    if (isUserLoggedIn()) {
       navigate('/');
     }
   };
-  const logoutHandler = (): void => {
-    handleLogout();
-    setUserLoggedIn(!!localStorage.getItem('AAA-Ecom-refreshToken'));
+  const logoutHandler = async (): Promise<void> => {
+    await handleLogout();
+    setUserLoggedIn(isUserLoggedIn());
     handleRedirect();
   };
   const navLinkClass = ({ isActive }: { isActive: boolean }): string => {

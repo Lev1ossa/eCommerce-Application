@@ -3,9 +3,10 @@ import {
   IRegistrationData,
   ToastTypes,
 } from '../../../types/types';
-import { createUser, getUser } from './requests';
+import { createUser, getUser } from '../../../api/requests';
 import { showToast } from './showToast';
 import { CustomTokenCache } from './tokenCache';
+import { changeToken, createAnonymousToken } from '../../../api/tokenHandlers';
 
 export const handleLogin = async (loginData: ILoginData): Promise<void> => {
   const tokenCache = new CustomTokenCache();
@@ -14,7 +15,10 @@ export const handleLogin = async (loginData: ILoginData): Promise<void> => {
       showToast(ToastTypes.success, `You are successfully logged in!`);
       const { refreshToken } = tokenCache.get();
       if (refreshToken) {
-        localStorage.setItem('AAA-Ecom-refreshToken', refreshToken);
+        changeToken({
+          token: refreshToken,
+          isLogin: true,
+        });
       }
     },
     (error: Error) => {
@@ -41,6 +45,6 @@ export const handleRegistration = async (
   );
 };
 
-export const handleLogout = (): void => {
-  localStorage.removeItem('AAA-Ecom-refreshToken');
+export const handleLogout = async (): Promise<void> => {
+  await createAnonymousToken();
 };

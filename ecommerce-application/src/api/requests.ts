@@ -1,11 +1,13 @@
 import {
+  CartPagedQueryResponse,
   ClientResponse,
   CustomerSignInResult,
   MyCustomerSignin,
 } from '@commercetools/platform-sdk';
 import { TokenCache } from '@commercetools/sdk-client-v2';
-import { ILoginData, IRegistrationData } from '../../../types/types';
+import { ILoginData, IRegistrationData } from '../types/types';
 import {
+  getAnonymousFlowApiRoot,
   getClientCridentialsFlowApiRoot,
   getPasswordFlowApiRoot,
 } from './clientBuilder';
@@ -41,4 +43,11 @@ export const getUser = async (
     .login()
     .post({ body: clientData })
     .execute();
+};
+
+export const getAnonymousUser = async (
+  tokenCache: TokenCache,
+): Promise<ClientResponse<CartPagedQueryResponse>> => {
+  const apiRoot = getAnonymousFlowApiRoot(tokenCache);
+  return apiRoot.withProjectKey({ projectKey }).me().carts().get().execute();
 };
