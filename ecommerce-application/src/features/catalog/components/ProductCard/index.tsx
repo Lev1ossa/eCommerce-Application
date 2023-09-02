@@ -1,21 +1,29 @@
+import { Product } from '@commercetools/platform-sdk';
 import { Link } from 'react-router-dom';
-import { IProduct } from '../../../../types/types';
-import img from '../../assets/orange-1.png';
 import styles from './ProductCard.module.scss';
 
-export function ProductCard(props: { product: IProduct }): React.ReactElement {
+export function ProductCard(props: { product: Product }): React.ReactElement {
   const { product } = props;
-  const { name, category, price, tm } = product;
+  const name = product.masterData.current.name.en;
+  const centAmount = product.masterData.current.masterVariant.prices
+    ? product.masterData.current.masterVariant.prices[0].value.centAmount
+    : 0;
+  const image = product.masterData.current.masterVariant.images
+    ? product.masterData.current.masterVariant.images[0].url
+    : '';
+  const tradeMark = product.masterData.current.masterVariant.attributes
+    ? product.masterData.current.masterVariant.attributes[0].value
+    : 'good food';
   return (
     <Link to={`/catalog/category/subcategory/${name.toLowerCase()}`}>
       <div className={styles.card}>
-        <img src={img} className={styles.image} alt="product" />
+        <img src={image} className={styles.image} alt="product" />
         <div className={styles.description}>
           <div className={styles.product_info}>
-            <strong className={styles.price}>${price}</strong>
+            <strong className={styles.price}>${centAmount}</strong>
             <p className={styles.name}>{name}</p>
-            <p className={styles.category}>Category:{category}</p>
-            <p className={styles.tm}>TM:{tm}</p>
+            {/* <p className={styles.category}>Category:{category}</p> */}
+            <p className={styles.tm}>TM:{tradeMark}</p>
           </div>
         </div>
         <button
