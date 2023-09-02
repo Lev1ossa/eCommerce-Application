@@ -57,7 +57,6 @@ export function Slider(props: {
               <img
                 className={styles.img}
                 aria-hidden
-                onClick={(): void => setActive(true)}
                 src={image.url}
                 alt="test"
               />
