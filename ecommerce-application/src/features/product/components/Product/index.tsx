@@ -1,4 +1,4 @@
-import { ProductProjection } from '@commercetools/platform-sdk';
+import { Image, ProductProjection } from '@commercetools/platform-sdk';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { getProductByID } from '../../../../api/requests';
@@ -12,6 +12,7 @@ export function Product(props: { name: string }): React.ReactElement {
   const [modalActive, setModalActive] = useState(false);
   const [product, setProduct] = useState<ProductProjection>();
   const [isLoading, setIsLoading] = useState(true);
+  // const [productImages, setProductImages] = useState<Image[] | undefined>();
 
   const productCard = useLocation();
 
@@ -28,11 +29,15 @@ export function Product(props: { name: string }): React.ReactElement {
   let price = 0;
   let trademark = '';
   let description = '';
+  let productImages: Image[] | undefined = [];
   if (product) {
-    const { prices, attributes } = product.masterVariant;
+    const { prices, attributes, images } = product.masterVariant;
     price = prices ? prices[0].value.centAmount / 100 : 0;
     trademark = attributes ? attributes[0].value : '';
     description = product.description ? product.description.en : '';
+    if (images) {
+      productImages = images;
+    }
   }
 
   return (
@@ -41,7 +46,7 @@ export function Product(props: { name: string }): React.ReactElement {
         <div className={styles.product}>
           <div className={styles.container}>
             <div className={styles.slider}>
-              <Slider setActive={setModalActive} />
+              <Slider setActive={setModalActive} images={productImages} />
             </div>
             <div className={styles.details}>
               <div className={styles.name}>{name}</div>
@@ -60,11 +65,15 @@ export function Product(props: { name: string }): React.ReactElement {
       ) : (
         <h1>Loader</h1>
       )}
-      <Modal active={modalActive} setActive={setModalActive} title={name}>
-        <div className={styles.slider_modal}>
-          <Slider setActive={setModalActive} />
-        </div>
-      </Modal>
+      {!isLoading ? (
+        <Modal active={modalActive} setActive={setModalActive} title={name}>
+          <div className={styles.slider_modal}>
+            <Slider setActive={setModalActive} images={productImages} />
+          </div>
+        </Modal>
+      ) : (
+        ''
+      )}
     </>
   );
 }
