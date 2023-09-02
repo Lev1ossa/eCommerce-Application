@@ -20,8 +20,8 @@ export function ProductCard(props: { product: Product }): React.ReactElement {
         <img src={image} className={styles.image} alt="product" />
         <div className={styles.description}>
           <div className={styles.product_info}>
-            <strong className={styles.price}>${centAmount}</strong>
-            <p className={styles.name}>{name}</p>
+            <p className={styles.price}>${centAmount}</p>
+            <strong className={styles.name}>{name}</strong>
             {/* <p className={styles.category}>Category:{category}</p> */}
             <p className={styles.tm}>TM:{tradeMark}</p>
           </div>

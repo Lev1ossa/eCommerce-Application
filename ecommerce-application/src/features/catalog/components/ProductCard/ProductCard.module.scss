@@ -28,6 +28,9 @@
   display: flex;
   justify-content: space-between;
 }
+.name {
+  white-space: nowrap;
+}
 .button {
   width: 100%;
   align-self: end;
