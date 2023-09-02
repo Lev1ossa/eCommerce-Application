@@ -79,9 +79,9 @@ export function Addresses(): React.ReactElement {
       </div>
       {modalActive && (
         <Modal active={modalActive} setActive={setModalActive}>
-          <div className={styles.slider_modal}>
+          <div className={styles.modal}>
             <header className={styles.modal_header}>
-              <h3>Name</h3>
+              <h3>Edit address</h3>
               <button
                 type="button"
                 className={styles.modal_button}
@@ -90,14 +90,14 @@ export function Addresses(): React.ReactElement {
                 X
               </button>
             </header>
+            <AddressCard
+              styles={styles}
+              addressData={data as UserAdress}
+              setModalActive={setModalActive}
+              setModalAddressId={setModalAddressId}
+              disabled={false}
+            />
           </div>
-          <AddressCard
-            styles={styles}
-            addressData={data as UserAdress}
-            setModalActive={setModalActive}
-            setModalAddressId={setModalAddressId}
-            disabled={false}
-          />
         </Modal>
       )}
     </>

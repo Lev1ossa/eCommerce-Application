@@ -42,7 +42,12 @@ export function AddressCard(props: {
     setShippingCountry(value);
   };
   return (
-    <form onSubmit={handleSubmit(onSubmit)} id={addressData?.id} noValidate>
+    <form
+      className={styles.form}
+      onSubmit={handleSubmit(onSubmit)}
+      id={addressData?.id}
+      noValidate
+    >
       <div className={styles.info_blocks_container}>
         <div className={styles.input_block}>
           <FormInputProfile
@@ -98,42 +103,50 @@ export function AddressCard(props: {
           />
           <Error errors={errors} name="shippingPostalCode" />
         </div>
-        <FormInputProfile
-          input={register('isShipping')}
-          type="checkbox"
-          label="Shipping Address"
-          styles={styles}
-          value=""
-          disabled={disabled}
-          checked={addressData.isShipping}
-        />
-        <FormInputProfile
-          input={register('isShippingAddressDefault')}
-          type="checkbox"
-          label="Default Shipping Address"
-          styles={styles}
-          value=""
-          disabled={disabled}
-          checked={addressData.isDefaultShipping}
-        />
-        <FormInputProfile
-          input={register('isBilling')}
-          type="checkbox"
-          label="Billing Address"
-          styles={styles}
-          value=""
-          disabled={disabled}
-          checked={addressData.isBilling}
-        />
-        <FormInputProfile
-          input={register('isBillingAddressDefault')}
-          type="checkbox"
-          label="Default Billing Address"
-          styles={styles}
-          value=""
-          disabled={disabled}
-          checked={addressData.isDefaultBilling}
-        />
+        <div className={styles.input_block}>
+          <FormInputProfile
+            input={register('isShipping')}
+            type="checkbox"
+            label="Shipping Address"
+            styles={styles}
+            value=""
+            disabled={disabled}
+            checked={addressData.isShipping}
+          />
+        </div>
+        <div className={styles.input_block}>
+          <FormInputProfile
+            input={register('isShippingAddressDefault')}
+            type="checkbox"
+            label="Default Shipping Address"
+            styles={styles}
+            value=""
+            disabled={disabled}
+            checked={addressData.isDefaultShipping}
+          />
+        </div>
+        <div className={styles.input_block}>
+          <FormInputProfile
+            input={register('isBilling')}
+            type="checkbox"
+            label="Billing Address"
+            styles={styles}
+            value=""
+            disabled={disabled}
+            checked={addressData.isBilling}
+          />
+        </div>
+        <div className={styles.input_block}>
+          <FormInputProfile
+            input={register('isBillingAddressDefault')}
+            type="checkbox"
+            label="Default Billing Address"
+            styles={styles}
+            value=""
+            disabled={disabled}
+            checked={addressData.isDefaultBilling}
+          />
+        </div>
         {disabled && (
           <>
             <div className={styles.edit_buttons_container}>
