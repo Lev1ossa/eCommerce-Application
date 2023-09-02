@@ -21,13 +21,19 @@ export function Product(props: { name: string }): React.ReactElement {
         setProduct(result.body);
         setIsLoading(false);
       },
-      (error) => {
-        console.log(error);
-      },
+      (error) => console.log(error),
     );
   }, [productCard.state]);
 
-  console.log(product);
+  let price = 0;
+  let trademark = '';
+  let description = '';
+  if (product) {
+    const { prices, attributes } = product.masterVariant;
+    price = prices ? prices[0].value.centAmount / 100 : 0;
+    trademark = attributes ? attributes[0].value : '';
+    description = product.description ? product.description.en : '';
+  }
 
   return (
     <>
@@ -39,24 +45,20 @@ export function Product(props: { name: string }): React.ReactElement {
             </div>
             <div className={styles.details}>
               <div className={styles.name}>{name}</div>
-              <div className={styles.price}>$ 1.44</div>
+              <div className={styles.price}>$ {price}</div>
               <div className={styles.category}>Citrus</div>
-              <div className={styles.trademark}>Victoria</div>
+              <div className={styles.trademark}>{trademark}</div>
               <button type="button" className={styles.button}>
                 Add to cart
               </button>
               <div className={styles.description}>
-                <strong>Description: </strong> Lorem ipsum dolor sit, amet
-                consectetur adipisicing elit. Aperiam laudantium officia
-                incidunt consequuntur quam sint repudiandae perspiciatis nihil,
-                aliquid excepturi reprehenderit amet labore, non officiis
-                dolores, voluptate et magnam nobis.
+                <strong>Description: </strong> {description}
               </div>
             </div>
           </div>
         </div>
       ) : (
-        <h1>Loading</h1>
+        <h1>Loader</h1>
       )}
       <Modal active={modalActive} setActive={setModalActive} title={name}>
         <div className={styles.slider_modal}>
