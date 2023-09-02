@@ -45,6 +45,15 @@
   object-fit: contain;
   user-select: none;
 }
+:global(.swiper-wrapper) {
+  display: flex;
+  align-items: center;
+}
+:global(.swiper-slide-thumb-active) {
+  opacity: 1;
+}
+
+
 @media (max-width: 767.98px) {
   .top_img {
     padding: 2rem;
