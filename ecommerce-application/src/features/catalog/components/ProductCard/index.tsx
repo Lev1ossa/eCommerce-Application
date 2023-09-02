@@ -5,8 +5,8 @@ import styles from './ProductCard.module.scss';
 export function ProductCard(props: { product: Product }): React.ReactElement {
   const { product } = props;
   const name = product.masterData.current.name.en;
-  const centAmount = product.masterData.current.masterVariant.prices
-    ? product.masterData.current.masterVariant.prices[0].value.centAmount
+  const price = product.masterData.current.masterVariant.prices
+    ? product.masterData.current.masterVariant.prices[0].value.centAmount / 100
     : 0;
   const image = product.masterData.current.masterVariant.images
     ? product.masterData.current.masterVariant.images[0].url
@@ -20,7 +20,7 @@ export function ProductCard(props: { product: Product }): React.ReactElement {
         <img src={image} className={styles.image} alt="product" />
         <div className={styles.description}>
           <div className={styles.product_info}>
-            <p className={styles.price}>${centAmount}</p>
+            <p className={styles.price}>${price}</p>
             <strong className={styles.name}>{name}</strong>
             {/* <p className={styles.category}>Category:{category}</p> */}
             <p className={styles.tm}>TM:{tradeMark}</p>
