@@ -2,8 +2,10 @@ import {
   CartPagedQueryResponse,
   CategoryPagedQueryResponse,
   ClientResponse,
+  Customer,
   CustomerSignInResult,
   MyCustomerSignin,
+  MyCustomerUpdate,
   ProductPagedQueryResponse,
   ProductProjection,
 } from '@commercetools/platform-sdk';
@@ -108,4 +110,16 @@ export const getCategories = async (): Promise<
       },
     })
     .execute();
+};
+
+export const getCustomerData = async (): Promise<ClientResponse<Customer>> => {
+  const apiRoot = getRefreshTokenFlowApiRoot(getRefreshToken());
+  return apiRoot.withProjectKey({ projectKey }).me().get().execute();
+};
+
+export const updateCustomerData = async (
+  body: MyCustomerUpdate,
+): Promise<ClientResponse<Customer>> => {
+  const apiRoot = getRefreshTokenFlowApiRoot(getRefreshToken());
+  return apiRoot.withProjectKey({ projectKey }).me().post({ body }).execute();
 };
