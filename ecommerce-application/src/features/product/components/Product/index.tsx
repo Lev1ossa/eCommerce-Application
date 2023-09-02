@@ -33,18 +33,8 @@ export function Product(props: { name: string }): React.ReactElement {
           </div>
         </div>
       </div>
-      <Modal active={modalActive} setActive={setModalActive}>
+      <Modal active={modalActive} setActive={setModalActive} title={name}>
         <div className={styles.slider_modal}>
-          <header className={styles.modal_header}>
-            <h3>{name}</h3>
-            <button
-              type="button"
-              className={styles.modal_button}
-              onClick={(): void => setModalActive(false)}
-            >
-              X
-            </button>
-          </header>
           <Slider setActive={setModalActive} />
         </div>
       </Modal>

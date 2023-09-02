@@ -12,7 +12,28 @@
   opacity: 0;
   pointer-events: none;
 }
+.modal_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 1rem 1rem 0;
 
+}
+.title {
+  align-self: center;
+  font-size: 1.2rem;
+  font-weight: normal;
+}
+.close {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  &:hover {
+    color: var(--color-orange);
+  }
+}
 .modal_active {
   opacity: 1;
   pointer-events: all;
