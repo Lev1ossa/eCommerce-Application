@@ -12,7 +12,6 @@ export function Product(props: { name: string }): React.ReactElement {
   const [modalActive, setModalActive] = useState(false);
   const [product, setProduct] = useState<ProductProjection>();
   const [isLoading, setIsLoading] = useState(true);
-  // const [productImages, setProductImages] = useState<Image[] | undefined>();
 
   const productCard = useLocation();
 
@@ -65,14 +64,12 @@ export function Product(props: { name: string }): React.ReactElement {
       ) : (
         <h1>Loader</h1>
       )}
-      {!isLoading ? (
+      {!isLoading && (
         <Modal active={modalActive} setActive={setModalActive} title={name}>
           <div className={styles.slider_modal}>
             <Slider setActive={setModalActive} images={productImages} />
           </div>
         </Modal>
-      ) : (
-        ''
       )}
     </>
   );

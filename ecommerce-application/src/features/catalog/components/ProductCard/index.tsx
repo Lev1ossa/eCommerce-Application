@@ -6,6 +6,9 @@ export function ProductCard(props: { product: Product }): React.ReactElement {
   const { product } = props;
   const { id } = product;
   const name = product.masterData.current.name.en;
+  const description = product.masterData.current.description?.en
+    .slice(0, 65)
+    .concat('...');
 
   const { prices, attributes, images } =
     product.masterData.current.masterVariant;
@@ -22,8 +25,8 @@ export function ProductCard(props: { product: Product }): React.ReactElement {
           <div className={styles.product_info}>
             <p className={styles.price}>${price}</p>
             <strong className={styles.name}>{name}</strong>
-            {/* <p className={styles.category}>Category:{category}</p> */}
             <p className={styles.tm}>TM:{tradeMark}</p>
+            <p className={styles.info}>{description}</p>
           </div>
         </div>
         <button
