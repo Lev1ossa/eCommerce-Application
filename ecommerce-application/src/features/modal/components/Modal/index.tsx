@@ -1,12 +1,14 @@
 import { Dispatch, SetStateAction } from 'react';
+import { MdOutlineClose } from 'react-icons/md';
 import styles from './Modal.module.scss';
 
 export function Modal(props: {
   active: boolean;
   setActive: Dispatch<SetStateAction<boolean>>;
+  title: string;
   children: React.ReactNode;
 }): React.ReactElement {
-  const { active, setActive, children } = props;
+  const { title, active, setActive, children } = props;
   return (
     <div
       className={
@@ -22,6 +24,13 @@ export function Modal(props: {
         onClick={(e): void => e.stopPropagation()}
         aria-hidden
       >
+        <header className={styles.modal_header}>
+          <h3 className={styles.title}>{title}</h3>
+          <MdOutlineClose
+            className={styles.close}
+            onClick={(): void => setActive(false)}
+          />
+        </header>
         {children}
       </div>
     </div>
