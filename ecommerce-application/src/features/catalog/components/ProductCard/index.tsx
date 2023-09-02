@@ -4,6 +4,7 @@ import styles from './ProductCard.module.scss';
 
 export function ProductCard(props: { product: Product }): React.ReactElement {
   const { product } = props;
+  const { id } = product;
   const name = product.masterData.current.name.en;
 
   const { prices, attributes, images } =
@@ -14,7 +15,7 @@ export function ProductCard(props: { product: Product }): React.ReactElement {
   const tradeMark = attributes ? attributes[0].value : 'good food';
 
   return (
-    <Link to={`/catalog/category/subcategory/${name.toLowerCase()}`}>
+    <Link to={`/catalog/category/subcategory/${name.toLowerCase()}`} state={id}>
       <div className={styles.card}>
         <img src={image} className={styles.image} alt="product" />
         <div className={styles.description}>
