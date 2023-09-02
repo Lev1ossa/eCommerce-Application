@@ -1,5 +1,5 @@
 import { BaseAddress, CustomerDraft } from '@commercetools/platform-sdk';
-import { IRegistrationData } from '../types/types';
+import { IRegistrationData, UserLogin } from '../types/types';
 
 // eslint-disable-next-line max-lines-per-function
 export const getClientData = (
@@ -42,4 +42,13 @@ export const getClientData = (
     defaultShippingAddress: clientDefaultShippingAddress,
     defaultBillingAddress: clientDefaultBillingAddress,
   };
+};
+
+export const getRefreshToken = (): string => {
+  const userLoginJson = localStorage.getItem('AAA-Ecom-refreshToken');
+  if (userLoginJson) {
+    const userLogin: UserLogin = JSON.parse(userLoginJson);
+    return userLogin.token;
+  }
+  return '';
 };

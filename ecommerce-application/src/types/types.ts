@@ -95,3 +95,15 @@ export type UserLogin = {
   token: string;
   isLogin: boolean;
 };
+
+export type UserAdress = {
+  id: string | undefined;
+  country: string | undefined;
+  city: string | undefined;
+  streetName: string | undefined;
+  postalCode: string | undefined;
+  isShipping: boolean;
+  isBilling: boolean;
+  isDefaultShipping: boolean;
+  isDefaultBilling: boolean;
+};
