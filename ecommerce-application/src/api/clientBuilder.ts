@@ -111,10 +111,7 @@ export const getAnonymousFlowApiRoot = (tokenCache: TokenCache): ApiRoot => {
 };
 
 // Refresh token flow api root
-export const getRefreshTokenFlowApiRoot = (
-  tokenCache: TokenCache,
-  refreshToken: string,
-): ApiRoot => {
+export const getRefreshTokenFlowApiRoot = (refreshToken: string): ApiRoot => {
   const refreshAuthMiddlewareOptions: RefreshAuthMiddlewareOptions = {
     host: `https://auth.${import.meta.env.VITE_API_REGION}.commercetools.com`,
     projectKey,
@@ -123,7 +120,6 @@ export const getRefreshTokenFlowApiRoot = (
       clientSecret: import.meta.env.VITE_CLIENT_SECRET,
     },
     refreshToken,
-    tokenCache,
     fetch,
   };
 
