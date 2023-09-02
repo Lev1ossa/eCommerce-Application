@@ -1,7 +1,5 @@
-import { AiOutlineLock, AiOutlineUser } from 'react-icons/ai';
-import { BsCreditCard } from 'react-icons/bs';
+import { AiOutlineHome, AiOutlineLock, AiOutlineUser } from 'react-icons/ai';
 import { useState } from 'react';
-import { LiaShippingFastSolid } from 'react-icons/lia';
 import { ProfileInfo } from '../ProfileInfo/ProfileInfo';
 
 import styles from './ProfileContent.module.scss';
@@ -46,9 +44,6 @@ const userData = {
   defaultBillingAddressId: 'NmgefXgI',
   shippingAddressIds: ['lMy62e2R'],
   billingAddressIds: ['NmgefXgI'],
-  /* isEmailVerified: false,
-  stores: [],
-  authenticationMode: 'Password', */
 };
 
 // eslint-disable-next-line max-lines-per-function
@@ -60,11 +55,8 @@ export function ProfileContent(): React.ReactElement {
   const handleButtonPassword = (): void => {
     setActiveArticle('password');
   };
-  const handleButtonShippingAddress = (): void => {
-    setActiveArticle('shippingAddress');
-  };
-  const handleButtonBillingAddress = (): void => {
-    setActiveArticle('billingAddress');
+  const handleButtonAddresses = (): void => {
+    setActiveArticle('addresses');
   };
   return (
     <main className={styles.container}>
@@ -95,18 +87,10 @@ export function ProfileContent(): React.ReactElement {
           <button
             className={styles.button}
             type="button"
-            onClick={handleButtonShippingAddress}
+            onClick={handleButtonAddresses}
           >
-            <LiaShippingFastSolid className={styles.icon} />
-            Shipping Address
-          </button>
-          <button
-            className={styles.button}
-            type="button"
-            onClick={handleButtonBillingAddress}
-          >
-            <BsCreditCard className={styles.icon} />
-            Billing Address
+            <AiOutlineHome className={styles.icon} />
+            Addresses
           </button>
         </div>
       </div>
