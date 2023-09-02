@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { getProductByID } from '../../../../api/requests';
 import { Modal } from '../../../modal';
+import { Loader } from '../../../../components/Loader';
 import { Slider } from '../Slider';
 import styles from './Product.module.scss';
 
@@ -62,7 +63,7 @@ export function Product(props: { name: string }): React.ReactElement {
           </div>
         </div>
       ) : (
-        <h1>Loader</h1>
+        <Loader />
       )}
       {!isLoading && (
         <Modal active={modalActive} setActive={setModalActive} title={name}>

@@ -1,6 +1,7 @@
 import { Product } from '@commercetools/platform-sdk';
 import { useEffect, useState } from 'react';
 import { getProductsList } from '../../../../api/requests';
+import { Loader } from '../../../../components/Loader';
 import { ProductCard } from '../ProductCard';
 import { Sidebar } from '../Sidebar';
 import styles from './Catalog.module.scss';
@@ -36,7 +37,7 @@ export function Catalog(): React.ReactElement {
   return (
     <div className={styles.catalog}>
       <Sidebar />
-      <ul className={styles.grid}>{!isLoading && catalog}</ul>
+      <ul className={styles.grid}>{!isLoading ? catalog : <Loader />}</ul>
     </div>
   );
 }
