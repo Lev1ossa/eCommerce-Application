@@ -20,6 +20,8 @@ export interface IRegistrationData extends ILoginData {
   isShippingAddressDefault: boolean;
   isBillingAddressDefault: boolean;
   isSameAddress: boolean;
+  isShipping: boolean;
+  isBilling: boolean;
 }
 
 export interface IRegistrationPageParam {
@@ -51,6 +53,8 @@ export interface IValidationRules {
   isShippingAddressDefault: string[];
   isBillingAddressDefault: string[];
   isSameAddress: string[];
+  isShipping: boolean[];
+  isBilling: boolean[];
 }
 
 export enum ToastTypes {

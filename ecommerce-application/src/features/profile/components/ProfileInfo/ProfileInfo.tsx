@@ -1,8 +1,7 @@
 import { IUserData } from '../../../../types/types';
 import { Account } from '../Account/Account';
-import { BillingAddress } from '../BillingAddress/BillingAddress';
+import { Addresses } from '../Addresses/Addresses';
 import { Password } from '../Password/Password';
-import { ShippingAddress } from '../ShippingAddress/ShippingAddress';
 
 export function ProfileInfo(props: {
   activeArticle: string;
@@ -14,10 +13,8 @@ export function ProfileInfo(props: {
       return <Account userData={userData} />;
     case 'password':
       return <Password userData={userData} />;
-    case 'shippingAddress':
-      return <ShippingAddress userData={userData} />;
-    case 'billingAddress':
-      return <BillingAddress userData={userData} />;
+    case 'addresses':
+      return <Addresses />;
     default:
       return null;
   }
