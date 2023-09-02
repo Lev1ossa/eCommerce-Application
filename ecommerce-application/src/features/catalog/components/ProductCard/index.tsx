@@ -7,9 +7,9 @@ export function ProductCard(props: { product: IProduct }): React.ReactElement {
   const { product } = props;
   const { name, category, price, tm } = product;
   return (
-    <div className={styles.card}>
-      <img src={img} className={styles.image} alt="product" />
-      <Link to={`/catalog/category/subcategory/${name.toLowerCase()}`}>
+    <Link to={`/catalog/category/subcategory/${name.toLowerCase()}`}>
+      <div className={styles.card}>
+        <img src={img} className={styles.image} alt="product" />
         <div className={styles.description}>
           <div className={styles.product_info}>
             <strong className={styles.price}>${price}</strong>
@@ -18,10 +18,14 @@ export function ProductCard(props: { product: IProduct }): React.ReactElement {
             <p className={styles.tm}>TM:{tm}</p>
           </div>
         </div>
-      </Link>
-      <button type="button" className={styles.button}>
-        Add to cart
-      </button>
-    </div>
+        <button
+          type="button"
+          className={styles.button}
+          onClick={(e): void => e.preventDefault()}
+        >
+          Add to cart
+        </button>
+      </div>
+    </Link>
   );
 }
