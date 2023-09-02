@@ -26,8 +26,7 @@ export function Slider(props: {
           swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null,
         }}
         modules={[FreeMode, Navigation, Thumbs]}
-        className={styles.swiper_top}
-        // className={`${styles.swiper_top} ${styles.swiper}`}
+        className={`${styles.swiper_top} ${styles.swiper}`}
       >
         <SwiperSlide className={styles.swiper_slide}>
           <img
