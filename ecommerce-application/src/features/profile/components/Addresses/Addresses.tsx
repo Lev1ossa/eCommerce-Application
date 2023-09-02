@@ -4,6 +4,7 @@ import styles from './Addresses.module.scss';
 import { AddressCard } from '../AddressCard/AddressCard';
 import { Modal } from '../../../modal';
 import { UserAdress } from '../../../../types/types';
+import { AddressCardActive } from '../AddressCardActive/AddressCardActive';
 
 const addressesData = [
   {
@@ -64,18 +65,19 @@ export function Addresses(): React.ReactElement {
           <LiaShippingFastSolid className={styles.icon} />
           ADDRESSES
         </h3>
-        {addressesData.map((addressData) => {
-          return (
-            <AddressCard
-              styles={styles}
-              key={addressData.id}
-              addressData={addressData}
-              setModalActive={setModalActive}
-              setModalAddressId={setModalAddressId}
-              disabled
-            />
-          );
-        })}
+        <div className={styles.addresses_container}>
+          {addressesData.map((addressData) => {
+            return (
+              <AddressCard
+                styles={styles}
+                key={addressData.id}
+                addressData={addressData}
+                setModalActive={setModalActive}
+                setModalAddressId={setModalAddressId}
+              />
+            );
+          })}
+        </div>
       </div>
       {modalActive && (
         <Modal active={modalActive} setActive={setModalActive}>
@@ -90,12 +92,9 @@ export function Addresses(): React.ReactElement {
                 X
               </button>
             </header>
-            <AddressCard
+            <AddressCardActive
               styles={styles}
               addressData={data as UserAdress}
-              setModalActive={setModalActive}
-              setModalAddressId={setModalAddressId}
-              disabled={false}
             />
           </div>
         </Modal>

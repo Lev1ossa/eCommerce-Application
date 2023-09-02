@@ -1,17 +1,16 @@
 import { useState } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
 
-export function FormInputProfile(props: {
+export function FormCheckboxProfile(props: {
   label: string;
   input: UseFormRegisterReturn;
   type: string;
   styles: CSSModuleClasses;
-  value: string | undefined;
+  handleIsShipping: () => void;
   checked: boolean;
 }): React.ReactElement {
-  const { label, input, type, styles, value, checked } = props;
+  const { label, input, type, styles, handleIsShipping, checked } = props;
   const { onChange, name, ref } = input;
-  const [currentValue, setCurrentValue] = useState(value);
   const [currentCheckedValue, setCurrentCheckedValue] = useState(checked);
   const id = `${name}Input`;
   return (
@@ -23,12 +22,11 @@ export function FormInputProfile(props: {
         type={type}
         onChange={(e): void => {
           onChange(e);
-          setCurrentValue(e.target.value);
+          handleIsShipping();
           setCurrentCheckedValue(!currentCheckedValue);
         }}
         name={name}
         ref={ref}
-        value={currentValue}
         checked={currentCheckedValue}
       />
     </label>

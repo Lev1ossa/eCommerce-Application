@@ -3,7 +3,6 @@
     text-align: left;
     display: flex;
     flex-direction: column;
-    width: 350px;
     &:first-child {
         margin-right: 30px;
     }
@@ -100,7 +99,8 @@
     border: 2px solid var(--color-green);
     padding: 10px 10px 0px;
     position: relative;
-    margin-bottom: 10px;
+    margin: 0 10px 10px 0;
+    max-width: 350px;
     &.default {
         border: 2px solid var(--color-blue);
     }
@@ -186,3 +186,9 @@
       color: var(--color-orange);
     }
   }
+.addresses_container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}

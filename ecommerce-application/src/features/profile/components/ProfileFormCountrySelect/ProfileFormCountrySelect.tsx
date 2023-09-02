@@ -8,9 +8,8 @@ export function ProfileCountryInput(props: {
   label: string;
   input: UseFormRegisterReturn;
   onSelect: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  disabled: boolean;
 }): React.ReactElement {
-  const { styles, value, label, input, onSelect, disabled } = props;
+  const { styles, value, label, input, onSelect } = props;
   const { onChange, onBlur, name, ref } = input;
   return (
     <label className={styles.info_block} htmlFor={name}>
@@ -26,7 +25,6 @@ export function ProfileCountryInput(props: {
         onBlur={onBlur}
         name={name}
         ref={ref}
-        disabled={disabled}
       >
         {countriesData.map((countryData) => {
           return (
