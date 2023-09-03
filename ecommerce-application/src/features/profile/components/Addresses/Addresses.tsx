@@ -18,6 +18,53 @@ export function Addresses(): React.ReactElement {
   const [addressesData, setAddressesData] = useState<UserAdress[]>([]);
 
   // eslint-disable-next-line max-lines-per-function
+  const handleSaveButton = (): void => {
+    getCustomerData().then(
+      (result) => {
+        const customerData = result.body;
+        const customerAdresses: UserAdress[] = customerData.addresses.map(
+          (adress) => {
+            const { id, country, city, streetName, postalCode } = adress;
+            const isShipping =
+              id && customerData.shippingAddressIds
+                ? customerData.shippingAddressIds.includes(id)
+                : false;
+            const isBilling =
+              id && customerData.billingAddressIds
+                ? customerData.billingAddressIds.includes(id)
+                : false;
+            const isDefaultShipping =
+              id && customerData.defaultShippingAddressId
+                ? customerData.defaultShippingAddressId.includes(id)
+                : false;
+            const isDefaultBilling =
+              id && customerData.defaultBillingAddressId
+                ? customerData.defaultBillingAddressId.includes(id)
+                : false;
+            const userAdress: UserAdress = {
+              id,
+              country,
+              city,
+              streetName,
+              postalCode,
+              isShipping,
+              isBilling,
+              isDefaultShipping,
+              isDefaultBilling,
+            };
+
+            return userAdress;
+          },
+        );
+        setAddressesData(customerAdresses);
+      },
+      (error) => {
+        console.log(error);
+      },
+    );
+  };
+
+  // eslint-disable-next-line max-lines-per-function
   useEffect(() => {
     // eslint-disable-next-line max-lines-per-function
     getCustomerData().then(
@@ -119,7 +166,10 @@ export function Addresses(): React.ReactElement {
           title="Create address"
         >
           <div className={styles.modal}>
-            <NewAddressCard styles={styles} />
+            <NewAddressCard
+              styles={styles}
+              handleSaveButton={handleSaveButton}
+            />
           </div>
         </Modal>
       )}

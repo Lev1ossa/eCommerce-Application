@@ -2,19 +2,32 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { postcodeValidator } from 'postcode-validator';
 import { BiSave } from 'react-icons/bi';
-import { IRegistrationData } from '../../../../types/types';
+import {
+  MyCustomerAddAddressAction,
+  MyCustomerAddBillingAddressIdAction,
+  MyCustomerAddShippingAddressIdAction,
+  MyCustomerSetDefaultBillingAddressAction,
+  MyCustomerSetDefaultShippingAddressAction,
+  MyCustomerUpdate,
+  MyCustomerUpdateAction,
+} from '@commercetools/platform-sdk';
+import { IRegistrationData, ToastTypes } from '../../../../types/types';
 import { ServiceInputParameters } from '../../../autentification/services/inputService';
 import { Error } from '../../../autentification/components/FormInputs/Error/Error';
 import { FormInputProfile } from '../FormInputProfile/FormInputProfile';
 import { ProfileCountryInput } from '../ProfileFormCountrySelect/ProfileFormCountrySelect';
 import { FormCheckboxProfile } from '../FormCheckboxProfile/FormCheckboxProfile';
 import { FormCheckboxDisabled } from '../FormCheckboxDisabled/FormCheckboxDisabled';
+import { getCustomerData, updateCustomerData } from '../../../../api/requests';
+import { showToast } from '../../../autentification/utils/showToast';
+import { generateUniqueKey } from '../../../../api/utils';
 
 // eslint-disable-next-line max-lines-per-function
 export function NewAddressCard(props: {
   styles: CSSModuleClasses;
+  handleSaveButton: () => void;
 }): React.ReactElement {
-  const { styles } = props;
+  const { styles, handleSaveButton } = props;
   const {
     register,
     setValue,
@@ -24,10 +37,76 @@ export function NewAddressCard(props: {
     mode: 'onChange',
   });
   const inputService = new ServiceInputParameters(register);
+
+  // eslint-disable-next-line max-lines-per-function
   const onSubmit: SubmitHandler<IRegistrationData> = (
-    data: IRegistrationData,
+    addressData: IRegistrationData,
   ): void => {
-    console.log('RESULT', data);
+    getCustomerData().then(
+      // eslint-disable-next-line max-lines-per-function
+      (result) => {
+        const key = generateUniqueKey();
+        const addAddress: MyCustomerAddAddressAction = {
+          action: 'addAddress',
+          address: {
+            key,
+            country: addressData.shippingCountry,
+            city: addressData.shippingCity,
+            streetName: addressData.shippingStreet,
+            postalCode: addressData.shippingPostalCode,
+          },
+        };
+        const addShippingAddress: MyCustomerAddShippingAddressIdAction = {
+          action: 'addShippingAddressId',
+          addressKey: key,
+        };
+        const addBillinAddress: MyCustomerAddBillingAddressIdAction = {
+          action: 'addBillingAddressId',
+          addressKey: key,
+        };
+        const addDefaultShippingAddress: MyCustomerSetDefaultShippingAddressAction =
+          {
+            action: 'setDefaultShippingAddress',
+            addressKey: key,
+          };
+        const addDefaultBillingAddress: MyCustomerSetDefaultBillingAddressAction =
+          {
+            action: 'setDefaultBillingAddress',
+            addressKey: key,
+          };
+        const arrActions: MyCustomerUpdateAction[] = [addAddress];
+
+        if (addressData.isShipping) {
+          arrActions.push(addShippingAddress);
+        }
+        if (addressData.isBilling) {
+          arrActions.push(addBillinAddress);
+        }
+        if (addressData.isShippingAddressDefault) {
+          arrActions.push(addDefaultShippingAddress);
+        }
+        if (addressData.isBillingAddressDefault) {
+          arrActions.push(addDefaultBillingAddress);
+        }
+
+        const body: MyCustomerUpdate = {
+          version: result.body.version,
+          actions: arrActions,
+        };
+        updateCustomerData(body).then(
+          () => {
+            showToast(ToastTypes.success, `Address successfully saved!`);
+            handleSaveButton();
+          },
+          (error) => {
+            showToast(ToastTypes.error, error.message);
+          },
+        );
+      },
+      (error) => {
+        console.log(error);
+      },
+    );
   };
   const [currentShippingCountry, setShippingCountry] = useState('AX');
   const [isShipping, setShipping] = useState(false);

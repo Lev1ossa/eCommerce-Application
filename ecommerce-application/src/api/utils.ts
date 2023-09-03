@@ -52,3 +52,7 @@ export const getRefreshToken = (): string => {
   }
   return '';
 };
+
+export const generateUniqueKey = (): string => {
+  return Math.random().toString(36).substring(2, 9);
+};
