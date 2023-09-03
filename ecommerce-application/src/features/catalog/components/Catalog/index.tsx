@@ -1,4 +1,4 @@
-import { Product } from '@commercetools/platform-sdk';
+import { ProductProjection } from '@commercetools/platform-sdk';
 import { useEffect, useState } from 'react';
 import { getProductsList } from '../../../../api/requests';
 import { Loader } from '../../../../components/Loader';
@@ -7,7 +7,7 @@ import { CatalogSidebar } from '../Sidebar';
 import styles from './Catalog.module.scss';
 
 export function Catalog(): React.ReactElement {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<ProductProjection[]>([]);
   const [catalog, setCatalog] = useState<JSX.Element[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
