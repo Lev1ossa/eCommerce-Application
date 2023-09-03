@@ -24,11 +24,12 @@
   flex-direction: column;
   row-gap: 15px;
   margin: 10px 20px;
+  font-size: 14px;
   list-style: none;
   li {
     display: flex;
     align-items: center;
-    margin-left: 10px;
+    margin-left: 5px;
     column-gap: 5px;
     cursor: pointer;
   }
@@ -52,7 +53,14 @@
   display: flex;
   justify-content: space-between;
 }
+
 .text {
   display: flex;
   align-items: center;
+}
+
+.brand_list {
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
 }
