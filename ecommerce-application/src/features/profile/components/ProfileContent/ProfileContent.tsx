@@ -70,7 +70,11 @@ export function ProfileContent(): React.ReactElement {
         </div>
       </div>
       {userData && (
-        <ProfileInfo activeArticle={activeArticle} userData={userData} />
+        <ProfileInfo
+          activeArticle={activeArticle}
+          userData={userData}
+          setUserData={setUserData}
+        />
       )}
     </main>
   );
