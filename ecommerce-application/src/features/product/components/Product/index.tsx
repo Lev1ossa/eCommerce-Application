@@ -2,8 +2,8 @@ import { Image, ProductProjection } from '@commercetools/platform-sdk';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { getProductByID } from '../../../../api/requests';
-import { Modal } from '../../../modal';
 import { Loader } from '../../../../components/Loader';
+import { Modal } from '../../../modal';
 import { Slider } from '../Slider';
 import styles from './Product.module.scss';
 
@@ -29,11 +29,17 @@ export function Product(props: { name: string }): React.ReactElement {
   let price = 0;
   let trademark = '';
   let description = '';
+  let category = '';
+  let subCategory = '';
+  let origin = '';
   let productImages: Image[] | undefined = [];
   if (product) {
     const { prices, attributes, images } = product.masterVariant;
     price = prices ? prices[0].value.centAmount / 100 : 0;
     trademark = attributes ? attributes[0].value : '';
+    category = attributes ? attributes[1].value : '';
+    origin = attributes ? attributes[3].value.label : '';
+    subCategory = attributes ? attributes[2].value.replace('_', ' ') : '';
     description = product.description ? product.description.en : '';
     if (images) {
       productImages = images;
@@ -49,9 +55,13 @@ export function Product(props: { name: string }): React.ReactElement {
               <Slider setActive={setModalActive} images={productImages} />
             </div>
             <div className={styles.details}>
-              <div className={styles.name}>{name}</div>
+              <div className={styles.name}>
+                <strong>{name}</strong>
+              </div>
               <div className={styles.price}>$ {price}</div>
-              <div className={styles.category}>Citrus</div>
+              <div className={styles.category}>{category}</div>
+              <div className={styles.category}>{subCategory}</div>
+              <div className={styles.category}>{origin}</div>
               <div className={styles.trademark}>{trademark}</div>
               <button type="button" className={styles.button}>
                 Add to cart

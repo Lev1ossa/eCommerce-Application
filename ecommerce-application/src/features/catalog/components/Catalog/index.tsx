@@ -6,7 +6,6 @@ import { ProductCard } from '../ProductCard';
 import { CatalogSidebar } from '../Sidebar';
 import styles from './Catalog.module.scss';
 
-// eslint-disable-next-line max-lines-per-function
 export function Catalog(): React.ReactElement {
   const [products, setProducts] = useState<Product[]>([]);
   const [catalog, setCatalog] = useState<JSX.Element[]>([]);
