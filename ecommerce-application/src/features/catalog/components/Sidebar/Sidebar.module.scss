@@ -19,7 +19,7 @@
   right: 10px;
   cursor: pointer;
 }
-.filters {
+.list {
   display: flex;
   flex-direction: column;
   row-gap: 15px;
@@ -28,17 +28,30 @@
   li {
     display: flex;
     align-items: center;
+    margin-left: 10px;
     column-gap: 5px;
     cursor: pointer;
   }
-  input {
+  input[type='checkbox'] {
     width: 15px;
     height: 15px;
     margin: 0;
     cursor: pointer;
   }
+  input[type='text'] {
+    width: 100%;
+    border-radius: 10px;
+    padding: 5px 10px;
+    border: 1px solid var(--color-light);
+    &:focus {
+      outline: none;
+    }
+  }
 }
-
+.price {
+  display: flex;
+  justify-content: space-between;
+}
 .text {
   display: flex;
   align-items: center;

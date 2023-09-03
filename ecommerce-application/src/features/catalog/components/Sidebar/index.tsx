@@ -48,7 +48,16 @@ export function CatalogSidebar(): React.ReactElement {
             <MenuItem> 2</MenuItem>
           </SubMenu>
           <SubMenu label="Filters" defaultOpen>
-            <ul className={styles.filters}>
+            <ul className={styles.list}>
+              <li className={styles.price}>
+                <span>Price</span>
+                <input type="text" placeholder="min" />
+                <input type="text" placeholder="max" />
+              </li>
+            </ul>
+          </SubMenu>
+          <SubMenu label="Sort" defaultOpen>
+            <ul className={styles.list}>
               <li>
                 <input className="checkbox" type="checkbox" />
                 <span className="text">Name</span>
