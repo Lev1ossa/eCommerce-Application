@@ -1,5 +1,6 @@
 import { BiSave } from 'react-icons/bi';
 import { UserAdress } from '../../../../types/types';
+import { getCountryName } from '../../../autentification/utils/utils';
 
 // eslint-disable-next-line max-lines-per-function
 export function AddressCard(props: {
@@ -9,7 +10,10 @@ export function AddressCard(props: {
   setModalAddressId: React.Dispatch<React.SetStateAction<string>>;
 }): React.ReactElement {
   const { styles, addressData, setModalActive, setModalAddressId } = props;
-
+  let countryInputValue;
+  if (addressData?.country) {
+    countryInputValue = getCountryName(addressData?.country);
+  }
   return (
     <div className={styles.info_blocks_container}>
       <div className={styles.info_block}>
@@ -22,7 +26,7 @@ export function AddressCard(props: {
       </div>
       <div className={styles.info_block}>
         <div className={styles.label}>Country:</div>
-        <div className={styles.text}>{addressData?.country}</div>
+        <div className={styles.text}>{countryInputValue}</div>
       </div>
       <div className={styles.info_block}>
         <div className={styles.label}>Postal code:</div>
@@ -79,7 +83,6 @@ export function AddressCard(props: {
           onClick={(): void => {
             setModalActive(true);
             setModalAddressId(addressData.id as string);
-            console.log(addressData.id);
           }}
         >
           <BiSave className={styles.edit_button_icon} />

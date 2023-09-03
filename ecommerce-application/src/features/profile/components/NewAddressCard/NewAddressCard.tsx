@@ -25,9 +25,9 @@ import { generateUniqueKey } from '../../../../api/utils';
 // eslint-disable-next-line max-lines-per-function
 export function NewAddressCard(props: {
   styles: CSSModuleClasses;
-  handleSaveButton: () => void;
+  handleAddButton: () => void;
 }): React.ReactElement {
-  const { styles, handleSaveButton } = props;
+  const { styles, handleAddButton } = props;
   const {
     register,
     setValue,
@@ -96,7 +96,7 @@ export function NewAddressCard(props: {
         updateCustomerData(body).then(
           () => {
             showToast(ToastTypes.success, `Address successfully saved!`);
-            handleSaveButton();
+            handleAddButton();
           },
           (error) => {
             showToast(ToastTypes.error, error.message);
