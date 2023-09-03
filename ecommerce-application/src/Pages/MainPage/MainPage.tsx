@@ -1,6 +1,7 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import {
   MyCustomerAddAddressAction,
+  MyCustomerChangePassword,
   MyCustomerUpdate,
 } from '@commercetools/platform-sdk';
 import { Header } from '../../components/Header/Header';
@@ -9,147 +10,242 @@ import { Footer } from '../../components/Footer/Footer';
 import {
   getCategories,
   getCustomerData,
+  getFilteredProductList,
   getProductByID,
   getProductByKey,
   getProductsList,
   updateCustomerData,
+  updateCustomerPassword,
 } from '../../api/requests';
-import { UserAdress } from '../../types/types';
-
-// TODO delete all tests and button
-const getProductsTest = (): void => {
-  getProductsList().then(
-    (result) => {
-      console.log('Should return list of products', result.body.results);
-    },
-    (error) => {
-      console.log(error);
-    },
-  );
-};
-
-const getProductByIDTest = (): void => {
-  getProductByID('73bd367d-271b-44c7-a599-d5fe8346605f').then(
-    (result) => {
-      console.log('Should return mango!', result.body);
-    },
-    (error) => {
-      console.log(error);
-    },
-  );
-};
-
-const getProductByKeyTest = (): void => {
-  getProductByKey('1').then(
-    (result) => {
-      console.log('Should return nectarine!', result.body);
-    },
-    (error) => {
-      console.log(error);
-    },
-  );
-};
-
-const getCategoriesTest = (): void => {
-  getCategories().then(
-    (result) => {
-      console.log('Should return categories!', result.body.results);
-    },
-    (error) => {
-      console.log(error);
-    },
-  );
-};
+import { CustomCategory, ToastTypes, UserAdress } from '../../types/types';
+import { handleLogout } from '../../features/autentification';
+import { showToast } from '../../features/autentification/utils/showToast';
+import { isUserLoggedIn } from '../../api/tokenHandlers';
 
 // eslint-disable-next-line max-lines-per-function
-const getCustomerDataTest = (): void => {
-  getCustomerData().then(
-    (result) => {
-      console.log('Should return customer data!', result.body);
-      const customerData = result.body;
-      const customerAdresses: UserAdress[] = customerData.addresses.map(
-        (adress) => {
-          const { id, country, city, streetName, postalCode } = adress;
-          const isShipping =
-            id && customerData.shippingAddressIds
-              ? customerData.shippingAddressIds.includes(id)
-              : false;
-          const isBilling =
-            id && customerData.billingAddressIds
-              ? customerData.billingAddressIds.includes(id)
-              : false;
-          const isDefaultShipping =
-            id && customerData.defaultShippingAddressId
-              ? customerData.defaultShippingAddressId.includes(id)
-              : false;
-          const isDefaultBilling =
-            id && customerData.defaultBillingAddressId
-              ? customerData.defaultBillingAddressId.includes(id)
-              : false;
-          const userAdress: UserAdress = {
-            id,
-            country,
-            city,
-            streetName,
-            postalCode,
-            isShipping,
-            isBilling,
-            isDefaultShipping,
-            isDefaultBilling,
-          };
-
-          return userAdress;
-        },
-      );
-      console.log('should return customer adresses', customerAdresses);
-    },
-    (error) => {
-      console.log(error);
-    },
-  );
-};
-
-const updateCustomerDataTest = (): void => {
-  getCustomerData().then(
-    (result) => {
-      const addAdressAction: MyCustomerAddAddressAction = {
-        action: 'addAddress',
-        address: {
-          country: 'RU',
-          city: 'NEW ADRESS!!!',
-          streetName: 'NEW ADRESS!!!',
-          postalCode: '111111',
-        },
-      };
-      const body: MyCustomerUpdate = {
-        version: result.body.version,
-        actions: [addAdressAction],
-      };
-      updateCustomerData(body).then(
-        (updateResult) => {
-          console.log('Should return update result!', updateResult.body);
-        },
-        (error) => {
-          console.log(error);
-        },
-      );
-    },
-    (error) => {
-      console.log(error);
-    },
-  );
-};
-
-const testCallback = (): void => {
-  getProductsTest();
-  getProductByIDTest();
-  getProductByKeyTest();
-  getCategoriesTest();
-  getCustomerDataTest();
-  updateCustomerDataTest();
-};
-
 export function MainPage(): React.ReactElement {
+  // TODO delete all tests and button and navigate
+  const navigate = useNavigate();
+  const handleRedirect = (): void => {
+    if (!isUserLoggedIn()) {
+      navigate('/catalog'); // TODO this navigate only for update header (user logged in). If it password change on profile page, we should redirect user to main page.
+    }
+  };
+
+  const getProductsTest = async (): Promise<void> => {
+    await getProductsList().then(
+      (result) => {
+        console.log('Should return list of products', result.body.results);
+      },
+      (error) => {
+        console.log(error);
+      },
+    );
+  };
+
+  const getFilteredProductsTest = async (): Promise<void> => {
+    const categoryID = 'dbab00bf-5d0b-4a4d-9cf0-17739113af5f';
+    const filterQueryStrings = [
+      `categories.id: subtree("${categoryID}")`,
+      `variants.attributes.origin.key:"foreign"`,
+      `variants.attributes.trademark:"Barbados"`,
+    ];
+    await getFilteredProductList(filterQueryStrings).then(
+      (result) => {
+        console.log(
+          'Should return filtered list of products (Fruits, foreign, barbados',
+          result.body.results,
+        );
+      },
+      (error) => {
+        console.log(error);
+      },
+    );
+  };
+
+  const getProductByIDTest = async (): Promise<void> => {
+    await getProductByID('2d86d24b-1c9b-443a-96c6-7805939d0be9').then(
+      (result) => {
+        console.log('Should return mango!', result.body);
+      },
+      (error) => {
+        console.log(error);
+      },
+    );
+  };
+
+  const getProductByKeyTest = async (): Promise<void> => {
+    await getProductByKey('1').then(
+      (result) => {
+        console.log('Should return nectarine!', result.body);
+      },
+      (error) => {
+        console.log(error);
+      },
+    );
+  };
+
+  const getCategoriesTest = async (): Promise<void> => {
+    await getCategories().then(
+      (result) => {
+        const categories: CustomCategory[] = result.body.results.map(
+          (category) => {
+            const newCategory: CustomCategory = {
+              id: category.id,
+              parentID: category.parent?.id,
+              key: category.key,
+              slug: category.slug.en,
+              name: category.name.en,
+              children: [],
+            };
+            return newCategory;
+          },
+        );
+        const categoriesTree = categories.filter(
+          (category) => !category.parentID,
+        );
+        categories
+          .filter((category) => category.parentID)
+          .forEach((subcategory) => {
+            const parentIdx = categoriesTree.findIndex(
+              (item) => item.id === subcategory.parentID,
+            );
+            if (parentIdx !== -1) {
+              categoriesTree[parentIdx].children.push(subcategory);
+            }
+          });
+        console.log('Should return categories tree!', categoriesTree);
+      },
+      (error) => {
+        console.log(error);
+      },
+    );
+  };
+
+  // eslint-disable-next-line max-lines-per-function
+  const getCustomerDataTest = async (): Promise<void> => {
+    await getCustomerData().then(
+      (result) => {
+        console.log('Should return customer data!', result.body);
+        const customerData = result.body;
+        const customerAdresses: UserAdress[] = customerData.addresses.map(
+          (adress) => {
+            const { id, country, city, streetName, postalCode } = adress;
+            const isShipping =
+              id && customerData.shippingAddressIds
+                ? customerData.shippingAddressIds.includes(id)
+                : false;
+            const isBilling =
+              id && customerData.billingAddressIds
+                ? customerData.billingAddressIds.includes(id)
+                : false;
+            const isDefaultShipping =
+              id && customerData.defaultShippingAddressId
+                ? customerData.defaultShippingAddressId.includes(id)
+                : false;
+            const isDefaultBilling =
+              id && customerData.defaultBillingAddressId
+                ? customerData.defaultBillingAddressId.includes(id)
+                : false;
+            const userAdress: UserAdress = {
+              id,
+              country,
+              city,
+              streetName,
+              postalCode,
+              isShipping,
+              isBilling,
+              isDefaultShipping,
+              isDefaultBilling,
+            };
+
+            return userAdress;
+          },
+        );
+        console.log('should return customer adresses', customerAdresses);
+      },
+      (error) => {
+        console.log(error);
+      },
+    );
+  };
+
+  const updateCustomerDataTest = async (): Promise<void> => {
+    await getCustomerData().then(
+      (result) => {
+        const addAdressAction: MyCustomerAddAddressAction = {
+          action: 'addAddress',
+          address: {
+            country: 'RU',
+            city: 'NEW ADRESS!!!',
+            streetName: 'NEW ADRESS!!!',
+            postalCode: '111111',
+          },
+        };
+        const body: MyCustomerUpdate = {
+          version: result.body.version,
+          actions: [addAdressAction],
+        };
+        updateCustomerData(body).then(
+          (updateResult) => {
+            console.log('Should return update result!', updateResult.body);
+            showToast(ToastTypes.success, `Your data has succesfully changed!`);
+          },
+          (error) => {
+            showToast(ToastTypes.error, error.message);
+          },
+        );
+      },
+      (error) => {
+        showToast(ToastTypes.error, error.message);
+      },
+    );
+  };
+
+  const updateCustomerPasswordTest = async (): Promise<void> => {
+    await getCustomerData().then(
+      (result) => {
+        const body: MyCustomerChangePassword = {
+          version: result.body.version,
+          currentPassword: 'Qwerty12',
+          newPassword: 'Qwerty12',
+        };
+        updateCustomerPassword(body).then(
+          async (updateResult) => {
+            console.log(
+              'Should return update password result!',
+              updateResult.body,
+            );
+            await handleLogout();
+            handleRedirect();
+            showToast(
+              ToastTypes.success,
+              `Your password has succesfully changed! You log out!`, // TODO: change toast message
+            );
+          },
+          (error) => {
+            console.log(error);
+            showToast(ToastTypes.error, error.message);
+          },
+        );
+      },
+      (error) => {
+        showToast(ToastTypes.error, error.message);
+      },
+    );
+  };
+
+  const testCallback = async (): Promise<void> => {
+    await getProductsTest();
+    await getProductByIDTest();
+    await getProductByKeyTest();
+    await getCategoriesTest();
+    await getCustomerDataTest();
+    await updateCustomerDataTest();
+    await getFilteredProductsTest();
+    await updateCustomerPasswordTest();
+  };
+
   return (
     <div className={styles.main_page}>
       <Header />
@@ -176,7 +272,12 @@ export function MainPage(): React.ReactElement {
             </NavLink>
           </li>
         </ul>
-        <button type="button" onClick={testCallback}>
+        <button
+          type="button"
+          onClick={(): void => {
+            testCallback();
+          }}
+        >
           Get test data
         </button>
       </main>
