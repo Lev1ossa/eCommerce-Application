@@ -7,8 +7,8 @@ import {
   MyCustomerChangePassword,
   MyCustomerSignin,
   MyCustomerUpdate,
-  ProductPagedQueryResponse,
   ProductProjection,
+  ProductProjectionPagedQueryResponse,
   ProductProjectionPagedSearchResponse,
 } from '@commercetools/platform-sdk';
 import { TokenCache } from '@commercetools/sdk-client-v2';
@@ -61,12 +61,12 @@ export const getAnonymousUser = async (
 };
 
 export const getProductsList = async (): Promise<
-  ClientResponse<ProductPagedQueryResponse>
+  ClientResponse<ProductProjectionPagedQueryResponse>
 > => {
   const apiRoot = getRefreshTokenFlowApiRoot(getRefreshToken());
   return apiRoot
     .withProjectKey({ projectKey })
-    .products()
+    .productProjections()
     .get({
       queryArgs: {
         limit: 30,
