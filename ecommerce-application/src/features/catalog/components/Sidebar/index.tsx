@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from 'react';
 import { FiSearch } from 'react-icons/fi';
 import {
   CSSObject,
@@ -8,10 +9,71 @@ import {
   menuClasses,
   sidebarClasses,
 } from 'react-pro-sidebar';
+import { getCategories } from '../../../../api/requests';
+import { CustomCategory } from '../../../../types/types';
 import styles from './Sidebar.module.scss';
 
 // eslint-disable-next-line max-lines-per-function
 export function CatalogSidebar(): React.ReactElement {
+  const [productCategories, setProductCategories] = useState<CustomCategory[]>(
+    [],
+  );
+  const [categoriesList, setCategoriesList] = useState<JSX.Element[]>([]);
+
+  useEffect(() => {
+    getCategories().then(
+      (result) => {
+        const categories: CustomCategory[] = result.body.results.map(
+          (category) => {
+            const newCategory: CustomCategory = {
+              id: category.id,
+              parentID: category.parent?.id,
+              key: category.key,
+              slug: category.slug.en,
+              name: category.name.en,
+              children: [],
+            };
+            return newCategory;
+          },
+        );
+        const categoriesTree = categories.filter(
+          (category) => !category.parentID,
+        );
+        categories
+          .filter((category) => category.parentID)
+          .forEach((subcategory) => {
+            const parentIdx = categoriesTree.findIndex(
+              (item) => item.id === subcategory.parentID,
+            );
+            if (parentIdx !== -1) {
+              categoriesTree[parentIdx].children.push(subcategory);
+            }
+          });
+        console.log('Should return categories tree!', categoriesTree);
+        setProductCategories(categoriesTree);
+      },
+      (error) => {
+        console.log(error);
+      },
+    );
+  }, []);
+
+  useEffect(() => {
+    if (productCategories) {
+      setCategoriesList(
+        productCategories.map((category) => (
+          <SubMenu key={category.key} label={category.name}>
+            {category.children.map((child) => (
+              <MenuItem key={child.key}>
+                {child.name.replace('_', ' ')}
+              </MenuItem>
+            ))}
+          </SubMenu>
+        )),
+      );
+    }
+  }, [productCategories]);
+
   return (
     <div style={{ display: 'flex' }}>
       <Sidebar
@@ -54,19 +116,7 @@ export function CatalogSidebar(): React.ReactElement {
             />
             <FiSearch className={styles.search_icon} />
           </div>
-          <SubMenu active label="Fruits">
-            <MenuItem> Citrus</MenuItem>
-            <MenuItem active> Tropical</MenuItem>
-            <MenuItem> Stoned</MenuItem>
-          </SubMenu>
-          <SubMenu label="Vegetables">
-            <MenuItem> 1</MenuItem>
-            <MenuItem> 2</MenuItem>
-          </SubMenu>
-          <SubMenu label="Berries">
-            <MenuItem> 1</MenuItem>
-            <MenuItem> 2</MenuItem>
-          </SubMenu>
+          {categoriesList}
           <SubMenu label="Filters" defaultOpen>
             <ul className={styles.list}>
               <li className={styles.price}>
