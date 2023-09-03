@@ -4,10 +4,12 @@ import {
   ClientResponse,
   Customer,
   CustomerSignInResult,
+  MyCustomerChangePassword,
   MyCustomerSignin,
   MyCustomerUpdate,
   ProductPagedQueryResponse,
   ProductProjection,
+  ProductProjectionPagedSearchResponse,
 } from '@commercetools/platform-sdk';
 import { TokenCache } from '@commercetools/sdk-client-v2';
 import { ILoginData, IRegistrationData } from '../types/types';
@@ -73,6 +75,22 @@ export const getProductsList = async (): Promise<
     .execute();
 };
 
+export const getFilteredProductList = async (
+  filterQueryStrings: string[],
+): Promise<ClientResponse<ProductProjectionPagedSearchResponse>> => {
+  const apiRoot = getRefreshTokenFlowApiRoot(getRefreshToken());
+  return apiRoot
+    .withProjectKey({ projectKey })
+    .productProjections()
+    .search()
+    .get({
+      queryArgs: {
+        filter: filterQueryStrings,
+      },
+    })
+    .execute();
+};
+
 export const getProductByID = async (
   productId: string,
 ): Promise<ClientResponse<ProductProjection>> => {
@@ -122,4 +140,16 @@ export const updateCustomerData = async (
 ): Promise<ClientResponse<Customer>> => {
   const apiRoot = getRefreshTokenFlowApiRoot(getRefreshToken());
   return apiRoot.withProjectKey({ projectKey }).me().post({ body }).execute();
+};
+
+export const updateCustomerPassword = async (
+  body: MyCustomerChangePassword,
+): Promise<ClientResponse<Customer>> => {
+  const apiRoot = getRefreshTokenFlowApiRoot(getRefreshToken());
+  return apiRoot
+    .withProjectKey({ projectKey })
+    .me()
+    .password()
+    .post({ body })
+    .execute();
 };

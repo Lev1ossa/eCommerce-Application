@@ -119,3 +119,12 @@ export type UserAdress = {
   isDefaultShipping: boolean;
   isDefaultBilling: boolean;
 };
+
+export type CustomCategory = {
+  id: string;
+  key?: string;
+  name: string;
+  slug: string;
+  parentID?: string;
+  children: CustomCategory[];
+};
