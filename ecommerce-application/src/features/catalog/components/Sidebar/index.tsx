@@ -1,5 +1,6 @@
 import { FiSearch } from 'react-icons/fi';
 import {
+  CSSObject,
   Menu,
   MenuItem,
   Sidebar,
@@ -25,11 +26,24 @@ export function CatalogSidebar(): React.ReactElement {
           rootStyles={{
             [`.${menuClasses.button}`]: {
               ':hover': {
-                backgroundColor: '#64e44c',
+                backgroundColor: '#fdff8d',
               },
             },
             // position: 'sticky',
             top: '1.5rem',
+          }}
+          menuItemStyles={{
+            button: ({ level, active }): CSSObject | undefined => {
+              if (level === 0)
+                return {
+                  backgroundColor: active ? '#64e44c' : undefined,
+                };
+              if (level === 1)
+                return {
+                  backgroundColor: active ? '#fdff8d' : undefined,
+                };
+              return undefined;
+            },
           }}
         >
           <div className={styles.search}>
@@ -40,9 +54,9 @@ export function CatalogSidebar(): React.ReactElement {
             />
             <FiSearch className={styles.search_icon} />
           </div>
-          <SubMenu label="Fruits">
+          <SubMenu active label="Fruits">
             <MenuItem> Citrus</MenuItem>
-            <MenuItem> Tropical</MenuItem>
+            <MenuItem active> Tropical</MenuItem>
             <MenuItem> Stoned</MenuItem>
           </SubMenu>
           <SubMenu label="Vegetables">
@@ -105,23 +119,6 @@ export function CatalogSidebar(): React.ReactElement {
                     <span className="text">Foreign</span>
                   </li>
                 </ul>
-              </li>
-            </ul>
-          </SubMenu>
-          <SubMenu label="Sort" defaultOpen>
-            <ul className={`${styles.list} ${styles.brand_list}`}>
-              <li>
-                <input type="checkbox" />
-                <span>Name</span>
-              </li>
-              <li>
-                <input type="checkbox" /> Price
-              </li>
-              <li>
-                <input type="checkbox" /> Origin
-              </li>
-              <li>
-                <input type="checkbox" /> TM
               </li>
             </ul>
           </SubMenu>
