@@ -1,7 +1,8 @@
-import { /* SubmitHandler, */ SubmitHandler, useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { BiSave } from 'react-icons/bi';
 import { MdOutlineCancel } from 'react-icons/md';
-import { IRegistrationData, IUserData } from '../../../../types/types';
+import { Customer } from '@commercetools/platform-sdk';
+import { IRegistrationData } from '../../../../types/types';
 import { ServiceInputParameters } from '../../../autentification/services/inputService';
 import { Error } from '../../../autentification/components/FormInputs/Error/Error';
 import { FormInputProfile } from '../FormInputProfile/FormInputProfile';
@@ -9,7 +10,7 @@ import { FormInputProfile } from '../FormInputProfile/FormInputProfile';
 // eslint-disable-next-line max-lines-per-function
 export function AccountContentActive(props: {
   styles: CSSModuleClasses;
-  userData: IUserData;
+  userData: Customer;
   handleEditButton: () => void;
 }): React.ReactElement {
   const { styles, userData, handleEditButton } = props;
@@ -35,6 +36,7 @@ export function AccountContentActive(props: {
         label={inputService.createInputParams('userFirstName').label}
         styles={styles}
         value={userData.firstName}
+        checked={false}
       />
       <Error errors={errors} name="userFirstName" />
       <FormInputProfile
@@ -43,6 +45,7 @@ export function AccountContentActive(props: {
         label={inputService.createInputParams('userLastName').label}
         styles={styles}
         value={userData.lastName}
+        checked={false}
       />
       <Error errors={errors} name="userLastName" />
       <FormInputProfile
@@ -51,6 +54,7 @@ export function AccountContentActive(props: {
         label={inputService.createInputParams('birthDate').label}
         styles={styles}
         value={userData.dateOfBirth}
+        checked={false}
       />
       <Error errors={errors} name="birthDate" />
       <FormInputProfile
@@ -59,6 +63,7 @@ export function AccountContentActive(props: {
         label={inputService.createInputParams('email').label}
         styles={styles}
         value={userData.email}
+        checked={false}
       />
       <Error errors={errors} name="email" />
       <div className={styles.edit_buttons_container}>

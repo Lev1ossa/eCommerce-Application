@@ -1,12 +1,12 @@
 import { BiEditAlt } from 'react-icons/bi';
 import { AiOutlineUser } from 'react-icons/ai';
 import { useState } from 'react';
-import { IUserData } from '../../../../types/types';
+import { Customer } from '@commercetools/platform-sdk';
 import styles from './Account.module.scss';
 import { AccountContentInactive } from '../AccountContentInactive/AccountContentInactive';
 import { AccountContentActive } from '../AccountContentActive/AccountContentActive';
 
-export function Account(props: { userData: IUserData }): React.ReactElement {
+export function Account(props: { userData: Customer }): React.ReactElement {
   const { userData } = props;
   const [editMode, setEditMode] = useState(false);
   const handleEditButton = (): void => {
