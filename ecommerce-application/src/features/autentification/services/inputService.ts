@@ -75,6 +75,16 @@ export class ServiceInputParameters {
       isShippingAddressDefault: [],
       isBillingAddressDefault: [],
       isSameAddress: [],
+      isShipping: [],
+      isBilling: [],
+      newPassword: [],
+      currentPassword: [
+        'space',
+        'number',
+        'uppercase',
+        'lowercase',
+        'passwordLength',
+      ],
     };
     this.labels = {
       email: 'Email:',
