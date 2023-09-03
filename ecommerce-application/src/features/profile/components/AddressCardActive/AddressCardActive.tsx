@@ -177,13 +177,7 @@ export function AddressCardActive(props: {
           </div>
         )}
         <div className={styles.edit_buttons_container}>
-          <button
-            className={styles.edit_button}
-            type="submit"
-            onClick={(): void => {
-              console.log(addressData.id);
-            }}
-          >
+          <button className={styles.edit_button} type="submit">
             <BiSave className={styles.edit_button_icon} />
             Save
           </button>

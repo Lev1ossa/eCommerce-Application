@@ -1,4 +1,8 @@
-import { RegisterOptions, UseFormRegisterReturn } from 'react-hook-form';
+import {
+  PathString,
+  RegisterOptions,
+  UseFormRegisterReturn,
+} from 'react-hook-form';
 
 export interface ILoginData {
   email: string;
@@ -22,6 +26,8 @@ export interface IRegistrationData extends ILoginData {
   isSameAddress: boolean;
   isShipping: boolean;
   isBilling: boolean;
+  newPassword: string;
+  currentPassword: string;
 }
 
 export interface IRegistrationPageParam {
@@ -53,8 +59,10 @@ export interface IValidationRules {
   isShippingAddressDefault: string[];
   isBillingAddressDefault: string[];
   isSameAddress: string[];
-  isShipping: boolean[];
-  isBilling: boolean[];
+  isShipping: string[];
+  isBilling: PathString[];
+  newPassword: string[];
+  currentPassword: string[];
 }
 
 export enum ToastTypes {
