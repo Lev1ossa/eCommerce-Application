@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { getProductsList } from '../../../../api/requests';
 import { Loader } from '../../../../components/Loader';
 import { ProductCard } from '../ProductCard';
-import { Sidebar } from '../Sidebar';
+import { CatalogSidebar } from '../Sidebar';
 import styles from './Catalog.module.scss';
 
 // eslint-disable-next-line max-lines-per-function
@@ -36,7 +36,7 @@ export function Catalog(): React.ReactElement {
 
   return (
     <div className={styles.catalog}>
-      <Sidebar />
+      <CatalogSidebar />
       <ul className={styles.grid}>{!isLoading ? catalog : <Loader />}</ul>
     </div>
   );
