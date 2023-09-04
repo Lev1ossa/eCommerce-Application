@@ -14,6 +14,7 @@ export function Catalog(): React.ReactElement {
   const [products, setProducts] = useState<ProductProjection[]>([]);
   const [catalog, setCatalog] = useState<JSX.Element[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [brands, setBrands] = useState<string[]>([]);
 
   useEffect(() => {
     getProductsList().then(
@@ -27,13 +28,23 @@ export function Catalog(): React.ReactElement {
     );
   }, []);
 
+  const getBrandsFromProducts = (productList: ProductProjection[]): void => {
+    const brandsList = productList.map((product: ProductProjection) =>
+      product.masterVariant.attributes
+        ? product.masterVariant.attributes[0].value
+        : 'good food',
+    );
+    setBrands([...new Set(brandsList)]);
+  };
   useEffect(() => {
+    console.log(products);
     const data = products.map((product) => (
       <li key={product.id} className={styles.item}>
         <ProductCard product={product} />
       </li>
     ));
     setCatalog(data);
+    getBrandsFromProducts(products);
   }, [products]);
 
   const getFilteredProducts = async (...args: []): Promise<void> => {
@@ -57,7 +68,7 @@ export function Catalog(): React.ReactElement {
 
   return (
     <div className={styles.catalog}>
-      <CatalogSidebar categoryFilter={getFilteredProducts} />
+      <CatalogSidebar categoryFilter={getFilteredProducts} brands={brands} />
       <ul className={styles.grid}>{!isLoading ? catalog : <Loader />}</ul>
     </div>
   );

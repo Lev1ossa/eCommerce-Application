@@ -20,8 +20,9 @@ export function CatalogSidebar(props: {
     foreign?: string,
     trademark?: string,
   ) => Promise<void>;
+  brands: string[];
 }): React.ReactElement {
-  const { categoryFilter } = props;
+  const { categoryFilter, brands } = props;
   const [productCategories, setProductCategories] = useState<CustomCategory[]>(
     [],
   );
@@ -88,6 +89,13 @@ export function CatalogSidebar(props: {
     }
   }, [productCategories, categoryFilter]);
 
+  const brandsList = brands.map((brand: string) => (
+    <li key={brand}>
+      <input type="checkbox" />
+      <span className="text">{brand}</span>
+    </li>
+  ));
+
   return (
     <div style={{ display: 'flex' }}>
       <Sidebar
@@ -141,34 +149,7 @@ export function CatalogSidebar(props: {
               <li className={styles.brand}>
                 <ul className={styles.brand_list}>
                   <strong>Brands</strong>
-                  <li>
-                    <input type="checkbox" />
-                    <span className="text">Barbados</span>
-                  </li>
-                  <li>
-                    <input type="checkbox" />
-                    <span className="text">Campari</span>
-                  </li>
-                  <li>
-                    <input type="checkbox" />
-                    <span className="text">Cara Navel</span>
-                  </li>
-                  <li>
-                    <input type="checkbox" />
-                    <span className="text">Cosmic Crisp</span>
-                  </li>
-                  <li>
-                    <input type="checkbox" />
-                    <span className="text">Dream</span>
-                  </li>
-                  <li>
-                    <input type="checkbox" />
-                    <span className="text">Victoria</span>
-                  </li>
-                  <li>
-                    <input type="checkbox" />
-                    <span className="text">Vegan</span>
-                  </li>
+                  {brandsList}
                 </ul>
               </li>
               <li className={styles.brand}>
