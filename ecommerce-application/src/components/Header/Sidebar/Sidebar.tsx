@@ -7,7 +7,7 @@ import './Sidebar.scss';
 export function Sidebar(props: {
   className: ({ isActive }: { isActive: boolean }) => string;
   userLoggedIn: boolean;
-  logoutHandler: React.MouseEventHandler<HTMLAnchorElement>;
+  logoutHandler: () => Promise<void>;
 }): React.ReactElement {
   const { className, userLoggedIn, logoutHandler } = props;
   const burgerIconUrl = new URL(
@@ -50,9 +50,13 @@ export function Sidebar(props: {
           </NavLink>
         )}
         {userLoggedIn && (
-          <NavLink className="menu-item" onClick={logoutHandler} to="#">
+          <button
+            className="logout_button"
+            onClick={logoutHandler}
+            type="button"
+          >
             Logout
-          </NavLink>
+          </button>
         )}
       </Menu>
     </nav>

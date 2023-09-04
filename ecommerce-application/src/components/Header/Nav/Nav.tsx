@@ -7,7 +7,7 @@ import styles from './Nav.module.scss';
 export function Nav(props: {
   className: ({ isActive }: { isActive: boolean }) => string;
   userLoggedIn: boolean;
-  logoutHandler: React.MouseEventHandler<HTMLAnchorElement>;
+  logoutHandler: () => Promise<void>;
 }): React.ReactElement {
   const { className, userLoggedIn, logoutHandler } = props;
   return (
@@ -46,9 +46,13 @@ export function Nav(props: {
         )}
         {userLoggedIn && (
           <li>
-            <NavLink onClick={logoutHandler} className={styles.inactive} to="#">
+            <button
+              className={styles.logout_button}
+              onClick={logoutHandler}
+              type="button"
+            >
               <AiOutlineLogout className={styles.header_icon} />
-            </NavLink>
+            </button>
           </li>
         )}
       </ul>

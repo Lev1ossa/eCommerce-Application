@@ -66,3 +66,11 @@
   font-weight: bold;
   color: var(--color-orange);
 }
+
+.logout_button {
+  border: none;
+  background-color: inherit;
+  &:hover {
+    color: var(--color-orange);
+  }
+}
