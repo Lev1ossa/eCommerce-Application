@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { FiSearch } from 'react-icons/fi';
 import {
   CSSObject,
@@ -23,7 +23,15 @@ export function CatalogSidebar(props: {
     [],
   );
   const [categoriesList, setCategoriesList] = useState<JSX.Element[]>([]);
-  const [currentFilters, setcurrentFilters] = useState<ICurrentFilters>();
+  const [currentFilters, setcurrentFilters] = useState<ICurrentFilters>({
+    category: '',
+    trademark: [],
+    originFilter: [],
+  });
+  // const [originFilters, setOriginFilters] = useState({
+  //   foreigh: false,
+  //   local: false,
+  // });
   const [brandsList, setBrandsList] = useState<JSX.Element[]>([]);
 
   useEffect(() => {
@@ -113,6 +121,40 @@ export function CatalogSidebar(props: {
     );
   }, [productCategories, categoryFilter, currentFilters, brands]);
 
+  const handleOriginChange = (
+    event: ChangeEvent<HTMLInputElement>,
+    value: string,
+  ): void => {
+    if (event.target.checked) {
+      const filters = {
+        ...currentFilters,
+        originFilter: [...currentFilters.originFilter, value],
+      };
+      categoryFilter({ ...filters });
+
+      setcurrentFilters({
+        ...currentFilters,
+        originFilter: [...currentFilters.originFilter, value],
+      });
+    } else {
+      const filters = {
+        ...currentFilters,
+        originFilter: [
+          ...currentFilters.originFilter.filter((filter) => filter !== value),
+        ],
+      };
+
+      categoryFilter({ ...filters });
+
+      setcurrentFilters({
+        ...currentFilters,
+        originFilter: [
+          ...currentFilters.originFilter.filter((filter) => filter !== value),
+        ],
+      });
+    }
+  };
+
   return (
     <div style={{ display: 'flex' }}>
       <Sidebar
@@ -171,39 +213,23 @@ export function CatalogSidebar(props: {
               </li>
               <li className={styles.brand}>
                 <ul className={styles.brand_list}>
-                  <strong>Origin</strong>
-                  <li
-                    aria-hidden
-                    onClick={(): void => {
-                      setcurrentFilters({
-                        ...currentFilters,
-                        origin: 'local',
-                      });
-                      const filters = {
-                        ...currentFilters,
-                        origin: 'local',
-                      };
-                      categoryFilter({ ...filters });
-                    }}
-                  >
-                    <input type="checkbox" />
+                  <strong>originFilter</strong>
+                  <li>
+                    <input
+                      type="checkbox"
+                      onChange={(event): void =>
+                        handleOriginChange(event, 'local')
+                      }
+                    />
                     <span className="text">Local</span>
                   </li>
-                  <li
-                    aria-hidden
-                    onClick={(): void => {
-                      setcurrentFilters({
-                        ...currentFilters,
-                        origin: 'foreign',
-                      });
-                      const filters = {
-                        ...currentFilters,
-                        origin: 'foreign',
-                      };
-                      categoryFilter({ ...filters });
-                    }}
-                  >
-                    <input type="checkbox" />
+                  <li>
+                    <input
+                      type="checkbox"
+                      onChange={(event): void =>
+                        handleOriginChange(event, 'foreign')
+                      }
+                    />
                     <span className="text">Foreign</span>
                   </li>
                 </ul>

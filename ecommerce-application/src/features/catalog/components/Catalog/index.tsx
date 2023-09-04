@@ -17,18 +17,6 @@ export function Catalog(): React.ReactElement {
   const [isLoading, setIsLoading] = useState(true);
   const [brands, setBrands] = useState<string[]>([]);
 
-  useEffect(() => {
-    getProductsList().then(
-      (result) => {
-        setProducts(result.body.results);
-        setIsLoading(false);
-      },
-      (error) => {
-        console.log(error);
-      },
-    );
-  }, []);
-
   const getBrandsFromProducts = (productList: ProductProjection[]): void => {
     const brandsList = productList.map((product: ProductProjection) =>
       product.masterVariant.attributes
@@ -37,15 +25,29 @@ export function Catalog(): React.ReactElement {
     );
     setBrands([...new Set(brandsList.sort())]);
   };
+
   useEffect(() => {
-    // console.log('get products');
+    getProductsList().then(
+      (result) => {
+        setProducts(result.body.results);
+        setIsLoading(false);
+        getBrandsFromProducts(result.body.results);
+      },
+      (error) => {
+        console.log(error);
+      },
+    );
+  }, []);
+
+  useEffect(() => {
     const data = products.map((product) => (
       <li key={product.id} className={styles.item}>
         <ProductCard product={product} />
       </li>
     ));
-    setCatalog(data);
-    getBrandsFromProducts(products);
+    if (data.length) {
+      setCatalog(data);
+    } else setCatalog([<h1 key={0}>Not found</h1>]);
     console.log('data', products);
   }, [products]);
 
@@ -53,20 +55,21 @@ export function Catalog(): React.ReactElement {
     ...args: ICurrentFilters[]
   ): Promise<void> => {
     setIsLoading(true);
-
-    const filterQueryStrings = [];
-    if (args[0].category)
+    console.log('args', args);
+    const filterQueryStrings: string[] = [];
+    if (args[0].category.length)
       filterQueryStrings.push(`categories.id: subtree("${args[0].category}")`);
-    if (args[0].trademark)
+    if (args[0].trademark.length)
       filterQueryStrings.push(
         `variants.attributes.trademark:"${args[0].trademark}"`,
       );
-    if (args[0].origin)
+    if (args[0].originFilter.length)
       filterQueryStrings.push(
-        `variants.attributes.origin.key:"${args[0].origin}"`,
+        `variants.attributes.origin.key:${args[0].originFilter
+          .map((filter: string): string => `"${filter}"`)
+          .join(',')}`,
       );
-    // console.log('filterQueryStrings', filterQueryStrings);
-
+    console.log('filterQueryStrings', filterQueryStrings);
     await getFilteredProductList(filterQueryStrings).then(
       (result) => {
         setProducts(result.body.results);

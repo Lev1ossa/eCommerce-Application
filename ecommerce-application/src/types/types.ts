@@ -130,7 +130,7 @@ export type CustomCategory = {
 };
 
 export interface ICurrentFilters {
-  category?: string;
-  trademark?: string;
-  origin?: string;
+  category: string;
+  trademark: string[];
+  originFilter: string[];
 }
