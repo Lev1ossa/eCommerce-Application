@@ -1,18 +1,17 @@
-import { Product } from '@commercetools/platform-sdk';
+import { ProductProjection } from '@commercetools/platform-sdk';
 import { Link } from 'react-router-dom';
 import styles from './ProductCard.module.scss';
 
 // eslint-disable-next-line max-lines-per-function
-export function ProductCard(props: { product: Product }): React.ReactElement {
+export function ProductCard(props: {
+  product: ProductProjection;
+}): React.ReactElement {
   const { product } = props;
   const { id } = product;
-  const name = product.masterData.current.name.en;
-  const description = product.masterData.current.description?.en
-    .slice(0, 65)
-    .concat('...');
+  const name = product.name.en;
+  const description = product.description?.en.slice(0, 65).concat('...');
 
-  const { prices, attributes, images } =
-    product.masterData.current.masterVariant;
+  const { prices, attributes, images } = product.masterVariant;
 
   const price = prices ? prices[0].value.centAmount / 100 : 0;
   const image = images ? images[0].url : '';
