@@ -27,6 +27,8 @@ export function CatalogSidebar(props: {
     category: '',
     trademark: [],
     originFilter: [],
+    lowerPrice: 0,
+    higherPrice: 0,
   });
   const [brandsList, setBrandsList] = useState<JSX.Element[]>([]);
 
@@ -181,6 +183,26 @@ export function CatalogSidebar(props: {
     }
   };
 
+  const handlePriceChange = (
+    event: ChangeEvent<HTMLInputElement>,
+    name: string,
+  ): void => {
+    const regex = /[^0-9]/g;
+    if (!event.target.value.match(regex)) {
+      const filters = {
+        ...currentFilters,
+        [name]: +event.target.value,
+      };
+
+      categoryFilter({ ...filters });
+
+      setcurrentFilters({
+        ...currentFilters,
+        [name]: +event.target.value,
+      });
+    }
+  };
+
   return (
     <div style={{ display: 'flex' }}>
       <Sidebar
@@ -228,8 +250,22 @@ export function CatalogSidebar(props: {
             <ul className={styles.list}>
               <li className={styles.price}>
                 <strong>Price</strong>
-                <input type="text" placeholder="min" />
-                <input type="text" placeholder="max" />
+                <input
+                  type="text"
+                  value={currentFilters.lowerPrice}
+                  placeholder="min"
+                  onChange={(event): void =>
+                    handlePriceChange(event, 'lowerPrice')
+                  }
+                />
+                <input
+                  type="text"
+                  placeholder="max"
+                  value={currentFilters.higherPrice}
+                  onChange={(event): void =>
+                    handlePriceChange(event, 'higherPrice')
+                  }
+                />
               </li>
               <li className={styles.brand}>
                 <ul className={styles.brand_list}>

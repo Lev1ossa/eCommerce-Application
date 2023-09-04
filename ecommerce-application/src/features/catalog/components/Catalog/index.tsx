@@ -70,6 +70,13 @@ export function Catalog(): React.ReactElement {
           .map((filter: string): string => `"${filter}"`)
           .join(',')}`,
       );
+    if (args[0].lowerPrice && args[0].higherPrice)
+      filterQueryStrings.push(
+        `variants.price.centAmount:range (${args[0].lowerPrice * 100} to ${
+          args[0].higherPrice * 100
+        })`,
+      );
+
     await getFilteredProductList(filterQueryStrings).then(
       (result) => {
         setProducts(result.body.results);
