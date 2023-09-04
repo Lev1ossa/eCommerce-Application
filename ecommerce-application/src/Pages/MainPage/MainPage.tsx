@@ -13,6 +13,7 @@ import {
   getFilteredProductList,
   getProductByID,
   getProductByKey,
+  getProductBySlug,
   getProductsList,
   updateCustomerData,
   updateCustomerPassword,
@@ -45,15 +46,18 @@ export function MainPage(): React.ReactElement {
 
   const getFilteredProductsTest = async (): Promise<void> => {
     const categoryID = 'dbab00bf-5d0b-4a4d-9cf0-17739113af5f';
+    const lowerPrice = '1';
+    const higherPrice = '150';
     const filterQueryStrings = [
       `categories.id: subtree("${categoryID}")`,
       `variants.attributes.origin.key:"foreign"`,
       `variants.attributes.trademark:"Barbados"`,
+      `variants.price.centAmount:range (${lowerPrice} to ${higherPrice})`,
     ];
     await getFilteredProductList(filterQueryStrings).then(
       (result) => {
         console.log(
-          'Should return filtered list of products (Fruits, foreign, barbados',
+          'Should return filtered list of products',
           result.body.results,
         );
       },
@@ -78,6 +82,17 @@ export function MainPage(): React.ReactElement {
     await getProductByKey('1').then(
       (result) => {
         console.log('Should return nectarine!', result.body);
+      },
+      (error) => {
+        console.log(error);
+      },
+    );
+  };
+
+  const getProductBySlugTest = async (): Promise<void> => {
+    await getProductBySlug('banana').then(
+      (result) => {
+        console.log('Should return banana!', result.body);
       },
       (error) => {
         console.log(error);
@@ -239,6 +254,7 @@ export function MainPage(): React.ReactElement {
     await getProductsTest();
     await getProductByIDTest();
     await getProductByKeyTest();
+    await getProductBySlugTest();
     await getCategoriesTest();
     await getCustomerDataTest();
     await updateCustomerDataTest();

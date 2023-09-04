@@ -85,6 +85,7 @@ export const getFilteredProductList = async (
     .search()
     .get({
       queryArgs: {
+        limit: 30,
         filter: filterQueryStrings,
       },
     })
@@ -112,6 +113,22 @@ export const getProductByKey = async (
     .productProjections()
     .withKey({ key: productKey })
     .get()
+    .execute();
+};
+
+export const getProductBySlug = async (
+  productSlug: string,
+): Promise<ClientResponse<ProductProjectionPagedSearchResponse>> => {
+  const apiRoot = getRefreshTokenFlowApiRoot(getRefreshToken());
+  return apiRoot
+    .withProjectKey({ projectKey })
+    .productProjections()
+    .search()
+    .get({
+      queryArgs: {
+        'text.en': `"${productSlug}"`,
+      },
+    })
     .execute();
 };
 
