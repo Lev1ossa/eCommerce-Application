@@ -106,7 +106,7 @@ export function PasswordContentActive(props: {
         styles={styles}
       />
       <Error errors={errors} name="newPassword" />
-      <button className={styles.submit_button} type="submit">
+      <button className={styles.button} type="submit">
         <AiOutlineSave className={styles.edit_button_icon} />
         Save
       </button>

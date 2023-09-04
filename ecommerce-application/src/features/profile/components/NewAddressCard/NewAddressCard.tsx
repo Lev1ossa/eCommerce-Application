@@ -1,7 +1,6 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { postcodeValidator } from 'postcode-validator';
-import { BiSave } from 'react-icons/bi';
 import {
   MyCustomerAddAddressAction,
   MyCustomerAddBillingAddressIdAction,
@@ -11,6 +10,7 @@ import {
   MyCustomerUpdate,
   MyCustomerUpdateAction,
 } from '@commercetools/platform-sdk';
+import { BsHouseAdd } from 'react-icons/bs';
 import { IRegistrationData, ToastTypes } from '../../../../types/types';
 import { ServiceInputParameters } from '../../../autentification/services/inputService';
 import { Error } from '../../../autentification/components/FormInputs/Error/Error';
@@ -249,7 +249,7 @@ export function NewAddressCard(props: {
         )}
         <div className={styles.edit_buttons_container}>
           <button className={styles.edit_button} type="submit">
-            <BiSave className={styles.edit_button_icon} />
+            <BsHouseAdd className={styles.edit_button_icon} />
             Add Address
           </button>
         </div>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { AiOutlineHome } from 'react-icons/ai';
-import { BiEditAlt } from 'react-icons/bi';
+import { BsHouseAdd } from 'react-icons/bs';
 import styles from './Addresses.module.scss';
 import { AddressCard } from '../AddressCard/AddressCard';
 import { Modal } from '../../../modal';
@@ -220,7 +220,7 @@ export function Addresses(): React.ReactElement {
             onClick={handleCreateAddressButton}
             type="button"
           >
-            <BiEditAlt className={styles.edit_button_icon} />
+            <BsHouseAdd className={styles.edit_button_icon} />
             Add Address
           </button>
         </h3>
@@ -258,7 +258,7 @@ export function Addresses(): React.ReactElement {
         <Modal
           active={modalCreateAddressActive}
           setActive={setModalCreateAddressActive}
-          title="Create address"
+          title="Add address"
         >
           <div className={styles.modal}>
             <NewAddressCard styles={styles} handleAddButton={handleAddButton} />
