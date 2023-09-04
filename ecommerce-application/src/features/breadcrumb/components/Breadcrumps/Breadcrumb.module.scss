@@ -1,0 +1,28 @@
+.container {
+  width: 90%;
+  margin: 10px auto;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+.button {
+  font-family: inherit;
+  font-size: 20px;
+  padding: 0 10px;
+  border: none;
+  background-color: inherit;
+  color: var(--color-green);
+  transition: 0.3s;
+  &:hover {
+    color: var(--color-orange);
+    transition: 0.3s;
+    transform: scale(1.1);
+  }
+}
+
+.icon {
+  width: 30px;
+  height: 30px;
+  color: var(--color-orange);
+}

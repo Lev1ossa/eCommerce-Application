@@ -8,6 +8,7 @@ import { Slider } from '../Slider';
 import styles from './Product.module.scss';
 import { ToastTypes } from '../../../../types/types';
 import { showToast } from '../../../autentification/utils/showToast';
+import { Breadcrumb } from '../../../breadcrumb/components/Breadcrumps/Breadcrumb';
 
 // eslint-disable-next-line max-lines-per-function
 export function Product(props: {
@@ -17,6 +18,7 @@ export function Product(props: {
 }): React.ReactElement {
   const navigate = useNavigate();
   const { categorySlug, subCategorySlug, slug } = props;
+  console.log('result', categorySlug, subCategorySlug, slug);
   const [modalActive, setModalActive] = useState(false);
   const [product, setProduct] = useState<ProductProjection>();
   const [isLoading, setIsLoading] = useState(true);
@@ -72,29 +74,36 @@ export function Product(props: {
   return (
     <>
       {!isLoading ? (
-        <div className={styles.product}>
-          <div className={styles.container}>
-            <div className={styles.slider}>
-              <Slider setActive={setModalActive} images={productImages} />
-            </div>
-            <div className={styles.details}>
-              <div className={styles.name}>
-                <strong>{productName}</strong>
+        <>
+          <Breadcrumb
+            categorySlug={categorySlug}
+            subCategorySlug={subCategorySlug}
+            slug={slug}
+          />
+          <div className={styles.product}>
+            <div className={styles.container}>
+              <div className={styles.slider}>
+                <Slider setActive={setModalActive} images={productImages} />
               </div>
-              <div className={styles.price}>$ {price}</div>
-              <div className={styles.category}>{category}</div>
-              <div className={styles.category}>{subCategory}</div>
-              <div className={styles.category}>{origin}</div>
-              <div className={styles.trademark}>{trademark}</div>
-              <button type="button" className={styles.button}>
-                Add to cart
-              </button>
-              <div className={styles.description}>
-                <strong>Description: </strong> {description}
+              <div className={styles.details}>
+                <div className={styles.name}>
+                  <strong>{productName}</strong>
+                </div>
+                <div className={styles.price}>$ {price}</div>
+                <div className={styles.category}>{category}</div>
+                <div className={styles.category}>{subCategory}</div>
+                <div className={styles.category}>{origin}</div>
+                <div className={styles.trademark}>{trademark}</div>
+                <button type="button" className={styles.button}>
+                  Add to cart
+                </button>
+                <div className={styles.description}>
+                  <strong>Description: </strong> {description}
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </>
       ) : (
         <Loader />
       )}
