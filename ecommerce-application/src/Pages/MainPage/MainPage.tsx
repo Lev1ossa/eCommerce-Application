@@ -15,6 +15,7 @@ import {
   getProductByKey,
   getProductBySlug,
   getProductsList,
+  searchProduct,
   updateCustomerData,
   updateCustomerPassword,
 } from '../../api/requests';
@@ -258,6 +259,17 @@ export function MainPage(): React.ReactElement {
     );
   };
 
+  const searchProductTest = async (): Promise<void> => {
+    await searchProduct('foreign').then(
+      (result) => {
+        console.log('Should return search result!', result.body);
+      },
+      (error) => {
+        console.log(error);
+      },
+    );
+  };
+
   const testCallback = async (): Promise<void> => {
     await getProductsTest();
     await getProductByIDTest();
@@ -268,6 +280,7 @@ export function MainPage(): React.ReactElement {
     await updateCustomerDataTest();
     await getFilteredProductsTest();
     await updateCustomerPasswordTest();
+    await searchProductTest();
   };
 
   return (

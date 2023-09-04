@@ -172,3 +172,19 @@ export const updateCustomerPassword = async (
     .post({ body })
     .execute();
 };
+
+export const searchProduct = async (
+  searchValue: string,
+): Promise<ClientResponse<ProductProjectionPagedSearchResponse>> => {
+  const apiRoot = getRefreshTokenFlowApiRoot(getRefreshToken());
+  return apiRoot
+    .withProjectKey({ projectKey })
+    .productProjections()
+    .search()
+    .get({
+      queryArgs: {
+        'text.en': `"${searchValue}"`,
+      },
+    })
+    .execute();
+};
