@@ -1,3 +1,5 @@
+@import "/src/App/styles/vars.scss";
+
 .article {
     padding-top: 20px;
     text-align: left;
@@ -6,6 +8,10 @@
     flex-direction: column;
     &:first-child {
         margin-right: 30px;
+    }
+    @media screen and (max-width: $tablet-width) {
+        padding-top: 0px;
+        width: 100%;
     }
 }
 
@@ -29,11 +35,22 @@
 
 .edit_button {
     margin-left: 50px;
-    background-color: var(--color-background-main-block);
-    border: 2px solid var(--color-background-main-block);
+    background-color: var(--color-dark-green);
+    border: 2px solid var(--color-dark-green);
+    border-radius: 10px;
     display: flex;
     align-items: center;
     padding: 5px 10px;
+    color: var(--color-text-light);
+    transition: 0.3s;
+    &:hover {
+        background-color: var(--color-orange);
+        border: 2px solid var(--color-orange);
+        transition: 0.3s;
+    }
+    @media screen and (max-width: $tablet-width) {
+        margin-left: 100px; 
+    }
 }
 
 .edit_button_icon {
@@ -55,11 +72,14 @@
         border: 2px solid var(--color-green);
         outline: none;
     }
+    @media screen and (max-width: $tablet-width) {
+        width: 100%;
+    }
 }
 
 .input{
     padding: 5px 0 5px 5px;
-    border: 2px solid var(--color-background-main-block);
+    border: 2px solid var(--color-dark-green);
     width: 250px;
     font-family: inherit;
     font-size: inherit;
@@ -67,14 +87,17 @@
     background-color: var(--color-background-main-block);
     animation: blink .5s 3;
     &:focus {
-        border: 2px solid var(--color-green);
+        border: 2px solid var(--color-dark-green);
         outline: none;
+    }
+    @media screen and (max-width: $tablet-width) {
+        width: 100%;
     }
 }
 
 @keyframes blink {
     50% {
-      border-color: var(--color-green);
+      border-color: var(--color-background-main-block);
     }
 }
 

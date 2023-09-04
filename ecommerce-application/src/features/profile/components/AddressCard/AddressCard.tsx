@@ -1,8 +1,9 @@
-import { BiSave } from 'react-icons/bi';
+import { BiEditAlt } from 'react-icons/bi';
 import {
   MyCustomerRemoveAddressAction,
   MyCustomerUpdate,
 } from '@commercetools/platform-sdk';
+import { BsHouseDash } from 'react-icons/bs';
 import { ToastTypes, UserAdress } from '../../../../types/types';
 import { getCountryName } from '../../../autentification/utils/utils';
 import { getCustomerData, updateCustomerData } from '../../../../api/requests';
@@ -126,13 +127,13 @@ export function AddressCard(props: {
             setModalAddressId(addressData.id as string);
           }}
         >
-          <BiSave className={styles.edit_button_icon} />
+          <BiEditAlt className={styles.edit_button_icon} />
           Edit
         </button>
       </div>
       <div className={styles.edit_buttons_container}>
         <button className={styles.edit_button} type="button" onClick={onClick}>
-          <BiSave className={styles.edit_button_icon} />
+          <BsHouseDash className={styles.edit_button_icon} />
           Delete
         </button>
       </div>
