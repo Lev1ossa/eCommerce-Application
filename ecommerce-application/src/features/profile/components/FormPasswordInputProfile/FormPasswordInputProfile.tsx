@@ -8,14 +8,12 @@ export function FormPasswordInputProfile(props: {
   input: UseFormRegisterReturn;
   type: string;
   styles: CSSModuleClasses;
-  value: string;
 }): React.ReactElement {
   const [showPassword, setShowPassword] = useState(false);
-  const { label, input, styles, value } = props;
+  const { label, input, styles } = props;
   let { type } = props;
   const { onChange, onBlur, name, ref } = input;
   const id = `${name}Input`;
-  const [currentValue, setCurrentValue] = useState(value);
   type = showPassword ? 'text' : 'password';
   return (
     <label className={styles.info_block} htmlFor={id}>
@@ -24,12 +22,8 @@ export function FormPasswordInputProfile(props: {
         <input
           className={styles.input}
           id={id}
-          value={currentValue}
           type={type}
-          onChange={(e): void => {
-            onChange(e);
-            setCurrentValue(e.target.value);
-          }}
+          onChange={onChange}
           onBlur={onBlur}
           name={name}
           ref={ref}
