@@ -11,7 +11,9 @@ export function Header(): React.ReactElement {
   const [userLoggedIn, setUserLoggedIn] = useState(isUserLoggedIn());
   const navigate = useNavigate();
   const handleRedirect = (): void => {
-    navigate('/');
+    if (!isUserLoggedIn()) {
+      navigate('/catalog');
+    }
   };
   const logoutHandler = async (): Promise<void> => {
     await handleLogout();
