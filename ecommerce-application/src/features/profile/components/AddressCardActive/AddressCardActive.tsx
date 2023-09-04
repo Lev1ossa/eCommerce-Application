@@ -19,13 +19,13 @@ import {
   UserAdress,
 } from '../../../../types/types';
 import { ServiceInputParameters } from '../../../autentification/services/inputService';
-import { Error } from '../../../autentification/components/FormInputs/Error/Error';
 import { FormInputProfile } from '../FormInputProfile/FormInputProfile';
 import { ProfileCountryInput } from '../ProfileFormCountrySelect/ProfileFormCountrySelect';
 import { FormCheckboxProfile } from '../FormCheckboxProfile/FormCheckboxProfile';
 import { FormCheckboxDisabled } from '../FormCheckboxDisabled/FormCheckboxDisabled';
 import { getCustomerData, updateCustomerData } from '../../../../api/requests';
 import { showToast } from '../../../autentification/utils/showToast';
+import { InputError } from '../InputError/InputError';
 
 // eslint-disable-next-line max-lines-per-function
 export function AddressCardActive(props: {
@@ -176,7 +176,7 @@ export function AddressCardActive(props: {
             value={addressData?.streetName}
             checked={false}
           />
-          <Error errors={errors} name="shippingStreet" />
+          <InputError styles={styles} errors={errors} name="shippingStreet" />
         </div>
         <div className={styles.input_block}>
           <FormInputProfile
@@ -187,7 +187,7 @@ export function AddressCardActive(props: {
             value={addressData.city}
             checked={false}
           />
-          <Error errors={errors} name="shippingCity" />
+          <InputError styles={styles} errors={errors} name="shippingCity" />
         </div>
         <div className={styles.input_block}>
           <ProfileCountryInput
@@ -197,7 +197,7 @@ export function AddressCardActive(props: {
             label={inputService.createInputParams('shippingCountry').label}
             onSelect={handleShippingCountryChange}
           />
-          <Error errors={errors} name="shippingCountry" />
+          <InputError styles={styles} errors={errors} name="shippingCountry" />
         </div>
         <div className={styles.input_block}>
           <FormInputProfile
@@ -215,7 +215,11 @@ export function AddressCardActive(props: {
             value={addressData?.postalCode}
             checked={false}
           />
-          <Error errors={errors} name="shippingPostalCode" />
+          <InputError
+            styles={styles}
+            errors={errors}
+            name="shippingPostalCode"
+          />
         </div>
         <div className={styles.input_block}>
           <FormCheckboxProfile
