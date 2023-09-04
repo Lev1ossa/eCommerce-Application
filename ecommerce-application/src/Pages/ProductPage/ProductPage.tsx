@@ -5,12 +5,18 @@ import { Product } from '../../features/product';
 import styles from './ProductPage.module.scss';
 
 export function ProductPage(): React.ReactElement {
-  const { slug } = useParams();
+  const { categorySlug, subCategorySlug, slug } = useParams();
 
   return (
     <div className={styles.product_page}>
       <Header />
-      {slug && <Product slug={slug} />}
+      {slug && categorySlug && subCategorySlug && (
+        <Product
+          categorySlug={categorySlug}
+          subCategorySlug={subCategorySlug}
+          slug={slug}
+        />
+      )}
       <Footer />
     </div>
   );

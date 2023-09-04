@@ -1,32 +1,51 @@
 import { Image, ProductProjection } from '@commercetools/platform-sdk';
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import { getProductByID } from '../../../../api/requests';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { getProductBySlug } from '../../../../api/requests';
 import { Loader } from '../../../../components/Loader';
 import { Modal } from '../../../modal';
 import { Slider } from '../Slider';
 import styles from './Product.module.scss';
+import { ToastTypes } from '../../../../types/types';
+import { showToast } from '../../../autentification/utils/showToast';
 
 // eslint-disable-next-line max-lines-per-function
-export function Product(props: { slug: string }): React.ReactElement {
-  const { slug } = props;
+export function Product(props: {
+  categorySlug: string;
+  subCategorySlug: string;
+  slug: string;
+}): React.ReactElement {
+  const navigate = useNavigate();
+  const { categorySlug, subCategorySlug, slug } = props;
   const [modalActive, setModalActive] = useState(false);
   const [product, setProduct] = useState<ProductProjection>();
   const [isLoading, setIsLoading] = useState(true);
 
+  console.log('props', props);
+
   const productCard = useLocation();
 
-  console.log(slug);
+  console.log(
+    `BreadCrumb template: ${categorySlug} > ${subCategorySlug} > ${slug}`,
+  );
 
   useEffect(() => {
-    getProductByID(productCard.state).then(
+    getProductBySlug(slug).then(
       (result) => {
-        setProduct(result.body);
-        setIsLoading(false);
+        const productResult = result.body.results[0];
+        if (productResult) {
+          setProduct(productResult);
+          setIsLoading(false);
+        } else {
+          showToast(ToastTypes.error, 'Product is not found!');
+          navigate('/404');
+        }
       },
-      (error) => console.log(error),
+      (error) => {
+        console.log(error);
+      },
     );
-  }, [productCard.state]);
+  }, [productCard.state, slug, navigate]);
 
   let price = 0;
   let productName = '';

@@ -92,7 +92,12 @@ export function MainPage(): React.ReactElement {
   const getProductBySlugTest = async (): Promise<void> => {
     await getProductBySlug('banana').then(
       (result) => {
-        console.log('Should return banana!', result.body);
+        const product = result.body.results[0];
+        if (product) {
+          console.log('Should return banana!', product);
+        } else {
+          showToast(ToastTypes.error, 'Product is not found, try again');
+        }
       },
       (error) => {
         console.log(error);
