@@ -15,7 +15,6 @@ import {
   getProductByKey,
   getProductBySlug,
   getProductsList,
-  searchProduct,
   updateCustomerData,
   updateCustomerPassword,
 } from '../../api/requests';
@@ -63,7 +62,13 @@ export function MainPage(): React.ReactElement {
       // `variants.price.centAmount:range (${lowerPrice} to ${higherPrice})`,
       '',
     ];
-    await getFilteredProductList(filterQueryStrings, sortQueryStrings).then(
+    const searchQueryString = `"foreign"`;
+
+    await getFilteredProductList(
+      filterQueryStrings,
+      sortQueryStrings,
+      searchQueryString,
+    ).then(
       (result) => {
         console.log(
           'Should return filtered list of products',
@@ -259,17 +264,6 @@ export function MainPage(): React.ReactElement {
     );
   };
 
-  const searchProductTest = async (): Promise<void> => {
-    await searchProduct('foreign').then(
-      (result) => {
-        console.log('Should return search result!', result.body);
-      },
-      (error) => {
-        console.log(error);
-      },
-    );
-  };
-
   const testCallback = async (): Promise<void> => {
     await getProductsTest();
     await getProductByIDTest();
@@ -280,7 +274,6 @@ export function MainPage(): React.ReactElement {
     await updateCustomerDataTest();
     await getFilteredProductsTest();
     await updateCustomerPasswordTest();
-    await searchProductTest();
   };
 
   return (
