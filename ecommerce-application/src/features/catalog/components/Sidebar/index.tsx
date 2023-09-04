@@ -194,7 +194,7 @@ export function CatalogSidebar(props: {
                     onClick={(): void => {
                       setcurrentFilters({
                         ...currentFilters,
-                        origin: 'fForeign',
+                        origin: 'foreign',
                       });
                       const filters = {
                         ...currentFilters,
