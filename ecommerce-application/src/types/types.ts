@@ -133,4 +133,6 @@ export interface ICurrentFilters {
   category: string;
   trademark: string[];
   originFilter: string[];
+  lowerPrice: number;
+  higherPrice: number;
 }
