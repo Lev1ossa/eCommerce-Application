@@ -9,7 +9,7 @@ import {
   menuClasses,
   sidebarClasses,
 } from 'react-pro-sidebar';
-import Select from 'react-select';
+import Select, { SingleValue } from 'react-select';
 import { getCategories } from '../../../../api/requests';
 import { CustomCategory, ICurrentFilters } from '../../../../types/types';
 import styles from './Sidebar.module.scss';
@@ -30,13 +30,15 @@ export function CatalogSidebar(props: {
     originFilter: [],
     lowerPrice: 0,
     higherPrice: 0,
+    sort: '',
   });
   const [brandsList, setBrandsList] = useState<JSX.Element[]>([]);
+
   const options = [
-    { value: 'price', label: 'price' },
-    { value: 'name', label: 'name' },
-    { value: 'trademark', label: 'trademark' },
-    { value: 'origin', label: 'origin' },
+    { value: 'price asc', label: 'price' },
+    { value: 'name.en asc', label: 'name' },
+    { value: 'variants.attributes.trademark desc', label: 'trademark' },
+    { value: 'variants.attributes.origin.key asc', label: 'origin' },
   ];
 
   useEffect(() => {
@@ -210,6 +212,19 @@ export function CatalogSidebar(props: {
     }
   };
 
+  const handleSortChange = (
+    option: SingleValue<{ value: string; label: string }>,
+  ): void => {
+    const filters = {
+      ...currentFilters,
+      sort: option ? option.value : '',
+    };
+    categoryFilter({ ...filters });
+    setcurrentFilters({
+      ...currentFilters,
+      sort: option ? option.value : '',
+    });
+  };
   return (
     <div style={{ display: 'flex' }}>
       <Sidebar
@@ -256,6 +271,7 @@ export function CatalogSidebar(props: {
             options={options}
             placeholder="sort..."
             className={styles.sort}
+            onChange={handleSortChange}
             styles={{
               control: (baseStyles, state) => ({
                 ...baseStyles,

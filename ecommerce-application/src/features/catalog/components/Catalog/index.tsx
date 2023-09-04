@@ -78,6 +78,9 @@ export function Catalog(): React.ReactElement {
         })`,
       );
     const sortQueryStrings: string[] = [];
+    if (args[0].sort) {
+      sortQueryStrings.push(args[0].sort);
+    }
     // const sortQueryStrings = [
     //   'price asc',
     //   'name.en asc',
