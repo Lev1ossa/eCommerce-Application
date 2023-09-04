@@ -78,6 +78,7 @@ export const getProductsList = async (): Promise<
 export const getFilteredProductList = async (
   filterQueryStrings: string[],
   sortQueryStrings: string[],
+  searchQueryString: string,
 ): Promise<ClientResponse<ProductProjectionPagedSearchResponse>> => {
   const apiRoot = getRefreshTokenFlowApiRoot(getRefreshToken());
   return apiRoot
@@ -89,6 +90,7 @@ export const getFilteredProductList = async (
         limit: 30,
         filter: filterQueryStrings,
         sort: sortQueryStrings,
+        'text.en': searchQueryString,
       },
     })
     .execute();

@@ -62,7 +62,13 @@ export function MainPage(): React.ReactElement {
       // `variants.price.centAmount:range (${lowerPrice} to ${higherPrice})`,
       '',
     ];
-    await getFilteredProductList(filterQueryStrings, sortQueryStrings).then(
+    const searchQueryString = `"foreign"`;
+
+    await getFilteredProductList(
+      filterQueryStrings,
+      sortQueryStrings,
+      searchQueryString,
+    ).then(
       (result) => {
         console.log(
           'Should return filtered list of products',
