@@ -5,15 +5,11 @@ import {
   getProductsList,
 } from '../../../../api/requests';
 import { Loader } from '../../../../components/Loader';
+import { ICurrentFilters } from '../../../../types/types';
 import { ProductCard } from '../ProductCard';
 import { CatalogSidebar } from '../Sidebar';
 import styles from './Catalog.module.scss';
 
-interface ICurrentFilters {
-  category?: string;
-  trademark?: string;
-  foreigh?: string;
-}
 // eslint-disable-next-line max-lines-per-function
 export function Catalog(): React.ReactElement {
   const [products, setProducts] = useState<ProductProjection[]>([]);

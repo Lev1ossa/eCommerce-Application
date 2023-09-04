@@ -10,14 +10,9 @@ import {
   sidebarClasses,
 } from 'react-pro-sidebar';
 import { getCategories } from '../../../../api/requests';
-import { CustomCategory } from '../../../../types/types';
+import { CustomCategory, ICurrentFilters } from '../../../../types/types';
 import styles from './Sidebar.module.scss';
 
-interface ICurrentFilters {
-  category?: string;
-  trademark?: string;
-  foreigh?: string;
-}
 // eslint-disable-next-line max-lines-per-function
 export function CatalogSidebar(props: {
   categoryFilter: (...args: ICurrentFilters[]) => Promise<void>;
