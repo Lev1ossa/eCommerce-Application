@@ -5,12 +5,12 @@ import { Product } from '../../features/product';
 import styles from './ProductPage.module.scss';
 
 export function ProductPage(): React.ReactElement {
-  const { name } = useParams();
+  const { slug } = useParams();
 
   return (
     <div className={styles.product_page}>
       <Header />
-      {name && <Product name={name} />}
+      {slug && <Product slug={slug} />}
       <Footer />
     </div>
   );

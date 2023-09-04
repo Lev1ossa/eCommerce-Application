@@ -28,10 +28,6 @@ export function CatalogSidebar(props: {
     trademark: [],
     originFilter: [],
   });
-  // const [originFilters, setOriginFilters] = useState({
-  //   foreigh: false,
-  //   local: false,
-  // });
   const [brandsList, setBrandsList] = useState<JSX.Element[]>([]);
 
   useEffect(() => {
@@ -110,8 +106,6 @@ export function CatalogSidebar(props: {
       event: ChangeEvent<HTMLInputElement>,
       value: string,
     ): void => {
-      console.log('value', value);
-
       if (event.target.checked) {
         setcurrentFilters({
           ...currentFilters,

@@ -47,15 +47,14 @@ export function Catalog(): React.ReactElement {
     ));
     if (data.length) {
       setCatalog(data);
-    } else setCatalog([<h1 key={0}>Not found</h1>]);
-    console.log('data', products);
+    } else setCatalog([<h1 key={0}>No Products Found</h1>]);
   }, [products]);
 
   const getFilteredProducts = async (
     ...args: ICurrentFilters[]
   ): Promise<void> => {
     setIsLoading(true);
-    console.log('args', args);
+
     const filterQueryStrings: string[] = [];
     if (args[0].category.length)
       filterQueryStrings.push(`categories.id: subtree("${args[0].category}")`);
@@ -71,7 +70,6 @@ export function Catalog(): React.ReactElement {
           .map((filter: string): string => `"${filter}"`)
           .join(',')}`,
       );
-    console.log('filterQueryStrings', filterQueryStrings);
     await getFilteredProductList(filterQueryStrings).then(
       (result) => {
         setProducts(result.body.results);

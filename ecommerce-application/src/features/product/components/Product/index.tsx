@@ -8,13 +8,15 @@ import { Slider } from '../Slider';
 import styles from './Product.module.scss';
 
 // eslint-disable-next-line max-lines-per-function
-export function Product(props: { name: string }): React.ReactElement {
-  const { name } = props;
+export function Product(props: { slug: string }): React.ReactElement {
+  const { slug } = props;
   const [modalActive, setModalActive] = useState(false);
   const [product, setProduct] = useState<ProductProjection>();
   const [isLoading, setIsLoading] = useState(true);
 
   const productCard = useLocation();
+
+  console.log(slug);
 
   useEffect(() => {
     getProductByID(productCard.state).then(
@@ -27,6 +29,7 @@ export function Product(props: { name: string }): React.ReactElement {
   }, [productCard.state]);
 
   let price = 0;
+  let productName = '';
   let trademark = '';
   let description = '';
   let category = '';
@@ -35,6 +38,7 @@ export function Product(props: { name: string }): React.ReactElement {
   let productImages: Image[] | undefined = [];
   if (product) {
     const { prices, attributes, images } = product.masterVariant;
+    productName = product.name.en;
     price = prices ? prices[0].value.centAmount / 100 : 0;
     trademark = attributes ? attributes[0].value : '';
     category = attributes ? attributes[1].value : '';
@@ -56,7 +60,7 @@ export function Product(props: { name: string }): React.ReactElement {
             </div>
             <div className={styles.details}>
               <div className={styles.name}>
-                <strong>{name}</strong>
+                <strong>{productName}</strong>
               </div>
               <div className={styles.price}>$ {price}</div>
               <div className={styles.category}>{category}</div>
@@ -76,7 +80,11 @@ export function Product(props: { name: string }): React.ReactElement {
         <Loader />
       )}
       {!isLoading && (
-        <Modal active={modalActive} setActive={setModalActive} title={name}>
+        <Modal
+          active={modalActive}
+          setActive={setModalActive}
+          title={productName}
+        >
           <div className={styles.slider_modal}>
             <Slider setActive={setModalActive} images={productImages} />
           </div>
