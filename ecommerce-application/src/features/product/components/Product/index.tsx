@@ -50,6 +50,7 @@ export function Product(props: {
   }, [productCard.state, slug, navigate]);
 
   let price = 0;
+  let priceDiscounted = null;
   let productName = '';
   let trademark = '';
   let description = '';
@@ -61,6 +62,10 @@ export function Product(props: {
     const { prices, attributes, images } = product.masterVariant;
     productName = product.name.en;
     price = prices ? prices[0].value.centAmount / 100 : 0;
+    priceDiscounted =
+      prices && prices[0].discounted
+        ? prices[0].discounted.value.centAmount / 100
+        : null;
     trademark = attributes ? attributes[0].value : '';
     category = attributes ? attributes[1].value : '';
     origin = attributes ? attributes[3].value.label : '';
@@ -89,11 +94,31 @@ export function Product(props: {
                 <div className={styles.name}>
                   <strong>{productName}</strong>
                 </div>
-                <div className={styles.price}>$ {price}</div>
-                <div className={styles.category}>{category}</div>
-                <div className={styles.category}>{subCategory}</div>
-                <div className={styles.category}>{origin}</div>
-                <div className={styles.trademark}>{trademark}</div>
+                {priceDiscounted && (
+                  <div className={styles.prices_container}>
+                    <div className={styles.price_new}>$ {priceDiscounted}</div>
+                    <div className={styles.price_old}>$ {price}</div>
+                  </div>
+                )}
+                {!priceDiscounted && (
+                  <div className={styles.price}>$ {price}</div>
+                )}
+                <div className={styles.category}>
+                  <span className={styles.bold}>Category: </span>
+                  {category}
+                </div>
+                <div className={styles.category}>
+                  <span className={styles.bold}>Subcategory: </span>
+                  {subCategory}
+                </div>
+                <div className={styles.category}>
+                  <span className={styles.bold}>Origin: </span>
+                  {origin}
+                </div>
+                <div className={styles.trademark}>
+                  <span className={styles.bold}>TM: </span>
+                  {trademark}
+                </div>
                 <button type="button" className={styles.button}>
                   Add to cart
                 </button>
