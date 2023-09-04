@@ -14,7 +14,14 @@ import { CustomCategory } from '../../../../types/types';
 import styles from './Sidebar.module.scss';
 
 // eslint-disable-next-line max-lines-per-function
-export function CatalogSidebar(): React.ReactElement {
+export function CatalogSidebar(props: {
+  categoryFilter: (
+    categoryID: string,
+    foreign?: string,
+    trademark?: string,
+  ) => Promise<void>;
+}): React.ReactElement {
+  const { categoryFilter } = props;
   const [productCategories, setProductCategories] = useState<CustomCategory[]>(
     [],
   );
@@ -62,9 +69,16 @@ export function CatalogSidebar(): React.ReactElement {
     if (productCategories) {
       setCategoriesList(
         productCategories.map((category) => (
-          <SubMenu key={category.key} label={category.name}>
+          <SubMenu
+            key={category.key}
+            label={category.name}
+            onClick={(): Promise<void> => categoryFilter(category.id)}
+          >
             {category.children.map((child) => (
-              <MenuItem key={child.key}>
+              <MenuItem
+                key={child.key}
+                onClick={(): Promise<void> => categoryFilter(child.id)}
+              >
                 {child.name.replace('_', ' ')}
               </MenuItem>
             ))}
@@ -72,7 +86,7 @@ export function CatalogSidebar(): React.ReactElement {
         )),
       );
     }
-  }, [productCategories]);
+  }, [productCategories, categoryFilter]);
 
   return (
     <div style={{ display: 'flex' }}>
