@@ -34,7 +34,7 @@ export function Catalog(): React.ReactElement {
         ? product.masterVariant.attributes[0].value
         : 'good food',
     );
-    setBrands([...new Set(brandsList)]);
+    setBrands([...new Set(brandsList.sort())]);
   };
   useEffect(() => {
     console.log(products);
