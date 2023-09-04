@@ -50,6 +50,7 @@ export function Catalog(): React.ReactElement {
     } else setCatalog([<h1 key={0}>No Products Found</h1>]);
   }, [products]);
 
+  // eslint-disable-next-line max-lines-per-function
   const getFilteredProducts = async (
     ...args: ICurrentFilters[]
   ): Promise<void> => {
@@ -76,8 +77,14 @@ export function Catalog(): React.ReactElement {
           args[0].higherPrice * 100
         })`,
       );
-
-    await getFilteredProductList(filterQueryStrings).then(
+    const sortQueryStrings: string[] = [];
+    // const sortQueryStrings = [
+    //   'price asc',
+    //   'name.en asc',
+    //   'variants.attributes.origin.key asc',
+    //   'variants.attributes.trademark desc',
+    // ];
+    await getFilteredProductList(filterQueryStrings, sortQueryStrings).then(
       (result) => {
         setProducts(result.body.results);
         setIsLoading(false);

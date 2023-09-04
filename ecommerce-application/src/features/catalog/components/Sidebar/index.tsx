@@ -9,6 +9,7 @@ import {
   menuClasses,
   sidebarClasses,
 } from 'react-pro-sidebar';
+import Select from 'react-select';
 import { getCategories } from '../../../../api/requests';
 import { CustomCategory, ICurrentFilters } from '../../../../types/types';
 import styles from './Sidebar.module.scss';
@@ -31,6 +32,12 @@ export function CatalogSidebar(props: {
     higherPrice: 0,
   });
   const [brandsList, setBrandsList] = useState<JSX.Element[]>([]);
+  const options = [
+    { value: 'price', label: 'price' },
+    { value: 'name', label: 'name' },
+    { value: 'trademark', label: 'trademark' },
+    { value: 'origin', label: 'origin' },
+  ];
 
   useEffect(() => {
     getCategories().then(
@@ -245,6 +252,24 @@ export function CatalogSidebar(props: {
             />
             <FiSearch className={styles.search_icon} />
           </div>
+          <Select
+            options={options}
+            placeholder="sort..."
+            className={styles.sort}
+            styles={{
+              control: (baseStyles, state) => ({
+                ...baseStyles,
+                borderColor: state.isFocused ? 'none' : 'none',
+                border: '1px solid #ededed',
+                outline: 'none',
+                fontSize: '14px',
+                height: '2rem',
+                margin: '5px',
+                padding: '0',
+              }),
+            }}
+          />
+
           {categoriesList}
           <SubMenu label="Filters" defaultOpen>
             <ul className={styles.list}>
