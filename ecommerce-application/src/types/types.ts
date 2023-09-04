@@ -128,3 +128,9 @@ export type CustomCategory = {
   parentID?: string;
   children: CustomCategory[];
 };
+
+export interface ICurrentFilters {
+  category: string;
+  trademark: string[];
+  originFilter: string[];
+}

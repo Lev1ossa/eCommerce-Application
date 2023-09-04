@@ -18,7 +18,7 @@ export const router = createBrowserRouter([
       { path: 'registration', element: <RegistrationPage /> },
       { path: 'catalog', element: <CatalogPage /> },
       {
-        path: 'catalog/category/subcategory/:name',
+        path: 'catalog/:category/:subcategory/:slug',
         element: <ProductPage />,
       },
     ],

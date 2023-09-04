@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { FiSearch } from 'react-icons/fi';
 import {
   CSSObject,
@@ -10,22 +10,25 @@ import {
   sidebarClasses,
 } from 'react-pro-sidebar';
 import { getCategories } from '../../../../api/requests';
-import { CustomCategory } from '../../../../types/types';
+import { CustomCategory, ICurrentFilters } from '../../../../types/types';
 import styles from './Sidebar.module.scss';
 
 // eslint-disable-next-line max-lines-per-function
 export function CatalogSidebar(props: {
-  categoryFilter: (
-    categoryID: string,
-    foreign?: string,
-    trademark?: string,
-  ) => Promise<void>;
+  categoryFilter: (...args: ICurrentFilters[]) => Promise<void>;
+  brands: string[];
 }): React.ReactElement {
-  const { categoryFilter } = props;
+  const { categoryFilter, brands } = props;
   const [productCategories, setProductCategories] = useState<CustomCategory[]>(
     [],
   );
   const [categoriesList, setCategoriesList] = useState<JSX.Element[]>([]);
+  const [currentFilters, setcurrentFilters] = useState<ICurrentFilters>({
+    category: '',
+    trademark: [],
+    originFilter: [],
+  });
+  const [brandsList, setBrandsList] = useState<JSX.Element[]>([]);
 
   useEffect(() => {
     getCategories().then(
@@ -65,19 +68,32 @@ export function CatalogSidebar(props: {
     );
   }, []);
 
+  // eslint-disable-next-line max-lines-per-function
   useEffect(() => {
+    const handleFiltersClick = (filter: string, value: string): void => {
+      setcurrentFilters({
+        ...currentFilters,
+        [filter]: value,
+      });
+      const filters = {
+        ...currentFilters,
+        [filter]: value,
+      };
+      categoryFilter({ ...filters });
+    };
     if (productCategories) {
       setCategoriesList(
+        // eslint-disable-next-line max-lines-per-function
         productCategories.map((category) => (
           <SubMenu
             key={category.key}
             label={category.name}
-            onClick={(): Promise<void> => categoryFilter(category.id)}
+            onClick={(): void => handleFiltersClick('category', category.id)}
           >
             {category.children.map((child) => (
               <MenuItem
                 key={child.key}
-                onClick={(): Promise<void> => categoryFilter(child.id)}
+                onClick={(): void => handleFiltersClick('category', child.id)}
               >
                 {child.name.replace('_', ' ')}
               </MenuItem>
@@ -86,7 +102,84 @@ export function CatalogSidebar(props: {
         )),
       );
     }
-  }, [productCategories, categoryFilter]);
+    const handleBrandsClick = (
+      event: ChangeEvent<HTMLInputElement>,
+      value: string,
+    ): void => {
+      if (event.target.checked) {
+        setcurrentFilters({
+          ...currentFilters,
+          trademark: [...currentFilters.trademark, value],
+        });
+        const filters = {
+          ...currentFilters,
+          trademark: [...currentFilters.trademark, value],
+        };
+        categoryFilter({ ...filters });
+      } else {
+        const filters = {
+          ...currentFilters,
+          trademark: [
+            ...currentFilters.trademark.filter((filter) => filter !== value),
+          ],
+        };
+
+        categoryFilter({ ...filters });
+
+        setcurrentFilters({
+          ...currentFilters,
+          trademark: [
+            ...currentFilters.trademark.filter((filter) => filter !== value),
+          ],
+        });
+      }
+    };
+    setBrandsList(
+      brands.map((brand: string) => (
+        <li key={brand}>
+          <input
+            type="checkbox"
+            onChange={(event): void => handleBrandsClick(event, brand)}
+          />
+          <span className="text">{brand}</span>
+        </li>
+      )),
+    );
+  }, [productCategories, categoryFilter, currentFilters, brands]);
+
+  const handleOriginChange = (
+    event: ChangeEvent<HTMLInputElement>,
+    value: string,
+  ): void => {
+    if (event.target.checked) {
+      const filters = {
+        ...currentFilters,
+        originFilter: [...currentFilters.originFilter, value],
+      };
+      categoryFilter({ ...filters });
+
+      setcurrentFilters({
+        ...currentFilters,
+        originFilter: [...currentFilters.originFilter, value],
+      });
+    } else {
+      const filters = {
+        ...currentFilters,
+        originFilter: [
+          ...currentFilters.originFilter.filter((filter) => filter !== value),
+        ],
+      };
+
+      categoryFilter({ ...filters });
+
+      setcurrentFilters({
+        ...currentFilters,
+        originFilter: [
+          ...currentFilters.originFilter.filter((filter) => filter !== value),
+        ],
+      });
+    }
+  };
 
   return (
     <div style={{ display: 'flex' }}>
@@ -141,45 +234,28 @@ export function CatalogSidebar(props: {
               <li className={styles.brand}>
                 <ul className={styles.brand_list}>
                   <strong>Brands</strong>
-                  <li>
-                    <input type="checkbox" />
-                    <span className="text">Barbados</span>
-                  </li>
-                  <li>
-                    <input type="checkbox" />
-                    <span className="text">Campari</span>
-                  </li>
-                  <li>
-                    <input type="checkbox" />
-                    <span className="text">Cara Navel</span>
-                  </li>
-                  <li>
-                    <input type="checkbox" />
-                    <span className="text">Cosmic Crisp</span>
-                  </li>
-                  <li>
-                    <input type="checkbox" />
-                    <span className="text">Dream</span>
-                  </li>
-                  <li>
-                    <input type="checkbox" />
-                    <span className="text">Victoria</span>
-                  </li>
-                  <li>
-                    <input type="checkbox" />
-                    <span className="text">Vegan</span>
-                  </li>
+                  {brandsList}
                 </ul>
               </li>
               <li className={styles.brand}>
                 <ul className={styles.brand_list}>
-                  <strong>Origin</strong>
+                  <strong>originFilter</strong>
                   <li>
-                    <input type="checkbox" />
+                    <input
+                      type="checkbox"
+                      onChange={(event): void =>
+                        handleOriginChange(event, 'local')
+                      }
+                    />
                     <span className="text">Local</span>
                   </li>
                   <li>
-                    <input type="checkbox" />
+                    <input
+                      type="checkbox"
+                      onChange={(event): void =>
+                        handleOriginChange(event, 'foreign')
+                      }
+                    />
                     <span className="text">Foreign</span>
                   </li>
                 </ul>

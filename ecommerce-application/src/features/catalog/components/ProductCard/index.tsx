@@ -8,6 +8,7 @@ export function ProductCard(props: {
 }): React.ReactElement {
   const { product } = props;
   const { id } = product;
+  const slug = product.slug.en;
   const name = product.name.en;
   const description = product.description?.en.slice(0, 65).concat('...');
 
@@ -17,9 +18,13 @@ export function ProductCard(props: {
   const image = images ? images[0].url : '';
   const tradeMark = attributes ? attributes[0].value : 'good food';
   const category = attributes ? attributes[1].value : '';
+  const subCategory = attributes ? attributes[2].value : '';
   const origin = attributes ? attributes[3].value.label : '';
   return (
-    <Link to={`/catalog/category/subcategory/${name.toLowerCase()}`} state={id}>
+    <Link
+      to={`/catalog/${category.toLowerCase()}/${subCategory.toLowerCase()}/${slug}`}
+      state={id}
+    >
       <div className={styles.card}>
         <img src={image} className={styles.image} alt="product" />
         <div className={styles.description}>
