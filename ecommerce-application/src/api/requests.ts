@@ -77,6 +77,7 @@ export const getProductsList = async (): Promise<
 
 export const getFilteredProductList = async (
   filterQueryStrings: string[],
+  sortQueryStrings: string[],
 ): Promise<ClientResponse<ProductProjectionPagedSearchResponse>> => {
   const apiRoot = getRefreshTokenFlowApiRoot(getRefreshToken());
   return apiRoot
@@ -87,6 +88,7 @@ export const getFilteredProductList = async (
       queryArgs: {
         limit: 30,
         filter: filterQueryStrings,
+        sort: sortQueryStrings,
       },
     })
     .execute();
