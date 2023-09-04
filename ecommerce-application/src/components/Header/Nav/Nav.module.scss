@@ -13,3 +13,17 @@
     list-style-type: none;
   }
 }
+
+
+.header_icon {
+  width: 30px;
+  height: 30px;
+}
+
+.logout_button {
+  border: none;
+  background-color: inherit;
+  &:hover {
+    color: var(--color-orange);
+  }
+}

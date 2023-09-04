@@ -4,11 +4,13 @@ import { Customer } from '@commercetools/platform-sdk';
 import { ProfileInfo } from '../ProfileInfo/ProfileInfo';
 import styles from './ProfileContent.module.scss';
 import { getCustomerData } from '../../../../api/requests';
+import { Loader } from '../../../../components/Loader';
 
 // eslint-disable-next-line max-lines-per-function
 export function ProfileContent(): React.ReactElement {
   const [activeArticle, setActiveArticle] = useState('account');
   const [userData, setUserData] = useState<Customer>();
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleButtonAccount = (): void => {
     setActiveArticle('account');
@@ -26,6 +28,7 @@ export function ProfileContent(): React.ReactElement {
     getCustomerData().then(
       (result) => {
         setUserData(result.body);
+        setIsLoading(false);
       },
       (error) => {
         console.log(error);
@@ -38,9 +41,13 @@ export function ProfileContent(): React.ReactElement {
       <div className={styles.article}>
         <div>
           <div className={styles.image} />
-          <h3
-            className={styles.title}
-          >{`${userData?.firstName} ${userData?.lastName}`}</h3>
+          {!isLoading ? (
+            <h3
+              className={styles.title}
+            >{`${userData?.firstName} ${userData?.lastName}`}</h3>
+          ) : (
+            <Loader />
+          )}
         </div>
         <div className={styles.buttons_container}>
           <button
