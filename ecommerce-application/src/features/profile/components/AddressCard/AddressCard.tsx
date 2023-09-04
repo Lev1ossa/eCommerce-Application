@@ -1,6 +1,12 @@
 import { BiSave } from 'react-icons/bi';
-import { UserAdress } from '../../../../types/types';
+import {
+  MyCustomerRemoveAddressAction,
+  MyCustomerUpdate,
+} from '@commercetools/platform-sdk';
+import { ToastTypes, UserAdress } from '../../../../types/types';
 import { getCountryName } from '../../../autentification/utils/utils';
+import { getCustomerData, updateCustomerData } from '../../../../api/requests';
+import { showToast } from '../../../autentification/utils/showToast';
 
 // eslint-disable-next-line max-lines-per-function
 export function AddressCard(props: {
@@ -8,12 +14,47 @@ export function AddressCard(props: {
   addressData: UserAdress;
   setModalActive: React.Dispatch<React.SetStateAction<boolean>>;
   setModalAddressId: React.Dispatch<React.SetStateAction<string>>;
+  handleDeleteButton: () => void;
 }): React.ReactElement {
-  const { styles, addressData, setModalActive, setModalAddressId } = props;
+  const {
+    styles,
+    addressData,
+    setModalActive,
+    setModalAddressId,
+    handleDeleteButton,
+  } = props;
   let countryInputValue;
   if (addressData?.country) {
     countryInputValue = getCountryName(addressData?.country);
   }
+
+  // eslint-disable-next-line max-lines-per-function
+  const onClick = (): void => {
+    getCustomerData().then(
+      (result) => {
+        const removeAddress: MyCustomerRemoveAddressAction = {
+          action: 'removeAddress',
+          addressId: addressData.id,
+        };
+        const body: MyCustomerUpdate = {
+          version: result.body.version,
+          actions: [removeAddress],
+        };
+        updateCustomerData(body).then(
+          () => {
+            showToast(ToastTypes.success, `Address successfully removed!`);
+            handleDeleteButton();
+          },
+          (error) => {
+            showToast(ToastTypes.error, error.message);
+          },
+        );
+      },
+      (error) => {
+        console.log(error);
+      },
+    );
+  };
   return (
     <div className={styles.info_blocks_container}>
       <div className={styles.info_block}>
@@ -90,13 +131,7 @@ export function AddressCard(props: {
         </button>
       </div>
       <div className={styles.edit_buttons_container}>
-        <button
-          className={styles.edit_button}
-          type="button"
-          onClick={(): void => {
-            console.log(addressData.id);
-          }}
-        >
+        <button className={styles.edit_button} type="button" onClick={onClick}>
           <BiSave className={styles.edit_button_icon} />
           Delete
         </button>

@@ -111,6 +111,51 @@ export function Addresses(): React.ReactElement {
       },
     );
   };
+  // eslint-disable-next-line max-lines-per-function
+  const handleDeleteButton = (): void => {
+    getCustomerData().then(
+      (result) => {
+        const customerData = result.body;
+        const customerAdresses: UserAdress[] = customerData.addresses.map(
+          (adress) => {
+            const { id, country, city, streetName, postalCode } = adress;
+            const isShipping =
+              id && customerData.shippingAddressIds
+                ? customerData.shippingAddressIds.includes(id)
+                : false;
+            const isBilling =
+              id && customerData.billingAddressIds
+                ? customerData.billingAddressIds.includes(id)
+                : false;
+            const isDefaultShipping =
+              id && customerData.defaultShippingAddressId
+                ? customerData.defaultShippingAddressId.includes(id)
+                : false;
+            const isDefaultBilling =
+              id && customerData.defaultBillingAddressId
+                ? customerData.defaultBillingAddressId.includes(id)
+                : false;
+            const userAdress: UserAdress = {
+              id,
+              country,
+              city,
+              streetName,
+              postalCode,
+              isShipping,
+              isBilling,
+              isDefaultShipping,
+              isDefaultBilling,
+            };
+            return userAdress;
+          },
+        );
+        setAddressesData(customerAdresses);
+      },
+      (error) => {
+        console.log(error);
+      },
+    );
+  };
 
   // eslint-disable-next-line max-lines-per-function
   useEffect(() => {
@@ -188,6 +233,7 @@ export function Addresses(): React.ReactElement {
                 addressData={addressData}
                 setModalActive={setModalActive}
                 setModalAddressId={setModalAddressId}
+                handleDeleteButton={handleDeleteButton}
               />
             );
           })}
