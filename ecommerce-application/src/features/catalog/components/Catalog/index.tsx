@@ -61,9 +61,9 @@ export function Catalog(): React.ReactElement {
       filterQueryStrings.push(
         `variants.attributes.trademark:"${args[0].trademark}"`,
       );
-    if (args[0].foreigh)
+    if (args[0].origin)
       filterQueryStrings.push(
-        `variants.attributes.origin.key:"${args[0].foreigh}"`,
+        `variants.attributes.origin.key:"${args[0].origin}"`,
       );
     // console.log('filterQueryStrings', filterQueryStrings);
 

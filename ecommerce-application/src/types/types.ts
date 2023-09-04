@@ -132,5 +132,5 @@ export type CustomCategory = {
 export interface ICurrentFilters {
   category?: string;
   trademark?: string;
-  foreigh?: string;
+  origin?: string;
 }

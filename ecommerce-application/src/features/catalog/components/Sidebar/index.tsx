@@ -172,11 +172,37 @@ export function CatalogSidebar(props: {
               <li className={styles.brand}>
                 <ul className={styles.brand_list}>
                   <strong>Origin</strong>
-                  <li>
+                  <li
+                    aria-hidden
+                    onClick={(): void => {
+                      setcurrentFilters({
+                        ...currentFilters,
+                        origin: 'local',
+                      });
+                      const filters = {
+                        ...currentFilters,
+                        origin: 'local',
+                      };
+                      categoryFilter({ ...filters });
+                    }}
+                  >
                     <input type="checkbox" />
                     <span className="text">Local</span>
                   </li>
-                  <li>
+                  <li
+                    aria-hidden
+                    onClick={(): void => {
+                      setcurrentFilters({
+                        ...currentFilters,
+                        origin: 'fForeign',
+                      });
+                      const filters = {
+                        ...currentFilters,
+                        origin: 'foreign',
+                      };
+                      categoryFilter({ ...filters });
+                    }}
+                  >
                     <input type="checkbox" />
                     <span className="text">Foreign</span>
                   </li>
