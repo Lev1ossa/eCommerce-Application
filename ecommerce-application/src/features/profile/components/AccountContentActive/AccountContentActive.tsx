@@ -11,10 +11,10 @@ import {
 } from '@commercetools/platform-sdk';
 import { IRegistrationData, ToastTypes } from '../../../../types/types';
 import { ServiceInputParameters } from '../../../autentification/services/inputService';
-import { Error } from '../../../autentification/components/FormInputs/Error/Error';
 import { FormInputProfile } from '../FormInputProfile/FormInputProfile';
 import { getCustomerData, updateCustomerData } from '../../../../api/requests';
 import { showToast } from '../../../autentification/utils/showToast';
+import { InputError } from '../InputError/InputError';
 
 // eslint-disable-next-line max-lines-per-function
 export function AccountContentActive(props: {
@@ -81,42 +81,50 @@ export function AccountContentActive(props: {
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)} noValidate>
-      <FormInputProfile
-        input={inputService.createInputParams('userFirstName').input}
-        type={inputService.createInputParams('userFirstName').type}
-        label={inputService.createInputParams('userFirstName').label}
-        styles={styles}
-        value={userData.firstName}
-        checked={false}
-      />
-      <Error errors={errors} name="userFirstName" />
-      <FormInputProfile
-        input={inputService.createInputParams('userLastName').input}
-        type={inputService.createInputParams('userLastName').type}
-        label={inputService.createInputParams('userLastName').label}
-        styles={styles}
-        value={userData.lastName}
-        checked={false}
-      />
-      <Error errors={errors} name="userLastName" />
-      <FormInputProfile
-        input={inputService.createInputParams('birthDate').input}
-        type={inputService.createInputParams('birthDate').type}
-        label={inputService.createInputParams('birthDate').label}
-        styles={styles}
-        value={userData.dateOfBirth}
-        checked={false}
-      />
-      <Error errors={errors} name="birthDate" />
-      <FormInputProfile
-        input={inputService.createInputParams('email').input}
-        type={inputService.createInputParams('email').type}
-        label={inputService.createInputParams('email').label}
-        styles={styles}
-        value={userData.email}
-        checked={false}
-      />
-      <Error errors={errors} name="email" />
+      <div className={styles.input_block}>
+        <FormInputProfile
+          input={inputService.createInputParams('userFirstName').input}
+          type={inputService.createInputParams('userFirstName').type}
+          label={inputService.createInputParams('userFirstName').label}
+          styles={styles}
+          value={userData.firstName}
+          checked={false}
+        />
+        <InputError styles={styles} errors={errors} name="userFirstName" />
+      </div>
+      <div className={styles.input_block}>
+        <FormInputProfile
+          input={inputService.createInputParams('userLastName').input}
+          type={inputService.createInputParams('userLastName').type}
+          label={inputService.createInputParams('userLastName').label}
+          styles={styles}
+          value={userData.lastName}
+          checked={false}
+        />
+        <InputError styles={styles} errors={errors} name="userLastName" />
+      </div>
+      <div className={styles.input_block}>
+        <FormInputProfile
+          input={inputService.createInputParams('birthDate').input}
+          type={inputService.createInputParams('birthDate').type}
+          label={inputService.createInputParams('birthDate').label}
+          styles={styles}
+          value={userData.dateOfBirth}
+          checked={false}
+        />
+        <InputError styles={styles} errors={errors} name="birthDate" />
+      </div>
+      <div className={styles.input_block}>
+        <FormInputProfile
+          input={inputService.createInputParams('email').input}
+          type={inputService.createInputParams('email').type}
+          label={inputService.createInputParams('email').label}
+          styles={styles}
+          value={userData.email}
+          checked={false}
+        />
+        <InputError styles={styles} errors={errors} name="email" />
+      </div>
       <div className={styles.edit_buttons_container}>
         <button className={styles.edit_button} type="submit">
           <BiSave className={styles.edit_button_icon} />
