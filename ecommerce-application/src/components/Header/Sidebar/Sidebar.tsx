@@ -45,7 +45,12 @@ export function Sidebar(props: {
           </NavLink>
         )}
         {userLoggedIn && (
-          <NavLink onClick={logoutHandler} to="#">
+          <NavLink className={`menu-item ${className}`} to="/profile">
+            Profile
+          </NavLink>
+        )}
+        {userLoggedIn && (
+          <NavLink className="menu-item" onClick={logoutHandler} to="#">
             Logout
           </NavLink>
         )}

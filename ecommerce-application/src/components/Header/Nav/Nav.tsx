@@ -1,4 +1,6 @@
 import { NavLink } from 'react-router-dom';
+import { CgProfile } from 'react-icons/cg';
+import { AiOutlineLogin, AiOutlineLogout } from 'react-icons/ai';
 import styles from './Nav.module.scss';
 
 // eslint-disable-next-line max-lines-per-function
@@ -17,22 +19,10 @@ export function Nav(props: {
           </NavLink>
         </li>
         <li>
-          <NavLink className={className} to="/profile">
-            Profile
-          </NavLink>
-        </li>
-        <li>
           <NavLink className={className} to="/catalog">
             Catalog
           </NavLink>
         </li>
-        {!userLoggedIn && (
-          <li>
-            <NavLink className={className} to="/login">
-              Login
-            </NavLink>
-          </li>
-        )}
         {!userLoggedIn && (
           <li>
             <NavLink className={className} to="/registration">
@@ -40,10 +30,24 @@ export function Nav(props: {
             </NavLink>
           </li>
         )}
+        {!userLoggedIn && (
+          <li>
+            <NavLink className={className} to="/login">
+              <AiOutlineLogin className={styles.header_icon} />
+            </NavLink>
+          </li>
+        )}
+        {userLoggedIn && (
+          <li>
+            <NavLink className={className} to="/profile">
+              <CgProfile className={styles.header_icon} />
+            </NavLink>
+          </li>
+        )}
         {userLoggedIn && (
           <li>
             <NavLink onClick={logoutHandler} className={styles.inactive} to="#">
-              Logout
+              <AiOutlineLogout className={styles.header_icon} />
             </NavLink>
           </li>
         )}
