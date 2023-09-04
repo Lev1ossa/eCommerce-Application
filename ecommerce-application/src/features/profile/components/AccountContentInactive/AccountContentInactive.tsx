@@ -1,12 +1,12 @@
-import { IUserData } from '../../../../types/types';
+import { Customer } from '@commercetools/platform-sdk';
 import { changeDateView } from '../../../autentification/utils/utils';
 
 export function AccountContentInactive(props: {
   styles: CSSModuleClasses;
-  userData: IUserData;
+  userData: Customer;
 }): React.ReactElement {
   const { styles, userData } = props;
-  const dateOfBirthValue = changeDateView(userData.dateOfBirth);
+  const dateOfBirthValue = changeDateView(userData?.dateOfBirth);
   return (
     <>
       <div className={styles.info_block}>

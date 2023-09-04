@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AiOutlineHome } from 'react-icons/ai';
 import { BiEditAlt } from 'react-icons/bi';
 import styles from './Addresses.module.scss';
@@ -7,60 +7,204 @@ import { Modal } from '../../../modal';
 import { UserAdress } from '../../../../types/types';
 import { AddressCardActive } from '../AddressCardActive/AddressCardActive';
 import { NewAddressCard } from '../NewAddressCard/NewAddressCard';
-
-const addressesData = [
-  {
-    city: 'a',
-    country: 'BY',
-    id: '0xe7kPdI',
-    isBilling: false,
-    isDefaultBilling: false,
-    isDefaultShipping: true,
-    isShipping: true,
-    postalCode: '111111',
-    streetName: 'a',
-  },
-  {
-    city: 'b',
-    country: 'BY',
-    id: '2222222',
-    isBilling: false,
-    isDefaultBilling: false,
-    isDefaultShipping: false,
-    isShipping: true,
-    postalCode: '222222',
-    streetName: 'b',
-  },
-  {
-    city: 'a',
-    country: 'BY',
-    id: '444444',
-    isBilling: true,
-    isDefaultBilling: false,
-    isDefaultShipping: false,
-    isShipping: false,
-    postalCode: '333333',
-    streetName: 'a',
-  },
-  {
-    city: 'c',
-    country: 'BY',
-    id: '333333',
-    isBilling: true,
-    isDefaultBilling: true,
-    isDefaultShipping: false,
-    isShipping: true,
-    postalCode: '333333',
-    streetName: 'c',
-  },
-];
+import { getCustomerData } from '../../../../api/requests';
 
 // eslint-disable-next-line max-lines-per-function
 export function Addresses(): React.ReactElement {
   const [modalActive, setModalActive] = useState(false);
   const [modalCreateAddressActive, setModalCreateAddressActive] =
     useState(false);
-  const [modalAddressId, setModalAddressId] = useState('0xe7kPdI');
+  const [modalAddressId, setModalAddressId] = useState('');
+  const [addressesData, setAddressesData] = useState<UserAdress[]>([]);
+
+  // eslint-disable-next-line max-lines-per-function
+  const handleAddButton = (): void => {
+    getCustomerData().then(
+      (result) => {
+        const customerData = result.body;
+        const customerAdresses: UserAdress[] = customerData.addresses.map(
+          (adress) => {
+            const { id, country, city, streetName, postalCode } = adress;
+            const isShipping =
+              id && customerData.shippingAddressIds
+                ? customerData.shippingAddressIds.includes(id)
+                : false;
+            const isBilling =
+              id && customerData.billingAddressIds
+                ? customerData.billingAddressIds.includes(id)
+                : false;
+            const isDefaultShipping =
+              id && customerData.defaultShippingAddressId
+                ? customerData.defaultShippingAddressId.includes(id)
+                : false;
+            const isDefaultBilling =
+              id && customerData.defaultBillingAddressId
+                ? customerData.defaultBillingAddressId.includes(id)
+                : false;
+            const userAdress: UserAdress = {
+              id,
+              country,
+              city,
+              streetName,
+              postalCode,
+              isShipping,
+              isBilling,
+              isDefaultShipping,
+              isDefaultBilling,
+            };
+
+            return userAdress;
+          },
+        );
+        setAddressesData(customerAdresses);
+        setModalCreateAddressActive(false);
+      },
+      (error) => {
+        console.log(error);
+      },
+    );
+  };
+  // eslint-disable-next-line max-lines-per-function
+  const handleSaveButton = (): void => {
+    getCustomerData().then(
+      (result) => {
+        const customerData = result.body;
+        const customerAdresses: UserAdress[] = customerData.addresses.map(
+          (adress) => {
+            const { id, country, city, streetName, postalCode } = adress;
+            const isShipping =
+              id && customerData.shippingAddressIds
+                ? customerData.shippingAddressIds.includes(id)
+                : false;
+            const isBilling =
+              id && customerData.billingAddressIds
+                ? customerData.billingAddressIds.includes(id)
+                : false;
+            const isDefaultShipping =
+              id && customerData.defaultShippingAddressId
+                ? customerData.defaultShippingAddressId.includes(id)
+                : false;
+            const isDefaultBilling =
+              id && customerData.defaultBillingAddressId
+                ? customerData.defaultBillingAddressId.includes(id)
+                : false;
+            const userAdress: UserAdress = {
+              id,
+              country,
+              city,
+              streetName,
+              postalCode,
+              isShipping,
+              isBilling,
+              isDefaultShipping,
+              isDefaultBilling,
+            };
+
+            return userAdress;
+          },
+        );
+        setAddressesData(customerAdresses);
+        setModalActive(false);
+      },
+      (error) => {
+        console.log(error);
+      },
+    );
+  };
+  // eslint-disable-next-line max-lines-per-function
+  const handleDeleteButton = (): void => {
+    getCustomerData().then(
+      (result) => {
+        const customerData = result.body;
+        const customerAdresses: UserAdress[] = customerData.addresses.map(
+          (adress) => {
+            const { id, country, city, streetName, postalCode } = adress;
+            const isShipping =
+              id && customerData.shippingAddressIds
+                ? customerData.shippingAddressIds.includes(id)
+                : false;
+            const isBilling =
+              id && customerData.billingAddressIds
+                ? customerData.billingAddressIds.includes(id)
+                : false;
+            const isDefaultShipping =
+              id && customerData.defaultShippingAddressId
+                ? customerData.defaultShippingAddressId.includes(id)
+                : false;
+            const isDefaultBilling =
+              id && customerData.defaultBillingAddressId
+                ? customerData.defaultBillingAddressId.includes(id)
+                : false;
+            const userAdress: UserAdress = {
+              id,
+              country,
+              city,
+              streetName,
+              postalCode,
+              isShipping,
+              isBilling,
+              isDefaultShipping,
+              isDefaultBilling,
+            };
+            return userAdress;
+          },
+        );
+        setAddressesData(customerAdresses);
+      },
+      (error) => {
+        console.log(error);
+      },
+    );
+  };
+
+  // eslint-disable-next-line max-lines-per-function
+  useEffect(() => {
+    // eslint-disable-next-line max-lines-per-function
+    getCustomerData().then(
+      (result) => {
+        const customerData = result.body;
+        const customerAdresses: UserAdress[] = customerData.addresses.map(
+          (adress) => {
+            const { id, country, city, streetName, postalCode } = adress;
+            const isShipping =
+              id && customerData.shippingAddressIds
+                ? customerData.shippingAddressIds.includes(id)
+                : false;
+            const isBilling =
+              id && customerData.billingAddressIds
+                ? customerData.billingAddressIds.includes(id)
+                : false;
+            const isDefaultShipping =
+              id && customerData.defaultShippingAddressId
+                ? customerData.defaultShippingAddressId.includes(id)
+                : false;
+            const isDefaultBilling =
+              id && customerData.defaultBillingAddressId
+                ? customerData.defaultBillingAddressId.includes(id)
+                : false;
+            const userAdress: UserAdress = {
+              id,
+              country,
+              city,
+              streetName,
+              postalCode,
+              isShipping,
+              isBilling,
+              isDefaultShipping,
+              isDefaultBilling,
+            };
+
+            return userAdress;
+          },
+        );
+        setAddressesData(customerAdresses);
+      },
+      (error) => {
+        console.log(error);
+      },
+    );
+  }, []);
+
   const data = addressesData.find((el) => el.id === modalAddressId);
   const handleCreateAddressButton = (): void => {
     setModalCreateAddressActive(true);
@@ -89,27 +233,23 @@ export function Addresses(): React.ReactElement {
                 addressData={addressData}
                 setModalActive={setModalActive}
                 setModalAddressId={setModalAddressId}
+                handleDeleteButton={handleDeleteButton}
               />
             );
           })}
         </div>
       </div>
       {modalActive && (
-        <Modal active={modalActive} setActive={setModalActive}>
+        <Modal
+          active={modalActive}
+          setActive={setModalActive}
+          title="Edit address"
+        >
           <div className={styles.modal}>
-            <header className={styles.modal_header}>
-              <h3>Edit address</h3>
-              <button
-                type="button"
-                className={styles.modal_button}
-                onClick={(): void => setModalActive(false)}
-              >
-                X
-              </button>
-            </header>
             <AddressCardActive
               styles={styles}
               addressData={data as UserAdress}
+              handleSaveButton={handleSaveButton}
             />
           </div>
         </Modal>
@@ -118,19 +258,10 @@ export function Addresses(): React.ReactElement {
         <Modal
           active={modalCreateAddressActive}
           setActive={setModalCreateAddressActive}
+          title="Create address"
         >
           <div className={styles.modal}>
-            <header className={styles.modal_header}>
-              <h3>Create address</h3>
-              <button
-                type="button"
-                className={styles.modal_button}
-                onClick={(): void => setModalCreateAddressActive(false)}
-              >
-                X
-              </button>
-            </header>
-            <NewAddressCard styles={styles} />
+            <NewAddressCard styles={styles} handleAddButton={handleAddButton} />
           </div>
         </Modal>
       )}

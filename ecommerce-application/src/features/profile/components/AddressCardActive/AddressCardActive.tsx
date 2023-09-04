@@ -2,20 +2,39 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { postcodeValidator } from 'postcode-validator';
 import { BiSave } from 'react-icons/bi';
-import { IRegistrationData, UserAdress } from '../../../../types/types';
+import {
+  MyCustomerAddBillingAddressIdAction,
+  MyCustomerAddShippingAddressIdAction,
+  MyCustomerChangeAddressAction,
+  MyCustomerRemoveBillingAddressIdAction,
+  MyCustomerRemoveShippingAddressIdAction,
+  MyCustomerSetDefaultBillingAddressAction,
+  MyCustomerSetDefaultShippingAddressAction,
+  MyCustomerUpdate,
+  MyCustomerUpdateAction,
+} from '@commercetools/platform-sdk';
+import {
+  IRegistrationData,
+  ToastTypes,
+  UserAdress,
+} from '../../../../types/types';
 import { ServiceInputParameters } from '../../../autentification/services/inputService';
 import { Error } from '../../../autentification/components/FormInputs/Error/Error';
 import { FormInputProfile } from '../FormInputProfile/FormInputProfile';
 import { ProfileCountryInput } from '../ProfileFormCountrySelect/ProfileFormCountrySelect';
 import { FormCheckboxProfile } from '../FormCheckboxProfile/FormCheckboxProfile';
 import { FormCheckboxDisabled } from '../FormCheckboxDisabled/FormCheckboxDisabled';
+import { getCustomerData, updateCustomerData } from '../../../../api/requests';
+import { showToast } from '../../../autentification/utils/showToast';
 
 // eslint-disable-next-line max-lines-per-function
 export function AddressCardActive(props: {
   styles: CSSModuleClasses;
   addressData: UserAdress;
+  handleSaveButton: () => void;
 }): React.ReactElement {
-  const { styles, addressData } = props;
+  const { styles, addressData, handleSaveButton } = props;
+
   const {
     register,
     setValue,
@@ -24,12 +43,99 @@ export function AddressCardActive(props: {
   } = useForm<IRegistrationData>({
     mode: 'onChange',
   });
+
   const inputService = new ServiceInputParameters(register);
+
+  // eslint-disable-next-line max-lines-per-function
   const onSubmit: SubmitHandler<IRegistrationData> = (
-    data: IRegistrationData,
+    changedAddressData: IRegistrationData,
   ): void => {
-    console.log('RESULT', data);
+    getCustomerData().then(
+      // eslint-disable-next-line max-lines-per-function
+      (result) => {
+        const changeAddress: MyCustomerChangeAddressAction = {
+          action: 'changeAddress',
+          addressId: addressData.id,
+          address: {
+            country: changedAddressData.shippingCountry,
+            city: changedAddressData.shippingCity,
+            streetName: changedAddressData.shippingStreet,
+            postalCode: changedAddressData.shippingPostalCode,
+          },
+        };
+        const addShippingAddress: MyCustomerAddShippingAddressIdAction = {
+          action: 'addShippingAddressId',
+          addressId: addressData.id,
+        };
+        const addBillinAddress: MyCustomerAddBillingAddressIdAction = {
+          action: 'addBillingAddressId',
+          addressId: addressData.id,
+        };
+        const removeShippingAddress: MyCustomerRemoveShippingAddressIdAction = {
+          action: 'removeShippingAddressId',
+          addressId: addressData.id,
+        };
+        const removeBillingAddress: MyCustomerRemoveBillingAddressIdAction = {
+          action: 'removeBillingAddressId',
+          addressId: addressData.id,
+        };
+        const addDefaultShippingAddress: MyCustomerSetDefaultShippingAddressAction =
+          {
+            action: 'setDefaultShippingAddress',
+            addressId: addressData.id,
+          };
+        const addDefaultBillingAddress: MyCustomerSetDefaultBillingAddressAction =
+          {
+            action: 'setDefaultBillingAddress',
+            addressId: addressData.id,
+          };
+        const arrActions: MyCustomerUpdateAction[] = [changeAddress];
+
+        if (changedAddressData.isShipping && !addressData.isShipping) {
+          arrActions.push(addShippingAddress);
+        }
+        if (changedAddressData.isBilling && !addressData.isBilling) {
+          arrActions.push(addBillinAddress);
+        }
+        if (!changedAddressData.isShipping && addressData.isShipping) {
+          arrActions.push(removeShippingAddress);
+        }
+        if (!changedAddressData.isBilling && addressData.isBilling) {
+          arrActions.push(removeBillingAddress);
+        }
+        if (
+          changedAddressData.isShippingAddressDefault &&
+          !addressData.isDefaultShipping
+        ) {
+          arrActions.push(addDefaultShippingAddress);
+        }
+        if (
+          changedAddressData.isBillingAddressDefault &&
+          !addressData.isDefaultBilling
+        ) {
+          arrActions.push(addDefaultBillingAddress);
+        }
+
+        const body: MyCustomerUpdate = {
+          version: result.body.version,
+          actions: arrActions,
+        };
+        updateCustomerData(body).then(
+          () => {
+            showToast(ToastTypes.success, `Address successfully edited!`);
+            handleSaveButton();
+          },
+          (error) => {
+            showToast(ToastTypes.error, error.message);
+          },
+        );
+      },
+      (error) => {
+        console.log(error);
+      },
+    );
   };
+
   const [currentShippingCountry, setShippingCountry] = useState(
     addressData?.country as string,
   );
