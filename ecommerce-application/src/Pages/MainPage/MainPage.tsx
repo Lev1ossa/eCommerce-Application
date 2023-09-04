@@ -44,17 +44,25 @@ export function MainPage(): React.ReactElement {
     );
   };
 
+  // eslint-disable-next-line max-lines-per-function
   const getFilteredProductsTest = async (): Promise<void> => {
-    const categoryID = 'dbab00bf-5d0b-4a4d-9cf0-17739113af5f';
-    const lowerPrice = '1';
-    const higherPrice = '150';
-    const filterQueryStrings = [
-      `categories.id: subtree("${categoryID}")`,
-      `variants.attributes.origin.key:"foreign"`,
-      `variants.attributes.trademark:"Barbados"`,
-      `variants.price.centAmount:range (${lowerPrice} to ${higherPrice})`,
+    // const categoryID = 'dbab00bf-5d0b-4a4d-9cf0-17739113af5f';
+    // const lowerPrice = '1';
+    // const higherPrice = '150';
+    const sortQueryStrings = [
+      'price asc',
+      'name.en asc',
+      'variants.attributes.origin.key asc',
+      'variants.attributes.trademark desc',
     ];
-    await getFilteredProductList(filterQueryStrings).then(
+    const filterQueryStrings = [
+      // `categories.id: subtree("${categoryID}")`,
+      // `variants.attributes.origin.key:"foreign"`,
+      // `variants.attributes.trademark:"Barbados"`,
+      // `variants.price.centAmount:range (${lowerPrice} to ${higherPrice})`,
+      '',
+    ];
+    await getFilteredProductList(filterQueryStrings, sortQueryStrings).then(
       (result) => {
         console.log(
           'Should return filtered list of products',
