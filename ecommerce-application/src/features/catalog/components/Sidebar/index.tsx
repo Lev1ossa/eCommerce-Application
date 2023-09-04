@@ -273,15 +273,29 @@ export function CatalogSidebar(props: {
             className={styles.sort}
             onChange={handleSortChange}
             styles={{
-              control: (baseStyles, state) => ({
-                ...baseStyles,
-                borderColor: state.isFocused ? 'none' : 'none',
+              control: (base, state) => ({
+                ...base,
+                boxShadow: 'none',
+                borderColor: state.isFocused ? '#ededed' : '#ededed',
+                '&:hover': {
+                  borderColor: state.isFocused ? '#ededed' : '#ededed',
+                },
                 border: '1px solid #ededed',
-                outline: 'none',
                 fontSize: '14px',
                 height: '2rem',
                 margin: '5px',
                 padding: '0',
+              }),
+              option: (base, state) => ({
+                ...base,
+                borderColor: '#ededed',
+                color: '#000',
+                backgroundColor: state.isSelected ? '#fff' : '#fff',
+                '&:hover': {
+                  borderColor: state.isFocused ? '#ededed' : '#ededed',
+                  color: '#000',
+                  backgroundColor: '#fdff8d',
+                },
               }),
             }}
           />

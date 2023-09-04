@@ -81,12 +81,6 @@ export function Catalog(): React.ReactElement {
     if (args[0].sort) {
       sortQueryStrings.push(args[0].sort);
     }
-    // const sortQueryStrings = [
-    //   'price asc',
-    //   'name.en asc',
-    //   'variants.attributes.origin.key asc',
-    //   'variants.attributes.trademark desc',
-    // ];
     await getFilteredProductList(filterQueryStrings, sortQueryStrings).then(
       (result) => {
         setProducts(result.body.results);
