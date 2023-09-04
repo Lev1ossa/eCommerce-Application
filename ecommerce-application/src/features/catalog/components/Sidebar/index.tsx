@@ -13,13 +13,14 @@ import { getCategories } from '../../../../api/requests';
 import { CustomCategory } from '../../../../types/types';
 import styles from './Sidebar.module.scss';
 
+interface ICurrentFilters {
+  category?: string;
+  trademark?: string;
+  foreigh?: string;
+}
 // eslint-disable-next-line max-lines-per-function
 export function CatalogSidebar(props: {
-  categoryFilter: (
-    categoryID: string,
-    foreign?: string,
-    trademark?: string,
-  ) => Promise<void>;
+  categoryFilter: (...args: ICurrentFilters[]) => Promise<void>;
   brands: string[];
 }): React.ReactElement {
   const { categoryFilter, brands } = props;
@@ -27,6 +28,7 @@ export function CatalogSidebar(props: {
     [],
   );
   const [categoriesList, setCategoriesList] = useState<JSX.Element[]>([]);
+  const [currentFilters, setcurrentFilters] = useState<ICurrentFilters>();
 
   useEffect(() => {
     getCategories().then(
@@ -73,12 +75,29 @@ export function CatalogSidebar(props: {
           <SubMenu
             key={category.key}
             label={category.name}
-            onClick={(): Promise<void> => categoryFilter(category.id)}
+            onClick={(): void => {
+              setcurrentFilters({
+                ...currentFilters,
+                category: category.id,
+              });
+              const filters = {
+                ...currentFilters,
+                category: category.id,
+              };
+              categoryFilter({ ...filters });
+            }}
           >
             {category.children.map((child) => (
               <MenuItem
                 key={child.key}
-                onClick={(): Promise<void> => categoryFilter(child.id)}
+                onClick={(): void => {
+                  setcurrentFilters({ ...currentFilters, category: child.id });
+                  const filters = {
+                    ...currentFilters,
+                    category: child.id,
+                  };
+                  categoryFilter({ ...filters });
+                }}
               >
                 {child.name.replace('_', ' ')}
               </MenuItem>
@@ -87,10 +106,21 @@ export function CatalogSidebar(props: {
         )),
       );
     }
-  }, [productCategories, categoryFilter]);
+  }, [productCategories, categoryFilter, currentFilters]);
 
   const brandsList = brands.map((brand: string) => (
-    <li key={brand}>
+    <li
+      aria-hidden
+      key={brand}
+      onClick={(): void => {
+        setcurrentFilters({ ...currentFilters, trademark: brand });
+        const filters = {
+          ...currentFilters,
+          trademark: brand,
+        };
+        categoryFilter({ ...filters });
+      }}
+    >
       <input type="checkbox" />
       <span className="text">{brand}</span>
     </li>

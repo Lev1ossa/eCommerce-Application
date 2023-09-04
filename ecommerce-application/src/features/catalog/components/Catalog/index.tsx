@@ -9,6 +9,11 @@ import { ProductCard } from '../ProductCard';
 import { CatalogSidebar } from '../Sidebar';
 import styles from './Catalog.module.scss';
 
+interface ICurrentFilters {
+  category?: string;
+  trademark?: string;
+  foreigh?: string;
+}
 // eslint-disable-next-line max-lines-per-function
 export function Catalog(): React.ReactElement {
   const [products, setProducts] = useState<ProductProjection[]>([]);
@@ -37,7 +42,7 @@ export function Catalog(): React.ReactElement {
     setBrands([...new Set(brandsList.sort())]);
   };
   useEffect(() => {
-    console.log(products);
+    // console.log('get products');
     const data = products.map((product) => (
       <li key={product.id} className={styles.item}>
         <ProductCard product={product} />
@@ -45,15 +50,26 @@ export function Catalog(): React.ReactElement {
     ));
     setCatalog(data);
     getBrandsFromProducts(products);
+    console.log('data', products);
   }, [products]);
 
-  const getFilteredProducts = async (...args: []): Promise<void> => {
+  const getFilteredProducts = async (
+    ...args: ICurrentFilters[]
+  ): Promise<void> => {
     setIsLoading(true);
-    const filterQueryStrings = args.map((arg, i): string => {
-      if (i === 0) return `categories.id: subtree("${arg}")`;
-      if (i === 1) return `variants.attributes.origin.key:"${arg}"`;
-      return `variants.attributes.trademark:"${arg}"`;
-    });
+
+    const filterQueryStrings = [];
+    if (args[0].category)
+      filterQueryStrings.push(`categories.id: subtree("${args[0].category}")`);
+    if (args[0].trademark)
+      filterQueryStrings.push(
+        `variants.attributes.trademark:"${args[0].trademark}"`,
+      );
+    if (args[0].foreigh)
+      filterQueryStrings.push(
+        `variants.attributes.origin.key:"${args[0].foreigh}"`,
+      );
+    // console.log('filterQueryStrings', filterQueryStrings);
 
     await getFilteredProductList(filterQueryStrings).then(
       (result) => {
