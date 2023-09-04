@@ -61,7 +61,9 @@ export function Catalog(): React.ReactElement {
       filterQueryStrings.push(`categories.id: subtree("${args[0].category}")`);
     if (args[0].trademark.length)
       filterQueryStrings.push(
-        `variants.attributes.trademark:"${args[0].trademark}"`,
+        `variants.attributes.trademark:${args[0].trademark
+          .map((filter: string): string => `"${filter}"`)
+          .join(',')}`,
       );
     if (args[0].originFilter.length)
       filterQueryStrings.push(

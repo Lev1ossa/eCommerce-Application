@@ -106,15 +106,47 @@ export function CatalogSidebar(props: {
         )),
       );
     }
+    const handleBrandsClick = (
+      event: ChangeEvent<HTMLInputElement>,
+      value: string,
+    ): void => {
+      console.log('value', value);
 
+      if (event.target.checked) {
+        setcurrentFilters({
+          ...currentFilters,
+          trademark: [...currentFilters.trademark, value],
+        });
+        const filters = {
+          ...currentFilters,
+          trademark: [...currentFilters.trademark, value],
+        };
+        categoryFilter({ ...filters });
+      } else {
+        const filters = {
+          ...currentFilters,
+          trademark: [
+            ...currentFilters.trademark.filter((filter) => filter !== value),
+          ],
+        };
+
+        categoryFilter({ ...filters });
+
+        setcurrentFilters({
+          ...currentFilters,
+          trademark: [
+            ...currentFilters.trademark.filter((filter) => filter !== value),
+          ],
+        });
+      }
+    };
     setBrandsList(
       brands.map((brand: string) => (
-        <li
-          aria-hidden
-          key={brand}
-          onClick={(): void => handleFiltersClick('trademark', brand)}
-        >
-          <input type="checkbox" />
+        <li key={brand}>
+          <input
+            type="checkbox"
+            onChange={(event): void => handleBrandsClick(event, brand)}
+          />
           <span className="text">{brand}</span>
         </li>
       )),
