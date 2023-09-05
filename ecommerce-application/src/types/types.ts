@@ -135,4 +135,10 @@ export interface ICurrentFilters {
   originFilter: string[];
   lowerPrice: number;
   higherPrice: number;
+  sort: string;
+}
+
+export interface ISortOption {
+  value: string;
+  label: string;
 }

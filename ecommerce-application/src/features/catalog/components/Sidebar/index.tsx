@@ -9,6 +9,7 @@ import {
   menuClasses,
   sidebarClasses,
 } from 'react-pro-sidebar';
+import Select, { SingleValue } from 'react-select';
 import { getCategories } from '../../../../api/requests';
 import { CustomCategory, ICurrentFilters } from '../../../../types/types';
 import styles from './Sidebar.module.scss';
@@ -29,8 +30,33 @@ export function CatalogSidebar(props: {
     originFilter: [],
     lowerPrice: 0,
     higherPrice: 0,
+    sort: '',
   });
   const [brandsList, setBrandsList] = useState<JSX.Element[]>([]);
+  const [collapsed, setCollapsed] = useState(false);
+  const [width, setWidth] = useState<number>();
+
+  const getWindowSize = (): void => {
+    setWidth(window.innerWidth);
+  };
+  useEffect(() => {
+    window.addEventListener('resize', getWindowSize);
+    if (width && width < 678) {
+      setCollapsed(true);
+    } else {
+      setCollapsed(false);
+    }
+    return () => {
+      window.removeEventListener('resize', getWindowSize);
+    };
+  }, [width]);
+
+  const options = [
+    { value: 'price asc', label: 'price' },
+    { value: 'name.en asc', label: 'name' },
+    { value: 'variants.attributes.trademark desc', label: 'trademark' },
+    { value: 'variants.attributes.origin.key asc', label: 'origin' },
+  ];
 
   useEffect(() => {
     getCategories().then(
@@ -68,6 +94,7 @@ export function CatalogSidebar(props: {
         console.log(error);
       },
     );
+    if (window.innerWidth < 678) setCollapsed(true);
   }, []);
 
   // eslint-disable-next-line max-lines-per-function
@@ -203,9 +230,24 @@ export function CatalogSidebar(props: {
     }
   };
 
+  const handleSortChange = (
+    option: SingleValue<{ value: string; label: string }>,
+  ): void => {
+    const filters = {
+      ...currentFilters,
+      sort: option ? option.value : '',
+    };
+    categoryFilter({ ...filters });
+    setcurrentFilters({
+      ...currentFilters,
+      sort: option ? option.value : '',
+    });
+  };
   return (
     <div style={{ display: 'flex' }}>
       <Sidebar
+        collapsed={collapsed}
+        collapsedWidth="130px"
         className={styles.sidebar}
         rootStyles={{
           [`.${sidebarClasses.container}`]: {
@@ -220,7 +262,7 @@ export function CatalogSidebar(props: {
                 backgroundColor: '#fdff8d',
               },
             },
-            // position: 'sticky',
+            position: 'sticky',
             top: '1.5rem',
           }}
           menuItemStyles={{
@@ -245,6 +287,39 @@ export function CatalogSidebar(props: {
             />
             <FiSearch className={styles.search_icon} />
           </div>
+          <Select
+            options={options}
+            placeholder="sort..."
+            className={styles.sort}
+            onChange={handleSortChange}
+            styles={{
+              control: (base, state) => ({
+                ...base,
+                boxShadow: 'none',
+                borderColor: state.isFocused ? '#ededed' : '#ededed',
+                '&:hover': {
+                  borderColor: state.isFocused ? '#ededed' : '#ededed',
+                },
+                border: '1px solid #ededed',
+                fontSize: '14px',
+                height: '2rem',
+                margin: '5px',
+                padding: '0',
+              }),
+              option: (base, state) => ({
+                ...base,
+                borderColor: '#ededed',
+                color: '#000',
+                backgroundColor: state.isSelected ? '#fff' : '#fff',
+                '&:hover': {
+                  borderColor: state.isFocused ? '#ededed' : '#ededed',
+                  color: '#000',
+                  backgroundColor: '#fdff8d',
+                },
+              }),
+            }}
+          />
+
           {categoriesList}
           <SubMenu label="Filters" defaultOpen>
             <ul className={styles.list}>
