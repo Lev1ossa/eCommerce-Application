@@ -1,3 +1,5 @@
+@import "/src/App/styles/vars.scss";
+
 .modal {
   display: flex;
   justify-content: center;
@@ -39,13 +41,16 @@
   pointer-events: all;
 }
 .content {
-  width: 90%;
   height: 90%;
+  min-width: 350px;
   padding: 1rem;
   border-radius: 1rem;
   background-color: white;
   transform: scale(0.5);
   transition: 0.4s all;
+  @media screen and (max-width: $tablet-width) {
+    width: 90%;
+  }
 }
 
 .content_active {

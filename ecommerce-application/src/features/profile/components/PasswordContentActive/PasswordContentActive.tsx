@@ -41,7 +41,7 @@ export function PasswordContentActive(props: {
 
   const navigate = useNavigate();
   const handleRedirect = (): void => {
-    navigate('/');
+    navigate('/login');
   };
 
   const onSubmit: SubmitHandler<IRegistrationData> = async (

@@ -12,7 +12,7 @@ export function Header(): React.ReactElement {
   const navigate = useNavigate();
   const handleRedirect = (): void => {
     if (!isUserLoggedIn()) {
-      navigate('/catalog');
+      navigate('/login');
     }
   };
   const logoutHandler = async (): Promise<void> => {
