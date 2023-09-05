@@ -30,7 +30,6 @@ export function AddressCard(props: {
     countryInputValue = countryName || '';
   }
 
-  // eslint-disable-next-line max-lines-per-function
   const onClick = (): void => {
     getCustomerData().then(
       (result) => {

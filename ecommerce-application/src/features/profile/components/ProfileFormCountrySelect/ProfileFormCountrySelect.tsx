@@ -1,7 +1,6 @@
 import { UseFormRegisterReturn } from 'react-hook-form';
 import { countriesData } from '../../../autentification/constants/constants';
 
-// eslint-disable-next-line max-lines-per-function
 export function ProfileCountryInput(props: {
   styles: CSSModuleClasses;
   value: string;

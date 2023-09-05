@@ -3,7 +3,6 @@ import { Header } from '../../components/Header/Header';
 import styles from './MainPage.module.scss';
 import { Footer } from '../../components/Footer/Footer';
 
-// eslint-disable-next-line max-lines-per-function
 export function MainPage(): React.ReactElement {
   return (
     <div className={styles.main_page}>

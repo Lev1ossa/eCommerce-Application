@@ -159,7 +159,6 @@ export function Addresses(): React.ReactElement {
 
   // eslint-disable-next-line max-lines-per-function
   useEffect(() => {
-    // eslint-disable-next-line max-lines-per-function
     getCustomerData().then(
       (result) => {
         const customerData = result.body;
