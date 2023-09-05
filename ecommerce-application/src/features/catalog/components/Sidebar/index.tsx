@@ -215,8 +215,9 @@ export function CatalogSidebar(props: {
         ...currentFilters,
         [name]: +event.target.value,
       };
-
-      categoryFilter({ ...filters });
+      if (filters.lowerPrice < filters.higherPrice) {
+        categoryFilter({ ...filters });
+      }
 
       setcurrentFilters({
         ...currentFilters,
