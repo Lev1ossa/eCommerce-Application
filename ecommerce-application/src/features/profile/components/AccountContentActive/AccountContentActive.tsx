@@ -68,12 +68,12 @@ export function AccountContentActive(props: {
             showToast(ToastTypes.success, `Data successfully saved!`);
             handleSaveButton();
           },
-          (error) => {
+          (error: Error) => {
             showToast(ToastTypes.error, error.message);
           },
         );
       },
-      (error) => {
+      (error: Error) => {
         console.log(error);
       },
     );

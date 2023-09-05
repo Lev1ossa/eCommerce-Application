@@ -59,7 +59,7 @@ export function Addresses(): React.ReactElement {
         setAddressesData(customerAdresses);
         setModalCreateAddressActive(false);
       },
-      (error) => {
+      (error: Error) => {
         console.log(error);
       },
     );
@@ -106,7 +106,7 @@ export function Addresses(): React.ReactElement {
         setAddressesData(customerAdresses);
         setModalActive(false);
       },
-      (error) => {
+      (error: Error) => {
         console.log(error);
       },
     );
@@ -151,7 +151,7 @@ export function Addresses(): React.ReactElement {
         );
         setAddressesData(customerAdresses);
       },
-      (error) => {
+      (error: Error) => {
         console.log(error);
       },
     );
@@ -199,7 +199,7 @@ export function Addresses(): React.ReactElement {
         );
         setAddressesData(customerAdresses);
       },
-      (error) => {
+      (error: Error) => {
         console.log(error);
       },
     );

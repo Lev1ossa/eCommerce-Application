@@ -41,7 +41,7 @@ export function ProfileContent(): React.ReactElement {
         setUserData(result.body);
         setIsLoading(false);
       },
-      (error) => {
+      (error: Error) => {
         console.log(error);
       },
     );

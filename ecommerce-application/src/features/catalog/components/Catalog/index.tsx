@@ -44,7 +44,7 @@ export function Catalog(props: {
         setIsLoading(false);
         getBrandsFromProducts(result.body.results);
       },
-      (error) => {
+      (error: Error) => {
         console.log(error);
       },
     );
@@ -82,7 +82,7 @@ export function Catalog(props: {
         setProductCategories(categoriesTree);
         setIsLoading(false);
       },
-      (error) => {
+      (error: Error) => {
         console.log(error);
       },
     );
@@ -142,7 +142,7 @@ export function Catalog(props: {
         setProducts(result.body.results);
         setIsLoading(false);
       },
-      (error) => {
+      (error: Error) => {
         console.log(error);
       },
     );

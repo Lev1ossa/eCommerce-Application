@@ -63,13 +63,13 @@ export function PasswordContentActive(props: {
               `Your password has succesfully changed! You log out!`,
             );
           },
-          (error) => {
+          (error: Error) => {
             console.log(error);
             showToast(ToastTypes.error, error.message);
           },
         );
       },
-      (error) => {
+      (error: Error) => {
         showToast(ToastTypes.error, error.message);
       },
     );

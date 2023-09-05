@@ -36,14 +36,14 @@ export function Product(props: {
           navigate('/404');
         }
       },
-      (error) => {
+      (error: Error) => {
         console.log(error);
       },
     );
   }, [productCard.state, slug, navigate]);
 
   let price = 0;
-  let priceDiscounted = null;
+  let priceDiscounted: number | null = null;
   let productName = '';
   let trademark = '';
   let description = '';

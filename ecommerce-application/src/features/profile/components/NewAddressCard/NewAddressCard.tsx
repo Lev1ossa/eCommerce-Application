@@ -98,12 +98,12 @@ export function NewAddressCard(props: {
             showToast(ToastTypes.success, `Address successfully saved!`);
             handleAddButton();
           },
-          (error) => {
+          (error: Error) => {
             showToast(ToastTypes.error, error.message);
           },
         );
       },
-      (error) => {
+      (error: Error) => {
         console.log(error);
       },
     );

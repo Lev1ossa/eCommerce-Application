@@ -125,12 +125,12 @@ export function AddressCardActive(props: {
             showToast(ToastTypes.success, `Address successfully edited!`);
             handleSaveButton();
           },
-          (error) => {
+          (error: Error) => {
             showToast(ToastTypes.error, error.message);
           },
         );
       },
-      (error) => {
+      (error: Error) => {
         console.log(error);
       },
     );
