@@ -262,7 +262,7 @@ export function CatalogSidebar(props: {
                 backgroundColor: '#fdff8d',
               },
             },
-            // position: 'sticky',
+            position: 'sticky',
             top: '1.5rem',
           }}
           menuItemStyles={{
