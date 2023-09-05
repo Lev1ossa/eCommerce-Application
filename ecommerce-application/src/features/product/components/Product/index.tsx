@@ -1,34 +1,52 @@
 import { Image, ProductProjection } from '@commercetools/platform-sdk';
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import { getProductByID } from '../../../../api/requests';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { getProductBySlug } from '../../../../api/requests';
 import { Loader } from '../../../../components/Loader';
 import { Modal } from '../../../modal';
 import { Slider } from '../Slider';
 import styles from './Product.module.scss';
+import { ToastTypes } from '../../../../types/types';
+import { showToast } from '../../../autentification/utils/showToast';
+import { Breadcrumb } from '../../../breadcrumb/components/Breadcrumps/Breadcrumb';
 
 // eslint-disable-next-line max-lines-per-function
-export function Product(props: { slug: string }): React.ReactElement {
-  const { slug } = props;
+export function Product(props: {
+  categorySlug: string;
+  subCategorySlug: string;
+  slug: string;
+}): React.ReactElement {
+  const navigate = useNavigate();
+  const { categorySlug, subCategorySlug, slug } = props;
+  console.log('result', categorySlug, subCategorySlug, slug);
   const [modalActive, setModalActive] = useState(false);
   const [product, setProduct] = useState<ProductProjection>();
   const [isLoading, setIsLoading] = useState(true);
 
+  console.log('props', props);
+
   const productCard = useLocation();
 
-  console.log(slug);
-
   useEffect(() => {
-    getProductByID(productCard.state).then(
+    getProductBySlug(slug).then(
       (result) => {
-        setProduct(result.body);
-        setIsLoading(false);
+        const productResult = result.body.results[0];
+        if (productResult) {
+          setProduct(productResult);
+          setIsLoading(false);
+        } else {
+          showToast(ToastTypes.error, 'Product is not found!');
+          navigate('/404');
+        }
       },
-      (error) => console.log(error),
+      (error) => {
+        console.log(error);
+      },
     );
-  }, [productCard.state]);
+  }, [productCard.state, slug, navigate]);
 
   let price = 0;
+  let priceDiscounted = null;
   let productName = '';
   let trademark = '';
   let description = '';
@@ -40,6 +58,10 @@ export function Product(props: { slug: string }): React.ReactElement {
     const { prices, attributes, images } = product.masterVariant;
     productName = product.name.en;
     price = prices ? prices[0].value.centAmount / 100 : 0;
+    priceDiscounted =
+      prices && prices[0].discounted
+        ? prices[0].discounted.value.centAmount / 100
+        : null;
     trademark = attributes ? attributes[0].value : '';
     category = attributes ? attributes[1].value : '';
     origin = attributes ? attributes[3].value.label : '';
@@ -53,29 +75,56 @@ export function Product(props: { slug: string }): React.ReactElement {
   return (
     <>
       {!isLoading ? (
-        <div className={styles.product}>
-          <div className={styles.container}>
-            <div className={styles.slider}>
-              <Slider setActive={setModalActive} images={productImages} />
-            </div>
-            <div className={styles.details}>
-              <div className={styles.name}>
-                <strong>{productName}</strong>
+        <>
+          <Breadcrumb
+            categorySlug={categorySlug}
+            subCategorySlug={subCategorySlug}
+            slug={slug}
+          />
+          <div className={styles.product}>
+            <div className={styles.container}>
+              <div className={styles.slider}>
+                <Slider setActive={setModalActive} images={productImages} />
               </div>
-              <div className={styles.price}>$ {price}</div>
-              <div className={styles.category}>{category}</div>
-              <div className={styles.category}>{subCategory}</div>
-              <div className={styles.category}>{origin}</div>
-              <div className={styles.trademark}>{trademark}</div>
-              <button type="button" className={styles.button}>
-                Add to cart
-              </button>
-              <div className={styles.description}>
-                <strong>Description: </strong> {description}
+              <div className={styles.details}>
+                <div className={styles.name}>
+                  <strong>{productName}</strong>
+                </div>
+                {priceDiscounted && (
+                  <div className={styles.prices_container}>
+                    <div className={styles.price_new}>$ {priceDiscounted}</div>
+                    <div className={styles.price_old}>$ {price}</div>
+                  </div>
+                )}
+                {!priceDiscounted && (
+                  <div className={styles.price}>$ {price}</div>
+                )}
+                <div className={styles.category}>
+                  <span className={styles.bold}>Category: </span>
+                  {category}
+                </div>
+                <div className={styles.category}>
+                  <span className={styles.bold}>Subcategory: </span>
+                  {subCategory}
+                </div>
+                <div className={styles.category}>
+                  <span className={styles.bold}>Origin: </span>
+                  {origin}
+                </div>
+                <div className={styles.trademark}>
+                  <span className={styles.bold}>TM: </span>
+                  {trademark}
+                </div>
+                <button type="button" className={styles.button}>
+                  Add to cart
+                </button>
+                <div className={styles.description}>
+                  <strong>Description: </strong> {description}
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </>
       ) : (
         <Loader />
       )}

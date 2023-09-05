@@ -1,16 +1,27 @@
 import { AiOutlineHome, AiOutlineLock, AiOutlineUser } from 'react-icons/ai';
 import { useEffect, useState } from 'react';
 import { Customer } from '@commercetools/platform-sdk';
+import { useNavigate } from 'react-router-dom';
 import { ProfileInfo } from '../ProfileInfo/ProfileInfo';
 import styles from './ProfileContent.module.scss';
 import { getCustomerData } from '../../../../api/requests';
 import { Loader } from '../../../../components/Loader';
+import { isUserLoggedIn } from '../../../../api/tokenHandlers';
 
 // eslint-disable-next-line max-lines-per-function
 export function ProfileContent(): React.ReactElement {
   const [activeArticle, setActiveArticle] = useState('account');
   const [userData, setUserData] = useState<Customer>();
   const [isLoading, setIsLoading] = useState(true);
+
+  const navigate = useNavigate();
+  const handleRedirect = (): void => {
+    if (!isUserLoggedIn()) {
+      navigate('/');
+    }
+  };
+
+  useEffect(handleRedirect);
 
   const handleButtonAccount = (): void => {
     setActiveArticle('account');
