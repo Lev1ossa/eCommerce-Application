@@ -37,6 +37,8 @@ export function CatalogSidebar(props: {
   const [brandsList, setBrandsList] = useState<JSX.Element[]>([]);
   const [collapsed, setCollapsed] = useState(false);
   const [width, setWidth] = useState<number>();
+  const [localChecked, setLocalChecked] = useState(false);
+  const [foreignChecked, setForeignChecked] = useState(false);
 
   const getWindowSize = (): void => {
     setWidth(window.innerWidth);
@@ -171,10 +173,20 @@ export function CatalogSidebar(props: {
     );
   }, [productCategories, categoryFilter, currentFilters, brands]);
 
+  // eslint-disable-next-line max-lines-per-function
   const handleOriginChange = (
     event: ChangeEvent<HTMLInputElement>,
     value: string,
   ): void => {
+    if (value === 'local' && event.target.checked) {
+      setLocalChecked(true);
+    } else if (value === 'local' && !event.target.checked) {
+      setLocalChecked(false);
+    } else if (value === 'foreign' && event.target.checked) {
+      setForeignChecked(true);
+    } else if (value === 'foreign' && !event.target.checked) {
+      setForeignChecked(false);
+    }
     if (event.target.checked) {
       const filters = {
         ...currentFilters,
@@ -252,17 +264,21 @@ export function CatalogSidebar(props: {
     });
   };
 
-  const handleResetFilters = (): void => {
-    setcurrentFilters({
-      category: '',
+  const handleResetFilters = (): undefined => {
+    setLocalChecked(false);
+    setForeignChecked(false);
+    setBrandsList([]);
+    const filters = {
+      category: currentFilters.category,
       trademark: [],
       originFilter: [],
       lowerPrice: 0,
       higherPrice: 0,
-      sort: '',
-      search: '',
-    });
-    categoryFilter({ ...currentFilters });
+      sort: currentFilters.sort,
+      search: currentFilters.search,
+    };
+    setcurrentFilters(filters);
+    categoryFilter(filters);
   };
 
   return (
@@ -328,6 +344,7 @@ export function CatalogSidebar(props: {
           </div>
           <Select
             options={sortOptions}
+            isClearable
             placeholder="sort..."
             className={styles.sort}
             onChange={handleSortChange}
@@ -363,7 +380,8 @@ export function CatalogSidebar(props: {
           <SubMenu label="Filters" defaultOpen>
             <ul className={styles.list}>
               <li className={styles.price}>
-                <strong>Price</strong>
+                <strong>Price: </strong>
+                <span>from</span>
                 <input
                   type="text"
                   value={currentFilters.lowerPrice}
@@ -372,6 +390,7 @@ export function CatalogSidebar(props: {
                     handlePriceChange(event, 'lowerPrice')
                   }
                 />
+                <span>to</span>
                 <input
                   type="text"
                   placeholder="max"
@@ -393,6 +412,7 @@ export function CatalogSidebar(props: {
                   <li>
                     <input
                       type="checkbox"
+                      checked={localChecked}
                       onChange={(event): void =>
                         handleOriginChange(event, 'local')
                       }
@@ -402,6 +422,7 @@ export function CatalogSidebar(props: {
                   <li>
                     <input
                       type="checkbox"
+                      checked={foreignChecked}
                       onChange={(event): void =>
                         handleOriginChange(event, 'foreign')
                       }
