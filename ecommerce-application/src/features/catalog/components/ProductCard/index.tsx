@@ -15,6 +15,10 @@ export function ProductCard(props: {
   const { prices, attributes, images } = product.masterVariant;
 
   const price = prices ? prices[0].value.centAmount / 100 : 0;
+  const priceDiscounted =
+    prices && prices[0].discounted
+      ? prices[0].discounted.value.centAmount / 100
+      : null;
   const image = images ? images[0].url : '';
   const tradeMark = attributes ? attributes[0].value : 'good food';
   const category = attributes ? attributes[1].value : '';
@@ -29,7 +33,13 @@ export function ProductCard(props: {
         <img src={image} className={styles.image} alt="product" />
         <div className={styles.description}>
           <div className={styles.product_info}>
-            <p className={styles.price}>${price}</p>
+            {priceDiscounted && (
+              <div className={styles.prices_container}>
+                <div className={styles.price_new}>$ {priceDiscounted}</div>
+                <div className={styles.price_old}>$ {price}</div>
+              </div>
+            )}
+            {!priceDiscounted && <div className={styles.price}>$ {price}</div>}
             <strong className={styles.name}>{name}</strong>
             <p className={styles.tm}>TM:{tradeMark}</p>
             <p className={styles.info}>

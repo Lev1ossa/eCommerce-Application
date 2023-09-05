@@ -4,7 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import styles from './Breadcrumb.module.scss';
 
 // eslint-disable-next-line max-lines-per-function
-export function Breadcrumb(props: Record<string, string>): React.ReactElement {
+export function Breadcrumb(
+  props: Record<string, string | undefined>,
+): React.ReactElement {
   const { categorySlug, subCategorySlug, slug } = props;
   const navigate = useNavigate();
 
@@ -13,12 +15,16 @@ export function Breadcrumb(props: Record<string, string>): React.ReactElement {
   };
 
   const categoryName = (
-    categorySlug[0].toUpperCase() + categorySlug.slice(1)
+    categorySlug ? categorySlug[0].toUpperCase() + categorySlug.slice(1) : ''
   ).replace('_', ' ');
   const subcategoryName = (
-    subCategorySlug[0].toUpperCase() + subCategorySlug.slice(1)
+    subCategorySlug
+      ? subCategorySlug[0].toUpperCase() + subCategorySlug.slice(1)
+      : ''
   ).replace('_', ' ');
-  const productName = (slug[0].toUpperCase() + slug.slice(1)).replace('_', ' ');
+  const productName = (
+    slug ? slug[0].toUpperCase() + slug.slice(1) : ''
+  ).replace('_', ' ');
 
   return (
     <div className={styles.container}>
@@ -29,32 +35,46 @@ export function Breadcrumb(props: Record<string, string>): React.ReactElement {
       >
         Catalog
       </button>
-      <FiChevronsRight className={styles.icon} />
-      <button
-        className={styles.button}
-        type="button"
-        onClick={handleRedirect(`/catalog/${categorySlug}`)}
-      >
-        {categoryName}
-      </button>
-      <FiChevronsRight className={styles.icon} />
-      <button
-        className={styles.button}
-        type="button"
-        onClick={handleRedirect(`/catalog/${categorySlug}/${subCategorySlug}`)}
-      >
-        {subcategoryName}
-      </button>
-      <FiChevronsRight className={styles.icon} />
-      <button
-        className={styles.button}
-        type="button"
-        onClick={handleRedirect(
-          `/catalog/${categorySlug}/${subCategorySlug}/${slug}`,
-        )}
-      >
-        {productName}
-      </button>
+      {categorySlug && (
+        <>
+          <FiChevronsRight className={styles.icon} />
+          <button
+            className={styles.button}
+            type="button"
+            onClick={handleRedirect(`/catalog/${categorySlug}`)}
+          >
+            {categoryName}
+          </button>
+          {subCategorySlug && (
+            <>
+              <FiChevronsRight className={styles.icon} />
+              <button
+                className={styles.button}
+                type="button"
+                onClick={handleRedirect(
+                  `/catalog/${categorySlug}/${subCategorySlug}`,
+                )}
+              >
+                {subcategoryName}
+              </button>
+              {slug && (
+                <>
+                  <FiChevronsRight className={styles.icon} />
+                  <button
+                    className={styles.button}
+                    type="button"
+                    onClick={handleRedirect(
+                      `/catalog/${categorySlug}/${subCategorySlug}/${slug}`,
+                    )}
+                  >
+                    {productName}
+                  </button>
+                </>
+              )}
+            </>
+          )}
+        </>
+      )}
     </div>
   );
 }
