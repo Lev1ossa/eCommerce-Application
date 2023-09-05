@@ -24,7 +24,7 @@ export function Account(props: {
       (result) => {
         setUserData(result.body);
       },
-      (error) => {
+      (error: Error) => {
         console.log(error);
       },
     );

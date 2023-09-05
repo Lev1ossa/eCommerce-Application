@@ -24,12 +24,12 @@ export function AddressCard(props: {
     setModalAddressId,
     handleDeleteButton,
   } = props;
-  let countryInputValue;
+  let countryInputValue = '';
   if (addressData?.country) {
-    countryInputValue = getCountryName(addressData?.country);
+    const countryName = getCountryName(addressData?.country);
+    countryInputValue = countryName || '';
   }
 
-  // eslint-disable-next-line max-lines-per-function
   const onClick = (): void => {
     getCustomerData().then(
       (result) => {
@@ -46,12 +46,12 @@ export function AddressCard(props: {
             showToast(ToastTypes.success, `Address successfully removed!`);
             handleDeleteButton();
           },
-          (error) => {
+          (error: Error) => {
             showToast(ToastTypes.error, error.message);
           },
         );
       },
-      (error) => {
+      (error: Error) => {
         console.log(error);
       },
     );

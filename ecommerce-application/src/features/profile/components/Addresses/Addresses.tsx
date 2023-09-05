@@ -59,7 +59,7 @@ export function Addresses(): React.ReactElement {
         setAddressesData(customerAdresses);
         setModalCreateAddressActive(false);
       },
-      (error) => {
+      (error: Error) => {
         console.log(error);
       },
     );
@@ -106,7 +106,7 @@ export function Addresses(): React.ReactElement {
         setAddressesData(customerAdresses);
         setModalActive(false);
       },
-      (error) => {
+      (error: Error) => {
         console.log(error);
       },
     );
@@ -151,7 +151,7 @@ export function Addresses(): React.ReactElement {
         );
         setAddressesData(customerAdresses);
       },
-      (error) => {
+      (error: Error) => {
         console.log(error);
       },
     );
@@ -159,7 +159,6 @@ export function Addresses(): React.ReactElement {
 
   // eslint-disable-next-line max-lines-per-function
   useEffect(() => {
-    // eslint-disable-next-line max-lines-per-function
     getCustomerData().then(
       (result) => {
         const customerData = result.body;
@@ -199,7 +198,7 @@ export function Addresses(): React.ReactElement {
         );
         setAddressesData(customerAdresses);
       },
-      (error) => {
+      (error: Error) => {
         console.log(error);
       },
     );

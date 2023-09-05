@@ -18,12 +18,9 @@ export function Product(props: {
 }): React.ReactElement {
   const navigate = useNavigate();
   const { categorySlug, subCategorySlug, slug } = props;
-  console.log('result', categorySlug, subCategorySlug, slug);
   const [modalActive, setModalActive] = useState(false);
   const [product, setProduct] = useState<ProductProjection>();
   const [isLoading, setIsLoading] = useState(true);
-
-  console.log('props', props);
 
   const productCard = useLocation();
 
@@ -39,14 +36,14 @@ export function Product(props: {
           navigate('/404');
         }
       },
-      (error) => {
+      (error: Error) => {
         console.log(error);
       },
     );
   }, [productCard.state, slug, navigate]);
 
   let price = 0;
-  let priceDiscounted = null;
+  let priceDiscounted: number | null = null;
   let productName = '';
   let trademark = '';
   let description = '';
