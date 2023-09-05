@@ -121,12 +121,31 @@ export function Catalog(props: {
           .map((filter: string): string => `"${filter}"`)
           .join(',')}`,
       );
-    if (сurrentFilters.lowerPrice && сurrentFilters.higherPrice)
+    if (сurrentFilters.lowerPrice && сurrentFilters.higherPrice) {
       filterQueryStrings.push(
         `variants.price.centAmount:range (${
-          сurrentFilters.lowerPrice * 100
-        } to ${сurrentFilters.higherPrice * 100})`,
+          +сurrentFilters.lowerPrice * 100
+        } to ${+сurrentFilters.higherPrice * 100})`,
       );
+    }
+    if (сurrentFilters.lowerPrice) {
+      filterQueryStrings.push(
+        `variants.price.centAmount:range (${
+          +сurrentFilters.lowerPrice * 100
+        } to 100000)`,
+      );
+    }
+    if (сurrentFilters.higherPrice) {
+      filterQueryStrings.push(
+        `variants.price.centAmount:range (0 to ${
+          +сurrentFilters.higherPrice * 100
+        })`,
+      );
+    }
+    if (!сurrentFilters.lowerPrice && !сurrentFilters.higherPrice) {
+      filterQueryStrings.push(`variants.price.centAmount:range (0 to 10000)`);
+    }
+
     if (сurrentFilters.sort) {
       sortQueryStrings.push(сurrentFilters.sort);
     }

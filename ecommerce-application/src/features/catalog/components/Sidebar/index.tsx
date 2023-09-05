@@ -36,8 +36,8 @@ export function CatalogSidebar(props: {
   const [categoryFilterProps, setCategoryFilterProps] = useState('');
   const [trademarkProps, setTrademarkProps] = useState(['']);
   const [originFilterProps, setoriginFilterProps] = useState(['']);
-  const [lowerPriceFilterProps, setLowerPriceFilterProps] = useState(0);
-  const [higherPriceFilterProps, setHigherPriceFilterProps] = useState(0);
+  const [lowerPriceFilterProps, setLowerPriceFilterProps] = useState('');
+  const [higherPriceFilterProps, setHigherPriceFilterProps] = useState('');
   const [sortProps, setSortProps] = useState('');
   const [searchProps, setSearchProps] = useState('');
   const [currentSearchString, setCurrentSearchString] = useState('');
@@ -88,28 +88,22 @@ export function CatalogSidebar(props: {
   const handleLowerPriceChange = (
     event: ChangeEvent<HTMLInputElement>,
   ): void => {
-    const currentPrice = +event.target.value;
+    const currentPrice = event.target.value;
     const regex = /[^0-9]/g;
 
-    if (
-      !`${currentPrice}`.match(regex) &&
-      currentPrice < higherPriceFilterProps
-    ) {
-      setLowerPriceFilterProps(currentPrice);
+    if (!`${currentPrice}`.match(regex)) {
+      setLowerPriceFilterProps(currentPrice.toString());
     }
   };
 
   const handleHigherPriceChange = (
     event: ChangeEvent<HTMLInputElement>,
   ): void => {
-    const currentPrice = +event.target.value;
+    const currentPrice = event.target.value;
     const regex = /[^0-9]/g;
 
-    if (
-      !`${currentPrice}`.match(regex) &&
-      currentPrice > lowerPriceFilterProps
-    ) {
-      setHigherPriceFilterProps(currentPrice);
+    if (!`${currentPrice}`.match(regex)) {
+      setHigherPriceFilterProps(currentPrice.toString());
     }
   };
 
@@ -205,11 +199,11 @@ export function CatalogSidebar(props: {
     </li>
   ));
 
-  const handleResetFilters = (): undefined => {
+  const handleResetFilters = (): void => {
     setTrademarkProps(['']);
     setoriginFilterProps(['']);
-    setLowerPriceFilterProps(0);
-    setHigherPriceFilterProps(0);
+    setLowerPriceFilterProps('');
+    setHigherPriceFilterProps('');
     setSortProps('');
     setSearchProps('');
     setCurrentSearchString('');
