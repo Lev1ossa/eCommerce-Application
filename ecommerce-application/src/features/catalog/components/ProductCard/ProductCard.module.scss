@@ -62,3 +62,16 @@
     background-color: var(--color-orange);
   }
 }
+.prices_container {
+  display: flex;
+  align-items: center;
+  column-gap: 5px;
+}
+.price_old {
+  align-self: start;
+  text-decoration: line-through;
+}
+.price_new {
+  font-size: 24px;
+  color: var(--color-error);
+}

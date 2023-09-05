@@ -252,6 +252,19 @@ export function CatalogSidebar(props: {
     });
   };
 
+  const handleResetFilters = (): void => {
+    setcurrentFilters({
+      category: '',
+      trademark: [],
+      originFilter: [],
+      lowerPrice: 0,
+      higherPrice: 0,
+      sort: '',
+      search: '',
+    });
+    categoryFilter({ ...currentFilters });
+  };
+
   return (
     <div style={{ display: 'flex' }}>
       <Sidebar
@@ -288,6 +301,13 @@ export function CatalogSidebar(props: {
             },
           }}
         >
+          <button
+            type="button"
+            className={styles.reset}
+            onClick={handleResetFilters}
+          >
+            Reset Filters
+          </button>
           <div className={styles.search}>
             <input
               className={styles.input}
