@@ -17,7 +17,7 @@ export function ProfileContent(): React.ReactElement {
   const navigate = useNavigate();
   const handleRedirect = (): void => {
     if (!isUserLoggedIn()) {
-      navigate('/');
+      navigate('/login');
     }
   };
 
