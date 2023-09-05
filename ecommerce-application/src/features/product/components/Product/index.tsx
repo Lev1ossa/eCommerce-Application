@@ -18,12 +18,9 @@ export function Product(props: {
 }): React.ReactElement {
   const navigate = useNavigate();
   const { categorySlug, subCategorySlug, slug } = props;
-  console.log('result', categorySlug, subCategorySlug, slug);
   const [modalActive, setModalActive] = useState(false);
   const [product, setProduct] = useState<ProductProjection>();
   const [isLoading, setIsLoading] = useState(true);
-
-  console.log('props', props);
 
   const productCard = useLocation();
 
