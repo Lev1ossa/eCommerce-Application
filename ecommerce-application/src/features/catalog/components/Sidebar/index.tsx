@@ -13,6 +13,7 @@ import Select, { SingleValue } from 'react-select';
 import { getCategories } from '../../../../api/requests';
 import { CustomCategory, ICurrentFilters } from '../../../../types/types';
 import styles from './Sidebar.module.scss';
+import { sortOptions } from '../../constants/constants';
 
 // eslint-disable-next-line max-lines-per-function
 export function CatalogSidebar(props: {
@@ -50,17 +51,6 @@ export function CatalogSidebar(props: {
       window.removeEventListener('resize', getWindowSize);
     };
   }, [width]);
-
-  const options = [
-    { value: 'price asc', label: 'price ↑' },
-    { value: 'price desc', label: 'price ↓' },
-    { value: 'name.en asc', label: 'name ↑' },
-    { value: 'name.en desc', label: 'name ↓' },
-    { value: 'variants.attributes.trademark asc', label: 'trademark ↑' },
-    { value: 'variants.attributes.trademark desc', label: 'trademark ↓' },
-    { value: 'variants.attributes.origin.key asc', label: 'origin ↑' },
-    { value: 'variants.attributes.origin.key desc', label: 'origin ↓' },
-  ];
 
   useEffect(() => {
     getCategories().then(
@@ -247,6 +237,7 @@ export function CatalogSidebar(props: {
       sort: option ? option.value : '',
     });
   };
+
   return (
     <div style={{ display: 'flex' }}>
       <Sidebar
@@ -292,7 +283,7 @@ export function CatalogSidebar(props: {
             <FiSearch className={styles.search_icon} />
           </div>
           <Select
-            options={options}
+            options={sortOptions}
             placeholder="sort..."
             className={styles.sort}
             onChange={handleSortChange}
