@@ -33,6 +33,23 @@ export function CatalogSidebar(props: {
     sort: '',
   });
   const [brandsList, setBrandsList] = useState<JSX.Element[]>([]);
+  const [collapsed, setCollapsed] = useState(false);
+  const [width, setWidth] = useState<number>();
+
+  const getWindowSize = (): void => {
+    setWidth(window.innerWidth);
+  };
+  useEffect(() => {
+    window.addEventListener('resize', getWindowSize);
+    if (width && width < 678) {
+      setCollapsed(true);
+    } else {
+      setCollapsed(false);
+    }
+    return () => {
+      window.removeEventListener('resize', getWindowSize);
+    };
+  }, [width]);
 
   const options = [
     { value: 'price asc', label: 'price' },
@@ -77,6 +94,7 @@ export function CatalogSidebar(props: {
         console.log(error);
       },
     );
+    if (window.innerWidth < 678) setCollapsed(true);
   }, []);
 
   // eslint-disable-next-line max-lines-per-function
@@ -228,6 +246,8 @@ export function CatalogSidebar(props: {
   return (
     <div style={{ display: 'flex' }}>
       <Sidebar
+        collapsed={collapsed}
+        collapsedWidth="130px"
         className={styles.sidebar}
         rootStyles={{
           [`.${sidebarClasses.container}`]: {
