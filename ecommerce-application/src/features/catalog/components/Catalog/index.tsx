@@ -55,8 +55,12 @@ export function Catalog(): React.ReactElement {
     ...args: ICurrentFilters[]
   ): Promise<void> => {
     setIsLoading(true);
-
+    const sortQueryStrings: string[] = [];
     const filterQueryStrings: string[] = [];
+    let searchQueryString = '';
+
+    console.log('args', args);
+
     if (args[0].category.length)
       filterQueryStrings.push(`categories.id: subtree("${args[0].category}")`);
     if (args[0].trademark.length)
@@ -77,11 +81,17 @@ export function Catalog(): React.ReactElement {
           args[0].higherPrice * 100
         })`,
       );
-    const sortQueryStrings: string[] = [];
-    if (args[0].sort) {
+    if (args[0].sort.length) {
       sortQueryStrings.push(args[0].sort);
     }
-    await getFilteredProductList(filterQueryStrings, sortQueryStrings).then(
+    if (args[0].search.length) {
+      searchQueryString = args[0].search;
+    }
+    await getFilteredProductList(
+      filterQueryStrings,
+      sortQueryStrings,
+      searchQueryString,
+    ).then(
       (result) => {
         setProducts(result.body.results);
         setIsLoading(false);

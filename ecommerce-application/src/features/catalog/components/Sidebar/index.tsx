@@ -12,8 +12,8 @@ import {
 import Select, { SingleValue } from 'react-select';
 import { getCategories } from '../../../../api/requests';
 import { CustomCategory, ICurrentFilters } from '../../../../types/types';
-import styles from './Sidebar.module.scss';
 import { sortOptions } from '../../constants/constants';
+import styles from './Sidebar.module.scss';
 
 // eslint-disable-next-line max-lines-per-function
 export function CatalogSidebar(props: {
@@ -32,6 +32,7 @@ export function CatalogSidebar(props: {
     lowerPrice: 0,
     higherPrice: 0,
     sort: '',
+    search: '',
   });
   const [brandsList, setBrandsList] = useState<JSX.Element[]>([]);
   const [collapsed, setCollapsed] = useState(false);
@@ -238,6 +239,18 @@ export function CatalogSidebar(props: {
     });
   };
 
+  const handleSearchChange = (query: string): void => {
+    const filters = {
+      ...currentFilters,
+      search: query.toLowerCase(),
+    };
+    categoryFilter({ ...filters });
+    setcurrentFilters({
+      ...currentFilters,
+      search: query.toLowerCase(),
+    });
+  };
+
   return (
     <div style={{ display: 'flex' }}>
       <Sidebar
@@ -279,8 +292,18 @@ export function CatalogSidebar(props: {
               className={styles.input}
               type="text"
               placeholder="search..."
+              value={currentFilters.search}
+              onChange={(e): void =>
+                setcurrentFilters({
+                  ...currentFilters,
+                  search: e.target.value.toLowerCase(),
+                })
+              }
             />
-            <FiSearch className={styles.search_icon} />
+            <FiSearch
+              className={styles.search_icon}
+              onClick={(): void => handleSearchChange(currentFilters.search)}
+            />
           </div>
           <Select
             options={sortOptions}

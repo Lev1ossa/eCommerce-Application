@@ -136,6 +136,7 @@ export interface ICurrentFilters {
   lowerPrice: number;
   higherPrice: number;
   sort: string;
+  search: string;
 }
 
 export interface ISortOption {
