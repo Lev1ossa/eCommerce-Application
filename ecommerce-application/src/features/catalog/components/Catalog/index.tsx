@@ -127,7 +127,7 @@ export function Catalog(props: {
           .map((filter: string): string => `"${filter}"`)
           .join(',')}`,
       );
-    if (сurrentFilters.higherPrice >= 0 && сurrentFilters.lowerPrice >= 0)
+    if (сurrentFilters.higherPrice && сurrentFilters.lowerPrice)
       filterQueryStrings.push(
         `variants.price.centAmount:range (${
           сurrentFilters.lowerPrice * 100
