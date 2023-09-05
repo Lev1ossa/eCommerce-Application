@@ -68,7 +68,9 @@ export function AddressCard(props: {
       </div>
       <div className={styles.info_block}>
         <div className={styles.label}>Country:</div>
-        <div className={styles.text}>{countryInputValue}</div>
+        <div className={`${styles.text} ${styles.country}`}>
+          {countryInputValue}
+        </div>
       </div>
       <div className={styles.info_block}>
         <div className={styles.label}>Postal code:</div>

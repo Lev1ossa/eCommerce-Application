@@ -81,9 +81,15 @@
     padding: 5px 0 5px 5px;
     border: 2px solid var(--color-background-main-block);
     height: 30px;
+    word-wrap: unset;
     @media screen and (max-width: $tablet-width) {
         font-size: 14px;
     }
+}
+
+.country {
+    padding: 8px 0 5px 5px;
+    font-size: 11px;
 }
 
 .input{
