@@ -333,7 +333,7 @@ export function CatalogSidebar(props: {
               </li>
               <li className={styles.brand}>
                 <ul className={styles.brand_list}>
-                  <strong>originFilter</strong>
+                  <strong>Origin</strong>
                   <li>
                     <input
                       type="checkbox"
