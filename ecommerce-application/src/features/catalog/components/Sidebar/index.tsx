@@ -1,4 +1,3 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
 import { FiSearch } from 'react-icons/fi';
 import {
   CSSObject,
@@ -10,39 +9,128 @@ import {
   sidebarClasses,
 } from 'react-pro-sidebar';
 import Select, { SingleValue } from 'react-select';
-import { getCategories } from '../../../../api/requests';
-import { CustomCategory, ICurrentFilters } from '../../../../types/types';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { sortOptions } from '../../constants/constants';
 import styles from './Sidebar.module.scss';
+import { CustomCategory, ICurrentFilters } from '../../../../types/types';
+import { getStartCategoryID } from '../../constants/utils';
 
 // eslint-disable-next-line max-lines-per-function
 export function CatalogSidebar(props: {
-  categoryFilter: (...args: ICurrentFilters[]) => Promise<void>;
+  setcurrentFilters: React.Dispatch<
+    React.SetStateAction<Partial<ICurrentFilters>>
+  >;
+  productCategories: CustomCategory[];
   brands: string[];
+  categorySlug: string | undefined;
+  subCategorySlug: string | undefined;
 }): React.ReactElement {
-  const { categoryFilter, brands } = props;
-  const [productCategories, setProductCategories] = useState<CustomCategory[]>(
-    [],
-  );
-  const [categoriesList, setCategoriesList] = useState<JSX.Element[]>([]);
-  const [currentFilters, setcurrentFilters] = useState<ICurrentFilters>({
-    category: '',
-    trademark: [],
-    originFilter: [],
-    lowerPrice: 0,
-    higherPrice: 0,
-    sort: '',
-    search: '',
-  });
-  const [brandsList, setBrandsList] = useState<JSX.Element[]>([]);
+  const {
+    productCategories,
+    brands,
+    setcurrentFilters,
+    categorySlug,
+    subCategorySlug,
+  } = props;
+  const [categoryFilterProps, setCategoryFilterProps] = useState('');
+  const [trademarkProps, setTrademarkProps] = useState(['']);
+  const [originFilterProps, setoriginFilterProps] = useState(['']);
+  const [lowerPriceFilterProps, setLowerPriceFilterProps] = useState(0);
+  const [higherPriceFilterProps, setHigherPriceFilterProps] = useState(0);
+  const [sortProps, setSortProps] = useState('');
+  const [searchProps, setSearchProps] = useState('');
+  const [currentSearchString, setCurrentSearchString] = useState('');
   const [collapsed, setCollapsed] = useState(false);
-  const [width, setWidth] = useState<number>();
-  const [localChecked, setLocalChecked] = useState(false);
-  const [foreignChecked, setForeignChecked] = useState(false);
+  const [width, setWidth] = useState(0);
+  const [componentKey, setComponentKey] = useState(0);
+
+  useEffect(() => {
+    setCategoryFilterProps(
+      getStartCategoryID(productCategories, categorySlug, subCategorySlug),
+    );
+  }, [productCategories, categorySlug, subCategorySlug]);
+
+  useEffect(() => {
+    if (window.innerWidth < 678) {
+      setWidth(window.innerWidth);
+    }
+  }, []);
+
+  const handleFiltersClick = (categoryID: string): void => {
+    setCategoryFilterProps(`${categoryID}`);
+  };
+
+  const handleBrandsClick = (
+    event: ChangeEvent<HTMLInputElement>,
+    value: string,
+  ): void => {
+    if (event.target.checked) {
+      setTrademarkProps([...trademarkProps, value]);
+    } else {
+      setTrademarkProps(trademarkProps.filter((filter) => filter !== value));
+    }
+  };
+
+  const handleOriginChange = (
+    event: ChangeEvent<HTMLInputElement>,
+    value: string,
+  ): void => {
+    if (event.target.checked) {
+      setoriginFilterProps([...originFilterProps, value]);
+    } else {
+      setoriginFilterProps(
+        originFilterProps.filter((filter) => filter !== value),
+      );
+    }
+  };
+
+  const handleLowerPriceChange = (
+    event: ChangeEvent<HTMLInputElement>,
+  ): void => {
+    const currentPrice = +event.target.value;
+    const regex = /[^0-9]/g;
+
+    if (
+      !`${currentPrice}`.match(regex) &&
+      currentPrice < higherPriceFilterProps
+    ) {
+      setLowerPriceFilterProps(currentPrice);
+    }
+  };
+
+  const handleHigherPriceChange = (
+    event: ChangeEvent<HTMLInputElement>,
+  ): void => {
+    const currentPrice = +event.target.value;
+    const regex = /[^0-9]/g;
+
+    if (
+      !`${currentPrice}`.match(regex) &&
+      currentPrice > lowerPriceFilterProps
+    ) {
+      setHigherPriceFilterProps(currentPrice);
+    }
+  };
+
+  const handleSortChange = (
+    option: SingleValue<{ value: string; label: string }>,
+  ): void => {
+    setSortProps(option ? option.value : '');
+  };
+
+  const handleSearchInput = (searchValue: string): void => {
+    setCurrentSearchString(searchValue);
+  };
+
+  const handleSearchClick = (): void => {
+    setSearchProps(currentSearchString);
+  };
 
   const getWindowSize = (): void => {
     setWidth(window.innerWidth);
   };
+
   useEffect(() => {
     window.addEventListener('resize', getWindowSize);
     if (width && width < 678) {
@@ -56,233 +144,80 @@ export function CatalogSidebar(props: {
   }, [width]);
 
   useEffect(() => {
-    getCategories().then(
-      (result) => {
-        const categories: CustomCategory[] = result.body.results.map(
-          (category) => {
-            const newCategory: CustomCategory = {
-              id: category.id,
-              parentID: category.parent?.id,
-              key: category.key,
-              slug: category.slug.en,
-              name: category.name.en,
-              children: [],
-            };
-            return newCategory;
-          },
-        );
-        const categoriesTree = categories.filter(
-          (category) => !category.parentID,
-        );
-        categories
-          .filter((category) => category.parentID)
-          .forEach((subcategory) => {
-            const parentIdx = categoriesTree.findIndex(
-              (item) => item.id === subcategory.parentID,
-            );
-            if (parentIdx !== -1) {
-              categoriesTree[parentIdx].children.push(subcategory);
-            }
-          });
-        console.log('Should return categories tree!', categoriesTree);
-        setProductCategories(categoriesTree);
-      },
-      (error) => {
-        console.log(error);
-      },
-    );
-    if (window.innerWidth < 678) setCollapsed(true);
-  }, []);
-
-  // eslint-disable-next-line max-lines-per-function
-  useEffect(() => {
-    const handleFiltersClick = (filter: string, value: string): void => {
-      setcurrentFilters({
-        ...currentFilters,
-        [filter]: value,
-      });
-      const filters = {
-        ...currentFilters,
-        [filter]: value,
-      };
-      categoryFilter({ ...filters });
-    };
-    if (productCategories) {
-      setCategoriesList(
-        // eslint-disable-next-line max-lines-per-function
-        productCategories.map((category) => (
-          <SubMenu
-            key={category.key}
-            label={category.name}
-            onClick={(): void => handleFiltersClick('category', category.id)}
-          >
-            {category.children.map((child) => (
-              <MenuItem
-                key={child.key}
-                onClick={(): void => handleFiltersClick('category', child.id)}
-              >
-                {child.name.replace('_', ' ')}
-              </MenuItem>
-            ))}
-          </SubMenu>
-        )),
-      );
-    }
-    const handleBrandsClick = (
-      event: ChangeEvent<HTMLInputElement>,
-      value: string,
-    ): void => {
-      if (event.target.checked) {
-        setcurrentFilters({
-          ...currentFilters,
-          trademark: [...currentFilters.trademark, value],
-        });
-        const filters = {
-          ...currentFilters,
-          trademark: [...currentFilters.trademark, value],
-        };
-        categoryFilter({ ...filters });
-      } else {
-        const filters = {
-          ...currentFilters,
-          trademark: [
-            ...currentFilters.trademark.filter((filter) => filter !== value),
-          ],
-        };
-
-        categoryFilter({ ...filters });
-
-        setcurrentFilters({
-          ...currentFilters,
-          trademark: [
-            ...currentFilters.trademark.filter((filter) => filter !== value),
-          ],
-        });
-      }
-    };
-    setBrandsList(
-      brands.map((brand: string) => (
-        <li key={brand}>
-          <input
-            type="checkbox"
-            onChange={(event): void => handleBrandsClick(event, brand)}
-          />
-          <span className="text">{brand}</span>
-        </li>
-      )),
-    );
-  }, [productCategories, categoryFilter, currentFilters, brands]);
-
-  // eslint-disable-next-line max-lines-per-function
-  const handleOriginChange = (
-    event: ChangeEvent<HTMLInputElement>,
-    value: string,
-  ): void => {
-    if (value === 'local' && event.target.checked) {
-      setLocalChecked(true);
-    } else if (value === 'local' && !event.target.checked) {
-      setLocalChecked(false);
-    } else if (value === 'foreign' && event.target.checked) {
-      setForeignChecked(true);
-    } else if (value === 'foreign' && !event.target.checked) {
-      setForeignChecked(false);
-    }
-    if (event.target.checked) {
-      const filters = {
-        ...currentFilters,
-        originFilter: [...currentFilters.originFilter, value],
-      };
-      categoryFilter({ ...filters });
-
-      setcurrentFilters({
-        ...currentFilters,
-        originFilter: [...currentFilters.originFilter, value],
-      });
-    } else {
-      const filters = {
-        ...currentFilters,
-        originFilter: [
-          ...currentFilters.originFilter.filter((filter) => filter !== value),
-        ],
-      };
-
-      categoryFilter({ ...filters });
-
-      setcurrentFilters({
-        ...currentFilters,
-        originFilter: [
-          ...currentFilters.originFilter.filter((filter) => filter !== value),
-        ],
-      });
-    }
-  };
-
-  const handlePriceChange = (
-    event: ChangeEvent<HTMLInputElement>,
-    name: string,
-  ): void => {
-    const regex = /[^0-9]/g;
-    if (!event.target.value.match(regex)) {
-      const filters = {
-        ...currentFilters,
-        [name]: +event.target.value,
-      };
-      if (filters.lowerPrice < filters.higherPrice) {
-        categoryFilter({ ...filters });
-      }
-
-      setcurrentFilters({
-        ...currentFilters,
-        [name]: +event.target.value,
-      });
-    }
-  };
-
-  const handleSortChange = (
-    option: SingleValue<{ value: string; label: string }>,
-  ): void => {
-    const filters = {
-      ...currentFilters,
-      sort: option ? option.value : '',
-    };
-    categoryFilter({ ...filters });
     setcurrentFilters({
-      ...currentFilters,
-      sort: option ? option.value : '',
+      category: categoryFilterProps,
+      trademark: trademarkProps,
+      originFilter: originFilterProps,
+      lowerPrice: lowerPriceFilterProps,
+      higherPrice: higherPriceFilterProps,
+      sort: sortProps,
+      search: searchProps,
     });
-  };
+  }, [
+    setcurrentFilters,
+    categoryFilterProps,
+    trademarkProps,
+    originFilterProps,
+    lowerPriceFilterProps,
+    higherPriceFilterProps,
+    sortProps,
+    searchProps,
+  ]);
 
-  const handleSearchChange = (query: string): void => {
-    const filters = {
-      ...currentFilters,
-      search: query.toLowerCase(),
-    };
-    categoryFilter({ ...filters });
-    setcurrentFilters({
-      ...currentFilters,
-      search: query.toLowerCase(),
-    });
-  };
+  const categories = productCategories.map((category) => (
+    <Link to={`/catalog/${category.slug}`} key={category.id}>
+      <SubMenu
+        active={
+          window.location.pathname === `/catalog/${category.slug}` ||
+          window.location.pathname === `/catalog/${category.slug}/`
+        }
+        key={category.key}
+        label={category.name}
+        onClick={(): void => handleFiltersClick(category.id)}
+      >
+        {category.children.map((child) => (
+          <Link to={`/catalog/${category.slug}/${child.slug}`} key={child.id}>
+            <MenuItem
+              active={
+                window.location.pathname ===
+                  `/catalog/${category.slug}/${child.slug}` ||
+                window.location.pathname ===
+                  `/catalog/${category.slug}/${child.slug}/`
+              }
+              key={child.key}
+              onClick={(): void => handleFiltersClick(child.id)}
+            >
+              {child.name.replace('_', ' ')}
+            </MenuItem>
+          </Link>
+        ))}
+      </SubMenu>
+    </Link>
+  ));
+
+  const brandsList = brands.map((brand: string) => (
+    <li key={brand}>
+      <input
+        type="checkbox"
+        onChange={(event): void => handleBrandsClick(event, brand)}
+      />
+      <span className="text">{brand}</span>
+    </li>
+  ));
 
   const handleResetFilters = (): undefined => {
-    setLocalChecked(false);
-    setForeignChecked(false);
-    setBrandsList([]);
-    const filters = {
-      category: currentFilters.category,
-      trademark: [],
-      originFilter: [],
-      lowerPrice: 0,
-      higherPrice: 0,
-      sort: currentFilters.sort,
-      search: currentFilters.search,
-    };
-    setcurrentFilters(filters);
-    categoryFilter(filters);
+    setTrademarkProps(['']);
+    setoriginFilterProps(['']);
+    setLowerPriceFilterProps(0);
+    setHigherPriceFilterProps(0);
+    setSortProps('');
+    setSearchProps('');
+    setCurrentSearchString('');
+    setComponentKey(componentKey + 1);
   };
 
   return (
-    <div style={{ display: 'flex' }}>
+    <div key={componentKey} style={{ display: 'flex' }}>
       <Sidebar
         collapsed={collapsed}
         collapsedWidth="130px"
@@ -329,17 +264,13 @@ export function CatalogSidebar(props: {
               className={styles.input}
               type="text"
               placeholder="search..."
-              value={currentFilters.search}
               onChange={(e): void =>
-                setcurrentFilters({
-                  ...currentFilters,
-                  search: e.target.value.toLowerCase(),
-                })
+                handleSearchInput(e.target.value.toLowerCase())
               }
             />
             <FiSearch
               className={styles.search_icon}
-              onClick={(): void => handleSearchChange(currentFilters.search)}
+              onClick={(): void => handleSearchClick()}
             />
           </div>
           <Select
@@ -376,7 +307,7 @@ export function CatalogSidebar(props: {
             }}
           />
 
-          {categoriesList}
+          {categories}
           <SubMenu label="Filters" defaultOpen>
             <ul className={styles.list}>
               <li className={styles.price}>
@@ -384,20 +315,14 @@ export function CatalogSidebar(props: {
                 <span>from</span>
                 <input
                   type="text"
-                  value={currentFilters.lowerPrice}
                   placeholder="min"
-                  onChange={(event): void =>
-                    handlePriceChange(event, 'lowerPrice')
-                  }
+                  onChange={(event): void => handleLowerPriceChange(event)}
                 />
                 <span>to</span>
                 <input
                   type="text"
                   placeholder="max"
-                  value={currentFilters.higherPrice}
-                  onChange={(event): void =>
-                    handlePriceChange(event, 'higherPrice')
-                  }
+                  onChange={(event): void => handleHigherPriceChange(event)}
                 />
               </li>
               <li className={styles.brand}>
@@ -412,7 +337,6 @@ export function CatalogSidebar(props: {
                   <li>
                     <input
                       type="checkbox"
-                      checked={localChecked}
                       onChange={(event): void =>
                         handleOriginChange(event, 'local')
                       }
@@ -422,7 +346,6 @@ export function CatalogSidebar(props: {
                   <li>
                     <input
                       type="checkbox"
-                      checked={foreignChecked}
                       onChange={(event): void =>
                         handleOriginChange(event, 'foreign')
                       }

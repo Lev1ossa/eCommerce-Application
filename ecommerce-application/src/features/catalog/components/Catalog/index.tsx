@@ -3,19 +3,30 @@ import { useEffect, useState } from 'react';
 import {
   getFilteredProductList,
   getProductsList,
+  getCategories,
 } from '../../../../api/requests';
 import { Loader } from '../../../../components/Loader';
-import { ICurrentFilters } from '../../../../types/types';
+import { CustomCategory, ICurrentFilters } from '../../../../types/types';
 import { ProductCard } from '../ProductCard';
 import { CatalogSidebar } from '../Sidebar';
 import styles from './Catalog.module.scss';
+import { Breadcrumb } from '../../../breadcrumb/components/Breadcrumps/Breadcrumb';
 
 // eslint-disable-next-line max-lines-per-function
-export function Catalog(): React.ReactElement {
+export function Catalog(props: {
+  categorySlug: string | undefined;
+  subCategorySlug: string | undefined;
+}): React.ReactElement {
+  const { categorySlug, subCategorySlug } = props;
   const [products, setProducts] = useState<ProductProjection[]>([]);
-  const [catalog, setCatalog] = useState<JSX.Element[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [brands, setBrands] = useState<string[]>([]);
+  const [productCategories, setProductCategories] = useState<CustomCategory[]>(
+    [],
+  );
+  const [currentFilters, setcurrentFilters] = useState<
+    Partial<ICurrentFilters>
+  >({});
 
   const getBrandsFromProducts = (productList: ProductProjection[]): void => {
     const brandsList = productList.map((product: ProductProjection) =>
@@ -40,50 +51,87 @@ export function Catalog(): React.ReactElement {
   }, []);
 
   useEffect(() => {
-    const data = products.map((product) => (
-      <li key={product.id} className={styles.item}>
-        <ProductCard product={product} />
-      </li>
-    ));
-    if (data.length) {
-      setCatalog(data);
-    } else setCatalog([<h1 key={0}>No Products Found</h1>]);
-  }, [products]);
+    getCategories().then(
+      (result) => {
+        const categories: CustomCategory[] = result.body.results.map(
+          (category) => {
+            const newCategory: CustomCategory = {
+              id: category.id,
+              parentID: category.parent?.id,
+              key: category.key,
+              slug: category.slug.en,
+              name: category.name.en,
+              children: [],
+            };
+            return newCategory;
+          },
+        );
+        const categoriesTree = categories.filter(
+          (category) => !category.parentID,
+        );
+        categories
+          .filter((category) => category.parentID)
+          .forEach((subcategory) => {
+            const parentIdx = categoriesTree.findIndex(
+              (item) => item.id === subcategory.parentID,
+            );
+            if (parentIdx !== -1) {
+              categoriesTree[parentIdx].children.push(subcategory);
+            }
+          });
+        setProductCategories(categoriesTree);
+        setIsLoading(false);
+      },
+      (error) => {
+        console.log(error);
+      },
+    );
+  }, []);
+
+  const catalog = products
+    ? products.map((product) => (
+        <li key={product.id} className={styles.item}>
+          <ProductCard product={product} />
+        </li>
+      ))
+    : [<h1 key={0}>No Products Found</h1>];
 
   // eslint-disable-next-line max-lines-per-function
   const getFilteredProducts = async (
-    ...args: ICurrentFilters[]
+    сurrentFilters: Partial<ICurrentFilters>,
   ): Promise<void> => {
     setIsLoading(true);
     const sortQueryStrings: string[] = [];
     const filterQueryStrings: string[] = [];
     let searchQueryString = '';
 
-    if (args[0].category.length)
-      filterQueryStrings.push(`categories.id: subtree("${args[0].category}")`);
-    if (args[0].trademark.length)
+    if (сurrentFilters.category)
       filterQueryStrings.push(
-        `variants.attributes.trademark:${args[0].trademark
+        `categories.id: subtree("${сurrentFilters.category}")`,
+      );
+    if (сurrentFilters.trademark && сurrentFilters.trademark.join(''))
+      filterQueryStrings.push(
+        `variants.attributes.trademark:${сurrentFilters.trademark
           .map((filter: string): string => `"${filter}"`)
           .join(',')}`,
       );
-    if (args[0].originFilter.length)
+    if (сurrentFilters.originFilter && сurrentFilters.originFilter.join(''))
       filterQueryStrings.push(
-        `variants.attributes.origin.key:${args[0].originFilter
+        `variants.attributes.origin.key:${сurrentFilters.originFilter
           .map((filter: string): string => `"${filter}"`)
           .join(',')}`,
       );
-    if (args[0].lowerPrice && args[0].higherPrice)
+    if (сurrentFilters.lowerPrice && сurrentFilters.higherPrice)
       filterQueryStrings.push(
-        `variants.price.centAmount:range (${args[0].lowerPrice * 100} to ${
-          args[0].higherPrice * 100
-        })`,
+        `variants.price.centAmount:range (${
+          сurrentFilters.lowerPrice * 100
+        } to ${сurrentFilters.higherPrice * 100})`,
       );
-    if (args[0].sort.length) {
-      sortQueryStrings.push(args[0].sort);
+    if (сurrentFilters.sort) {
+      sortQueryStrings.push(сurrentFilters.sort);
     }
-    if (args[0].search.length) {
-      searchQueryString = args[0].search;
+    if (сurrentFilters.search) {
+      searchQueryString = сurrentFilters.search;
     }
     await getFilteredProductList(
       filterQueryStrings,
@@ -100,10 +148,26 @@ export function Catalog(): React.ReactElement {
     );
   };
 
+  useEffect(() => {
+    getFilteredProducts(currentFilters);
+  }, [currentFilters]);
+
   return (
-    <div className={styles.catalog}>
-      <CatalogSidebar categoryFilter={getFilteredProducts} brands={brands} />
-      <ul className={styles.grid}>{!isLoading ? catalog : <Loader />}</ul>
-    </div>
+    <>
+      <Breadcrumb
+        categorySlug={categorySlug}
+        subCategorySlug={subCategorySlug}
+      />
+      <div className={styles.catalog}>
+        <CatalogSidebar
+          setcurrentFilters={setcurrentFilters}
+          productCategories={productCategories}
+          brands={brands}
+          categorySlug={categorySlug}
+          subCategorySlug={subCategorySlug}
+        />
+        <ul className={styles.grid}>{!isLoading ? catalog : <Loader />}</ul>
+      </div>
+    </>
   );
 }
