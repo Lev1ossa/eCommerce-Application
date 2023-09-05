@@ -27,10 +27,6 @@ export function Product(props: {
 
   const productCard = useLocation();
 
-  console.log(
-    `BreadCrumb template: ${categorySlug} > ${subCategorySlug} > ${slug}`,
-  );
-
   useEffect(() => {
     getProductBySlug(slug).then(
       (result) => {
