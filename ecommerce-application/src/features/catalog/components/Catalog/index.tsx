@@ -24,9 +24,15 @@ export function Catalog(props: {
   const [productCategories, setProductCategories] = useState<CustomCategory[]>(
     [],
   );
-  const [currentFilters, setcurrentFilters] = useState<
-    Partial<ICurrentFilters>
-  >({});
+  const [currentFilters, setcurrentFilters] = useState<ICurrentFilters>({
+    category: '',
+    trademark: [],
+    originFilter: [],
+    lowerPrice: 0,
+    higherPrice: 0,
+    sort: '',
+    search: '',
+  });
 
   const getBrandsFromProducts = (productList: ProductProjection[]): void => {
     const brandsList = productList.map((product: ProductProjection) =>
@@ -98,7 +104,7 @@ export function Catalog(props: {
 
   // eslint-disable-next-line max-lines-per-function
   const getFilteredProducts = async (
-    сurrentFilters: Partial<ICurrentFilters>,
+    сurrentFilters: ICurrentFilters,
   ): Promise<void> => {
     setIsLoading(true);
     const sortQueryStrings: string[] = [];
@@ -121,7 +127,7 @@ export function Catalog(props: {
           .map((filter: string): string => `"${filter}"`)
           .join(',')}`,
       );
-    if (сurrentFilters.lowerPrice && сurrentFilters.higherPrice)
+    if (сurrentFilters.higherPrice >= 0 && сurrentFilters.lowerPrice >= 0)
       filterQueryStrings.push(
         `variants.price.centAmount:range (${
           сurrentFilters.lowerPrice * 100
@@ -142,7 +148,7 @@ export function Catalog(props: {
         setProducts(result.body.results);
         setIsLoading(false);
       },
-      (error: Error) => {
+      (error) => {
         console.log(error);
       },
     );

@@ -18,9 +18,7 @@ import { getStartCategoryID } from '../../constants/utils';
 
 // eslint-disable-next-line max-lines-per-function
 export function CatalogSidebar(props: {
-  setcurrentFilters: React.Dispatch<
-    React.SetStateAction<Partial<ICurrentFilters>>
-  >;
+  setcurrentFilters: React.Dispatch<React.SetStateAction<ICurrentFilters>>;
   productCategories: CustomCategory[];
   brands: string[];
   categorySlug: string | undefined;
