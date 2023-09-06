@@ -272,13 +272,6 @@ export function CatalogSidebar(props: {
             },
           }}
         >
-          <button
-            type="button"
-            className={styles.reset}
-            onClick={handleResetFilters}
-          >
-            Reset Filters
-          </button>
           <div className={styles.search}>
             <input
               className={styles.input}
@@ -376,6 +369,13 @@ export function CatalogSidebar(props: {
               </li>
             </ul>
           </SubMenu>
+          <button
+            type="button"
+            className={styles.reset}
+            onClick={handleResetFilters}
+          >
+            Reset Filters
+          </button>
         </Menu>
       </Sidebar>
     </div>
