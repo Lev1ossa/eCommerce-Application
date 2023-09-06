@@ -163,6 +163,7 @@ export function Catalog(props: {
       },
       (error: Error) => {
         console.log(error);
+        setIsLoading(false);
       },
     );
   };

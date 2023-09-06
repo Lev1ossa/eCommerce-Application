@@ -10,7 +10,7 @@ import {
 } from 'react-pro-sidebar';
 import Select, { SingleValue } from 'react-select';
 import { ChangeEvent, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { sortOptions } from '../../constants/constants';
 import styles from './Sidebar.module.scss';
 import { CustomCategory, ICurrentFilters } from '../../../../types/types';
@@ -33,6 +33,7 @@ export function CatalogSidebar(props: {
     categorySlug,
     subCategorySlug,
   } = props;
+  const navigate = useNavigate();
   const [categoryFilterProps, setCategoryFilterProps] = useState('');
   const [trademarkProps, setTrademarkProps] = useState(['']);
   const [originFilterProps, setoriginFilterProps] = useState(['']);
@@ -44,6 +45,10 @@ export function CatalogSidebar(props: {
   const [collapsed, setCollapsed] = useState(false);
   const [width, setWidth] = useState(0);
   const [componentKey, setComponentKey] = useState(0);
+
+  const handleNavigate = (path: string): void => {
+    navigate(path);
+  };
 
   useEffect(() => {
     setCategoryFilterProps(
@@ -57,8 +62,12 @@ export function CatalogSidebar(props: {
     }
   }, []);
 
-  const handleFiltersClick = (categoryID: string): void => {
+  const handleFiltersClick = (
+    categoryID: string,
+    redirectPath: string,
+  ): void => {
     setCategoryFilterProps(`${categoryID}`);
+    handleNavigate(redirectPath);
   };
 
   const handleBrandsClick = (
@@ -89,10 +98,15 @@ export function CatalogSidebar(props: {
     event: ChangeEvent<HTMLInputElement>,
   ): void => {
     const currentPrice = event.target.value;
-    const regex = /[^0-9]/g;
+    const regex = /[^0-9.,]/g;
+    const currentPriceAsNumber = currentPrice.replace(',', '.');
 
-    if (!`${currentPrice}`.match(regex)) {
-      setLowerPriceFilterProps(currentPrice.toString());
+    if (
+      (!`${currentPrice}`.match(regex) && +currentPriceAsNumber) ||
+      currentPriceAsNumber === '' ||
+      currentPriceAsNumber === '0'
+    ) {
+      setLowerPriceFilterProps(currentPriceAsNumber.toString());
     }
   };
 
@@ -100,10 +114,15 @@ export function CatalogSidebar(props: {
     event: ChangeEvent<HTMLInputElement>,
   ): void => {
     const currentPrice = event.target.value;
-    const regex = /[^0-9]/g;
+    const regex = /[^0-9.,]/g;
+    const currentPriceAsNumber = currentPrice.replace(',', '.');
 
-    if (!`${currentPrice}`.match(regex)) {
-      setHigherPriceFilterProps(currentPrice.toString());
+    if (
+      (!`${currentPrice}`.match(regex) && +currentPriceAsNumber) ||
+      currentPriceAsNumber === '' ||
+      currentPriceAsNumber === '0'
+    ) {
+      setHigherPriceFilterProps(currentPriceAsNumber.toString());
     }
   };
 
@@ -159,34 +178,41 @@ export function CatalogSidebar(props: {
   ]);
 
   const categories = productCategories.map((category) => (
-    <Link to={`/catalog/${category.slug}`} key={category.id}>
-      <SubMenu
-        active={
-          window.location.pathname === `/catalog/${category.slug}` ||
-          window.location.pathname === `/catalog/${category.slug}/`
-        }
-        key={category.key}
-        label={category.name}
-        onClick={(): void => handleFiltersClick(category.id)}
-      >
-        {category.children.map((child) => (
-          <Link to={`/catalog/${category.slug}/${child.slug}`} key={child.id}>
-            <MenuItem
-              active={
-                window.location.pathname ===
-                  `/catalog/${category.slug}/${child.slug}` ||
-                window.location.pathname ===
-                  `/catalog/${category.slug}/${child.slug}/`
-              }
-              key={child.key}
-              onClick={(): void => handleFiltersClick(child.id)}
-            >
-              {child.name.replace('_', ' ')}
-            </MenuItem>
-          </Link>
-        ))}
-      </SubMenu>
-    </Link>
+    // <Link to={`/catalog/${category.slug}`} key={category.id}>
+    <SubMenu
+      active={
+        window.location.pathname === `/catalog/${category.slug}` ||
+        window.location.pathname === `/catalog/${category.slug}/`
+      }
+      key={category.key}
+      label={category.name}
+      onClick={(): void =>
+        handleFiltersClick(category.id, `/catalog/${category.slug}`)
+      }
+    >
+      {category.children.map((child) => (
+        // <Link to={`/catalog/${category.slug}/${child.slug}`} key={child.id}>
+        <MenuItem
+          active={
+            window.location.pathname ===
+              `/catalog/${category.slug}/${child.slug}` ||
+            window.location.pathname ===
+              `/catalog/${category.slug}/${child.slug}/`
+          }
+          key={child.key}
+          onClick={(): void =>
+            handleFiltersClick(
+              child.id,
+              `/catalog/${category.slug}/${child.slug}`,
+            )
+          }
+        >
+          {child.name.replace('_', ' ')}
+        </MenuItem>
+        /* </Link> */
+      ))}
+    </SubMenu>
+    // </Link>
   ));
 
   const brandsList = brands.map((brand: string) => (
