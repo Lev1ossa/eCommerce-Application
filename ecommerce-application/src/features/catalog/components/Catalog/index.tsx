@@ -98,40 +98,55 @@ export function Catalog(props: {
 
   // eslint-disable-next-line max-lines-per-function
   const getFilteredProducts = async (
-    сurrentFilters: Partial<ICurrentFilters>,
+    filters: Partial<ICurrentFilters>,
   ): Promise<void> => {
     setIsLoading(true);
     const sortQueryStrings: string[] = [];
     const filterQueryStrings: string[] = [];
     let searchQueryString = '';
 
-    if (сurrentFilters.category)
+    if (filters.category)
+      filterQueryStrings.push(`categories.id: subtree("${filters.category}")`);
+    if (filters.trademark && filters.trademark.join(''))
       filterQueryStrings.push(
-        `categories.id: subtree("${сurrentFilters.category}")`,
-      );
-    if (сurrentFilters.trademark && сurrentFilters.trademark.join(''))
-      filterQueryStrings.push(
-        `variants.attributes.trademark:${сurrentFilters.trademark
+        `variants.attributes.trademark:${filters.trademark
           .map((filter: string): string => `"${filter}"`)
           .join(',')}`,
       );
-    if (сurrentFilters.originFilter && сurrentFilters.originFilter.join(''))
+    if (filters.originFilter && filters.originFilter.join(''))
       filterQueryStrings.push(
-        `variants.attributes.origin.key:${сurrentFilters.originFilter
+        `variants.attributes.origin.key:${filters.originFilter
           .map((filter: string): string => `"${filter}"`)
           .join(',')}`,
       );
-    if (сurrentFilters.lowerPrice && сurrentFilters.higherPrice)
+    if (filters.lowerPrice && filters.higherPrice) {
+      filterQueryStrings.push(
+        `variants.price.centAmount:range (${+filters.lowerPrice * 100} to ${
+          +filters.higherPrice * 100
+        })`,
+      );
+    }
+    if (filters.lowerPrice) {
       filterQueryStrings.push(
         `variants.price.centAmount:range (${
-          сurrentFilters.lowerPrice * 100
-        } to ${сurrentFilters.higherPrice * 100})`,
+          +filters.lowerPrice * 100
+        } to 100000)`,
       );
-    if (сurrentFilters.sort) {
-      sortQueryStrings.push(сurrentFilters.sort);
     }
-    if (сurrentFilters.search) {
-      searchQueryString = сurrentFilters.search;
+    if (filters.higherPrice) {
+      filterQueryStrings.push(
+        `variants.price.centAmount:range (0 to ${+filters.higherPrice * 100})`,
+      );
+    }
+    if (!filters.lowerPrice && !filters.higherPrice) {
+      filterQueryStrings.push(`variants.price.centAmount:range (0 to 10000)`);
+    }
+
+    if (filters.sort) {
+      sortQueryStrings.push(filters.sort);
+    }
+    if (filters.search) {
+      searchQueryString = filters.search;
     }
     await getFilteredProductList(
       filterQueryStrings,
@@ -144,6 +159,7 @@ export function Catalog(props: {
       },
       (error: Error) => {
         console.log(error);
+        setIsLoading(false);
       },
     );
   };

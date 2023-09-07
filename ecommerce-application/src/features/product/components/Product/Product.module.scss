@@ -107,14 +107,7 @@
 
 .price_old {
   position: relative;
-  &:before {
-    content: "";
-    position: absolute;
-    top: 13px;
-    background-color: black;
-    width: 100%;
-    height: 2px;
-  }
+  text-decoration: line-through;
 }
 
 .price_new {

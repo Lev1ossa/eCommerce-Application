@@ -10,7 +10,7 @@ import {
 } from 'react-pro-sidebar';
 import Select, { SingleValue } from 'react-select';
 import { ChangeEvent, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { sortOptions } from '../../constants/constants';
 import styles from './Sidebar.module.scss';
 import { CustomCategory, ICurrentFilters } from '../../../../types/types';
@@ -33,17 +33,22 @@ export function CatalogSidebar(props: {
     categorySlug,
     subCategorySlug,
   } = props;
+  const navigate = useNavigate();
   const [categoryFilterProps, setCategoryFilterProps] = useState('');
   const [trademarkProps, setTrademarkProps] = useState(['']);
   const [originFilterProps, setoriginFilterProps] = useState(['']);
-  const [lowerPriceFilterProps, setLowerPriceFilterProps] = useState(0);
-  const [higherPriceFilterProps, setHigherPriceFilterProps] = useState(0);
+  const [lowerPriceFilterProps, setLowerPriceFilterProps] = useState('');
+  const [higherPriceFilterProps, setHigherPriceFilterProps] = useState('');
   const [sortProps, setSortProps] = useState('');
   const [searchProps, setSearchProps] = useState('');
   const [currentSearchString, setCurrentSearchString] = useState('');
   const [collapsed, setCollapsed] = useState(false);
   const [width, setWidth] = useState(0);
   const [componentKey, setComponentKey] = useState(0);
+
+  const handleNavigate = (path: string): void => {
+    navigate(path);
+  };
 
   useEffect(() => {
     setCategoryFilterProps(
@@ -57,8 +62,12 @@ export function CatalogSidebar(props: {
     }
   }, []);
 
-  const handleFiltersClick = (categoryID: string): void => {
+  const handleFiltersClick = (
+    categoryID: string,
+    redirectPath: string,
+  ): void => {
     setCategoryFilterProps(`${categoryID}`);
+    handleNavigate(redirectPath);
   };
 
   const handleBrandsClick = (
@@ -88,28 +97,32 @@ export function CatalogSidebar(props: {
   const handleLowerPriceChange = (
     event: ChangeEvent<HTMLInputElement>,
   ): void => {
-    const currentPrice = +event.target.value;
-    const regex = /[^0-9]/g;
+    const currentPrice = event.target.value;
+    const regex = /[^0-9.,]/g;
+    const currentPriceAsNumber = currentPrice.replace(',', '.');
 
     if (
-      !`${currentPrice}`.match(regex) &&
-      currentPrice < higherPriceFilterProps
+      (!`${currentPrice}`.match(regex) && +currentPriceAsNumber) ||
+      currentPriceAsNumber === '' ||
+      currentPriceAsNumber === '0'
     ) {
-      setLowerPriceFilterProps(currentPrice);
+      setLowerPriceFilterProps(currentPriceAsNumber.toString());
     }
   };
 
   const handleHigherPriceChange = (
     event: ChangeEvent<HTMLInputElement>,
   ): void => {
-    const currentPrice = +event.target.value;
-    const regex = /[^0-9]/g;
+    const currentPrice = event.target.value;
+    const regex = /[^0-9.,]/g;
+    const currentPriceAsNumber = currentPrice.replace(',', '.');
 
     if (
-      !`${currentPrice}`.match(regex) &&
-      currentPrice > lowerPriceFilterProps
+      (!`${currentPrice}`.match(regex) && +currentPriceAsNumber) ||
+      currentPriceAsNumber === '' ||
+      currentPriceAsNumber === '0'
     ) {
-      setHigherPriceFilterProps(currentPrice);
+      setHigherPriceFilterProps(currentPriceAsNumber.toString());
     }
   };
 
@@ -165,34 +178,41 @@ export function CatalogSidebar(props: {
   ]);
 
   const categories = productCategories.map((category) => (
-    <Link to={`/catalog/${category.slug}`} key={category.id}>
-      <SubMenu
-        active={
-          window.location.pathname === `/catalog/${category.slug}` ||
-          window.location.pathname === `/catalog/${category.slug}/`
-        }
-        key={category.key}
-        label={category.name}
-        onClick={(): void => handleFiltersClick(category.id)}
-      >
-        {category.children.map((child) => (
-          <Link to={`/catalog/${category.slug}/${child.slug}`} key={child.id}>
-            <MenuItem
-              active={
-                window.location.pathname ===
-                  `/catalog/${category.slug}/${child.slug}` ||
-                window.location.pathname ===
-                  `/catalog/${category.slug}/${child.slug}/`
-              }
-              key={child.key}
-              onClick={(): void => handleFiltersClick(child.id)}
-            >
-              {child.name.replace('_', ' ')}
-            </MenuItem>
-          </Link>
-        ))}
-      </SubMenu>
-    </Link>
+    // <Link to={`/catalog/${category.slug}`} key={category.id}>
+    <SubMenu
+      active={
+        window.location.pathname === `/catalog/${category.slug}` ||
+        window.location.pathname === `/catalog/${category.slug}/`
+      }
+      key={category.key}
+      label={category.name}
+      onClick={(): void =>
+        handleFiltersClick(category.id, `/catalog/${category.slug}`)
+      }
+    >
+      {category.children.map((child) => (
+        // <Link to={`/catalog/${category.slug}/${child.slug}`} key={child.id}>
+        <MenuItem
+          active={
+            window.location.pathname ===
+              `/catalog/${category.slug}/${child.slug}` ||
+            window.location.pathname ===
+              `/catalog/${category.slug}/${child.slug}/`
+          }
+          key={child.key}
+          onClick={(): void =>
+            handleFiltersClick(
+              child.id,
+              `/catalog/${category.slug}/${child.slug}`,
+            )
+          }
+        >
+          {child.name.replace('_', ' ')}
+        </MenuItem>
+        /* </Link> */
+      ))}
+    </SubMenu>
+    // </Link>
   ));
 
   const brandsList = brands.map((brand: string) => (
@@ -205,11 +225,11 @@ export function CatalogSidebar(props: {
     </li>
   ));
 
-  const handleResetFilters = (): undefined => {
+  const handleResetFilters = (): void => {
     setTrademarkProps(['']);
     setoriginFilterProps(['']);
-    setLowerPriceFilterProps(0);
-    setHigherPriceFilterProps(0);
+    setLowerPriceFilterProps('');
+    setHigherPriceFilterProps('');
     setSortProps('');
     setSearchProps('');
     setCurrentSearchString('');
@@ -252,13 +272,6 @@ export function CatalogSidebar(props: {
             },
           }}
         >
-          <button
-            type="button"
-            className={styles.reset}
-            onClick={handleResetFilters}
-          >
-            Reset Filters
-          </button>
           <div className={styles.search}>
             <input
               className={styles.input}
@@ -356,6 +369,13 @@ export function CatalogSidebar(props: {
               </li>
             </ul>
           </SubMenu>
+          <button
+            type="button"
+            className={styles.reset}
+            onClick={handleResetFilters}
+          >
+            Reset Filters
+          </button>
         </Menu>
       </Sidebar>
     </div>
