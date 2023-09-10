@@ -1,4 +1,8 @@
-import { RegisterOptions, UseFormRegisterReturn } from 'react-hook-form';
+import {
+  PathString,
+  RegisterOptions,
+  UseFormRegisterReturn,
+} from 'react-hook-form';
 
 export interface ILoginData {
   email: string;
@@ -20,6 +24,10 @@ export interface IRegistrationData extends ILoginData {
   isShippingAddressDefault: boolean;
   isBillingAddressDefault: boolean;
   isSameAddress: boolean;
+  isShipping: boolean;
+  isBilling: boolean;
+  newPassword: string;
+  currentPassword: string;
 }
 
 export interface IRegistrationPageParam {
@@ -51,6 +59,10 @@ export interface IValidationRules {
   isShippingAddressDefault: string[];
   isBillingAddressDefault: string[];
   isSameAddress: string[];
+  isShipping: string[];
+  isBilling: PathString[];
+  newPassword: string[];
+  currentPassword: string[];
 }
 
 export enum ToastTypes {
@@ -58,4 +70,76 @@ export enum ToastTypes {
   error = 'error',
   info = 'info',
   warning = 'warning',
+}
+
+export interface IProduct {
+  id: number;
+  name: string;
+  type: string;
+  category: string;
+  price: number;
+  tm: string;
+  img: string;
+}
+
+export interface IUserData {
+  email: string;
+  firstName: string;
+  lastName: string;
+  dateOfBirth: string;
+  password: string;
+  addresses: IAddressData[];
+  defaultShippingAddressId: string;
+  defaultBillingAddressId: string;
+  shippingAddressIds: string[];
+  billingAddressIds: string[];
+}
+
+export interface IAddressData {
+  id: string;
+  streetName: string;
+  postalCode: string;
+  city: string;
+  country: string;
+}
+
+export type UserLogin = {
+  token: string;
+  isLogin: boolean;
+};
+
+export type UserAdress = {
+  id: string | undefined;
+  country: string | undefined;
+  city: string | undefined;
+  streetName: string | undefined;
+  postalCode: string | undefined;
+  isShipping: boolean;
+  isBilling: boolean;
+  isDefaultShipping: boolean;
+  isDefaultBilling: boolean;
+};
+
+export type CustomCategory = {
+  id: string;
+  key?: string;
+  name: string;
+  slug: string;
+  parentID?: string;
+  children: CustomCategory[];
+};
+
+export interface ICurrentFilters {
+  category: string;
+  trademark: string[];
+  originFilter: string[];
+  lowerPrice: string;
+  higherPrice: string;
+  sort: string;
+  search: string;
+}
+
+export interface ISortOption {
+  value: string;
+  label: string;
 }

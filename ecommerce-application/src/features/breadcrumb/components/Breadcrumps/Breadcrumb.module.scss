@@ -1,0 +1,48 @@
+@import "/src/App/styles/vars.scss";
+
+.container {
+  width: 90%;
+  margin: 10px auto;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  @media screen and (max-width: $tablet-width) {
+    padding-top: 0px;
+    width: 97%;
+}
+}
+
+.button {
+  font-family: inherit;
+  font-size: 20px;
+  padding: 0 10px;
+  border: none;
+  background-color: inherit;
+  color: var(--color-green);
+  transition: 0.3s;
+  &:hover {
+    color: var(--color-orange);
+    transition: 0.3s;
+    transform: scale(1.1);
+  }
+
+  @media screen and (max-width: $tablet-width) {
+    font-size: 16px;
+    padding: 0 5px;
+  }
+
+  @media screen and (max-width: $mobile-width) {
+    font-size: 13px;
+    padding: 0 3px;
+  }
+}
+
+.icon {
+  width: 30px;
+  height: 30px;
+  color: var(--color-orange);
+  @media screen and (max-width: $tablet-width) {
+    width: 20px;
+    height: 20px
+  }
+}

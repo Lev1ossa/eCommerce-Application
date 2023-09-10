@@ -1,7 +1,7 @@
 import { UseFormRegister } from 'react-hook-form';
 import { beforeEach, describe, expect, it } from 'vitest';
 
-import { ServiceInputParameters } from '../services/inputService';
+import { ServiceInputParameters } from '../features/autentification/services/inputService';
 import { IRegistrationData } from '../types/types';
 
 describe('ServiceInputParameters', () => {

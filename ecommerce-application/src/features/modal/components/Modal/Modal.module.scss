@@ -1,0 +1,64 @@
+@import "/src/App/styles/vars.scss";
+
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+}
+.modal_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 1rem 1rem 0;
+
+}
+.title {
+  align-self: center;
+  font-size: 1.2rem;
+  font-weight: normal;
+}
+.close {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  &:hover {
+    color: var(--color-orange);
+  }
+}
+.modal_active {
+  opacity: 1;
+  pointer-events: all;
+}
+.content {
+  height: 90%;
+  min-width: 350px;
+  padding: 1rem;
+  border-radius: 1rem;
+  background-color: white;
+  transform: scale(0.5);
+  transition: 0.4s all;
+  @media screen and (max-width: $tablet-width) {
+    width: 90%;
+  }
+}
+
+.content_active {
+  transform: scale(1);
+}
+
+@media (max-width: 991.98px) {
+  .content {
+    padding: 0;
+  }
+}

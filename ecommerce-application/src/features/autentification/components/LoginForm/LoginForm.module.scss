@@ -1,0 +1,72 @@
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  flex-grow: 1;
+  padding: 0 1rem;
+  background: var(--color-background-main-block);
+}
+
+.container {
+  background-color: var(--color-background-container);
+  border-radius: 1rem;
+  padding: 1rem 0.7rem;
+  margin: 2rem 0;
+  width: 100%;
+  max-width: 500px;
+}
+
+.title {
+  font-size: calc(27px + (28 - 27) * ((100vw - 320px) / (1920 - 320)));
+  margin-bottom: calc(20px + (30 - 20) * ((100vw - 320px) / (1920 - 320)));
+  color: var(--color-dark-green);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+}
+
+.login_btn {
+  padding: 5px;
+  font-size: 18px;
+  color: var(--color-background-container);;
+  border-radius: 5px;
+  border: 0;
+  margin-bottom: 10px;
+  width: 100%;
+  background-color: var(--color-dark-green);
+}
+
+.signup_btn {
+  border: none;
+  background-color: inherit;
+  color: var(--color-dark-green);
+  font-size: 18px;
+}
+
+.text {
+  display: inline-block;
+  font-size: 16px;
+  margin-right: 5px;
+}
+
+.error {
+  color: var(--color-dark-green);
+  font-size: 16px;
+}
+
+.error::before {
+  display: inline;
+  content: '⚠ ';
+}
+
+.button_registration {
+  * {
+    border: none;
+    background-color: inherit;
+    color: var(--color-dark-green);
+    font-size: 18px;
+  }
+}

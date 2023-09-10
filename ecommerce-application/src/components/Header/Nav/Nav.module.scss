@@ -1,0 +1,29 @@
+@import "/src/App/styles/vars.scss";
+
+.links {
+  display: flex;
+  align-items: center;
+  column-gap: 2rem;
+  
+  @media (max-width: $tablet-width) {
+    display: none;
+  }
+
+  li {
+    list-style-type: none;
+  }
+}
+
+
+.header_icon {
+  width: 30px;
+  height: 30px;
+}
+
+.logout_button {
+  border: none;
+  background-color: inherit;
+  &:hover {
+    color: var(--color-orange);
+  }
+}

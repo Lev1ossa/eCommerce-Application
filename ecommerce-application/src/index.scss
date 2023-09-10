@@ -1,0 +1,72 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+#root,
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+@font-face {
+  font-family: 'Rubik';
+  src:
+    url('./assets/fonts/Rubik-Light.woff2') format('woff2'),
+    url('./assets/fonts/Rubik-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Rubik';
+  src:
+    url('./assets/fonts/Rubik-Medium.woff2') format('woff2'),
+    url('./assets/fonts/Rubik-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+@font-face {
+  font-family: 'Rubik';
+  src:
+    url('./assets/fonts/Rubik-Regular.woff2') format('woff2'),
+    url('./assets/fonts/Rubik-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+@font-face {
+  font-family: 'Rubik';
+  src:
+    url('./assets/fonts/Rubik-ExtraBold.woff2') format('woff2'),
+    url('./assets/fonts/Rubik-ExtraBold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+body {
+  font-family: 'Rubik';
+  font-weight: normal;
+}
+button {
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  color: var(--color-dark);
+  &:hover {
+    color: var(--color-orange);
+  }
+}
+
+

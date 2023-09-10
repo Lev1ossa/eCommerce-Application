@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { useForm } from 'react-hook-form';
 import { describe, expect, it, test } from 'vitest';
 
-import { FormInput } from '../components/UI/FormInput/FormInput';
+import { FormInput } from '../features/autentification/components/FormInputs/FormInput/FormInput';
 import { IRegistrationData } from '../types/types';
 
 describe('Renders FormInput correctly', async () => {

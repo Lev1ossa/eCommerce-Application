@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { describe, it } from 'vitest';
 
 import { useState } from 'react';
-import { FormShippingAddressInput } from '../components/UI/FormShippingAddressInput/FormShippingAddressInput';
+import { FormShippingAddressInput } from '../features/autentification/components/FormInputs/FormShippingAddressInput/FormShippingAddressInput';
 import { IRegistrationData } from '../types/types';
 
 describe('Renders FormShippingAddressInput correctly', async () => {

@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { describe, it } from 'vitest';
 
 import { useState } from 'react';
-import { CountryInput } from '../components/UI/FormCounrtySelect/FormCountrySelect';
+import { CountryInput } from '../features/autentification/components/FormInputs/FormCounrtySelect/FormCountrySelect';
 import { IRegistrationData } from '../types/types';
 
 describe('Renders CountryInput correctly', async () => {
