@@ -21,7 +21,7 @@ export function CartContextProvider({
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
   const isItemInCart = useCallback(
-    (id: string) => {
+    (id: string): boolean => {
       return !!cartItems.find((cartItem) => cartItem.id === id);
     },
     [cartItems],
