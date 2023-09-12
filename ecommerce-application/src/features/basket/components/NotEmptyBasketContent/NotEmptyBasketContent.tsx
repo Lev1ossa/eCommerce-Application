@@ -4,13 +4,8 @@ import styles from './NotEmptyBasketContent.module.scss';
 
 export function NotEmptyBasketContent(props: {
   cartItemsData: IItemData[];
-  setEmpty: React.Dispatch<React.SetStateAction<boolean>>;
 }): React.ReactElement {
-  const { cartItemsData, setEmpty } = props;
-
-  const handleButton = (): void => {
-    setEmpty(true);
-  };
+  const { cartItemsData } = props;
 
   const cartList = cartItemsData.map((cartItemData) => (
     <li key={cartItemData.id} className={styles.item}>
@@ -28,9 +23,6 @@ export function NotEmptyBasketContent(props: {
         </div>
         <ul className={styles.list}>{cartList}</ul>
       </div>
-      <button className={styles.button} onClick={handleButton} type="button">
-        Clear Cart
-      </button>
     </main>
   );
 }

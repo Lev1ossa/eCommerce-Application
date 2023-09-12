@@ -33,13 +33,6 @@ export function CartItem(props: { itemData: IItemData }): React.ReactElement {
       {!itemData.totalPriceDiscounted && (
         <div className={styles.price}>$ {validTotalPrice}</div>
       )}
-      <button
-        type="button"
-        className={styles.button}
-        onClick={(): void => console.log(itemData.id)}
-      >
-        Remove from Cart
-      </button>
     </>
   );
 }

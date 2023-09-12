@@ -32,12 +32,13 @@ const itemDataArr: IItemData[] = [
 ];
 
 export function BasketPage(): React.ReactElement {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isEmpty, setEmpty] = useState(!itemDataArr);
 
   const content = isEmpty ? (
     <EmptyBasketContent />
   ) : (
-    <NotEmptyBasketContent cartItemsData={itemDataArr} setEmpty={setEmpty} />
+    <NotEmptyBasketContent cartItemsData={itemDataArr} />
   );
   return (
     <div className={styles.main_page}>
