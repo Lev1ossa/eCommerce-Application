@@ -6,7 +6,7 @@ import { NotEmptyBasketContent } from '../../features/basket/components/NotEmpty
 import { EmptyBasketContent } from '../../features/basket/components/EmptyBasketContent/EmptyBasketContent';
 import { IItemData } from '../../types/types';
 
-const ItemDataArr: IItemData[] = [
+const itemDataArr: IItemData[] = [
   {
     id: '1111111',
     name: 'Banana',
@@ -32,12 +32,12 @@ const ItemDataArr: IItemData[] = [
 ];
 
 export function BasketPage(): React.ReactElement {
-  const [isEmpty, setEmpty] = useState(!ItemDataArr);
+  const [isEmpty, setEmpty] = useState(!itemDataArr);
 
   const content = isEmpty ? (
     <EmptyBasketContent />
   ) : (
-    <NotEmptyBasketContent setEmpty={setEmpty} />
+    <NotEmptyBasketContent cartItemsData={itemDataArr} setEmpty={setEmpty} />
   );
   return (
     <div className={styles.main_page}>
