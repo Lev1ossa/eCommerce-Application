@@ -11,7 +11,7 @@ export function Nav(props: {
   logoutHandler: () => Promise<void>;
 }): React.ReactElement {
   const { className, userLoggedIn, logoutHandler } = props;
-  const cartCount = 0; // mock data
+  const cartCount = 10; // mock data
   return (
     <nav>
       <ul className={styles.links}>

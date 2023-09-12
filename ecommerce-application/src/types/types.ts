@@ -143,3 +143,14 @@ export interface ISortOption {
   value: string;
   label: string;
 }
+
+export interface IItemData {
+  id: string;
+  name: string;
+  image: string;
+  price: number;
+  discountedPrice: number;
+  quantity: number;
+  totalPrice: number;
+  totalPriceDiscounted: number;
+}
