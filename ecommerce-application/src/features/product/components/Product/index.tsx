@@ -3,12 +3,13 @@ import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getProductBySlug } from '../../../../api/requests';
 import { Loader } from '../../../../components/Loader';
-import { Modal } from '../../../modal';
-import { Slider } from '../Slider';
-import styles from './Product.module.scss';
+import { BuyButton } from '../../../../components/UI/BuyButton';
 import { ToastTypes } from '../../../../types/types';
 import { showToast } from '../../../autentification/utils/showToast';
 import { Breadcrumb } from '../../../breadcrumb/components/Breadcrumps/Breadcrumb';
+import { Modal } from '../../../modal';
+import { Slider } from '../Slider';
+import styles from './Product.module.scss';
 
 // eslint-disable-next-line max-lines-per-function
 export function Product(props: {
@@ -44,6 +45,7 @@ export function Product(props: {
 
   let price = 0;
   let priceDiscounted: number | null = null;
+  let productId = '';
   let productName = '';
   let trademark = '';
   let description = '';
@@ -53,6 +55,7 @@ export function Product(props: {
   let productImages: Image[] | undefined = [];
   if (product) {
     const { prices, attributes, images } = product.masterVariant;
+    productId = product.id;
     productName = product.name.en;
     price = prices ? prices[0].value.centAmount / 100 : 0;
     priceDiscounted =
@@ -112,9 +115,9 @@ export function Product(props: {
                   <span className={styles.bold}>TM: </span>
                   {trademark}
                 </div>
-                <button type="button" className={styles.button}>
-                  Add to cart
-                </button>
+                <div className={styles.button}>
+                  <BuyButton productId={productId} />
+                </div>
                 <div className={styles.description}>
                   <strong>Description: </strong> {description}
                 </div>

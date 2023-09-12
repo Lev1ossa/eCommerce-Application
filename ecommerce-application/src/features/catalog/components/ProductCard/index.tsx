@@ -1,5 +1,6 @@
 import { ProductProjection } from '@commercetools/platform-sdk';
 import { Link } from 'react-router-dom';
+import { BuyButton } from '../../../../components/UI/BuyButton';
 import styles from './ProductCard.module.scss';
 
 // eslint-disable-next-line max-lines-per-function
@@ -53,13 +54,7 @@ export function ProductCard(props: {
             <p className={styles.info}>{description}</p>
           </div>
         </div>
-        <button
-          type="button"
-          className={styles.button}
-          onClick={(e): void => e.preventDefault()}
-        >
-          Add to cart
-        </button>
+        <BuyButton productId={id} />
       </div>
     </Link>
   );
