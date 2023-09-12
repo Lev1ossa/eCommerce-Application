@@ -11,6 +11,7 @@ export function Nav(props: {
   logoutHandler: () => Promise<void>;
 }): React.ReactElement {
   const { className, userLoggedIn, logoutHandler } = props;
+  const cartCount = 0; // mock data
   return (
     <nav>
       <ul className={styles.links}>
@@ -33,7 +34,12 @@ export function Nav(props: {
         )}
         <li>
           <NavLink className={className} to="/cart">
-            <BsCart3 className={styles.header_icon} />
+            <div className={styles.icon_container}>
+              <BsCart3 className={styles.header_icon} />
+              {cartCount > 0 && (
+                <span className={styles.count_label}>{cartCount}</span>
+              )}
+            </div>
           </NavLink>
         </li>
         {!userLoggedIn && (
