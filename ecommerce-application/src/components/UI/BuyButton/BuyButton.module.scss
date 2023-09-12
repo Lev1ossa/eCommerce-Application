@@ -5,14 +5,24 @@
   justify-content: center;
   align-items: center;
   padding: 0.5rem 2rem;
-  height: 2rem;
+  font-size: inherit;
+  white-space: nowrap;
+  height: 100%;
   border: none;
   border-radius: 0.2rem;
   box-shadow: var(--shadow-small);
   background-color: var(--color-light-green);
   transition: 0.2s all ease-in;
   &:hover {
-    color: var(--color-light);
-    background-color: var(--color-orange);
+    background-color: var( --color-banana);
+  }
+}
+
+.button_active {
+  color: var(--color-dark);
+  background-color: var( --color-banana);
+  &:hover {
+    color: var(--color-dark);
+    background-color: var( --color-banana);
   }
 }

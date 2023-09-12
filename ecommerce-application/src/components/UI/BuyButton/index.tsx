@@ -18,7 +18,11 @@ export function BuyButton(props: { productId: string }): React.ReactElement {
   return (
     <button
       type="button"
-      className={styles.button}
+      className={
+        isProductInCart
+          ? `${styles.button_active} ${styles.button}`
+          : styles.button
+      }
       onClick={(e): void => {
         cart.addItemToCart(productId);
         changeIsInCartState();
