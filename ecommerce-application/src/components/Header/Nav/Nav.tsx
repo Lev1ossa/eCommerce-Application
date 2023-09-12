@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import { CgProfile } from 'react-icons/cg';
 import { AiOutlineLogin, AiOutlineLogout } from 'react-icons/ai';
+import { BsCart3 } from 'react-icons/bs';
 import styles from './Nav.module.scss';
 
 // eslint-disable-next-line max-lines-per-function
@@ -30,6 +31,11 @@ export function Nav(props: {
             </NavLink>
           </li>
         )}
+        <li>
+          <NavLink className={className} to="/cart">
+            <BsCart3 className={styles.header_icon} />
+          </NavLink>
+        </li>
         {!userLoggedIn && (
           <li>
             <NavLink className={className} to="/login">
