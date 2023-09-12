@@ -1,7 +1,7 @@
+import { MdOutlineClose } from 'react-icons/md';
 import { IItemData } from '../../../../types/types';
 import styles from './CartItem.module.scss';
 
-// eslint-disable-next-line max-lines-per-function
 export function CartItem(props: { itemData: IItemData }): React.ReactElement {
   const { itemData } = props;
   const validPrice = itemData.price / 100;
@@ -33,6 +33,10 @@ export function CartItem(props: { itemData: IItemData }): React.ReactElement {
       {!itemData.totalPriceDiscounted && (
         <div className={styles.price}>$ {validTotalPrice}</div>
       )}
+      <MdOutlineClose
+        className={styles.close_button}
+        onClick={(): void => console.log(itemData.id)}
+      />
     </>
   );
 }

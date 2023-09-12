@@ -1,7 +1,7 @@
 .product_block {
-    display: flex;
-    align-items: center;
-    width: 200px;
+  display: flex;
+  align-items: center;
+  width: 200px;
 }
   
 .image {
@@ -19,26 +19,6 @@
   width: 100px;
 }
 
-.button {
-  align-self: end;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 3px;
-  border: none;
-  border-radius: 0.2rem;
-  box-shadow: var(--shadow-small);
-  background-color: var(--color-orange);
-  transition: 0.2s all ease-in;
-  position: absolute;
-  right: 0;
-  top: 2px;
-  font-size: 10px;
-  &:hover {
-    color: var(--color-light);
-    background-color: var(--color-light-green);
-  }
-}
 .prices_container {
   display: flex;
   align-items: center;
@@ -50,9 +30,24 @@
   align-self: start;
   text-decoration: line-through;
 }
+
 .price_new {
   font-size: 24px;
   color: var(--color-error);
   margin-right: 3px;
+}
+
+.close_button {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: absolute;
+  right: 0;
+  top: 2px;
+  color: var(--color-error);
+  &:hover {
+    color: var(--color-orange);
+  }
 }
     
