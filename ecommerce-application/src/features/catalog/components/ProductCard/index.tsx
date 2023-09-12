@@ -1,12 +1,15 @@
 import { ProductProjection } from '@commercetools/platform-sdk';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import styles from './ProductCard.module.scss';
 import { BuyButton } from '../../../../components/UI/BuyButton';
+import { CartContext } from '../../../../context/CartContext';
+import styles from './ProductCard.module.scss';
 
 // eslint-disable-next-line max-lines-per-function
 export function ProductCard(props: {
   product: ProductProjection;
 }): React.ReactElement {
+  const cart = useContext(CartContext);
   const { product } = props;
   const { id } = product;
   const slug = product.slug.en;
@@ -54,7 +57,7 @@ export function ProductCard(props: {
             <p className={styles.info}>{description}</p>
           </div>
         </div>
-        <BuyButton />
+        <BuyButton onAddToCart={(): void => cart.addItemToCart(id)} />
       </div>
     </Link>
   );
