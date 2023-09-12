@@ -9,7 +9,7 @@ export function BuyButton(props: { productId: string }): React.ReactElement {
 
   useEffect(() => {
     setIsProductInCart(cart.isItemInCart(productId));
-  }, [cart, productId, cart.cartItems]);
+  }, [cart, productId]);
 
   const changeIsInCartState = (): void => {
     setIsProductInCart(true);
@@ -20,7 +20,7 @@ export function BuyButton(props: { productId: string }): React.ReactElement {
       type="button"
       className={
         isProductInCart
-          ? `${styles.button_active} ${styles.button}`
+          ? `${styles.button} ${styles.button_active}`
           : styles.button
       }
       onClick={(e): void => {
