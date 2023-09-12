@@ -27,3 +27,21 @@
     color: var(--color-orange);
   }
 }
+
+.icon_container{
+  position: relative;
+  text-align: center;
+}
+
+.count_label {
+  padding: 3px;
+  height: 20px;
+  background-color: var(--color-orange);
+  position: absolute;
+  font-weight: 400;
+  right: -7px;
+  top: -10px;
+  font-size: 12px;
+  border-radius: 50%;
+  color: var(--color-text-light);
+}
