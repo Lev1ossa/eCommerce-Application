@@ -10,6 +10,7 @@ type CartItem = {
 type CartContextProps = {
   isItemInCart: (id: string) => boolean;
   addItemToCart: (id: string) => void;
+  removeItemFromCart: (id: string) => void;
   cartItems: CartItem[];
 };
 export const CartContext = createContext({} as CartContextProps);
@@ -35,10 +36,18 @@ export function CartContextProvider({
     },
     [isItemInCart],
   );
+  const removeItemFromCart = useCallback(
+    (id: string): void => {
+      if (isItemInCart(id)) {
+        setCartItems(cartItems.filter((item) => item.id !== id));
+      }
+    },
+    [isItemInCart, cartItems],
+  );
 
   const CartContextValue: CartContextProps = useMemo(
-    () => ({ addItemToCart, isItemInCart, cartItems }),
-    [addItemToCart, isItemInCart, cartItems],
+    () => ({ addItemToCart, removeItemFromCart, isItemInCart, cartItems }),
+    [addItemToCart, removeItemFromCart, isItemInCart, cartItems],
   );
 
   return (

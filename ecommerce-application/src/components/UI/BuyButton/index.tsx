@@ -1,19 +1,11 @@
-import { useContext, useEffect, useState } from 'react';
-import { CartContext } from '../../../context/CartContext';
 import styles from './BuyButton.module.scss';
 
-export function BuyButton(props: { productId: string }): React.ReactElement {
-  const cart = useContext(CartContext);
-  const { productId } = props;
-  const [isProductInCart, setIsProductInCart] = useState(false);
-
-  useEffect(() => {
-    setIsProductInCart(cart.isItemInCart(productId));
-  }, [cart, productId]);
-
-  const changeIsInCartState = (): void => {
-    setIsProductInCart(true);
-  };
+export function BuyButton(props: {
+  addProductToCart: () => void;
+  changeIsInCartState: () => void;
+  isProductInCart: boolean;
+}): React.ReactElement {
+  const { isProductInCart, addProductToCart, changeIsInCartState } = props;
 
   return (
     <button
@@ -24,7 +16,7 @@ export function BuyButton(props: { productId: string }): React.ReactElement {
           : styles.button
       }
       onClick={(e): void => {
-        cart.addItemToCart(productId);
+        addProductToCart();
         changeIsInCartState();
         e.preventDefault();
       }}
