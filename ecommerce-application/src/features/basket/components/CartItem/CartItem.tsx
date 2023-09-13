@@ -1,4 +1,5 @@
 import { MdOutlineClose } from 'react-icons/md';
+import { useState } from 'react';
 import { IItemData } from '../../../../types/types';
 import styles from './CartItem.module.scss';
 
@@ -9,6 +10,21 @@ export function CartItem(props: { itemData: IItemData }): React.ReactElement {
   const validDiscountedPrice = itemData.discountedPrice / 100;
   const validTotalPrice = itemData.totalPrice / 100;
   const validTotalDiscountedPrice = itemData.totalPriceDiscounted / 100;
+
+  const [currentQuantity, setCurrentQuantity] = useState(itemData.quantity);
+
+  const increaseQuantity = (): void => {
+    const increasedСurrentQuantity = currentQuantity + 1;
+    setCurrentQuantity(increasedСurrentQuantity);
+  };
+
+  const decreaseQuantity = (): void => {
+    const decreasedСurrentQuantity = currentQuantity - 1;
+    if (decreasedСurrentQuantity >= 1) {
+      setCurrentQuantity(decreasedСurrentQuantity);
+    }
+  };
+
   return (
     <>
       <div className={styles.product_block}>
@@ -16,11 +32,19 @@ export function CartItem(props: { itemData: IItemData }): React.ReactElement {
         <p className={styles.name}>{itemData.name}</p>
       </div>
       <div className={styles.quantity_block}>
-        <button className={styles.quantity_button} type="button">
+        <button
+          className={styles.quantity_button}
+          onClick={decreaseQuantity}
+          type="button"
+        >
           -
         </button>
-        <p className={styles.quantity}>{itemData.quantity}</p>
-        <button className={styles.quantity_button} type="button">
+        <p className={styles.quantity}>{currentQuantity}</p>
+        <button
+          className={styles.quantity_button}
+          onClick={increaseQuantity}
+          type="button"
+        >
           +
         </button>
       </div>
