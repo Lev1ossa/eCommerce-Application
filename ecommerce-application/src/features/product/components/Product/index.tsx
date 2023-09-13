@@ -10,6 +10,7 @@ import { Breadcrumb } from '../../../breadcrumb/components/Breadcrumps/Breadcrum
 import { Modal } from '../../../modal';
 import { Slider } from '../Slider';
 import styles from './Product.module.scss';
+import { RemoveButton } from '../RemoveButton';
 
 // eslint-disable-next-line max-lines-per-function
 export function Product(props: {
@@ -117,6 +118,7 @@ export function Product(props: {
                 </div>
                 <div className={styles.button}>
                   <BuyButton productId={productId} />
+                  <RemoveButton />
                 </div>
                 <div className={styles.description}>
                   <strong>Description: </strong> {description}
