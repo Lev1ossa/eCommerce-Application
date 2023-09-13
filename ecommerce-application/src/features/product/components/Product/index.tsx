@@ -1,16 +1,17 @@
 import { Image, ProductProjection } from '@commercetools/platform-sdk';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getProductBySlug } from '../../../../api/requests';
 import { Loader } from '../../../../components/Loader';
 import { BuyButton } from '../../../../components/UI/BuyButton';
+import { CartContext } from '../../../../context/CartContext';
 import { ToastTypes } from '../../../../types/types';
 import { showToast } from '../../../autentification/utils/showToast';
 import { Breadcrumb } from '../../../breadcrumb/components/Breadcrumps/Breadcrumb';
 import { Modal } from '../../../modal';
+import { RemoveButton } from '../RemoveButton';
 import { Slider } from '../Slider';
 import styles from './Product.module.scss';
-import { RemoveButton } from '../RemoveButton';
 
 // eslint-disable-next-line max-lines-per-function
 export function Product(props: {
@@ -19,10 +20,12 @@ export function Product(props: {
   slug: string;
 }): React.ReactElement {
   const navigate = useNavigate();
+  const cart = useContext(CartContext);
   const { categorySlug, subCategorySlug, slug } = props;
   const [modalActive, setModalActive] = useState(false);
   const [product, setProduct] = useState<ProductProjection>();
   const [isLoading, setIsLoading] = useState(true);
+  const [isProductInCart, setIsProductInCart] = useState(false);
 
   const productCard = useLocation();
 
@@ -72,7 +75,16 @@ export function Product(props: {
       productImages = images;
     }
   }
+  useEffect(() => {
+    setIsProductInCart(cart.isItemInCart(productId));
+  }, [cart, productId]);
 
+  const changeIsInCartState = (): void => {
+    setIsProductInCart(!isProductInCart);
+  };
+  const removeProductFromCart = (): void => {
+    cart.removeItemFromCart(productId);
+  };
   return (
     <>
       {!isLoading ? (
@@ -118,7 +130,12 @@ export function Product(props: {
                 </div>
                 <div className={styles.button}>
                   <BuyButton productId={productId} />
-                  <RemoveButton />
+                  {isProductInCart && (
+                    <RemoveButton
+                      changeIsInCartState={changeIsInCartState}
+                      removeProductFromCart={removeProductFromCart}
+                    />
+                  )}
                 </div>
                 <div className={styles.description}>
                   <strong>Description: </strong> {description}
