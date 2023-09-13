@@ -16,7 +16,22 @@
 }
 
 .quantity{
+  margin: 0 10px;
+  display: inline-block;
+}
+
+.quantity_block {
+  display: flex;
+  justify-content: center;
   width: 100px;
+}
+
+.quantity_button {
+  width: 20px;
+  height: 20px;
+  border: none;
+  border-radius: 50%;
+  background-color: (--color-light-gray);
 }
 
 .prices_container {
