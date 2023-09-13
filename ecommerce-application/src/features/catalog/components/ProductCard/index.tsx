@@ -1,12 +1,17 @@
 import { ProductProjection } from '@commercetools/platform-sdk';
+import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { BuyButton } from '../../../../components/UI/BuyButton';
+import { CartContext } from '../../../../context/CartContext';
 import styles from './ProductCard.module.scss';
 
 // eslint-disable-next-line max-lines-per-function
 export function ProductCard(props: {
   product: ProductProjection;
 }): React.ReactElement {
+  const cart = useContext(CartContext);
+  const [isProductInCart, setIsProductInCart] = useState(false);
+
   const { product } = props;
   const { id } = product;
   const slug = product.slug.en;
@@ -25,6 +30,18 @@ export function ProductCard(props: {
   const category = attributes ? attributes[1].value : '';
   const subCategory = attributes ? attributes[2].value : '';
   const origin = attributes ? attributes[3].value.label : '';
+
+  useEffect(() => {
+    setIsProductInCart(cart.isItemInCart(id));
+  }, [cart, id]);
+
+  const changeIsInCartState = (): void => {
+    setIsProductInCart(true);
+  };
+  const addProductToCart = (): void => {
+    cart.addItemToCart(id);
+  };
+
   return (
     <Link
       to={`/catalog/${category.toLowerCase()}/${subCategory.toLowerCase()}/${slug}`}
@@ -54,7 +71,11 @@ export function ProductCard(props: {
             <p className={styles.info}>{description}</p>
           </div>
         </div>
-        <BuyButton productId={id} />
+        <BuyButton
+          isProductInCart={isProductInCart}
+          addProductToCart={addProductToCart}
+          changeIsInCartState={changeIsInCartState}
+        />
       </div>
     </Link>
   );

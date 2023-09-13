@@ -80,10 +80,13 @@ export function Product(props: {
   }, [cart, productId]);
 
   const changeIsInCartState = (): void => {
-    setIsProductInCart(!isProductInCart);
+    setIsProductInCart(true);
   };
   const removeProductFromCart = (): void => {
     cart.removeItemFromCart(productId);
+  };
+  const addProductToCart = (): void => {
+    cart.addItemToCart(productId);
   };
   return (
     <>
@@ -129,7 +132,11 @@ export function Product(props: {
                   {trademark}
                 </div>
                 <div className={styles.button}>
-                  <BuyButton productId={productId} />
+                  <BuyButton
+                    isProductInCart={isProductInCart}
+                    addProductToCart={addProductToCart}
+                    changeIsInCartState={changeIsInCartState}
+                  />
                   {isProductInCart && (
                     <RemoveButton
                       changeIsInCartState={changeIsInCartState}
