@@ -6,7 +6,6 @@ export function NotEmptyBasketContent(props: {
   cartItemsData: IItemData[];
 }): React.ReactElement {
   const { cartItemsData } = props;
-
   const cartList = cartItemsData.map((cartItemData) => (
     <li key={cartItemData.id} className={styles.item}>
       <CartItem itemData={cartItemData} />
@@ -22,6 +21,16 @@ export function NotEmptyBasketContent(props: {
           <div className={styles.header_title}>TOTAL PRICE</div>
         </div>
         <ul className={styles.list}>{cartList}</ul>
+        <div className={styles.promocode_block}>
+          <input
+            className={styles.input}
+            onBlur={(event): void => console.log(event.target.value)}
+            type="text"
+          />
+          <button className={styles.input_button} type="button">
+            APPLY PROMO CODE
+          </button>
+        </div>
         <div className={styles.subtotal}>
           <div className={styles.subtotal_title}>SUBTOTAL</div>
           <div className={styles.prices_container}>

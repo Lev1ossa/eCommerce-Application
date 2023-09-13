@@ -1,3 +1,5 @@
+@import "/src/App/styles/vars.scss";
+
 .main_page {
   width: 100%;
   min-height: 100%;
@@ -11,13 +13,126 @@
 }
 .links {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: start;
   row-gap: 1rem;
+  margin-bottom: 20px;
   li {
     list-style-type: none;
   }
 }
 .link {
   font-size: 1.5rem;
+  margin-right: 10px;
+  @media (max-width: $mobile-width) {
+    font-size: 18px;
+  }
+}
+
+.info_block {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  border-top: 2px solid var(--color-light-green);
+  padding-top: 15px;
+  position: relative;
+  @media (max-width: $tablet-width) {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.title {
+  position: absolute;
+  color: var(--color-light-green);
+  font-weight: normal;
+  background: var(--color-background-container);
+  top: -15px;
+  z-index: 1;
+  padding: 0 10px;
+}
+
+.image_block {
+  position: relative;
+  width: 45%;
+  margin-right: 10px;
+  @media (max-width: $tablet-width) {
+    width: 90%;
+    margin-right: 0;
+    margin-bottom: 5px;
+  }
+    &:hover {
+    .text_block {
+      transition: 0.2s all ease;
+      background: var(--color-light-green);
+      opacity: 0.9;
+    }
+    .discount_color {
+      transition: 0.2s all ease;
+      color: var(--color-light-green);
+    }
+  }
+}
+
+.image {
+  width: 100%;
+}
+
+.text_block {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  position: absolute;
+  top: 35%;
+  left: 20%;
+  background: var(--color-background-text-block);
+  z-index: 2;
+  width: 60%;
+  height: 35%;
+  text-align: center;
+  transition: 0.2s all ease;
+  .subtitle {
+    color: var(--color-text-light);
+    font-weight: 400;
+    font-size: 25px;
+    @media (max-width: $small_width) {
+      font-size: 18px;
+    }
+    @media (max-width: $tablet-width) {
+      font-size: 25px;
+    }
+    @media (max-width: $mobile-width) {
+      font-size: 18px;
+    }
+  }
+  .text {
+    color: var(--color-text-light);
+    @media (max-width: $small_width) {
+      font-size: 14px;
+    }
+    @media (max-width: $tablet-width) {
+      font-size: 18px;
+    }
+    @media (max-width: $mobile-width) {
+      font-size: 14px;
+    }
+  }
+  .text_color {
+    color: var(--color-banana);
+    @media (max-width: $small_width) {
+      font-size: 14px;
+    }
+    @media (max-width: $tablet-width) {
+      font-size: 18px;
+    }
+    @media (max-width: $mobile-width) {
+      font-size: 14px;
+    }
+  }
+}
+
+.discount {
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
