@@ -7,15 +7,28 @@
 .container {
   max-width: 70%;
   margin: 0 auto;
+  text-align: center;
+}
+
+.page_title {
+  font-size: 30px;
+  font-weight: 400;
+  margin-bottom: 10px;
 }
 
 .header {
   display: flex;
   justify-content: space-between;
   width: 100%;
-  padding: 0 20px 10px;
+  height: 50px;
+  padding: 0 20px;
   border-bottom: 1px solid var(--color-light-gray);
   color: var(--color-text-gray);
+  box-shadow: inset -1px 2px 2px rgba(0,0,0,0.15), 
+  inset -1px 0px 2px rgba(0,0,0,0.15);
+  box-shadow: inset 0px 2px 2px rgba(0,0,0,0.15), 
+  inset 0px -2px 2px rgba(0,0,0,0.15);
+  align-items: center;
 }
 
 .subtotal {
@@ -29,17 +42,18 @@
   border-top: 2px solid var(--color-light-gray);
 }
 
-
 .prices_container {
   display: flex;
   align-items: center;
   width: 150px;
   justify-content: center;
   font-weight: 400;
+  text-align: center;
 }
 
 .price_old {
   align-self: start;
+  width: 30%;
   text-decoration: line-through;
 }
 

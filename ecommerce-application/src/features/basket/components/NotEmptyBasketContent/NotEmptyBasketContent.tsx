@@ -2,6 +2,7 @@ import { IItemData } from '../../../../types/types';
 import { CartItem } from '../CartItem/CartItem';
 import styles from './NotEmptyBasketContent.module.scss';
 
+// eslint-disable-next-line max-lines-per-function
 export function NotEmptyBasketContent(props: {
   cartItemsData: IItemData[];
 }): React.ReactElement {
@@ -14,6 +15,7 @@ export function NotEmptyBasketContent(props: {
   return (
     <main className={styles.main}>
       <div className={styles.container}>
+        <h3 className={styles.page_title}>My Cart</h3>
         <div className={styles.header}>
           <div className={styles.header_title}>PRODUCT</div>
           <div className={styles.header_title}>QUANTITY</div>
