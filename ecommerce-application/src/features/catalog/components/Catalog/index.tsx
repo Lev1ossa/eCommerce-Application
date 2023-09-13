@@ -183,8 +183,12 @@ export function Catalog(props: {
           categorySlug={categorySlug}
           subCategorySlug={subCategorySlug}
         />
-        <ul className={styles.grid}>{!isLoading ? catalog : <Loader />}</ul>
-        <Pagination />
+        <div className={styles.catalog__content}>
+          <ul className={styles.grid}>{!isLoading ? catalog : <Loader />}</ul>
+          <div className={styles.pagination}>
+            <Pagination />
+          </div>
+        </div>
       </div>
     </>
   );
