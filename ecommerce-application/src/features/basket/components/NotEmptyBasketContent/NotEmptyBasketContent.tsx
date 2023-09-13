@@ -1,3 +1,5 @@
+import { BsCart3 } from 'react-icons/bs';
+import { AiOutlineDelete } from 'react-icons/ai';
 import { IItemData } from '../../../../types/types';
 import { CartItem } from '../CartItem/CartItem';
 import styles from './NotEmptyBasketContent.module.scss';
@@ -15,7 +17,14 @@ export function NotEmptyBasketContent(props: {
   return (
     <main className={styles.main}>
       <div className={styles.container}>
-        <h3 className={styles.page_title}>My Cart</h3>
+        <div className={styles.title_container}>
+          <BsCart3 className={styles.title_icon} />
+          <h3 className={styles.page_title}>My Cart</h3>
+        </div>
+        <button className={styles.clear_button} type="button">
+          <AiOutlineDelete className={styles.button_icon} />
+          Clear Cart
+        </button>
         <div className={styles.header}>
           <div className={styles.header_title}>PRODUCT</div>
           <div className={styles.header_title}>QUANTITY</div>

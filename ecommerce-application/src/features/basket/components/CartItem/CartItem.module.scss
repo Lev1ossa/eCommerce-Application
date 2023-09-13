@@ -1,7 +1,13 @@
+@import "/src/App/styles/vars.scss";
+
 .product_block {
   display: flex;
   align-items: center;
-  width: 200px;
+  width: 250px;
+  @media screen and (max-width: $mobile-width) {
+    width: 140px;
+    font-size: 0.6rem;
+  }
 }
   
 .image {
@@ -9,22 +15,48 @@
   max-height: 50px;
   height: 100%;
   margin-right: 20px;
+  @media screen and (max-width: $tablet-width) {
+    margin-right: 10px;
+  }
+  @media screen and (max-width: $mobile-width) {
+    margin-right: 5px;
+  }
 }
 
 .name {
-  white-space: nowrap;
+  text-align: start;
+  @media screen and (max-width: $mobile-width) {
+    width: 70px;
+  }
 }
 
 .quantity{
   margin: 0 10px;
   display: inline-block;
   width: 30px;
+  @media screen and (max-width: $tablet-width) {
+    width: 20px;
+    margin: 0 5px;
+  }
+  @media screen and (max-width: $mobile-width) {
+    width: 20px;
+  }
+
 }
 
 .quantity_block {
   display: flex;
   justify-content: center;
+  align-items: center;
   width: 150px;
+  @media screen and (max-width: $tablet-width) {
+    font-size: 0.8rem;
+    width: 100px;
+  }
+  @media screen and (max-width: $mobile-width) {
+    width: 50px;
+    font-size: 0.6rem;
+  }
 }
 
 .quantity_button {
@@ -33,6 +65,10 @@
   border: none;
   border-radius: 50%;
   background-color: (--color-light-gray);
+  @media screen and (max-width: $tablet-width) {
+    width: 15px;
+    height: 15px;
+  }
 }
 
 .prices_container {
@@ -41,18 +77,36 @@
   align-items: center;
   justify-content: center;
   text-align: center;
+  @media screen and (max-width: $tablet-width) {
+    width: 100px;
+  }
+  @media screen and (max-width: $mobile-width) {
+    width: 70px;
+  }
 }
 
 .price_old {
   align-self: start;
   width: 30%;
   text-decoration: line-through;
+  @media screen and (max-width: $tablet-width) {
+    font-size: 0.7rem;
+  }
+  @media screen and (max-width: $mobile-width) {
+    font-size: 0.6rem;
+  }
 }
 
 .price_new {
   font-size: 24px;
   color: var(--color-error);
   margin-right: 3px;
+  @media screen and (max-width: $tablet-width) {
+    font-size: 0.8rem;
+  }
+  @media screen and (max-width: $mobile-width) {
+    font-size: 0.6rem;
+  }
 }
 
 .close_button {
@@ -66,6 +120,10 @@
   color: var(--color-error);
   &:hover {
     color: var(--color-orange);
+  }
+  @media screen and (max-width: $tablet-width) {
+    width: 15px;
+    height: 15px;
   }
 }
     
