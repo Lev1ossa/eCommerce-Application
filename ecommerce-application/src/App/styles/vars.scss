@@ -18,6 +18,7 @@
 
   --color-background-main-block: #f0f3f8;
   --color-background-container: #ffffff;
+  --color-background-text-block: rgba(35, 35, 35, 0.93);
   --gradient-ligth-green: linear-gradient(to right, #78ffd6, #a8ff78);
 
   --shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -26,5 +27,6 @@
   --shadow-middle: rgba(0, 0, 0, 0.2) 0px 60px 40px -7px;
 }
 
+$small_width: 950px;
 $tablet-width: 768px;
-$mobile-width: 450px;
+$mobile-width: 500px;
