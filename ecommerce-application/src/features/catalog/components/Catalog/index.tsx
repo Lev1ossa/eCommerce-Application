@@ -1,16 +1,17 @@
 import { ProductProjection } from '@commercetools/platform-sdk';
 import { useEffect, useState } from 'react';
 import {
+  getCategories,
   getFilteredProductList,
   getProductsList,
-  getCategories,
 } from '../../../../api/requests';
 import { Loader } from '../../../../components/Loader';
 import { CustomCategory, ICurrentFilters } from '../../../../types/types';
+import { Breadcrumb } from '../../../breadcrumb/components/Breadcrumps/Breadcrumb';
+import { Pagination } from '../Pagination';
 import { ProductCard } from '../ProductCard';
 import { CatalogSidebar } from '../Sidebar';
 import styles from './Catalog.module.scss';
-import { Breadcrumb } from '../../../breadcrumb/components/Breadcrumps/Breadcrumb';
 
 // eslint-disable-next-line max-lines-per-function
 export function Catalog(props: {
@@ -182,7 +183,12 @@ export function Catalog(props: {
           categorySlug={categorySlug}
           subCategorySlug={subCategorySlug}
         />
-        <ul className={styles.grid}>{!isLoading ? catalog : <Loader />}</ul>
+        <div className={styles.catalog__content}>
+          <ul className={styles.grid}>{!isLoading ? catalog : <Loader />}</ul>
+          <div className={styles.pagination}>
+            <Pagination />
+          </div>
+        </div>
       </div>
     </>
   );
