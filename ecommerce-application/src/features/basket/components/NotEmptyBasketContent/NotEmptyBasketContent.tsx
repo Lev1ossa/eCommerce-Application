@@ -22,6 +22,13 @@ export function NotEmptyBasketContent(props: {
           <div className={styles.header_title}>TOTAL PRICE</div>
         </div>
         <ul className={styles.list}>{cartList}</ul>
+        <div className={styles.subtotal}>
+          <div className={styles.subtotal_title}>SUBTOTAL</div>
+          <div className={styles.prices_container}>
+            <div className={styles.price_new}>$ 72</div>
+            <div className={styles.price_old}>$ 52</div>
+          </div>
+        </div>
       </div>
     </main>
   );
