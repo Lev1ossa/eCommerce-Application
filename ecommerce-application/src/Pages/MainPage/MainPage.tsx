@@ -1,4 +1,3 @@
-import { NavLink } from 'react-router-dom';
 import { Header } from '../../components/Header/Header';
 import styles from './MainPage.module.scss';
 import { Footer } from '../../components/Footer/Footer';
@@ -17,29 +16,13 @@ export function MainPage(): React.ReactElement {
     <div className={styles.main_page}>
       <Header />
       <main className={styles.main}>
-        <ul className={styles.links}>
-          <li>
-            <NavLink className={styles.link} to="/">
-              Main
-            </NavLink>
-          </li>
-          <li>
-            <NavLink className={styles.link} to="/login">
-              Login
-            </NavLink>
-          </li>
-          <li>
-            <NavLink className={styles.link} to="/registration">
-              Registration
-            </NavLink>
-          </li>
-          <li>
-            <NavLink className={styles.link} to="/catalog">
-              Catalog
-            </NavLink>
-          </li>
-        </ul>
-        <div className={styles.info_block}>
+        <section className={styles.section_main}>
+          <div className={styles.circle_container}>
+            <div className={styles.circle} />
+          </div>
+          <div className={styles.fruit_image} />
+        </section>
+        <section className={styles.promocodes_block}>
           <h3 className={styles.title}>PROMO CODES</h3>
           <div className={styles.image_block}>
             <img
@@ -71,7 +54,7 @@ export function MainPage(): React.ReactElement {
               25% <span className={styles.discount_color}>OFF</span>
             </div>
           </div>
-        </div>
+        </section>
       </main>
       <Footer />
     </div>

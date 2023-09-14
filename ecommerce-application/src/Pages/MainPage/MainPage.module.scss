@@ -6,30 +6,90 @@
   display: flex;
   flex-direction: column;
 }
+
 .main {
   flex-grow: 1;
   padding: 1rem;
   height: 100%;
 }
-.links {
-  display: flex;
-  flex-direction: row;
-  align-items: start;
-  row-gap: 1rem;
+
+.section_main {
+  background-image: url('/src/assets/img/main_backgroud.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 500px;
   margin-bottom: 20px;
-  li {
-    list-style-type: none;
-  }
 }
-.link {
-  font-size: 1.5rem;
-  margin-right: 10px;
-  @media (max-width: $mobile-width) {
-    font-size: 18px;
+
+.circle_container {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  height: 500px;
+  transform: translateX(-50%);
+  width: 60%;
+}
+
+.circle {
+  position: absolute;
+  background-image: url('/src/assets/img/circle.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 750px;
+  height: 750px;
+  animation: rounded 20s infinite linear;
+}
+
+.fruit_image {
+  background-image: url('/src/assets/img/lemon.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 60%;
+  height: 775px;
+  margin: 0 auto;
+  margin-top: 4%;
+  height: 500px;
+  vertical-align: middle;
+  animation: rotate-flower 45s infinite linear;
+}
+
+@keyframes rounded {
+  0% {
+      transform: rotate(0deg);
+  }
+  50% {
+      transform: rotate(180deg);
+  }
+  100% {
+      transform: rotate(360deg);
   }
 }
 
-.info_block {
+@keyframes rotate-flower {
+  0% {
+      transform: rotate(0deg);
+      transform-origin: bottom;
+  }
+  25% {
+      transform: rotate(8deg);
+  }
+  50% {
+      transform: rotate(0deg);
+  }
+
+  75% {
+      transform: rotate(-8deg);
+  }
+  100% {
+      transform: rotate(0deg);
+  }
+}
+
+.promocodes_block {
   display: flex;
   justify-content: center;
   width: 100%;
