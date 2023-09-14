@@ -1,14 +1,33 @@
 import { BsCart3 } from 'react-icons/bs';
 import { AiOutlineDelete } from 'react-icons/ai';
+import { useState } from 'react';
 import { IItemData } from '../../../../types/types';
 import { CartItem } from '../CartItem/CartItem';
 import styles from './NotEmptyBasketContent.module.scss';
+import { Modal } from '../../../modal';
 
 // eslint-disable-next-line max-lines-per-function
 export function NotEmptyBasketContent(props: {
   cartItemsData: IItemData[];
+  setEmpty: React.Dispatch<React.SetStateAction<boolean>>;
 }): React.ReactElement {
-  const { cartItemsData } = props;
+  const { cartItemsData, setEmpty } = props;
+
+  const [modalActive, setModalActive] = useState(false);
+
+  const handleClearButton = (): void => {
+    setModalActive(true);
+  };
+
+  const handleApproveButton = (): void => {
+    // request
+    setEmpty(true);
+  };
+
+  const handleCancelButton = (): void => {
+    setModalActive(false);
+  };
+
   const cartList = cartItemsData.map((cartItemData) => (
     <li key={cartItemData.id} className={styles.item}>
       <CartItem itemData={cartItemData} />
@@ -21,7 +40,11 @@ export function NotEmptyBasketContent(props: {
           <BsCart3 className={styles.title_icon} />
           <h3 className={styles.page_title}>My Cart</h3>
         </div>
-        <button className={styles.clear_button} type="button">
+        <button
+          className={styles.clear_button}
+          type="button"
+          onClick={handleClearButton}
+        >
           <AiOutlineDelete className={styles.button_icon} />
           Clear Cart
         </button>
@@ -50,6 +73,36 @@ export function NotEmptyBasketContent(props: {
           </div>
         </div>
       </div>
+      {modalActive && (
+        <Modal active={modalActive} setActive={setModalActive} title="">
+          <div className={styles.block}>
+            <p className={styles.modal_text}>
+              Do you really want to clear your cart?
+            </p>
+            <div className={styles.modal_buttons_container}>
+              <button
+                className={styles.modal_button}
+                onClick={handleApproveButton}
+                type="button"
+              >
+                YES
+              </button>
+              <button
+                className={styles.modal_button}
+                onClick={handleCancelButton}
+                type="button"
+              >
+                NO
+              </button>
+            </div>
+            <img
+              className={styles.image}
+              src="/src/assets/img/modal_image.png"
+              alt="modal_image"
+            />
+          </div>
+        </Modal>
+      )}
     </main>
   );
 }
