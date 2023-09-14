@@ -5,6 +5,14 @@ import { Footer } from '../../components/Footer/Footer';
 
 // eslint-disable-next-line max-lines-per-function
 export function MainPage(): React.ReactElement {
+  const promoCode1Url = new URL(
+    '/src/assets/img/background_promo1.png',
+    import.meta.url,
+  ).href;
+  const promoCode2Url = new URL(
+    '/src/assets/img/background_promo2.jpg',
+    import.meta.url,
+  ).href;
   return (
     <div className={styles.main_page}>
       <Header />
@@ -36,7 +44,7 @@ export function MainPage(): React.ReactElement {
           <div className={styles.image_block}>
             <img
               className={styles.image}
-              src="/src/assets/img/background_promo1.png"
+              src={promoCode1Url}
               alt="promo_code"
             />
             <div className={styles.text_block}>
@@ -51,7 +59,7 @@ export function MainPage(): React.ReactElement {
           <div className={styles.image_block}>
             <img
               className={styles.image}
-              src="/src/assets/img/background_promo2.jpg"
+              src={promoCode2Url}
               alt="promo_code"
             />
             <div className={styles.text_block}>
