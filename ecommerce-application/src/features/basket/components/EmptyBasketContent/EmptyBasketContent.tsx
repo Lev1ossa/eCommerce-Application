@@ -1,12 +1,35 @@
+import { BsCart3 } from 'react-icons/bs';
+import { NavLink } from 'react-router-dom';
 import styles from './EmptyBasketContent.module.scss';
 
 export function EmptyBasketContent(): React.ReactElement {
+  const cartImageUrl = new URL(
+    '/src/assets/img/cart_image.jpg',
+    import.meta.url,
+  ).href;
   return (
     <main className={styles.main}>
       <div className={styles.container}>
-        <button className={styles.title} type="button">
-          EmptyBasket
-        </button>
+        <div className={styles.title_container}>
+          <BsCart3 className={styles.title_icon} />
+          <h3 className={styles.page_title}>My Cart</h3>
+        </div>
+        <div className={styles.content_block}>
+          <div className={styles.block}>
+            <h3 className={styles.title}>Your cart is empty</h3>
+            <p className={styles.text}>
+              Before proceed to checkout, you must add some products to your
+              cart. You will find a lot of interesting products on our
+              &quot;Catalog&ldquo; page.
+            </p>
+            <NavLink className={styles.link} to="/catalog">
+              Start Shopping
+            </NavLink>
+          </div>
+          <div className={styles.block}>
+            <img className={styles.image} src={cartImageUrl} alt="cart_image" />
+          </div>
+        </div>
       </div>
     </main>
   );
