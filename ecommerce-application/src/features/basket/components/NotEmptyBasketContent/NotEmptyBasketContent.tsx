@@ -43,7 +43,7 @@ export function NotEmptyBasketContent(props: {
       <div className={styles.container}>
         <div className={styles.title_container}>
           <BsCart3 className={styles.title_icon} />
-          <h3 className={styles.page_title}>My Cart</h3>
+          <h2 className={styles.page_title}>My Cart</h2>
         </div>
         <button
           className={styles.clear_button}

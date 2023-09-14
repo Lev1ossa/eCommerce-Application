@@ -19,24 +19,32 @@
 
 .title_container {
   display: flex;
-  width: 110px;
+  width: 130px;
   justify-content: space-between;
   align-self: center;
   .title_icon {
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 25px;
   }
 }
   
 .page_title {
   margin-bottom: 10px;
+  @media screen and (max-width: $tablet-width) {
+    font-size: 22px;
+    text-align: justify;
+  }
 }
 
 .content_block {
   width: 100%;
   height: 100%;
   display: flex;
-  
+  @media screen and (max-width: $mobile-width) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 .block {
@@ -46,22 +54,40 @@
   align-items: center;
   justify-content: center;
   text-align: center;
+  @media screen and (max-width: $mobile-width) {
+    width: 90%;
+  }
 }
 
 .title {
-  font-size: 22px;
   margin-bottom: 30px;
+  @media screen and (max-width: $tablet-width) {
+    font-size: 20px;
+    margin-bottom: 10px;
+    text-align: justify;
+  }
 }
 
 .image {
   display: block;
   width: 100%;
+  @media screen and (max-width: $mobile-width) {
+    width: 80%;
+  }
 }
 
 .text {
   color: var(--color-text-gray);
   width: 90%;
   margin-bottom: 30px;
+  @media screen and (max-width: $tablet-width) {
+    text-align:justify;
+  }
+  @media screen and (max-width: $mobile-width) {
+    text-align: center;
+    width: 100%;
+    margin-bottom: 15px;
+  }
 }
 
 .link {
@@ -76,5 +102,8 @@
     background-color: var(--color-orange);
     color: var(--color-text-light);
     transition: 0.2s all ease-in;
+  }
+  @media screen and (max-width: $mobile-width) {
+    margin-bottom: 10px;
   }
 }

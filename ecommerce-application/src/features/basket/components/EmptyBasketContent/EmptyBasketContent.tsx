@@ -12,11 +12,11 @@ export function EmptyBasketContent(): React.ReactElement {
       <div className={styles.container}>
         <div className={styles.title_container}>
           <BsCart3 className={styles.title_icon} />
-          <h3 className={styles.page_title}>My Cart</h3>
+          <h2 className={styles.page_title}>My Cart</h2>
         </div>
         <div className={styles.content_block}>
           <div className={styles.block}>
-            <h3 className={styles.title}>Your cart is empty</h3>
+            <h2 className={styles.title}>Your cart is empty</h2>
             <p className={styles.text}>
               Before proceed to checkout, you must add some products to your
               cart. You will find a lot of interesting products on our
