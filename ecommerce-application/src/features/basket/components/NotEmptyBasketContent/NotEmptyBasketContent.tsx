@@ -28,6 +28,11 @@ export function NotEmptyBasketContent(props: {
     setModalActive(false);
   };
 
+  const modalImageUrl = new URL(
+    '/src/assets/img/modal_image.png',
+    import.meta.url,
+  ).href;
+
   const cartList = cartItemsData.map((cartItemData) => (
     <li key={cartItemData.id} className={styles.item}>
       <CartItem itemData={cartItemData} />
@@ -97,7 +102,7 @@ export function NotEmptyBasketContent(props: {
             </div>
             <img
               className={styles.image}
-              src="/src/assets/img/modal_image.png"
+              src={modalImageUrl}
               alt="modal_image"
             />
           </div>
