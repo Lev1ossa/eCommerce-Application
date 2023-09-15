@@ -1,3 +1,4 @@
+import { AnimationBlock } from '../../animationBlock/AnimationBlock';
 import styles from './AboutUsContent.module.scss';
 
 export function AboutUsContent(): React.ReactElement {
@@ -5,8 +6,9 @@ export function AboutUsContent(): React.ReactElement {
     <main className={styles.main}>
       <div className={styles.container}>
         <div className={styles.title_container}>
-          <h2 className={styles.page_title}>Lorem ipsum dolor sit amet.</h2>
+          <h2 className={styles.page_title}>About Us</h2>
         </div>
+        <AnimationBlock />
         <div className={styles.content_block}>
           <div className={styles.block}>
             <h2 className={styles.title}>Lorem ipsum dolor sit amet.</h2>
