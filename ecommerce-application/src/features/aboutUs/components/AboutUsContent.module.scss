@@ -15,9 +15,8 @@
 }
 
 .title_container {
-  height: 100px;
+  height: 70px;
   font-size: calc(20px + (26 - 20) * ((100vw - 320px) / (1920 - 320)));
-  
   display: flex;
   justify-content: center;
   align-items: center;
