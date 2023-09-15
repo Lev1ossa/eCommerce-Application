@@ -34,6 +34,11 @@ export function Sidebar(props: {
         <NavLink className={`menu-item ${className}`} to="/catalog">
           Catalog
         </NavLink>
+        <li>
+          <NavLink className={`menu-item ${className}`} to="/about_us">
+            About Us
+          </NavLink>
+        </li>
         {!userLoggedIn && (
           <NavLink className={`menu-item ${className}`} to="/login">
             Login
