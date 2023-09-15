@@ -18,15 +18,16 @@
 
   --color-background-main-block: #f0f3f8;
   --color-background-container: #ffffff;
-  --color-background-text-block: rgba(35, 35, 35, 0.93);
+  --color-background-text-block: rgba(35, 35, 35, 0.8);
   --gradient-ligth-green: linear-gradient(to right, #78ffd6, #a8ff78);
 
   --shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   --shadow-light: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  --shadow-small: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  --shadow-small: rgba(102, 93, 93, 0.15) 1.95px 1.95px 2.6px;
   --shadow-middle: rgba(0, 0, 0, 0.2) 0px 60px 40px -7px;
 }
 
+$medium_width: 1200px;
 $small_width: 950px;
 $tablet-width: 768px;
 $mobile-width: 500px;

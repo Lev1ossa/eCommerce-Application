@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom';
 import { Header } from '../../components/Header/Header';
 import styles from './MainPage.module.scss';
 import { Footer } from '../../components/Footer/Footer';
@@ -17,6 +18,14 @@ export function MainPage(): React.ReactElement {
       <Header />
       <main className={styles.main}>
         <section className={styles.section_main}>
+          <div className={styles.main_text_block}>
+            <p className={styles.text_bold}>Fresh & Tasty</p>
+            <p className={styles.text_normal}>Fruits & Vegetables</p>
+            <p className={styles.text_small}>every day</p>
+            <NavLink className={styles.link} to="/catalog">
+              Start Shopping
+            </NavLink>
+          </div>
           <div className={styles.circle_container}>
             <div className={styles.circle} />
           </div>
