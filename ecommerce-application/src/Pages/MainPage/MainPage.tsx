@@ -1,8 +1,15 @@
+import { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Header } from '../../components/Header/Header';
-import styles from './MainPage.module.scss';
-import { Footer } from '../../components/Footer/Footer';
+import {
+  getAnonymousFlowApiRoot,
+  getClientCridentialsFlowApiRoot,
+} from '../../api/clientBuilder';
 import { addToCart, getActiveCart, removeFromCart } from '../../api/requests';
+import { Footer } from '../../components/Footer/Footer';
+import { Header } from '../../components/Header/Header';
+import { ApiRootContext } from '../../context/ApiRootContext';
+import { CustomTokenCache } from '../../features/autentification/utils/tokenCache';
+import styles from './MainPage.module.scss';
 
 // TODO Delete all handlers, imports and buttons
 const getCartHandler = (): void => {
@@ -46,6 +53,20 @@ const removeFromCartHandler = (): void => {
 
 // eslint-disable-next-line max-lines-per-function
 export function MainPage(): React.ReactElement {
+  const apiRoot = useContext(ApiRootContext);
+
+  const testClientCridentialsFlowApiRoot = (): void => {
+    const root = getClientCridentialsFlowApiRoot();
+    console.log('ClientCridentialsFlowApiRoot', root);
+    apiRoot.setFlowApiRoot(root);
+  };
+  const testAnonymousFlowApiRoot = (): void => {
+    const tokenCache = new CustomTokenCache();
+    const root = getAnonymousFlowApiRoot(tokenCache);
+    console.log('AnonymousFlowApiRoot', root);
+    apiRoot.setFlowApiRoot(root);
+  };
+
   const promoCode1Url = new URL(
     '/src/assets/img/background_promo1.png',
     import.meta.url,
@@ -113,6 +134,21 @@ export function MainPage(): React.ReactElement {
         </button>
         <button type="button" onClick={removeFromCartHandler}>
           Remove from cart
+        </button>
+        <br />
+        <button type="button" onClick={testClientCridentialsFlowApiRoot}>
+          save ApiRoot to Context
+        </button>
+        <br />
+        <button type="button" onClick={testAnonymousFlowApiRoot}>
+          rewrite clientCridentialsFlowApiRoot to AnonymousFlowApiRoot
+        </button>
+        <br />
+        <button
+          type="button"
+          onClick={(): void => console.log(apiRoot.flowApiRoot)}
+        >
+          get ApiRoot from Context
         </button>
       </main>
       <Footer />
