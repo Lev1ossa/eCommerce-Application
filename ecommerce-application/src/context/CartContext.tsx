@@ -1,17 +1,22 @@
-import { createContext, useCallback, useMemo, useState } from 'react';
+import { LineItem } from '@commercetools/platform-sdk';
+import {
+  createContext,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
+import { getActiveCart } from '../api/requests';
 
 type CartProviderProps = {
   children: React.ReactNode;
 };
-type CartItem = {
-  id: string;
-  count: number;
-};
+
 type CartContextProps = {
   isItemInCart: (id: string) => boolean;
-  addItemToCart: (id: string) => void;
   removeItemFromCart: (id: string) => void;
-  cartItems: CartItem[];
+  cartItems: LineItem[];
+  setCartItems: React.Dispatch<React.SetStateAction<LineItem[]>>;
 };
 export const CartContext = createContext({} as CartContextProps);
 
@@ -19,23 +24,33 @@ export const CartContext = createContext({} as CartContextProps);
 export function CartContextProvider({
   children,
 }: CartProviderProps): React.ReactElement {
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [cartItems, setCartItems] = useState<LineItem[]>([]);
+
+  useEffect(() => {
+    getActiveCart().then(
+      (result) => {
+        console.log('CART: ', result.body.lineItems);
+        setCartItems(result.body.lineItems);
+      },
+      (error: Error) => console.log(error),
+    );
+  }, []);
 
   const isItemInCart = useCallback(
     (id: string): boolean => {
-      return !!cartItems.find((cartItem) => cartItem.id === id);
+      return !!cartItems.find((cartItem) => cartItem.productId === id);
     },
     [cartItems],
   );
 
-  const addItemToCart = useCallback(
-    (id: string): void => {
-      if (!isItemInCart(id)) {
-        setCartItems((prev) => [...prev, { id, count: 1 }]);
-      }
-    },
-    [isItemInCart],
-  );
+  // const addItemToCart = useCallback(
+  //   (id: string): void => {
+  //     if (!isItemInCart(id)) {
+  //       setCartItems((prev) => [...prev, { id, count: 1 }]);
+  //     }
+  //   },
+  //   [isItemInCart],
+  // );
   const removeItemFromCart = useCallback(
     (id: string): void => {
       if (isItemInCart(id)) {
@@ -46,8 +61,13 @@ export function CartContextProvider({
   );
 
   const CartContextValue: CartContextProps = useMemo(
-    () => ({ addItemToCart, removeItemFromCart, isItemInCart, cartItems }),
-    [addItemToCart, removeItemFromCart, isItemInCart, cartItems],
+    () => ({
+      removeItemFromCart,
+      isItemInCart,
+      cartItems,
+      setCartItems,
+    }),
+    [removeItemFromCart, isItemInCart, cartItems, setCartItems],
   );
 
   return (
