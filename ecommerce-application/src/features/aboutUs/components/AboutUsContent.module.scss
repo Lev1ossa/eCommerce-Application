@@ -28,6 +28,45 @@
   line-height: 1.2;
 }
 
+.page_subtitle {
+  margin-bottom: 10px;
+  font-weight: 400;
+  font-style: oblique;
+  line-height: 1.2;
+  text-align: center;
+  position: relative;
+  @media screen and (max-width: $tablet-width) {
+    line-height: 1.1;
+    font-size: 12px;
+  }
+  @media screen and (max-width: $mobile-width) {
+    line-height: 1;
+    font-size: 10px;
+  }
+
+}
+
+.rs_logo {
+  background: url('https://app.rs.school/static/images/logo-rsschool3.png') center no-repeat;
+  background-size: contain;
+  margin-bottom: -12px;
+  display: inline-block;
+  margin-left: 15px;
+  height: 50px;
+  width: 70px;
+  transition: 0.3s;
+  &:hover {
+    transition: 0.3s;
+    transform: scale(1.1);
+  }
+  @media screen and (max-width: $mobile-width) {
+    margin-left: 5px;
+    margin-bottom: -6px;
+    height: 30px;
+    width: 50px;
+  }
+}
+
 .image {
   background: url('/src/assets/img/medium-shot-woman-holding-bananas.jpg') center no-repeat;
   background-size: cover;
@@ -58,7 +97,6 @@
 
 .text {
   font-size: calc(16px + (26 - 20) * ((100vw - 320px) / (1920 - 320)));
-  margin-bottom: 20px;
   text-align: justify;
   .link {
     color: var(--color-orange);
