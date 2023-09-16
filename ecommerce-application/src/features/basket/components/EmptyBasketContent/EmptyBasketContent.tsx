@@ -1,6 +1,7 @@
 import { BsCart3 } from 'react-icons/bs';
 import { NavLink } from 'react-router-dom';
 import styles from './EmptyBasketContent.module.scss';
+import { AnimationBlock } from '../../../animationBlock/AnimationBlock';
 
 export function EmptyBasketContent(): React.ReactElement {
   const cartImageUrl = new URL(
@@ -13,6 +14,7 @@ export function EmptyBasketContent(): React.ReactElement {
         <div className={styles.title_container}>
           <BsCart3 className={styles.title_icon} />
           <h2 className={styles.page_title}>My Cart</h2>
+          <AnimationBlock />
         </div>
         <div className={styles.content_block}>
           <div className={styles.block}>

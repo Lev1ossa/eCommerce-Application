@@ -5,6 +5,7 @@ import { IItemData } from '../../../../types/types';
 import { CartItem } from '../CartItem/CartItem';
 import styles from './NotEmptyBasketContent.module.scss';
 import { Modal } from '../../../modal';
+import { AnimationBlock } from '../../../animationBlock/AnimationBlock';
 
 // eslint-disable-next-line max-lines-per-function
 export function NotEmptyBasketContent(props: {
@@ -44,7 +45,9 @@ export function NotEmptyBasketContent(props: {
         <div className={styles.title_container}>
           <BsCart3 className={styles.title_icon} />
           <h2 className={styles.page_title}>My Cart</h2>
+          <AnimationBlock />
         </div>
+
         <button
           className={styles.clear_button}
           type="button"
