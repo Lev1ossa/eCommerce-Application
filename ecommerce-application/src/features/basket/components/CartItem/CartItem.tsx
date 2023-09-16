@@ -27,7 +27,7 @@ export function CartItem(props: {
     : '';
   const currentQuantity = itemData.quantity;
 
-  const increaseQuantity = (): void => {
+  const handleIncreaseQuantityButton = (): void => {
     getActiveCart().then(
       (cartResponse) => {
         const cart = cartResponse.body;
@@ -44,12 +44,29 @@ export function CartItem(props: {
     );
   };
 
-  const decreaseQuantity = (): void => {
+  const handleDecreaseQuantityButton = (): void => {
     getActiveCart().then(
       (cartResponse) => {
         const cart = cartResponse.body;
         const lineItemID = itemData.id;
         const quantity = 1;
+        removeFromCart(cart, lineItemID, quantity).then(
+          (result) => {
+            setCartData(result.body);
+          },
+          (error: Error) => console.log(error),
+        );
+      },
+      (error: Error) => console.log(error),
+    );
+  };
+
+  const handleDeleteButton = (): void => {
+    getActiveCart().then(
+      (cartResponse) => {
+        const cart = cartResponse.body;
+        const lineItemID = itemData.id;
+        const quantity = currentQuantity;
         removeFromCart(cart, lineItemID, quantity).then(
           (result) => {
             setCartData(result.body);
@@ -70,7 +87,7 @@ export function CartItem(props: {
       <div className={styles.quantity_block}>
         <button
           className={styles.quantity_button}
-          onClick={decreaseQuantity}
+          onClick={handleDecreaseQuantityButton}
           type="button"
         >
           -
@@ -78,7 +95,7 @@ export function CartItem(props: {
         <p className={styles.quantity}>{currentQuantity}</p>
         <button
           className={styles.quantity_button}
-          onClick={increaseQuantity}
+          onClick={handleIncreaseQuantityButton}
           type="button"
         >
           +
@@ -103,8 +120,8 @@ export function CartItem(props: {
         <div className={styles.price}>$ {validTotalPrice}</div>
       )}
       <MdOutlineClose
-        className={styles.close_button}
-        onClick={(): void => console.log(itemData.id)}
+        className={styles.delete_button}
+        onClick={handleDeleteButton}
       />
     </>
   );
