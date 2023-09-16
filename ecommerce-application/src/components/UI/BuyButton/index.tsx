@@ -3,9 +3,15 @@ import styles from './BuyButton.module.scss';
 export function BuyButton(props: {
   addProductToCart: () => void;
   changeIsInCartState: () => void;
+  addToCartHandler: () => void;
   isProductInCart: boolean;
 }): React.ReactElement {
-  const { isProductInCart, addProductToCart, changeIsInCartState } = props;
+  const {
+    isProductInCart,
+    addProductToCart,
+    addToCartHandler,
+    changeIsInCartState,
+  } = props;
 
   return (
     <button
@@ -17,6 +23,7 @@ export function BuyButton(props: {
       }
       onClick={(e): void => {
         addProductToCart();
+        addToCartHandler();
         changeIsInCartState();
         e.preventDefault();
       }}

@@ -1,7 +1,11 @@
 import { Image, ProductProjection } from '@commercetools/platform-sdk';
 import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { getProductBySlug } from '../../../../api/requests';
+import {
+  addToCart,
+  getActiveCart,
+  getProductBySlug,
+} from '../../../../api/requests';
 import { Loader } from '../../../../components/Loader';
 import { BuyButton } from '../../../../components/UI/BuyButton';
 import { CartContext } from '../../../../context/CartContext';
@@ -88,6 +92,22 @@ export function Product(props: {
   const addProductToCart = (): void => {
     cart.addItemToCart(productId);
   };
+
+  const addToCartHandler = (id: string): void => {
+    getActiveCart().then(
+      (cartResponse) => {
+        const cartBody = cartResponse.body;
+        // const productId = 'cb555e3d-7c53-4bd7-ac06-6de21d803716'; // banana
+        const quantity = 1;
+        addToCart(cartBody, id, quantity).then(
+          (result) => console.log('Add to cart result: ', result),
+          (error: Error) => console.log(error),
+        );
+      },
+      (error: Error) => console.log(error),
+    );
+  };
+
   return (
     <>
       {!isLoading ? (
@@ -135,6 +155,7 @@ export function Product(props: {
                   <BuyButton
                     isProductInCart={isProductInCart}
                     addProductToCart={addProductToCart}
+                    addToCartHandler={(): void => addToCartHandler(productId)}
                     changeIsInCartState={changeIsInCartState}
                   />
                   {isProductInCart && (
