@@ -14,6 +14,7 @@ import Select, { SingleValue } from 'react-select';
 import { CustomCategory, ICurrentFilters } from '../../../../types/types';
 import { sortOptions } from '../../constants/constants';
 import { getStartCategoryID } from '../../constants/utils';
+import BrandsList from '../BrandsList';
 import styles from './Sidebar.module.scss';
 
 // eslint-disable-next-line max-lines-per-function
@@ -218,16 +219,6 @@ export function CatalogSidebar(props: {
     // </Link>
   ));
 
-  const brandsList = brands.map((brand: string) => (
-    <li key={brand}>
-      <input
-        type="checkbox"
-        onChange={(event): void => handleBrandsClick(event, brand)}
-      />
-      <span className="text">{brand}</span>
-    </li>
-  ));
-
   const handleResetFilters = (): void => {
     setTrademarkProps(['']);
     setoriginFilterProps(['']);
@@ -342,13 +333,13 @@ export function CatalogSidebar(props: {
                 />
               </li>
               <li className={styles.brand}>
-                <ul className={styles.brand_list}>
-                  <strong>Brands</strong>
-                  {brandsList}
-                </ul>
+                <BrandsList
+                  brands={brands}
+                  handleBrandsClick={handleBrandsClick}
+                />
               </li>
               <li className={styles.brand}>
-                <ul className={styles.brand_list}>
+                <ul className={styles.origin_list}>
                   <strong>Origin</strong>
                   <li>
                     <input
