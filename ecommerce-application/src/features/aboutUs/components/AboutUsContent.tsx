@@ -23,6 +23,13 @@ export function AboutUsContent(): React.ReactElement {
             able to meet all project requirements and deliver e-commerce
             application that exceeded expectations.
           </p>
+          <h4 className={styles.page_subtitle}>
+            &#34;A huge thank you for the opportunity to write these lines here,
+            <a href="https://rs.school/js/">
+              <span className={styles.rs_logo} />
+            </a>
+            .&#34;
+          </h4>
           <AnimationBlock />
         </div>
       </div>
@@ -60,7 +67,7 @@ export function AboutUsContent(): React.ReactElement {
               page, cart page and this page. At RS School, she has gained a
               reputation as a tough reviewer. So she conducted extensive testing
               and debugging to ensure that the app is bug-free and works
-              flawlessly
+              flawlessly.
             </p>
           </div>
         </div>
@@ -97,7 +104,7 @@ export function AboutUsContent(): React.ReactElement {
               page, cart page and this page. At RS School, she has gained a
               reputation as a tough reviewer. So she conducted extensive testing
               and debugging to ensure that the app is bug-free and works
-              flawlessly
+              flawlessly.
             </p>
           </div>
         </div>
@@ -134,7 +141,7 @@ export function AboutUsContent(): React.ReactElement {
               page, cart page and this page. At RS School, she has gained a
               reputation as a tough reviewer. So she conducted extensive testing
               and debugging to ensure that the app is bug-free and works
-              flawlessly
+              flawlessly.
             </p>
           </div>
         </div>
