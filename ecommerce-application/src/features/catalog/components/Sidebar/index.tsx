@@ -1,3 +1,4 @@
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { FiSearch } from 'react-icons/fi';
 import {
   CSSObject,
@@ -8,13 +9,13 @@ import {
   menuClasses,
   sidebarClasses,
 } from 'react-pro-sidebar';
-import Select, { SingleValue } from 'react-select';
-import { ChangeEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { sortOptions } from '../../constants/constants';
-import styles from './Sidebar.module.scss';
+import Select, { SingleValue } from 'react-select';
 import { CustomCategory, ICurrentFilters } from '../../../../types/types';
+import { sortOptions } from '../../constants/constants';
 import { getStartCategoryID } from '../../constants/utils';
+import BrandsList from '../BrandsList';
+import styles from './Sidebar.module.scss';
 
 // eslint-disable-next-line max-lines-per-function
 export function CatalogSidebar(props: {
@@ -156,16 +157,19 @@ export function CatalogSidebar(props: {
     };
   }, [width]);
 
+  const didMount = useRef(false);
   useEffect(() => {
-    setcurrentFilters({
-      category: categoryFilterProps,
-      trademark: trademarkProps,
-      originFilter: originFilterProps,
-      lowerPrice: lowerPriceFilterProps,
-      higherPrice: higherPriceFilterProps,
-      sort: sortProps,
-      search: searchProps,
-    });
+    if (didMount.current) {
+      setcurrentFilters({
+        category: categoryFilterProps,
+        trademark: trademarkProps,
+        originFilter: originFilterProps,
+        lowerPrice: lowerPriceFilterProps,
+        higherPrice: higherPriceFilterProps,
+        sort: sortProps,
+        search: searchProps,
+      });
+    } else didMount.current = true;
   }, [
     setcurrentFilters,
     categoryFilterProps,
@@ -213,16 +217,6 @@ export function CatalogSidebar(props: {
       ))}
     </SubMenu>
     // </Link>
-  ));
-
-  const brandsList = brands.map((brand: string) => (
-    <li key={brand}>
-      <input
-        type="checkbox"
-        onChange={(event): void => handleBrandsClick(event, brand)}
-      />
-      <span className="text">{brand}</span>
-    </li>
   ));
 
   const handleResetFilters = (): void => {
@@ -339,13 +333,13 @@ export function CatalogSidebar(props: {
                 />
               </li>
               <li className={styles.brand}>
-                <ul className={styles.brand_list}>
-                  <strong>Brands</strong>
-                  {brandsList}
-                </ul>
+                <BrandsList
+                  brands={brands}
+                  handleBrandsClick={handleBrandsClick}
+                />
               </li>
               <li className={styles.brand}>
-                <ul className={styles.brand_list}>
+                <ul className={styles.origin_list}>
                   <strong>Origin</strong>
                   <li>
                     <input

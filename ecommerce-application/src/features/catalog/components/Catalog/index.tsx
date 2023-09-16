@@ -1,5 +1,6 @@
 import { ProductProjection } from '@commercetools/platform-sdk';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import {
   getCategories,
   getFilteredProductList,
@@ -9,7 +10,7 @@ import { Loader } from '../../../../components/Loader';
 import { CustomCategory, ICurrentFilters } from '../../../../types/types';
 import { Breadcrumb } from '../../../breadcrumb/components/Breadcrumps/Breadcrumb';
 import { Pagination } from '../Pagination';
-import { ProductCard } from '../ProductCard';
+import { ProductList } from '../ProductList';
 import { CatalogSidebar } from '../Sidebar';
 import styles from './Catalog.module.scss';
 
@@ -28,6 +29,7 @@ export function Catalog(props: {
   const [currentFilters, setcurrentFilters] = useState<
     Partial<ICurrentFilters>
   >({});
+  const location = useLocation();
 
   const getBrandsFromProducts = (productList: ProductProjection[]): void => {
     const brandsList = productList.map((product: ProductProjection) =>
@@ -41,9 +43,8 @@ export function Catalog(props: {
   useEffect(() => {
     getProductsList().then(
       (result) => {
-        setProducts(result.body.results);
-        setIsLoading(false);
         getBrandsFromProducts(result.body.results);
+        setIsLoading(false);
       },
       (error: Error) => {
         console.log(error);
@@ -88,14 +89,6 @@ export function Catalog(props: {
       },
     );
   }, []);
-
-  const catalog = products
-    ? products.map((product) => (
-        <li key={product.id} className={styles.item}>
-          <ProductCard product={product} />
-        </li>
-      ))
-    : [<h1 key={0}>No Products Found</h1>];
 
   // eslint-disable-next-line max-lines-per-function
   const getFilteredProducts = async (
@@ -165,9 +158,21 @@ export function Catalog(props: {
     );
   };
 
+  const didMount = useRef(false);
   useEffect(() => {
-    getFilteredProducts(currentFilters);
+    if (didMount.current) {
+      getFilteredProducts(currentFilters);
+    } else didMount.current = true;
   }, [currentFilters]);
+
+  useEffect(() => {
+    if (
+      location.pathname === '/catalog' &&
+      !Object.values(currentFilters).length
+    ) {
+      getFilteredProducts(currentFilters);
+    }
+  }, [currentFilters, location.pathname]);
 
   return (
     <>
@@ -184,9 +189,9 @@ export function Catalog(props: {
           subCategorySlug={subCategorySlug}
         />
         <div className={styles.catalog__content}>
-          <ul className={styles.grid}>{!isLoading ? catalog : <Loader />}</ul>
+          {!isLoading ? <ProductList products={products} /> : <Loader />}
           <div className={styles.pagination}>
-            <Pagination />
+            {!isLoading && <Pagination />}
           </div>
         </div>
       </div>
