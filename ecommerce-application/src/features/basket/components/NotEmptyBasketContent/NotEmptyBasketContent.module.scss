@@ -19,7 +19,7 @@
 
 .clear_button {
   position: absolute;
-  top: 15px;
+  top: 17px;
   right: 5px;
   background-color: var(--color-light-green);
   border: none;
@@ -54,6 +54,7 @@
   justify-content: center;
   align-items: center;
   font-size: calc(20px + (26 - 20) * ((100vw - 320px) / (1920 - 320)));
+  position: relative;
   .title_icon {
     width: 30px;
     height: 30px;

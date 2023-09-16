@@ -14,8 +14,8 @@ export function EmptyBasketContent(): React.ReactElement {
         <div className={styles.title_container}>
           <BsCart3 className={styles.title_icon} />
           <h2 className={styles.page_title}>My Cart</h2>
+          <AnimationBlock />
         </div>
-        <AnimationBlock />
         <div className={styles.content_block}>
           <div className={styles.block}>
             <h2 className={styles.title}>Your cart is empty</h2>
