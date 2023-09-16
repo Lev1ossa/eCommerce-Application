@@ -3,7 +3,12 @@ import {
   IRegistrationData,
   ToastTypes,
 } from '../../../types/types';
-import { createUser, getUser } from '../../../api/requests';
+import {
+  createCart,
+  createUser,
+  getActiveCart,
+  getUser,
+} from '../../../api/requests';
 import { showToast } from './showToast';
 import { CustomTokenCache } from './tokenCache';
 import { changeToken, createAnonymousToken } from '../../../api/tokenHandlers';
@@ -20,6 +25,12 @@ export const handleLogin = async (loginData: ILoginData): Promise<void> => {
           isLogin: true,
         });
       }
+      getActiveCart()
+        .then((result) => {
+          console.log(result);
+        })
+        .catch(() => createCart())
+        .catch((error: Error) => console.log(error));
     },
     (error: Error) => {
       showToast(ToastTypes.error, error.message);
