@@ -1,5 +1,6 @@
 import { ProductProjection } from '@commercetools/platform-sdk';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import {
   getCategories,
   getFilteredProductList,
@@ -28,6 +29,7 @@ export function Catalog(props: {
   const [currentFilters, setcurrentFilters] = useState<
     Partial<ICurrentFilters>
   >({});
+  const location = useLocation();
 
   const getBrandsFromProducts = (productList: ProductProjection[]): void => {
     const brandsList = productList.map((product: ProductProjection) =>
@@ -41,7 +43,6 @@ export function Catalog(props: {
   useEffect(() => {
     getProductsList().then(
       (result) => {
-        setProducts(result.body.results);
         setIsLoading(false);
         getBrandsFromProducts(result.body.results);
       },
@@ -165,9 +166,21 @@ export function Catalog(props: {
     );
   };
 
+  const didMount = useRef(false);
   useEffect(() => {
-    getFilteredProducts(currentFilters);
+    if (didMount.current) {
+      getFilteredProducts(currentFilters);
+    } else didMount.current = true;
   }, [currentFilters]);
+
+  useEffect(() => {
+    if (
+      location.pathname === '/catalog' &&
+      !Object.values(currentFilters).length
+    ) {
+      getFilteredProducts(currentFilters);
+    }
+  }, [currentFilters, location.pathname]);
 
   return (
     <>
