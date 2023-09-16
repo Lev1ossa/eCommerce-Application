@@ -2,6 +2,47 @@ import { NavLink } from 'react-router-dom';
 import { Header } from '../../components/Header/Header';
 import styles from './MainPage.module.scss';
 import { Footer } from '../../components/Footer/Footer';
+import { addToCart, getActiveCart, removeFromCart } from '../../api/requests';
+
+// TODO Delete all handlers, imports and buttons
+const getCartHandler = (): void => {
+  getActiveCart().then(
+    (result) => {
+      console.log('CART: ', result.body);
+    },
+    (error: Error) => console.log(error),
+  );
+};
+
+const addToCartHandler = (): void => {
+  getActiveCart().then(
+    (cartResponse) => {
+      const cart = cartResponse.body;
+      const productId = 'cb555e3d-7c53-4bd7-ac06-6de21d803716'; // banana
+      const quantity = 1;
+      addToCart(cart, productId, quantity).then(
+        (result) => console.log('Add to cart result: ', result),
+        (error: Error) => console.log(error),
+      );
+    },
+    (error: Error) => console.log(error),
+  );
+};
+
+const removeFromCartHandler = (): void => {
+  getActiveCart().then(
+    (cartResponse) => {
+      const cart = cartResponse.body;
+      const lineItemID = 'cf72446f-fae4-4ffa-8853-edc72e589cb4'; // id of line in cart
+      const quantity = 1;
+      removeFromCart(cart, lineItemID, quantity).then(
+        (result) => console.log('Remove from cart result: ', result),
+        (error: Error) => console.log(error),
+      );
+    },
+    (error: Error) => console.log(error),
+  );
+};
 
 // eslint-disable-next-line max-lines-per-function
 export function MainPage(): React.ReactElement {
@@ -64,6 +105,15 @@ export function MainPage(): React.ReactElement {
             </div>
           </div>
         </section>
+        <button type="button" onClick={getCartHandler}>
+          Get cart
+        </button>
+        <button type="button" onClick={addToCartHandler}>
+          Add to cart
+        </button>
+        <button type="button" onClick={removeFromCartHandler}>
+          Remove from cart
+        </button>
       </main>
       <Footer />
     </div>

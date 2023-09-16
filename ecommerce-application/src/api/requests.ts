@@ -1,5 +1,5 @@
 import {
-  CartPagedQueryResponse,
+  Cart,
   CategoryPagedQueryResponse,
   ClientResponse,
   Customer,
@@ -55,9 +55,14 @@ export const getUser = async (
 
 export const getAnonymousUser = async (
   tokenCache: TokenCache,
-): Promise<ClientResponse<CartPagedQueryResponse>> => {
+): Promise<ClientResponse<Cart>> => {
   const apiRoot = getAnonymousFlowApiRoot(tokenCache);
-  return apiRoot.withProjectKey({ projectKey }).me().carts().get().execute();
+  return apiRoot
+    .withProjectKey({ projectKey })
+    .me()
+    .carts()
+    .post({ body: { currency: 'USD', country: 'RU' } })
+    .execute();
 };
 
 export const getProductsList = async (): Promise<
@@ -172,5 +177,77 @@ export const updateCustomerPassword = async (
     .me()
     .password()
     .post({ body })
+    .execute();
+};
+
+export const getActiveCart = async (): Promise<ClientResponse<Cart>> => {
+  const apiRoot = getRefreshTokenFlowApiRoot(getRefreshToken());
+  return apiRoot
+    .withProjectKey({ projectKey })
+    .me()
+    .activeCart()
+    .get()
+    .execute();
+};
+
+export const createCart = async (): Promise<ClientResponse<Cart>> => {
+  const apiRoot = getRefreshTokenFlowApiRoot(getRefreshToken());
+  return apiRoot
+    .withProjectKey({ projectKey })
+    .me()
+    .carts()
+    .post({ body: { currency: 'USD', country: 'RU' } })
+    .execute();
+};
+
+export const addToCart = async (
+  cart: Cart,
+  productId: string,
+  quantity: number,
+): Promise<ClientResponse<Cart>> => {
+  const apiRoot = getRefreshTokenFlowApiRoot(getRefreshToken());
+  return apiRoot
+    .withProjectKey({ projectKey })
+    .me()
+    .carts()
+    .withId({ ID: cart.id })
+    .post({
+      body: {
+        version: cart.version,
+        actions: [
+          {
+            action: 'addLineItem',
+            productId,
+            quantity,
+          },
+        ],
+      },
+    })
+    .execute();
+};
+
+export const removeFromCart = async (
+  cart: Cart,
+  lineItemId: string,
+  quantity: number,
+): Promise<ClientResponse<Cart>> => {
+  const apiRoot = getRefreshTokenFlowApiRoot(getRefreshToken());
+  return apiRoot
+    .withProjectKey({ projectKey })
+    .me()
+    .carts()
+    .withId({ ID: cart.id })
+    .post({
+      body: {
+        version: cart.version,
+        actions: [
+          {
+            action: 'removeLineItem',
+            lineItemId,
+            quantity,
+          },
+        ],
+      },
+    })
     .execute();
 };

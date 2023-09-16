@@ -9,9 +9,14 @@ export const changeToken = (refreshToken: UserLogin): void => {
 
 export const createAnonymousToken = async (): Promise<void> => {
   const tokenCache = new CustomTokenCache();
-  await getAnonymousUser(tokenCache).catch((error: Error) => {
-    showToast(ToastTypes.error, error.message);
-  });
+  await getAnonymousUser(tokenCache).then(
+    (result) => {
+      console.log('CART', result);
+    },
+    (error: Error) => {
+      showToast(ToastTypes.error, error.message);
+    },
+  );
   const { refreshToken } = tokenCache.get();
   if (refreshToken) {
     changeToken({
