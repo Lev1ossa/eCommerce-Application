@@ -1,28 +1,62 @@
 import { BsCart3 } from 'react-icons/bs';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { useState } from 'react';
-import { IItemData } from '../../../../types/types';
+import { Cart, MyCartUpdateAction } from '@commercetools/platform-sdk';
 import { CartItem } from '../CartItem/CartItem';
 import styles from './NotEmptyBasketContent.module.scss';
 import { Modal } from '../../../modal';
 import { AnimationBlock } from '../../../animationBlock/AnimationBlock';
+import { clearCart, getActiveCart } from '../../../../api/requests';
 
 // eslint-disable-next-line max-lines-per-function
 export function NotEmptyBasketContent(props: {
-  cartItemsData: IItemData[];
-  setEmpty: React.Dispatch<React.SetStateAction<boolean>>;
+  cartData: Cart | undefined;
+  setCartData: React.Dispatch<React.SetStateAction<Cart | undefined>>;
 }): React.ReactElement {
-  const { cartItemsData, setEmpty } = props;
+  const { cartData, setCartData } = props;
+
+  const [isButtonsDisabled, setIsButtonsDisabled] = useState(false);
 
   const [modalActive, setModalActive] = useState(false);
+
+  const getCart = (): void => {
+    getActiveCart().then(
+      (result) => {
+        setCartData(result.body);
+      },
+      (error: Error) => console.log(error),
+    );
+  };
+
+  const totalCoast = cartData ? cartData.totalPrice.centAmount / 100 : null;
 
   const handleClearButton = (): void => {
     setModalActive(true);
   };
 
   const handleApproveButton = (): void => {
-    // request
-    setEmpty(true);
+    setIsButtonsDisabled(true);
+    getActiveCart().then(
+      (cartResponse) => {
+        const cart = cartResponse.body;
+        const actions: MyCartUpdateAction[] = cart.lineItems.map((lineItem) => {
+          return {
+            action: 'removeLineItem',
+            lineItemId: lineItem.id,
+            quantity: lineItem.quantity,
+          };
+        });
+        clearCart(cart, actions).then(
+          (result) => {
+            setCartData(result.body);
+            setIsButtonsDisabled(false);
+            getCart();
+          },
+          (error: Error) => console.log(error),
+        );
+      },
+      (error: Error) => console.log(error),
+    );
   };
 
   const handleCancelButton = (): void => {
@@ -34,9 +68,9 @@ export function NotEmptyBasketContent(props: {
     import.meta.url,
   ).href;
 
-  const cartList = cartItemsData.map((cartItemData) => (
+  const cartList = cartData?.lineItems.map((cartItemData) => (
     <li key={cartItemData.id} className={styles.item}>
-      <CartItem itemData={cartItemData} />
+      <CartItem itemData={cartItemData} setCartData={setCartData} />
     </li>
   ));
   return (
@@ -47,10 +81,10 @@ export function NotEmptyBasketContent(props: {
           <h2 className={styles.page_title}>My Cart</h2>
           <AnimationBlock />
         </div>
-
         <button
           className={styles.clear_button}
           type="button"
+          disabled={isButtonsDisabled}
           onClick={handleClearButton}
         >
           <AiOutlineDelete className={styles.button_icon} />
@@ -76,8 +110,8 @@ export function NotEmptyBasketContent(props: {
         <div className={styles.subtotal}>
           <div className={styles.subtotal_title}>SUBTOTAL</div>
           <div className={styles.prices_container}>
-            <div className={styles.price_new}>$ 72</div>
-            <div className={styles.price_old}>$ 52</div>
+            <div className={styles.price_new}>$ {totalCoast}</div>
+            <div className={styles.price_old}>$ {totalCoast}</div>
           </div>
         </div>
       </div>
@@ -91,6 +125,7 @@ export function NotEmptyBasketContent(props: {
               <button
                 className={styles.modal_button}
                 onClick={handleApproveButton}
+                disabled={isButtonsDisabled}
                 type="button"
               >
                 YES

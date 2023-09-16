@@ -4,6 +4,7 @@ import {
   ClientResponse,
   Customer,
   CustomerSignInResult,
+  MyCartUpdateAction,
   MyCustomerChangePassword,
   MyCustomerSignin,
   MyCustomerUpdate,
@@ -247,6 +248,25 @@ export const removeFromCart = async (
             quantity,
           },
         ],
+      },
+    })
+    .execute();
+};
+
+export const clearCart = async (
+  cart: Cart,
+  actions: MyCartUpdateAction[],
+): Promise<ClientResponse<Cart>> => {
+  const apiRoot = getRefreshTokenFlowApiRoot(getRefreshToken());
+  return apiRoot
+    .withProjectKey({ projectKey })
+    .me()
+    .carts()
+    .withId({ ID: cart.id })
+    .post({
+      body: {
+        version: cart.version,
+        actions,
       },
     })
     .execute();
