@@ -43,8 +43,8 @@ export function Catalog(props: {
   useEffect(() => {
     getProductsList().then(
       (result) => {
-        setIsLoading(false);
         getBrandsFromProducts(result.body.results);
+        setIsLoading(false);
       },
       (error: Error) => {
         console.log(error);
@@ -89,14 +89,6 @@ export function Catalog(props: {
       },
     );
   }, []);
-
-  const catalog = products
-    ? products.map((product) => (
-        <li key={product.id} className={styles.item}>
-          <ProductCard product={product} />
-        </li>
-      ))
-    : [<h1 key={0}>No Products Found</h1>];
 
   // eslint-disable-next-line max-lines-per-function
   const getFilteredProducts = async (
@@ -197,9 +189,19 @@ export function Catalog(props: {
           subCategorySlug={subCategorySlug}
         />
         <div className={styles.catalog__content}>
-          <ul className={styles.grid}>{!isLoading ? catalog : <Loader />}</ul>
+          <ul className={styles.grid}>
+            {!isLoading ? (
+              products.map((product) => (
+                <li key={product.id} className={styles.item}>
+                  <ProductCard product={product} />
+                </li>
+              ))
+            ) : (
+              <Loader />
+            )}
+          </ul>
           <div className={styles.pagination}>
-            <Pagination />
+            {!isLoading && <Pagination />}
           </div>
         </div>
       </div>
