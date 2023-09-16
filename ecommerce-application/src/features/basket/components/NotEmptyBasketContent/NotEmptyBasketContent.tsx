@@ -1,12 +1,12 @@
 import { BsCart3 } from 'react-icons/bs';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { useState } from 'react';
-import { Cart } from '@commercetools/platform-sdk';
+import { Cart, MyCartUpdateAction } from '@commercetools/platform-sdk';
 import { CartItem } from '../CartItem/CartItem';
 import styles from './NotEmptyBasketContent.module.scss';
 import { Modal } from '../../../modal';
 import { AnimationBlock } from '../../../animationBlock/AnimationBlock';
-import { getActiveCart } from '../../../../api/requests';
+import { clearCart, getActiveCart } from '../../../../api/requests';
 
 // eslint-disable-next-line max-lines-per-function
 export function NotEmptyBasketContent(props: {
@@ -14,6 +14,8 @@ export function NotEmptyBasketContent(props: {
   setCartData: React.Dispatch<React.SetStateAction<Cart | undefined>>;
 }): React.ReactElement {
   const { cartData, setCartData } = props;
+
+  const [isButtonsDisabled, setIsButtonsDisabled] = useState(false);
 
   const [modalActive, setModalActive] = useState(false);
 
@@ -33,7 +35,28 @@ export function NotEmptyBasketContent(props: {
   };
 
   const handleApproveButton = (): void => {
-    getCart();
+    setIsButtonsDisabled(true);
+    getActiveCart().then(
+      (cartResponse) => {
+        const cart = cartResponse.body;
+        const actions: MyCartUpdateAction[] = cart.lineItems.map((lineItem) => {
+          return {
+            action: 'removeLineItem',
+            lineItemId: lineItem.id,
+            quantity: lineItem.quantity,
+          };
+        });
+        clearCart(cart, actions).then(
+          (result) => {
+            setCartData(result.body);
+            setIsButtonsDisabled(false);
+            getCart();
+          },
+          (error: Error) => console.log(error),
+        );
+      },
+      (error: Error) => console.log(error),
+    );
   };
 
   const handleCancelButton = (): void => {
@@ -61,6 +84,7 @@ export function NotEmptyBasketContent(props: {
         <button
           className={styles.clear_button}
           type="button"
+          disabled={isButtonsDisabled}
           onClick={handleClearButton}
         >
           <AiOutlineDelete className={styles.button_icon} />
@@ -101,6 +125,7 @@ export function NotEmptyBasketContent(props: {
               <button
                 className={styles.modal_button}
                 onClick={handleApproveButton}
+                disabled={isButtonsDisabled}
                 type="button"
               >
                 YES
