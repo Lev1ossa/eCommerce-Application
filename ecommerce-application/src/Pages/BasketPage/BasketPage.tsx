@@ -16,6 +16,7 @@ export function BasketPage(): React.ReactElement {
     getActiveCart().then(
       (result) => {
         setCartData(result.body);
+        setIsLoading(false);
       },
       (error: Error) => console.log(error),
     );
@@ -23,7 +24,6 @@ export function BasketPage(): React.ReactElement {
 
   useEffect(() => {
     getCart();
-    setIsLoading(false);
   }, []);
 
   const content = !cartData?.lineItems.length ? (
