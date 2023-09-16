@@ -47,7 +47,7 @@ export function ProductCard(props: {
         const cartBody = cartResponse.body;
         const quantity = 1;
         addToCart(cartBody, productId, quantity).then(
-          (result) => console.log('Add to cart result: ', result),
+          () => cart.getCart(),
           (error: Error) => console.log(error),
         );
       },

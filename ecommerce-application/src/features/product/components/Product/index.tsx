@@ -79,6 +79,7 @@ export function Product(props: {
       productImages = images;
     }
   }
+
   useEffect(() => {
     setIsProductInCart(cart.isItemInCart(productId));
   }, [cart, productId]);
@@ -96,7 +97,7 @@ export function Product(props: {
         const cartBody = cartResponse.body;
         const quantity = 1;
         addToCart(cartBody, id, quantity).then(
-          (result) => console.log('Add to cart result: ', result),
+          () => cart.getCart(),
           (error: Error) => console.log(error),
         );
       },
@@ -150,7 +151,6 @@ export function Product(props: {
                 <div className={styles.button}>
                   <BuyButton
                     isProductInCart={isProductInCart}
-                    // addProductToCart={addProductToCart}
                     addToCartHandler={(): void => addToCartHandler(productId)}
                     changeIsInCartState={changeIsInCartState}
                   />
