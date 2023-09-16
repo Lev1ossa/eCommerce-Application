@@ -1,15 +1,23 @@
 import { MdOutlineClose } from 'react-icons/md';
 import { useState } from 'react';
-import { IItemData } from '../../../../types/types';
+import { LineItem } from '@commercetools/platform-sdk';
 import styles from './CartItem.module.scss';
 
 // eslint-disable-next-line max-lines-per-function
-export function CartItem(props: { itemData: IItemData }): React.ReactElement {
+export function CartItem(props: { itemData: LineItem }): React.ReactElement {
   const { itemData } = props;
-  const validPrice = itemData.price / 100;
-  const validDiscountedPrice = itemData.discountedPrice / 100;
-  const validTotalPrice = itemData.totalPrice / 100;
-  const validTotalDiscountedPrice = itemData.totalPriceDiscounted / 100;
+  const validPrice = itemData.variant.prices
+    ? itemData.variant.prices[0].value.centAmount / 100
+    : null;
+  const validDiscountedPrice =
+    itemData.variant.prices && itemData.variant.prices[0].discounted
+      ? itemData.variant.prices[0].discounted.value.centAmount / 100
+      : null;
+  const validTotalPrice = itemData.totalPrice.centAmount / 100;
+  const validTotalDiscountedPrice = itemData.totalPrice.centAmount / 100;
+  const imageSrc = itemData.variant.images
+    ? itemData.variant.images[0].url
+    : '';
 
   const [currentQuantity, setCurrentQuantity] = useState(itemData.quantity);
 
@@ -28,8 +36,8 @@ export function CartItem(props: { itemData: IItemData }): React.ReactElement {
   return (
     <>
       <div className={styles.product_block}>
-        <img src={itemData.image} className={styles.image} alt="product" />
-        <p className={styles.name}>{itemData.name}</p>
+        <img src={imageSrc} className={styles.image} alt="product" />
+        <p className={styles.name}>{itemData.name.en}</p>
       </div>
       <div className={styles.quantity_block}>
         <button
@@ -48,22 +56,22 @@ export function CartItem(props: { itemData: IItemData }): React.ReactElement {
           +
         </button>
       </div>
-      {itemData.discountedPrice && (
+      {validDiscountedPrice && (
         <div className={styles.prices_container}>
           <div className={styles.price_new}>$ {validDiscountedPrice}</div>
           <div className={styles.price_old}>$ {validPrice}</div>
         </div>
       )}
-      {!itemData.discountedPrice && (
+      {!validDiscountedPrice && (
         <div className={styles.price}>$ {validPrice}</div>
       )}
-      {itemData.totalPriceDiscounted && (
+      {validTotalDiscountedPrice && (
         <div className={styles.prices_container}>
           <div className={styles.price_new}>$ {validTotalDiscountedPrice}</div>
           <div className={styles.price_old}>$ {validTotalPrice}</div>
         </div>
       )}
-      {!itemData.totalPriceDiscounted && (
+      {!validTotalDiscountedPrice && (
         <div className={styles.price}>$ {validTotalPrice}</div>
       )}
       <MdOutlineClose

@@ -1,28 +1,39 @@
 import { BsCart3 } from 'react-icons/bs';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { useState } from 'react';
-import { IItemData } from '../../../../types/types';
+import { Cart } from '@commercetools/platform-sdk';
 import { CartItem } from '../CartItem/CartItem';
 import styles from './NotEmptyBasketContent.module.scss';
 import { Modal } from '../../../modal';
 import { AnimationBlock } from '../../../animationBlock/AnimationBlock';
+import { getActiveCart } from '../../../../api/requests';
 
 // eslint-disable-next-line max-lines-per-function
 export function NotEmptyBasketContent(props: {
-  cartItemsData: IItemData[];
-  setEmpty: React.Dispatch<React.SetStateAction<boolean>>;
+  cartData: Cart | undefined;
+  setCartData: React.Dispatch<React.SetStateAction<Cart | undefined>>;
 }): React.ReactElement {
-  const { cartItemsData, setEmpty } = props;
+  const { cartData, setCartData } = props;
 
   const [modalActive, setModalActive] = useState(false);
+
+  const getCart = (): void => {
+    getActiveCart().then(
+      (result) => {
+        setCartData(result.body);
+      },
+      (error: Error) => console.log(error),
+    );
+  };
+
+  const totalCoast = cartData ? cartData.totalPrice.centAmount / 100 : null;
 
   const handleClearButton = (): void => {
     setModalActive(true);
   };
 
   const handleApproveButton = (): void => {
-    // request
-    setEmpty(true);
+    getCart();
   };
 
   const handleCancelButton = (): void => {
@@ -34,7 +45,7 @@ export function NotEmptyBasketContent(props: {
     import.meta.url,
   ).href;
 
-  const cartList = cartItemsData.map((cartItemData) => (
+  const cartList = cartData?.lineItems.map((cartItemData) => (
     <li key={cartItemData.id} className={styles.item}>
       <CartItem itemData={cartItemData} />
     </li>
@@ -47,7 +58,6 @@ export function NotEmptyBasketContent(props: {
           <h2 className={styles.page_title}>My Cart</h2>
           <AnimationBlock />
         </div>
-
         <button
           className={styles.clear_button}
           type="button"
@@ -76,8 +86,8 @@ export function NotEmptyBasketContent(props: {
         <div className={styles.subtotal}>
           <div className={styles.subtotal_title}>SUBTOTAL</div>
           <div className={styles.prices_container}>
-            <div className={styles.price_new}>$ 72</div>
-            <div className={styles.price_old}>$ 52</div>
+            <div className={styles.price_new}>$ {totalCoast}</div>
+            <div className={styles.price_old}>$ {totalCoast}</div>
           </div>
         </div>
       </div>
