@@ -1,6 +1,7 @@
 import { ProductProjection } from '@commercetools/platform-sdk';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { addToCart, getActiveCart } from '../../../../api/requests';
 import { BuyButton } from '../../../../components/UI/BuyButton';
 import { CartContext } from '../../../../context/CartContext';
 import styles from './ProductCard.module.scss';
@@ -9,8 +10,9 @@ import styles from './ProductCard.module.scss';
 export function ProductCard(props: {
   product: ProductProjection;
 }): React.ReactElement {
-  const cart = useContext(CartContext);
   const [isProductInCart, setIsProductInCart] = useState(false);
+
+  const cart = useContext(CartContext);
 
   const { product } = props;
   const { id } = product;
@@ -38,8 +40,19 @@ export function ProductCard(props: {
   const changeIsInCartState = (): void => {
     setIsProductInCart(true);
   };
-  const addProductToCart = (): void => {
-    cart.addItemToCart(id);
+
+  const addToCartHandler = (productId: string): void => {
+    getActiveCart().then(
+      (cartResponse) => {
+        const cartBody = cartResponse.body;
+        const quantity = 1;
+        addToCart(cartBody, productId, quantity).then(
+          (result) => console.log('Add to cart result: ', result),
+          (error: Error) => console.log(error),
+        );
+      },
+      (error: Error) => console.log(error),
+    );
   };
 
   return (
@@ -73,7 +86,7 @@ export function ProductCard(props: {
         </div>
         <BuyButton
           isProductInCart={isProductInCart}
-          addProductToCart={addProductToCart}
+          addToCartHandler={(): void => addToCartHandler(product.id)}
           changeIsInCartState={changeIsInCartState}
         />
       </div>

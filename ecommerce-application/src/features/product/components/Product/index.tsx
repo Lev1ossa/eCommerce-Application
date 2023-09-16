@@ -89,15 +89,11 @@ export function Product(props: {
   const removeProductFromCart = (): void => {
     cart.removeItemFromCart(productId);
   };
-  const addProductToCart = (): void => {
-    cart.addItemToCart(productId);
-  };
 
   const addToCartHandler = (id: string): void => {
     getActiveCart().then(
       (cartResponse) => {
         const cartBody = cartResponse.body;
-        // const productId = 'cb555e3d-7c53-4bd7-ac06-6de21d803716'; // banana
         const quantity = 1;
         addToCart(cartBody, id, quantity).then(
           (result) => console.log('Add to cart result: ', result),
@@ -154,7 +150,7 @@ export function Product(props: {
                 <div className={styles.button}>
                   <BuyButton
                     isProductInCart={isProductInCart}
-                    addProductToCart={addProductToCart}
+                    // addProductToCart={addProductToCart}
                     addToCartHandler={(): void => addToCartHandler(productId)}
                     changeIsInCartState={changeIsInCartState}
                   />
