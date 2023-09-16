@@ -36,10 +36,6 @@ export function ProductCard(props: {
     setIsProductInCart(cart.isItemInCart(id));
   }, [cart, id]);
 
-  const changeIsInCartState = (): void => {
-    setIsProductInCart(true);
-  };
-
   const addToCartHandler = (): void => {
     cart.addItemToCart(id);
   };
@@ -76,7 +72,6 @@ export function ProductCard(props: {
         <BuyButton
           isProductInCart={isProductInCart}
           addToCartHandler={addToCartHandler}
-          changeIsInCartState={changeIsInCartState}
         />
       </div>
     </Link>

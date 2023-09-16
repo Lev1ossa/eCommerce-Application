@@ -138,7 +138,6 @@ export function Product(props: {
                   <BuyButton
                     isProductInCart={isProductInCart}
                     addToCartHandler={addToCartHandler}
-                    changeIsInCartState={changeIsInCartState}
                   />
                   {isProductInCart && (
                     <RemoveButton

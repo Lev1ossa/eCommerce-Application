@@ -1,11 +1,10 @@
 import styles from './BuyButton.module.scss';
 
 export function BuyButton(props: {
-  changeIsInCartState: () => void;
   addToCartHandler: () => void;
   isProductInCart: boolean;
 }): React.ReactElement {
-  const { isProductInCart, addToCartHandler, changeIsInCartState } = props;
+  const { isProductInCart, addToCartHandler } = props;
 
   return (
     <button
@@ -17,7 +16,6 @@ export function BuyButton(props: {
       }
       onClick={(e): void => {
         addToCartHandler();
-        changeIsInCartState();
         e.preventDefault();
       }}
     >
