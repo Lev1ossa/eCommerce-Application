@@ -1,10 +1,18 @@
 import { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
+import { MyCartUpdateAction } from '@commercetools/platform-sdk';
 import {
   getAnonymousFlowApiRoot,
   getClientCridentialsFlowApiRoot,
 } from '../../api/clientBuilder';
-import { addToCart, getActiveCart, removeFromCart } from '../../api/requests';
+import {
+  addPromocodeToCart,
+  addToCart,
+  clearCart,
+  getActiveCart,
+  removeFromCart,
+  removePromocodeFromCart,
+} from '../../api/requests';
 import { Footer } from '../../components/Footer/Footer';
 import { Header } from '../../components/Header/Header';
 import { ApiRootContext } from '../../context/ApiRootContext';
@@ -25,7 +33,7 @@ const addToCartHandler = (): void => {
   getActiveCart().then(
     (cartResponse) => {
       const cart = cartResponse.body;
-      const productId = 'cb555e3d-7c53-4bd7-ac06-6de21d803716'; // banana
+      const productId = '32d901f5-a0f1-4828-be13-f8d422474229'; // lemon
       const quantity = 1;
       addToCart(cart, productId, quantity).then(
         (result) => console.log('Add to cart result: ', result),
@@ -44,6 +52,64 @@ const removeFromCartHandler = (): void => {
       const quantity = 1;
       removeFromCart(cart, lineItemID, quantity).then(
         (result) => console.log('Remove from cart result: ', result),
+        (error: Error) => console.log(error),
+      );
+    },
+    (error: Error) => console.log(error),
+  );
+};
+
+const clearCartHandler = (): void => {
+  getActiveCart().then(
+    (cartResponse) => {
+      const cart = cartResponse.body;
+      // every time needs actual data from cart
+      const lineItemId1 = '32d901f5-a0f1-4828-be13-f8d422474229'; // id of line in cart
+      const lineItemId2 = '32d901f5-a0f1-4828-be13-f8d422474229'; // id of line in cart
+      const quantity1 = 1;
+      const quantity2 = 1;
+      const actions: MyCartUpdateAction[] = [
+        {
+          action: 'removeLineItem',
+          lineItemId: lineItemId1,
+          quantity: quantity1,
+        },
+        {
+          action: 'removeLineItem',
+          lineItemId: lineItemId2,
+          quantity: quantity2,
+        },
+      ];
+      clearCart(cart, actions).then(
+        (result) => console.log('Remove from cart result: ', result),
+        (error: Error) => console.log(error),
+      );
+    },
+    (error: Error) => console.log(error),
+  );
+};
+
+const addPromocodeToCartHandler = (): void => {
+  getActiveCart().then(
+    (cartResponse) => {
+      const cart = cartResponse.body;
+      const code = 'citrus_summer';
+      addPromocodeToCart(cart, code).then(
+        (result) => console.log('Add to cart result: ', result),
+        (error: Error) => console.log(error),
+      );
+    },
+    (error: Error) => console.log(error),
+  );
+};
+
+const removePromocodeFromCartHandler = (): void => {
+  getActiveCart().then(
+    (cartResponse) => {
+      const cart = cartResponse.body;
+      const discountCodeID = '3278faa3-6595-4147-bf30-e525b3bb1fed'; // id of promocode;
+      removePromocodeFromCart(cart, discountCodeID).then(
+        (result) => console.log('Add to cart result: ', result),
         (error: Error) => console.log(error),
       );
     },
@@ -129,11 +195,25 @@ export function MainPage(): React.ReactElement {
         <button type="button" onClick={getCartHandler}>
           Get cart
         </button>
+        <br />
         <button type="button" onClick={addToCartHandler}>
           Add to cart
         </button>
+        <br />
         <button type="button" onClick={removeFromCartHandler}>
           Remove from cart
+        </button>
+        <br />
+        <button type="button" onClick={clearCartHandler}>
+          clear cart
+        </button>
+        <br />
+        <button type="button" onClick={addPromocodeToCartHandler}>
+          Add promocode to cart
+        </button>
+        <br />
+        <button type="button" onClick={removePromocodeFromCartHandler}>
+          Remove promocode from cart
         </button>
         <br />
         <button type="button" onClick={testClientCridentialsFlowApiRoot}>

@@ -253,6 +253,57 @@ export const removeFromCart = async (
     .execute();
 };
 
+export const addPromocodeToCart = async (
+  cart: Cart,
+  code: string,
+): Promise<ClientResponse<Cart>> => {
+  const apiRoot = getRefreshTokenFlowApiRoot(getRefreshToken());
+  return apiRoot
+    .withProjectKey({ projectKey })
+    .me()
+    .carts()
+    .withId({ ID: cart.id })
+    .post({
+      body: {
+        version: cart.version,
+        actions: [
+          {
+            action: 'addDiscountCode',
+            code,
+          },
+        ],
+      },
+    })
+    .execute();
+};
+
+export const removePromocodeFromCart = async (
+  cart: Cart,
+  discountCodeID: string,
+): Promise<ClientResponse<Cart>> => {
+  const apiRoot = getRefreshTokenFlowApiRoot(getRefreshToken());
+  return apiRoot
+    .withProjectKey({ projectKey })
+    .me()
+    .carts()
+    .withId({ ID: cart.id })
+    .post({
+      body: {
+        version: cart.version,
+        actions: [
+          {
+            action: 'removeDiscountCode',
+            discountCode: {
+              typeId: 'discount-code',
+              id: discountCodeID,
+            },
+          },
+        ],
+      },
+    })
+    .execute();
+};
+
 export const clearCart = async (
   cart: Cart,
   actions: MyCartUpdateAction[],
