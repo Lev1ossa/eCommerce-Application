@@ -47,7 +47,7 @@ export function NotEmptyBasketContent(props: {
 
   const cartList = cartData?.lineItems.map((cartItemData) => (
     <li key={cartItemData.id} className={styles.item}>
-      <CartItem itemData={cartItemData} />
+      <CartItem itemData={cartItemData} setCartData={setCartData} />
     </li>
   ));
   return (
