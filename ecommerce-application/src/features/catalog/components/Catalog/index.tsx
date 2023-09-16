@@ -10,7 +10,7 @@ import { Loader } from '../../../../components/Loader';
 import { CustomCategory, ICurrentFilters } from '../../../../types/types';
 import { Breadcrumb } from '../../../breadcrumb/components/Breadcrumps/Breadcrumb';
 import { Pagination } from '../Pagination';
-import { ProductCard } from '../ProductCard';
+import { ProductList } from '../ProductList';
 import { CatalogSidebar } from '../Sidebar';
 import styles from './Catalog.module.scss';
 
@@ -189,17 +189,7 @@ export function Catalog(props: {
           subCategorySlug={subCategorySlug}
         />
         <div className={styles.catalog__content}>
-          <ul className={styles.grid}>
-            {!isLoading ? (
-              products.map((product) => (
-                <li key={product.id} className={styles.item}>
-                  <ProductCard product={product} />
-                </li>
-              ))
-            ) : (
-              <Loader />
-            )}
-          </ul>
+          {!isLoading ? <ProductList products={products} /> : <Loader />}
           <div className={styles.pagination}>
             {!isLoading && <Pagination />}
           </div>
