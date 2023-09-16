@@ -1,11 +1,7 @@
 import { Image, ProductProjection } from '@commercetools/platform-sdk';
 import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import {
-  addToCart,
-  getActiveCart,
-  getProductBySlug,
-} from '../../../../api/requests';
+import { getProductBySlug } from '../../../../api/requests';
 import { Loader } from '../../../../components/Loader';
 import { BuyButton } from '../../../../components/UI/BuyButton';
 import { CartContext } from '../../../../context/CartContext';
@@ -91,18 +87,8 @@ export function Product(props: {
     cart.removeItemFromCart(productId);
   };
 
-  const addToCartHandler = (id: string): void => {
-    getActiveCart().then(
-      (cartResponse) => {
-        const cartBody = cartResponse.body;
-        const quantity = 1;
-        addToCart(cartBody, id, quantity).then(
-          () => cart.getCart(),
-          (error: Error) => console.log(error),
-        );
-      },
-      (error: Error) => console.log(error),
-    );
+  const addToCartHandler = (): void => {
+    cart.addItemToCart(productId);
   };
 
   return (
@@ -151,7 +137,7 @@ export function Product(props: {
                 <div className={styles.button}>
                   <BuyButton
                     isProductInCart={isProductInCart}
-                    addToCartHandler={(): void => addToCartHandler(productId)}
+                    addToCartHandler={addToCartHandler}
                     changeIsInCartState={changeIsInCartState}
                   />
                   {isProductInCart && (
