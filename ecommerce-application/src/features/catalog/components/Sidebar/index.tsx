@@ -1,3 +1,4 @@
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { FiSearch } from 'react-icons/fi';
 import {
   CSSObject,
@@ -8,13 +9,12 @@ import {
   menuClasses,
   sidebarClasses,
 } from 'react-pro-sidebar';
-import Select, { SingleValue } from 'react-select';
-import { ChangeEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { sortOptions } from '../../constants/constants';
-import styles from './Sidebar.module.scss';
+import Select, { SingleValue } from 'react-select';
 import { CustomCategory, ICurrentFilters } from '../../../../types/types';
+import { sortOptions } from '../../constants/constants';
 import { getStartCategoryID } from '../../constants/utils';
+import styles from './Sidebar.module.scss';
 
 // eslint-disable-next-line max-lines-per-function
 export function CatalogSidebar(props: {
@@ -156,16 +156,19 @@ export function CatalogSidebar(props: {
     };
   }, [width]);
 
+  const didMount = useRef(false);
   useEffect(() => {
-    setcurrentFilters({
-      category: categoryFilterProps,
-      trademark: trademarkProps,
-      originFilter: originFilterProps,
-      lowerPrice: lowerPriceFilterProps,
-      higherPrice: higherPriceFilterProps,
-      sort: sortProps,
-      search: searchProps,
-    });
+    if (didMount.current) {
+      setcurrentFilters({
+        category: categoryFilterProps,
+        trademark: trademarkProps,
+        originFilter: originFilterProps,
+        lowerPrice: lowerPriceFilterProps,
+        higherPrice: higherPriceFilterProps,
+        sort: sortProps,
+        search: searchProps,
+      });
+    } else didMount.current = true;
   }, [
     setcurrentFilters,
     categoryFilterProps,
