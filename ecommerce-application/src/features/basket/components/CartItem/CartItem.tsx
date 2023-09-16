@@ -1,5 +1,6 @@
 import { MdOutlineClose } from 'react-icons/md';
 import { Cart, LineItem } from '@commercetools/platform-sdk';
+import { useState } from 'react';
 import styles from './CartItem.module.scss';
 import {
   addToCart,
@@ -13,6 +14,9 @@ export function CartItem(props: {
   setCartData: React.Dispatch<React.SetStateAction<Cart | undefined>>;
 }): React.ReactElement {
   const { itemData, setCartData } = props;
+
+  const [isButtonsDisabled, setIsButtonsDisabled] = useState(false);
+
   const validPrice = itemData.variant.prices
     ? itemData.variant.prices[0].value.centAmount / 100
     : null;
@@ -28,6 +32,7 @@ export function CartItem(props: {
   const currentQuantity = itemData.quantity;
 
   const handleIncreaseQuantityButton = (): void => {
+    setIsButtonsDisabled(true);
     getActiveCart().then(
       (cartResponse) => {
         const cart = cartResponse.body;
@@ -36,6 +41,7 @@ export function CartItem(props: {
         addToCart(cart, productId, quantity).then(
           (result) => {
             setCartData(result.body);
+            setIsButtonsDisabled(false);
           },
           (error: Error) => console.log(error),
         );
@@ -45,6 +51,7 @@ export function CartItem(props: {
   };
 
   const handleDecreaseQuantityButton = (): void => {
+    setIsButtonsDisabled(true);
     getActiveCart().then(
       (cartResponse) => {
         const cart = cartResponse.body;
@@ -53,6 +60,7 @@ export function CartItem(props: {
         removeFromCart(cart, lineItemID, quantity).then(
           (result) => {
             setCartData(result.body);
+            setIsButtonsDisabled(false);
           },
           (error: Error) => console.log(error),
         );
@@ -62,6 +70,7 @@ export function CartItem(props: {
   };
 
   const handleDeleteButton = (): void => {
+    setIsButtonsDisabled(true);
     getActiveCart().then(
       (cartResponse) => {
         const cart = cartResponse.body;
@@ -70,6 +79,7 @@ export function CartItem(props: {
         removeFromCart(cart, lineItemID, quantity).then(
           (result) => {
             setCartData(result.body);
+            setIsButtonsDisabled(false);
           },
           (error: Error) => console.log(error),
         );
@@ -88,6 +98,7 @@ export function CartItem(props: {
         <button
           className={styles.quantity_button}
           onClick={handleDecreaseQuantityButton}
+          disabled={isButtonsDisabled}
           type="button"
         >
           -
@@ -96,6 +107,7 @@ export function CartItem(props: {
         <button
           className={styles.quantity_button}
           onClick={handleIncreaseQuantityButton}
+          disabled={isButtonsDisabled}
           type="button"
         >
           +
@@ -119,10 +131,14 @@ export function CartItem(props: {
       {!validTotalDiscountedPrice && (
         <div className={styles.price}>$ {validTotalPrice}</div>
       )}
-      <MdOutlineClose
+      <button
         className={styles.delete_button}
         onClick={handleDeleteButton}
-      />
+        type="button"
+        disabled={isButtonsDisabled}
+      >
+        <MdOutlineClose className={styles.delete_icon} />
+      </button>
     </>
   );
 }

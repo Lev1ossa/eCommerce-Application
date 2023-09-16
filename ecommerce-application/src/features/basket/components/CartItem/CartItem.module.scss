@@ -110,6 +110,17 @@
 }
 
 .delete_button {
+  background-color: inherit;
+  border: none;
+  &:disabled {
+    cursor: not-allowed;
+    .delete_icon {
+      color: var(--color-light-gray);
+    }
+  }
+}
+
+.delete_icon {
   width: 20px;
   height: 20px;
   cursor: pointer;
