@@ -1,7 +1,11 @@
 import { MdOutlineClose } from 'react-icons/md';
 import { Cart, LineItem } from '@commercetools/platform-sdk';
 import styles from './CartItem.module.scss';
-import { addToCart, getActiveCart } from '../../../../api/requests';
+import {
+  addToCart,
+  getActiveCart,
+  removeFromCart,
+} from '../../../../api/requests';
 
 // eslint-disable-next-line max-lines-per-function
 export function CartItem(props: {
@@ -40,12 +44,22 @@ export function CartItem(props: {
     );
   };
 
-  /* const decreaseQuantity = (): void => {
-    const decreasedСurrentQuantity = currentQuantity - 1;
-    if (decreasedСurrentQuantity >= 1) {
-      setCurrentQuantity(decreasedСurrentQuantity);
-    }
-  }; */
+  const decreaseQuantity = (): void => {
+    getActiveCart().then(
+      (cartResponse) => {
+        const cart = cartResponse.body;
+        const lineItemID = itemData.id;
+        const quantity = 1;
+        removeFromCart(cart, lineItemID, quantity).then(
+          (result) => {
+            setCartData(result.body);
+          },
+          (error: Error) => console.log(error),
+        );
+      },
+      (error: Error) => console.log(error),
+    );
+  };
 
   return (
     <>
@@ -56,7 +70,7 @@ export function CartItem(props: {
       <div className={styles.quantity_block}>
         <button
           className={styles.quantity_button}
-          onClick={increaseQuantity}
+          onClick={decreaseQuantity}
           type="button"
         >
           -
