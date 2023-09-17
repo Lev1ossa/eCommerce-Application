@@ -246,7 +246,7 @@
   font-family: inherit;
   height: 30px;
   padding: 0 10px;
-  &:hover {
+  &:not(:disabled):hover {
     background-color: var(--color-orange);
     color: var(--color-text-light);
   }
@@ -270,6 +270,7 @@
     background-color: inherit;
     text-align: center;
     transition: 0.2s all ease-in;
+    cursor: pointer;
     &:hover {
       transition: 0.2s all ease-in;
       color: var(--color-light-green);

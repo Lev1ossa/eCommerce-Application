@@ -27,7 +27,22 @@ export function NotEmptyBasketContent(props: {
   setCartData: React.Dispatch<React.SetStateAction<Cart | undefined>>;
 }): React.ReactElement {
   const { cartData, setCartData } = props;
+
   const totalCoast = cartData ? cartData.totalPrice.centAmount / 100 : null;
+
+  const totalOldCoast = cartData?.lineItems.reduce((acc, currentVal) => {
+    if (currentVal.price.discounted) {
+      return (
+        acc +
+        (currentVal.price.discounted.value.centAmount * currentVal.quantity) /
+          100
+      );
+    }
+    return (
+      acc + (currentVal.price.value.centAmount * currentVal.quantity) / 100
+    );
+  }, 0);
+
   const promocodesId = cartData?.discountCodes.map((el) => {
     return {
       id: el.discountCode.id,
@@ -164,6 +179,15 @@ export function NotEmptyBasketContent(props: {
       })
     : null;
 
+  const subtotalContent = cartData?.discountCodes.length ? (
+    <div className={styles.prices_container}>
+      <div className={styles.price_new}>$ {totalCoast?.toFixed(2)}</div>
+      <div className={styles.price}>$ {totalOldCoast?.toFixed(2)}</div>
+    </div>
+  ) : (
+    <div className={styles.price_new}>$ {totalCoast?.toFixed(2)}</div>
+  );
+
   return (
     <main className={styles.main}>
       <div className={styles.container}>
@@ -189,7 +213,7 @@ export function NotEmptyBasketContent(props: {
         </div>
         <ul className={styles.list}>{cartList}</ul>
         <div className={styles.promocode_container}>
-          <div className={styles.input_block}>
+          <form className={styles.input_block}>
             <input
               value={inputValue}
               className={styles.input}
@@ -202,21 +226,18 @@ export function NotEmptyBasketContent(props: {
               className={styles.input_button}
               onClick={handleApplyPromocodeButton}
               disabled={!inputValue}
-              type="button"
+              type="submit"
             >
               APPLY PROMO CODE
             </button>
-          </div>
+          </form>
           <div className={styles.promocodesBlock}>
             {!isLoading ? promoBlockContent : <Loader />}
           </div>
         </div>
         <div className={styles.subtotal}>
           <div className={styles.subtotal_title}>SUBTOTAL</div>
-          <div className={styles.prices_container}>
-            <div className={styles.price_new}>$ {totalCoast}</div>
-            <div className={styles.price_old}>$ {totalCoast}</div>
-          </div>
+          {subtotalContent}
         </div>
       </div>
       {modalActive && (

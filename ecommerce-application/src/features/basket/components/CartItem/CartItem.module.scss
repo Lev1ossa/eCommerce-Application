@@ -83,6 +83,15 @@
   @media screen and (max-width: $mobile-width) {
     width: 70px;
   }
+  .price {
+    text-decoration: line-through;
+    @media screen and (max-width: $tablet-width) {
+      font-size: 0.7rem;
+    }
+    @media screen and (max-width: $mobile-width) {
+      font-size: 0.6rem;
+    }
+  }
 }
 
 .price_old {
