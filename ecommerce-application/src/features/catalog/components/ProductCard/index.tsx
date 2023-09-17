@@ -1,6 +1,7 @@
 import { ProductProjection } from '@commercetools/platform-sdk';
 import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { addToCart, getActiveCart } from '../../../../api/requests';
 import { BuyButton } from '../../../../components/UI/BuyButton';
 import { BuyCountButton } from '../../../../components/UI/BuyCountButton';
 import { CartContext } from '../../../../context/CartContext';
@@ -11,6 +12,7 @@ export function ProductCard(props: {
   product: ProductProjection;
 }): React.ReactElement {
   const [isProductInCart, setIsProductInCart] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [productCount, setProductCount] = useState(1);
 
   const cart = useContext(CartContext);
@@ -40,7 +42,21 @@ export function ProductCard(props: {
   }, [cart, id]);
 
   const addToCartHandler = (): void => {
-    cart.addItemToCart(id);
+    setIsLoading(true);
+    getActiveCart().then(
+      (cartResponse) => {
+        const cartBody = cartResponse.body;
+        const quantity = 1;
+        addToCart(cartBody, id, quantity).then(
+          () => {
+            cart.getCart();
+            setIsLoading(false);
+          },
+          (error: Error) => console.log(error),
+        );
+      },
+      (error: Error) => console.log(error),
+    );
   };
 
   return (
@@ -74,6 +90,7 @@ export function ProductCard(props: {
         </div>
         {isProductInCart ? (
           <BuyCountButton
+            isLoading={isLoading}
             addToCartHandler={addToCartHandler}
             productCount={productCount}
           />

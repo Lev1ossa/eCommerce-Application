@@ -1,23 +1,18 @@
-import { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
-import { CartContext } from '../../../context/CartContext';
 import styles from './BuyCountButton.module.scss';
 
+// eslint-disable-next-line max-lines-per-function
 export function BuyCountButton(props: {
   addToCartHandler: () => void;
   productCount: number;
+  isLoading: boolean;
 }): React.ReactElement {
-  const { addToCartHandler, productCount } = props;
+  const { addToCartHandler, productCount, isLoading } = props;
 
-  const cart = useContext(CartContext);
   return (
     <div className={styles.container}>
       <NavLink to="/cart" className={styles.button_container}>
-        <button
-          type="button"
-          className={styles.button}
-          disabled={cart.isLoading}
-        >
+        <button type="button" className={styles.button} disabled={isLoading}>
           to cart
         </button>
       </NavLink>
@@ -29,7 +24,7 @@ export function BuyCountButton(props: {
         <button
           type="button"
           className={styles.count_button}
-          disabled={cart.isLoading}
+          disabled={isLoading}
           onClick={(e): void => {
             addToCartHandler();
             e.preventDefault();

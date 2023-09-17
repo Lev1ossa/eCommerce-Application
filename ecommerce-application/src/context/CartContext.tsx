@@ -64,12 +64,16 @@ export function CartContextProvider({
   );
   const addItemToCart = useCallback(
     (id: string): void => {
+      setIsLoading(true);
       getActiveCart().then(
         (cartResponse) => {
           const cartBody = cartResponse.body;
           const quantity = 1;
           addToCart(cartBody, id, quantity).then(
-            () => getCart(),
+            () => {
+              getCart();
+              setIsLoading(false);
+            },
             (error: Error) => console.log(error),
           );
         },
