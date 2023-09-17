@@ -1,7 +1,11 @@
 import { BsCart3 } from 'react-icons/bs';
 import { AiOutlineDelete } from 'react-icons/ai';
-import { useState } from 'react';
-import { Cart, MyCartUpdateAction } from '@commercetools/platform-sdk';
+import { useEffect, useState } from 'react';
+import {
+  Cart,
+  DiscountCode,
+  MyCartUpdateAction,
+} from '@commercetools/platform-sdk';
 import { CartItem } from '../CartItem/CartItem';
 import styles from './NotEmptyBasketContent.module.scss';
 import { Modal } from '../../../modal';
@@ -10,9 +14,12 @@ import {
   addPromocodeToCart,
   clearCart,
   getActiveCart,
+  getDiscountCodes,
+  removePromocodeFromCart,
 } from '../../../../api/requests';
 import { showToast } from '../../../autentification/utils/showToast';
 import { ToastTypes } from '../../../../types/types';
+import { Loader } from '../../../../components/Loader';
 
 // eslint-disable-next-line max-lines-per-function
 export function NotEmptyBasketContent(props: {
@@ -24,15 +31,33 @@ export function NotEmptyBasketContent(props: {
   const promocodesId = cartData?.discountCodes.map((el) => {
     return {
       id: el.discountCode.id,
-      name: 'citrus_summer',
+      name: '',
     };
   });
 
   const [isButtonsDisabled, setIsButtonsDisabled] = useState(false);
 
+  const [isLoading, setIsLoading] = useState(true);
+
+  const [promocodes, setPromocodes] = useState<DiscountCode[]>();
+
   const [modalActive, setModalActive] = useState(false);
 
   const [inputValue, setInputValue] = useState('');
+
+  const getPromocodes = (): void => {
+    getDiscountCodes().then(
+      (result) => {
+        setPromocodes(result.body.results);
+        setIsLoading(false);
+      },
+      (error: Error) => console.log(error),
+    );
+  };
+
+  useEffect(() => {
+    getPromocodes();
+  }, []);
 
   const getCart = (): void => {
     getActiveCart().then(
@@ -84,7 +109,7 @@ export function NotEmptyBasketContent(props: {
         addPromocodeToCart(cart, code).then(
           (result) => {
             showToast(ToastTypes.success, `Promo code was applied!`);
-            console.log('Add to cart result: ', result);
+            setCartData(result.body);
           },
           () => showToast(ToastTypes.error, 'Such promo code was not found!'),
         );
@@ -106,23 +131,34 @@ export function NotEmptyBasketContent(props: {
   ));
 
   const handleRemoveButton = (id: string): void => {
-    console.log(id);
+    getActiveCart().then(
+      (cartResponse) => {
+        const cart = cartResponse.body;
+        const discountCodeID = id;
+        removePromocodeFromCart(cart, discountCodeID).then(
+          (result) => setCartData(result.body),
+          (error: Error) => console.log(error),
+        );
+      },
+      (error: Error) => console.log(error),
+    );
   };
 
   const promoBlockContent = promocodesId
     ? promocodesId.map((el) => {
         return (
           <span className={styles.promocode} key={el.id}>
-            {el.name}
-            <button
+            {
+              promocodes?.find((elem) => {
+                return elem.id === el.id;
+              })?.code
+            }
+            <AiOutlineDelete
               className={styles.remove_button}
               onClick={(): void => {
                 handleRemoveButton(el.id);
               }}
-              type="button"
-            >
-              x
-            </button>
+            />
           </span>
         );
       })
@@ -171,7 +207,9 @@ export function NotEmptyBasketContent(props: {
               APPLY PROMO CODE
             </button>
           </div>
-          <div className={styles.promocodesBlock}>{promoBlockContent}</div>
+          <div className={styles.promocodesBlock}>
+            {!isLoading ? promoBlockContent : <Loader />}
+          </div>
         </div>
         <div className={styles.subtotal}>
           <div className={styles.subtotal_title}>SUBTOTAL</div>
