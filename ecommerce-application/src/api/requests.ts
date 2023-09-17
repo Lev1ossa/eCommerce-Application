@@ -4,6 +4,8 @@ import {
   ClientResponse,
   Customer,
   CustomerSignInResult,
+  DiscountCode,
+  DiscountCodePagedQueryResponse,
   MyCartUpdateAction,
   MyCustomerChangePassword,
   MyCustomerSignin,
@@ -320,5 +322,24 @@ export const clearCart = async (
         actions,
       },
     })
+    .execute();
+};
+
+export const getDiscountCodes = async (): Promise<
+  ClientResponse<DiscountCodePagedQueryResponse>
+> => {
+  const apiRoot = getRefreshTokenFlowApiRoot(getRefreshToken());
+  return apiRoot.withProjectKey({ projectKey }).discountCodes().get().execute();
+};
+
+export const getDiscountCodeByID = async (
+  discountID: string,
+): Promise<ClientResponse<DiscountCode>> => {
+  const apiRoot = getRefreshTokenFlowApiRoot(getRefreshToken());
+  return apiRoot
+    .withProjectKey({ projectKey })
+    .discountCodes()
+    .withId({ ID: discountID })
+    .get()
     .execute();
 };

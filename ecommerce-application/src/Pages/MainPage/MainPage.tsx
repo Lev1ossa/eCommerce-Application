@@ -10,6 +10,8 @@ import {
   addToCart,
   clearCart,
   getActiveCart,
+  getDiscountCodeByID,
+  getDiscountCodes,
   removeFromCart,
   removePromocodeFromCart,
 } from '../../api/requests';
@@ -117,6 +119,21 @@ const removePromocodeFromCartHandler = (): void => {
   );
 };
 
+const getDiscountCodesHandler = (): void => {
+  getDiscountCodes().then(
+    (result) => console.log('Promocodes :', result),
+    (error: Error) => console.log(error),
+  );
+};
+
+const getDiscountCodeByIDHandler = (): void => {
+  const discountID = '3278faa3-6595-4147-bf30-e525b3bb1fed';
+  getDiscountCodeByID(discountID).then(
+    (result) => console.log('Promocodes :', result),
+    (error: Error) => console.log(error),
+  );
+};
+
 // eslint-disable-next-line max-lines-per-function
 export function MainPage(): React.ReactElement {
   const apiRoot = useContext(ApiRootContext);
@@ -214,6 +231,14 @@ export function MainPage(): React.ReactElement {
         <br />
         <button type="button" onClick={removePromocodeFromCartHandler}>
           Remove promocode from cart
+        </button>
+        <br />
+        <button type="button" onClick={getDiscountCodesHandler}>
+          get discount codes
+        </button>
+        <br />
+        <button type="button" onClick={getDiscountCodeByIDHandler}>
+          get discount code by id (citrus)
         </button>
         <br />
         <button type="button" onClick={testClientCridentialsFlowApiRoot}>
