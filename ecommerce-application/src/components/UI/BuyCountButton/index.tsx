@@ -4,10 +4,12 @@ import styles from './BuyCountButton.module.scss';
 // eslint-disable-next-line max-lines-per-function
 export function BuyCountButton(props: {
   addToCartHandler: () => void;
+  removeFromCartHandler: () => void;
   productCount: number;
   isLoading: boolean;
 }): React.ReactElement {
-  const { addToCartHandler, productCount, isLoading } = props;
+  const { addToCartHandler, removeFromCartHandler, productCount, isLoading } =
+    props;
 
   const navigate = useNavigate();
 
@@ -29,7 +31,15 @@ export function BuyCountButton(props: {
         to cart
       </button>
       <div className={styles.counter_container}>
-        <button type="button" className={styles.count_button}>
+        <button
+          type="button"
+          className={styles.count_button}
+          disabled={isLoading}
+          onClick={(e): void => {
+            removeFromCartHandler();
+            e.preventDefault();
+          }}
+        >
           -
         </button>
         <div className={styles.counter}>{productCount}</div>
