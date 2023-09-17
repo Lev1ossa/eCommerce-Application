@@ -213,6 +213,7 @@ export function Product(props: {
                   )}
                   {isProductInCart && (
                     <RemoveButton
+                      isLoading={isCartLoading}
                       changeIsInCartState={changeIsInCartState}
                       removeFromCartHandler={removeAllHandler}
                     />
