@@ -12,7 +12,7 @@ export function BuyCountButton(props: {
   const cart = useContext(CartContext);
   return (
     <div className={styles.container}>
-      <NavLink to="/cart">
+      <NavLink to="/cart" className={styles.button_container}>
         <button
           type="button"
           className={styles.button}
@@ -21,21 +21,23 @@ export function BuyCountButton(props: {
           in cart
         </button>
       </NavLink>
-      <button type="button" className={styles.count_button}>
-        -
-      </button>
-      <div className={styles.counter}>{productCount}</div>
-      <button
-        type="button"
-        className={styles.count_button}
-        disabled={cart.isLoading}
-        onClick={(e): void => {
-          addToCartHandler();
-          e.preventDefault();
-        }}
-      >
-        +
-      </button>
+      <div className={styles.counter_container}>
+        <button type="button" className={styles.count_button}>
+          -
+        </button>
+        <div className={styles.counter}>{productCount}</div>
+        <button
+          type="button"
+          className={styles.count_button}
+          disabled={cart.isLoading}
+          onClick={(e): void => {
+            addToCartHandler();
+            e.preventDefault();
+          }}
+        >
+          +
+        </button>
+      </div>
     </div>
   );
 }

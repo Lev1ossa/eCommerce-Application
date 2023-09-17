@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { getProductBySlug } from '../../../../api/requests';
 import { Loader } from '../../../../components/Loader';
 import { BuyButton } from '../../../../components/UI/BuyButton';
+import { BuyCountButton } from '../../../../components/UI/BuyCountButton';
 import { CartContext } from '../../../../context/CartContext';
 import { ToastTypes } from '../../../../types/types';
 import { showToast } from '../../../autentification/utils/showToast';
@@ -26,6 +27,7 @@ export function Product(props: {
   const [product, setProduct] = useState<ProductProjection>();
   const [isLoading, setIsLoading] = useState(true);
   const [isProductInCart, setIsProductInCart] = useState(false);
+  const [productCount, setProductCount] = useState(1);
 
   const productCard = useLocation();
 
@@ -78,6 +80,7 @@ export function Product(props: {
 
   useEffect(() => {
     setIsProductInCart(cart.isItemInCart(productId));
+    setProductCount(cart.getItemCount(productId));
   }, [cart, productId]);
 
   const changeIsInCartState = (): void => {
@@ -135,10 +138,17 @@ export function Product(props: {
                   {trademark}
                 </div>
                 <div className={styles.button}>
-                  <BuyButton
-                    isProductInCart={isProductInCart}
-                    addToCartHandler={addToCartHandler}
-                  />
+                  {isProductInCart ? (
+                    <BuyCountButton
+                      addToCartHandler={addToCartHandler}
+                      productCount={productCount}
+                    />
+                  ) : (
+                    <BuyButton
+                      isProductInCart={isProductInCart}
+                      addToCartHandler={addToCartHandler}
+                    />
+                  )}
                   {isProductInCart && (
                     <RemoveButton
                       changeIsInCartState={changeIsInCartState}
