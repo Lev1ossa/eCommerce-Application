@@ -14,15 +14,16 @@ import styles from './ProductCard.module.scss';
 // eslint-disable-next-line max-lines-per-function
 export function ProductCard(props: {
   product: ProductProjection;
+  isLoading: boolean;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }): React.ReactElement {
   const [isProductInCart, setIsProductInCart] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [productCount, setProductCount] = useState(1);
   const [lineItemID, setLineItemID] = useState('');
 
   const cart = useContext(CartContext);
 
-  const { product } = props;
+  const { product, isLoading, setIsLoading } = props;
   const { id } = product;
   const slug = product.slug.en;
   const name = product.name.en;
@@ -123,6 +124,7 @@ export function ProductCard(props: {
           />
         ) : (
           <BuyButton
+            isLoading={isLoading}
             isProductInCart={isProductInCart}
             addToCartHandler={addToCartHandler}
           />
