@@ -18,7 +18,6 @@ type CartContextProps = {
   getLineItemId: (id: string) => string;
   removeItemFromCart: (id: string) => void;
   getCart: () => void;
-  cartItems: LineItem[];
   setCartItems: React.Dispatch<React.SetStateAction<LineItem[]>>;
   isLoading: boolean;
 };

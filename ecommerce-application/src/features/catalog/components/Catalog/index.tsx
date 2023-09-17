@@ -24,6 +24,7 @@ export function Catalog(props: {
   const [isLoading, setIsLoading] = useState(true);
   const [brands, setBrands] = useState<string[]>([]);
   const [totalProductsCount, setTotalProductsCount] = useState(0);
+  const [productOffset, setProductOffset] = useState(0);
   const [productCategories, setProductCategories] = useState<CustomCategory[]>(
     [],
   );
@@ -94,6 +95,7 @@ export function Catalog(props: {
   // eslint-disable-next-line max-lines-per-function
   const getFilteredProducts = async (
     filters: Partial<ICurrentFilters>,
+    offset: number,
   ): Promise<void> => {
     setIsLoading(true);
     const sortQueryStrings: string[] = [];
@@ -147,7 +149,7 @@ export function Catalog(props: {
       filterQueryStrings,
       sortQueryStrings,
       searchQueryString,
-      0,
+      offset,
     ).then(
       (result) => {
         setProducts(result.body.results);
@@ -164,18 +166,18 @@ export function Catalog(props: {
   const didMount = useRef(false);
   useEffect(() => {
     if (didMount.current) {
-      getFilteredProducts(currentFilters);
+      getFilteredProducts(currentFilters, productOffset);
     } else didMount.current = true;
-  }, [currentFilters]);
+  }, [currentFilters, productOffset]);
 
   useEffect(() => {
     if (
       location.pathname === '/catalog' &&
       !Object.values(currentFilters).length
     ) {
-      getFilteredProducts(currentFilters);
+      getFilteredProducts(currentFilters, productOffset);
     }
-  }, [currentFilters, location.pathname]);
+  }, [currentFilters, location.pathname, productOffset]);
 
   return (
     <>
@@ -194,9 +196,10 @@ export function Catalog(props: {
         <div className={styles.catalog__content}>
           {!isLoading ? <ProductList products={products} /> : <Loader />}
           <div className={styles.pagination}>
-            {!isLoading && (
-              <Pagination totalProductsCount={totalProductsCount} />
-            )}
+            <Pagination
+              setProductOffset={setProductOffset}
+              totalProductsCount={totalProductsCount}
+            />
           </div>
         </div>
       </div>
