@@ -23,6 +23,7 @@ import {
   getRefreshTokenFlowApiRoot,
 } from './clientBuilder';
 import { getClientData, getRefreshToken } from './utils';
+import { PRODUCTS_ON_PAGE_LIMIT } from '../constants/constants';
 
 const projectKey: string = import.meta.env.VITE_PROJECT_KEY;
 
@@ -96,7 +97,7 @@ export const getFilteredProductList = async (
     .search()
     .get({
       queryArgs: {
-        limit: 10,
+        limit: PRODUCTS_ON_PAGE_LIMIT,
         offset: productsOffset,
         filter: filterQueryStrings,
         sort: sortQueryStrings,
