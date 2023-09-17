@@ -18,7 +18,7 @@ export function BuyCountButton(props: {
           className={styles.button}
           disabled={cart.isLoading}
         >
-          in cart
+          to cart
         </button>
       </NavLink>
       <div className={styles.counter_container}>
