@@ -19,7 +19,6 @@ type CartContextProps = {
   removeItemFromCart: (id: string) => void;
   getCart: () => void;
   setCartItems: React.Dispatch<React.SetStateAction<LineItem[]>>;
-  isLoading: boolean;
 };
 export const CartContext = createContext({} as CartContextProps);
 
@@ -28,19 +27,15 @@ export function CartContextProvider({
   children,
 }: CartProviderProps): React.ReactElement {
   const [cartItems, setCartItems] = useState<LineItem[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
 
   const getCart = useCallback(() => {
-    setIsLoading(true);
-    getActiveCart()
-      .then(
-        (result) => {
-          console.log('CART: ', result.body.lineItems);
-          setCartItems(result.body.lineItems);
-        },
-        (error: Error) => console.log(error),
-      )
-      .finally(() => setIsLoading(false));
+    getActiveCart().then(
+      (result) => {
+        console.log('CART: ', result.body.lineItems);
+        setCartItems(result.body.lineItems);
+      },
+      (error: Error) => console.log(error),
+    );
   }, []);
 
   useEffect(() => {
@@ -90,7 +85,6 @@ export function CartContextProvider({
       cartItems,
       setCartItems,
       getCart,
-      isLoading,
     }),
     [
       removeItemFromCart,
@@ -100,7 +94,6 @@ export function CartContextProvider({
       cartItems,
       setCartItems,
       getCart,
-      isLoading,
     ],
   );
 
