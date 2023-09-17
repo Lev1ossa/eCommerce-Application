@@ -6,7 +6,7 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { addToCart, getActiveCart } from '../api/requests';
+import { getActiveCart } from '../api/requests';
 
 type CartProviderProps = {
   children: React.ReactNode;
@@ -16,7 +16,6 @@ type CartContextProps = {
   isItemInCart: (id: string) => boolean;
   getItemCount: (id: string) => number;
   removeItemFromCart: (id: string) => void;
-  addItemToCart: (id: string) => void;
   getCart: () => void;
   cartItems: LineItem[];
   setCartItems: React.Dispatch<React.SetStateAction<LineItem[]>>;
@@ -62,26 +61,6 @@ export function CartContextProvider({
     },
     [cartItems],
   );
-  const addItemToCart = useCallback(
-    (id: string): void => {
-      setIsLoading(true);
-      getActiveCart().then(
-        (cartResponse) => {
-          const cartBody = cartResponse.body;
-          const quantity = 1;
-          addToCart(cartBody, id, quantity).then(
-            () => {
-              getCart();
-              setIsLoading(false);
-            },
-            (error: Error) => console.log(error),
-          );
-        },
-        (error: Error) => console.log(error),
-      );
-    },
-    [getCart],
-  );
 
   const removeItemFromCart = useCallback(
     (id: string): void => {
@@ -94,7 +73,6 @@ export function CartContextProvider({
 
   const CartContextValue: CartContextProps = useMemo(
     () => ({
-      addItemToCart,
       removeItemFromCart,
       isItemInCart,
       getItemCount,
@@ -104,7 +82,6 @@ export function CartContextProvider({
       isLoading,
     }),
     [
-      addItemToCart,
       removeItemFromCart,
       isItemInCart,
       getItemCount,
