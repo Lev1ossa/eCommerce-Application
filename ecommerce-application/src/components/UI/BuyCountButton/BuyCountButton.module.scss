@@ -6,9 +6,7 @@
   column-gap: 5px;
   width: 100%;
 }
-.button_container {
-  width: 100%;
-}
+
 .button {
   width: 100%;
   display: flex;
@@ -26,11 +24,13 @@
     background-color: var(--color-light-green);
   }
 }
+
 .counter_container{
   display: flex;
   justify-content: center;
   column-gap: 5px;
 }
+
 .counter {
   align-self: center;
   display: flex;
@@ -38,6 +38,7 @@
   align-items: center;
   color: var(--color-dark);
 }
+
 .count_button {
   font-size: inherit;
   width: 38px;
