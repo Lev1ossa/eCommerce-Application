@@ -1,12 +1,14 @@
+import { useContext } from 'react';
+import { CartContext } from '../../../context/CartContext';
 import styles from './BuyButton.module.scss';
 
 export function BuyButton(props: {
-  changeIsInCartState: () => void;
   addToCartHandler: () => void;
   isProductInCart: boolean;
 }): React.ReactElement {
-  const { isProductInCart, addToCartHandler, changeIsInCartState } = props;
+  const { isProductInCart, addToCartHandler } = props;
 
+  const cart = useContext(CartContext);
   return (
     <button
       type="button"
@@ -15,9 +17,9 @@ export function BuyButton(props: {
           ? `${styles.button} ${styles.button_active}`
           : styles.button
       }
+      disabled={cart.isLoading}
       onClick={(e): void => {
         addToCartHandler();
-        changeIsInCartState();
         e.preventDefault();
       }}
     >
