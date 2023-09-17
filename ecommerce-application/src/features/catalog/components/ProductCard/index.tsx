@@ -10,6 +10,7 @@ export function ProductCard(props: {
   product: ProductProjection;
 }): React.ReactElement {
   const [isProductInCart, setIsProductInCart] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
 
   const cart = useContext(CartContext);
 
@@ -35,6 +36,10 @@ export function ProductCard(props: {
   useEffect(() => {
     setIsProductInCart(cart.isItemInCart(id));
   }, [cart, id]);
+
+  // useEffect(() => {
+  //   setIsLoading(cart.isLoading);
+  // }, [cart.isLoading]);
 
   const addToCartHandler = (): void => {
     cart.addItemToCart(id);

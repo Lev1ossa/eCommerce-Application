@@ -19,10 +19,12 @@
 }
 
 .button_active {
-  color: var(--color-dark);
   background-color: var( --color-banana);
   &:hover {
-    color: var(--color-dark);
     background-color: var( --color-banana);
   }
+}
+
+.inactive {
+  background-color: var(--color-gray);
 }
