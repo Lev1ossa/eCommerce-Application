@@ -1,7 +1,11 @@
 import { Image, ProductProjection } from '@commercetools/platform-sdk';
 import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { getProductBySlug } from '../../../../api/requests';
+import {
+  addToCart,
+  getActiveCart,
+  getProductBySlug,
+} from '../../../../api/requests';
 import { Loader } from '../../../../components/Loader';
 import { BuyButton } from '../../../../components/UI/BuyButton';
 import { BuyCountButton } from '../../../../components/UI/BuyCountButton';
@@ -26,6 +30,7 @@ export function Product(props: {
   const [modalActive, setModalActive] = useState(false);
   const [product, setProduct] = useState<ProductProjection>();
   const [isLoading, setIsLoading] = useState(true);
+  const [isCartLoading, setIsCartLoading] = useState(false);
   const [isProductInCart, setIsProductInCart] = useState(false);
   const [productCount, setProductCount] = useState(1);
 
@@ -91,7 +96,21 @@ export function Product(props: {
   };
 
   const addToCartHandler = (): void => {
-    cart.addItemToCart(productId);
+    setIsCartLoading(true);
+    getActiveCart().then(
+      (cartResponse) => {
+        const cartBody = cartResponse.body;
+        const quantity = 1;
+        addToCart(cartBody, productId, quantity).then(
+          () => {
+            cart.getCart();
+            setIsCartLoading(false);
+          },
+          (error: Error) => console.log(error),
+        );
+      },
+      (error: Error) => console.log(error),
+    );
   };
 
   return (
@@ -142,6 +161,7 @@ export function Product(props: {
                     <BuyCountButton
                       addToCartHandler={addToCartHandler}
                       productCount={productCount}
+                      isLoading={isCartLoading}
                     />
                   ) : (
                     <BuyButton
