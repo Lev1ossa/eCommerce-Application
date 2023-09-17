@@ -3,9 +3,11 @@ import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
 import styles from './Pagination.module.scss';
 
 // eslint-disable-next-line max-lines-per-function
-export function Pagination(): React.ReactElement {
+export function Pagination(props: {
+  totalProductsCount: number;
+}): React.ReactElement {
+  const { totalProductsCount } = props;
   const [currentPage, setCurrentPage] = useState(1);
-  const countOfPages = 5;
 
   const getPagesArray = (count: number): number[] => {
     const pages = [];
@@ -15,9 +17,9 @@ export function Pagination(): React.ReactElement {
     return pages;
   };
 
-  const pagesArray = getPagesArray(countOfPages);
+  const pagesArray = getPagesArray(totalProductsCount / 10);
   const changeCurrentPage = (page: number): void => {
-    if (page > 0 && page <= countOfPages) {
+    if (page > 0 && page <= totalProductsCount) {
       setCurrentPage(page);
     }
   };

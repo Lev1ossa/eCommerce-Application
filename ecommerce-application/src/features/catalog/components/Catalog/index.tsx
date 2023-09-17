@@ -23,6 +23,7 @@ export function Catalog(props: {
   const [products, setProducts] = useState<ProductProjection[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [brands, setBrands] = useState<string[]>([]);
+  const [totalProductsCount, setTotalProductsCount] = useState(0);
   const [productCategories, setProductCategories] = useState<CustomCategory[]>(
     [],
   );
@@ -146,9 +147,11 @@ export function Catalog(props: {
       filterQueryStrings,
       sortQueryStrings,
       searchQueryString,
+      0,
     ).then(
       (result) => {
         setProducts(result.body.results);
+        if (result.body.total) setTotalProductsCount(result.body.total);
         setIsLoading(false);
       },
       (error: Error) => {
@@ -191,7 +194,9 @@ export function Catalog(props: {
         <div className={styles.catalog__content}>
           {!isLoading ? <ProductList products={products} /> : <Loader />}
           <div className={styles.pagination}>
-            {!isLoading && <Pagination />}
+            {!isLoading && (
+              <Pagination totalProductsCount={totalProductsCount} />
+            )}
           </div>
         </div>
       </div>
