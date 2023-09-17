@@ -5,6 +5,7 @@ import {
   addToCart,
   getActiveCart,
   getProductBySlug,
+  removeFromCart,
 } from '../../../../api/requests';
 import { Loader } from '../../../../components/Loader';
 import { BuyButton } from '../../../../components/UI/BuyButton';
@@ -33,6 +34,7 @@ export function Product(props: {
   const [isCartLoading, setIsCartLoading] = useState(false);
   const [isProductInCart, setIsProductInCart] = useState(false);
   const [productCount, setProductCount] = useState(1);
+  const [lineItemID, setLineItemID] = useState('');
 
   const productCard = useLocation();
 
@@ -86,13 +88,11 @@ export function Product(props: {
   useEffect(() => {
     setIsProductInCart(cart.isItemInCart(productId));
     setProductCount(cart.getItemCount(productId));
+    setLineItemID(cart.getLineItemId(productId));
   }, [cart, productId]);
 
   const changeIsInCartState = (): void => {
     setIsProductInCart(true);
-  };
-  const removeProductFromCart = (): void => {
-    cart.removeItemFromCart(productId);
   };
 
   const addToCartHandler = (): void => {
@@ -111,6 +111,26 @@ export function Product(props: {
       },
       (error: Error) => console.log(error),
     );
+  };
+
+  const removeFromCartHandler = (): void => {
+    if (lineItemID) {
+      setIsCartLoading(true);
+      getActiveCart().then(
+        (cartResponse) => {
+          const cartBody = cartResponse.body;
+          const quantity = 1;
+          removeFromCart(cartBody, lineItemID, quantity).then(
+            () => {
+              cart.getCart();
+              setIsCartLoading(false);
+            },
+            (error: Error) => console.log(error),
+          );
+        },
+        (error: Error) => console.log(error),
+      );
+    }
   };
 
   return (
@@ -160,6 +180,7 @@ export function Product(props: {
                   {isProductInCart ? (
                     <BuyCountButton
                       addToCartHandler={addToCartHandler}
+                      removeFromCartHandler={removeFromCartHandler}
                       productCount={productCount}
                       isLoading={isCartLoading}
                     />
@@ -172,7 +193,7 @@ export function Product(props: {
                   {isProductInCart && (
                     <RemoveButton
                       changeIsInCartState={changeIsInCartState}
-                      removeProductFromCart={removeProductFromCart}
+                      removeFromCartHandler={removeFromCartHandler}
                     />
                   )}
                 </div>

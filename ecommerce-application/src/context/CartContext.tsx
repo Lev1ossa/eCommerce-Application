@@ -15,6 +15,7 @@ type CartProviderProps = {
 type CartContextProps = {
   isItemInCart: (id: string) => boolean;
   getItemCount: (id: string) => number;
+  getLineItemId: (id: string) => string;
   removeItemFromCart: (id: string) => void;
   getCart: () => void;
   cartItems: LineItem[];
@@ -54,6 +55,16 @@ export function CartContextProvider({
     [cartItems],
   );
 
+  const getLineItemId = useCallback(
+    (id: string): string => {
+      const LineItemId = cartItems.find(
+        (cartItem) => cartItem.productId === id,
+      );
+      return LineItemId ? LineItemId.id : '';
+    },
+    [cartItems],
+  );
+
   const getItemCount = useCallback(
     (id: string): number => {
       const item = cartItems.find((cartItem) => cartItem.productId === id);
@@ -76,6 +87,7 @@ export function CartContextProvider({
       removeItemFromCart,
       isItemInCart,
       getItemCount,
+      getLineItemId,
       cartItems,
       setCartItems,
       getCart,
@@ -85,6 +97,7 @@ export function CartContextProvider({
       removeItemFromCart,
       isItemInCart,
       getItemCount,
+      getLineItemId,
       cartItems,
       setCartItems,
       getCart,

@@ -2,17 +2,17 @@ import { BsTrash3 } from 'react-icons/bs';
 import styles from './RemoveButton.module.scss';
 
 export function RemoveButton(props: {
-  removeProductFromCart: () => void;
+  removeFromCartHandler: () => void;
   changeIsInCartState: () => void;
 }): React.ReactElement {
-  const { removeProductFromCart, changeIsInCartState } = props;
+  const { removeFromCartHandler, changeIsInCartState } = props;
   return (
     <button
       type="button"
       className={styles.button}
       onClick={(): void => {
         changeIsInCartState();
-        removeProductFromCart();
+        removeFromCartHandler();
       }}
     >
       <BsTrash3 className={styles.trash} />
