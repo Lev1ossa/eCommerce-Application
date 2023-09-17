@@ -133,6 +133,26 @@ export function Product(props: {
     }
   };
 
+  const removeAllHandler = (): void => {
+    if (lineItemID) {
+      setIsCartLoading(true);
+      getActiveCart().then(
+        (cartResponse) => {
+          const cartBody = cartResponse.body;
+          const quantity = productCount;
+          removeFromCart(cartBody, lineItemID, quantity).then(
+            () => {
+              cart.getCart();
+              setIsCartLoading(false);
+            },
+            (error: Error) => console.log(error),
+          );
+        },
+        (error: Error) => console.log(error),
+      );
+    }
+  };
+
   return (
     <>
       {!isLoading ? (
@@ -186,6 +206,7 @@ export function Product(props: {
                     />
                   ) : (
                     <BuyButton
+                      isLoading={isCartLoading}
                       isProductInCart={isProductInCart}
                       addToCartHandler={addToCartHandler}
                     />
@@ -193,7 +214,7 @@ export function Product(props: {
                   {isProductInCart && (
                     <RemoveButton
                       changeIsInCartState={changeIsInCartState}
-                      removeFromCartHandler={removeFromCartHandler}
+                      removeFromCartHandler={removeAllHandler}
                     />
                   )}
                 </div>
