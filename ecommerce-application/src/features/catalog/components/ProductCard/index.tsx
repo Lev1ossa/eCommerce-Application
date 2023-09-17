@@ -2,6 +2,7 @@ import { ProductProjection } from '@commercetools/platform-sdk';
 import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { BuyButton } from '../../../../components/UI/BuyButton';
+import { BuyCountButton } from '../../../../components/UI/BuyCountButton';
 import { CartContext } from '../../../../context/CartContext';
 import styles from './ProductCard.module.scss';
 
@@ -10,7 +11,7 @@ export function ProductCard(props: {
   product: ProductProjection;
 }): React.ReactElement {
   const [isProductInCart, setIsProductInCart] = useState(false);
-  // const [isLoading, setIsLoading] = useState(false);
+  const [productCount, setProductCount] = useState(1);
 
   const cart = useContext(CartContext);
 
@@ -35,11 +36,8 @@ export function ProductCard(props: {
 
   useEffect(() => {
     setIsProductInCart(cart.isItemInCart(id));
+    setProductCount(cart.getItemCount(id));
   }, [cart, id]);
-
-  // useEffect(() => {
-  //   setIsLoading(cart.isLoading);
-  // }, [cart.isLoading]);
 
   const addToCartHandler = (): void => {
     cart.addItemToCart(id);
@@ -74,10 +72,17 @@ export function ProductCard(props: {
             <p className={styles.info}>{description}</p>
           </div>
         </div>
-        <BuyButton
-          isProductInCart={isProductInCart}
-          addToCartHandler={addToCartHandler}
-        />
+        {isProductInCart ? (
+          <BuyCountButton
+            addToCartHandler={addToCartHandler}
+            productCount={productCount}
+          />
+        ) : (
+          <BuyButton
+            isProductInCart={isProductInCart}
+            addToCartHandler={addToCartHandler}
+          />
+        )}
       </div>
     </Link>
   );
