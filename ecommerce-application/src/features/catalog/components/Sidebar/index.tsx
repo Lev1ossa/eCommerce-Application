@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import Select, { SingleValue } from 'react-select';
 import { CustomCategory, ICurrentFilters } from '../../../../types/types';
 import { sortOptions } from '../../constants/constants';
-import { getStartCategoryID } from '../../constants/utils';
+import { getStartCategoryID } from '../../utils/utils';
 import BrandsList from '../BrandsList';
 import styles from './Sidebar.module.scss';
 
