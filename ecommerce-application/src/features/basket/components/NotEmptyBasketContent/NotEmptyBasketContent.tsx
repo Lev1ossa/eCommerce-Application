@@ -6,7 +6,13 @@ import { CartItem } from '../CartItem/CartItem';
 import styles from './NotEmptyBasketContent.module.scss';
 import { Modal } from '../../../modal';
 import { AnimationBlock } from '../../../animationBlock/AnimationBlock';
-import { clearCart, getActiveCart } from '../../../../api/requests';
+import {
+  addPromocodeToCart,
+  clearCart,
+  getActiveCart,
+} from '../../../../api/requests';
+import { showToast } from '../../../autentification/utils/showToast';
+import { ToastTypes } from '../../../../types/types';
 
 // eslint-disable-next-line max-lines-per-function
 export function NotEmptyBasketContent(props: {
@@ -18,6 +24,8 @@ export function NotEmptyBasketContent(props: {
   const [isButtonsDisabled, setIsButtonsDisabled] = useState(false);
 
   const [modalActive, setModalActive] = useState(false);
+
+  const [inputValue, setInputValue] = useState('');
 
   const getCart = (): void => {
     getActiveCart().then(
@@ -63,6 +71,24 @@ export function NotEmptyBasketContent(props: {
     setModalActive(false);
   };
 
+  const handleApplyPromocodeButton = (): void => {
+    getActiveCart().then(
+      (cartResponse) => {
+        showToast(ToastTypes.success, `Promo code was applied!`);
+        const cart = cartResponse.body;
+        const code = inputValue;
+        addPromocodeToCart(cart, code).then(
+          (result) => {
+            console.log('Add to cart result: ', result);
+          },
+          () => showToast(ToastTypes.error, 'Such promo code was not found!'),
+        );
+      },
+      (error: Error) => console.log(error),
+    );
+    setInputValue('');
+  };
+
   const modalImageUrl = new URL(
     '/src/assets/img/modal_image.png',
     import.meta.url,
@@ -99,11 +125,19 @@ export function NotEmptyBasketContent(props: {
         <ul className={styles.list}>{cartList}</ul>
         <div className={styles.promocode_block}>
           <input
+            value={inputValue}
             className={styles.input}
-            onBlur={(event): void => console.log(event.target.value)}
+            onChange={(event): void => {
+              setInputValue(event.target.value);
+            }}
             type="text"
           />
-          <button className={styles.input_button} type="button">
+          <button
+            className={styles.input_button}
+            onClick={handleApplyPromocodeButton}
+            disabled={!inputValue}
+            type="button"
+          >
             APPLY PROMO CODE
           </button>
         </div>
