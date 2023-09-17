@@ -17,7 +17,6 @@ type CartContextProps = {
   getItemCount: (id: string) => number;
   getLineItemId: (id: string) => string;
   removeItemFromCart: (id: string) => void;
-  getCart: () => void;
   setCartItems: React.Dispatch<React.SetStateAction<LineItem[]>>;
 };
 export const CartContext = createContext({} as CartContextProps);
@@ -84,7 +83,6 @@ export function CartContextProvider({
       getLineItemId,
       cartItems,
       setCartItems,
-      getCart,
     }),
     [
       removeItemFromCart,
@@ -93,7 +91,6 @@ export function CartContextProvider({
       getLineItemId,
       cartItems,
       setCartItems,
-      getCart,
     ],
   );
 

@@ -102,8 +102,8 @@ export function Product(props: {
         const cartBody = cartResponse.body;
         const quantity = 1;
         addToCart(cartBody, productId, quantity).then(
-          () => {
-            cart.getCart();
+          (result) => {
+            cart.setCartItems(result.body.lineItems);
             setIsCartLoading(false);
           },
           (error: Error) => console.log(error),
@@ -121,8 +121,8 @@ export function Product(props: {
           const cartBody = cartResponse.body;
           const quantity = 1;
           removeFromCart(cartBody, lineItemID, quantity).then(
-            () => {
-              cart.getCart();
+            (result) => {
+              cart.setCartItems(result.body.lineItems);
               setIsCartLoading(false);
             },
             (error: Error) => console.log(error),
@@ -141,8 +141,8 @@ export function Product(props: {
           const cartBody = cartResponse.body;
           const quantity = productCount;
           removeFromCart(cartBody, lineItemID, quantity).then(
-            () => {
-              cart.getCart();
+            (result) => {
+              cart.setCartItems(result.body.lineItems);
               setIsCartLoading(false);
             },
             (error: Error) => console.log(error),

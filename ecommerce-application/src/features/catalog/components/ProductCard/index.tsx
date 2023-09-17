@@ -55,8 +55,8 @@ export function ProductCard(props: {
         const cartBody = cartResponse.body;
         const quantity = 1;
         addToCart(cartBody, id, quantity).then(
-          () => {
-            cart.getCart();
+          (result) => {
+            cart.setCartItems(result.body.lineItems);
             setIsLoading(false);
           },
           (error: Error) => console.log(error),
@@ -74,8 +74,8 @@ export function ProductCard(props: {
           const cartBody = cartResponse.body;
           const quantity = 1;
           removeFromCart(cartBody, lineItemID, quantity).then(
-            () => {
-              cart.getCart();
+            (result) => {
+              cart.setCartItems(result.body.lineItems);
               setIsLoading(false);
             },
             (error: Error) => console.log(error),
