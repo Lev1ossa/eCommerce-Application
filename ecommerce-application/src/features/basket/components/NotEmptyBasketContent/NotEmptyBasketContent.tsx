@@ -20,6 +20,13 @@ export function NotEmptyBasketContent(props: {
   setCartData: React.Dispatch<React.SetStateAction<Cart | undefined>>;
 }): React.ReactElement {
   const { cartData, setCartData } = props;
+  const totalCoast = cartData ? cartData.totalPrice.centAmount / 100 : null;
+  const promocodesId = cartData?.discountCodes.map((el) => {
+    return {
+      id: el.discountCode.id,
+      name: 'citrus_summer',
+    };
+  });
 
   const [isButtonsDisabled, setIsButtonsDisabled] = useState(false);
 
@@ -35,8 +42,6 @@ export function NotEmptyBasketContent(props: {
       (error: Error) => console.log(error),
     );
   };
-
-  const totalCoast = cartData ? cartData.totalPrice.centAmount / 100 : null;
 
   const handleClearButton = (): void => {
     setModalActive(true);
@@ -74,11 +79,11 @@ export function NotEmptyBasketContent(props: {
   const handleApplyPromocodeButton = (): void => {
     getActiveCart().then(
       (cartResponse) => {
-        showToast(ToastTypes.success, `Promo code was applied!`);
         const cart = cartResponse.body;
         const code = inputValue;
         addPromocodeToCart(cart, code).then(
           (result) => {
+            showToast(ToastTypes.success, `Promo code was applied!`);
             console.log('Add to cart result: ', result);
           },
           () => showToast(ToastTypes.error, 'Such promo code was not found!'),
@@ -99,6 +104,30 @@ export function NotEmptyBasketContent(props: {
       <CartItem itemData={cartItemData} setCartData={setCartData} />
     </li>
   ));
+
+  const handleRemoveButton = (id: string): void => {
+    console.log(id);
+  };
+
+  const promoBlockContent = promocodesId
+    ? promocodesId.map((el) => {
+        return (
+          <span className={styles.promocode} key={el.id}>
+            {el.name}
+            <button
+              className={styles.remove_button}
+              onClick={(): void => {
+                handleRemoveButton(el.id);
+              }}
+              type="button"
+            >
+              x
+            </button>
+          </span>
+        );
+      })
+    : null;
+
   return (
     <main className={styles.main}>
       <div className={styles.container}>
@@ -123,23 +152,26 @@ export function NotEmptyBasketContent(props: {
           <div className={styles.header_title}>TOTAL PRICE</div>
         </div>
         <ul className={styles.list}>{cartList}</ul>
-        <div className={styles.promocode_block}>
-          <input
-            value={inputValue}
-            className={styles.input}
-            onChange={(event): void => {
-              setInputValue(event.target.value);
-            }}
-            type="text"
-          />
-          <button
-            className={styles.input_button}
-            onClick={handleApplyPromocodeButton}
-            disabled={!inputValue}
-            type="button"
-          >
-            APPLY PROMO CODE
-          </button>
+        <div className={styles.promocode_container}>
+          <div className={styles.input_block}>
+            <input
+              value={inputValue}
+              className={styles.input}
+              onChange={(event): void => {
+                setInputValue(event.target.value);
+              }}
+              type="text"
+            />
+            <button
+              className={styles.input_button}
+              onClick={handleApplyPromocodeButton}
+              disabled={!inputValue}
+              type="button"
+            >
+              APPLY PROMO CODE
+            </button>
+          </div>
+          <div className={styles.promocodesBlock}>{promoBlockContent}</div>
         </div>
         <div className={styles.subtotal}>
           <div className={styles.subtotal_title}>SUBTOTAL</div>

@@ -186,20 +186,26 @@
   }
 }
 
-.promocode_block {
+.promocode_container {
   display: flex;
   justify-content: center;
-  height: 50px;
+  flex-direction: column;
   box-shadow: inset -1px 2px 2px rgba(0,0,0,0.15), 
   inset -1px 0px 2px rgba(0,0,0,0.15);
   box-shadow: inset 0px 2px 2px rgba(0,0,0,0.15), 
   inset 0px -2px 2px rgba(0,0,0,0.15);
   background-color: #ebe9e921;
   align-items: center;
-  padding: 0 5px;
+  padding: 8px 5px;
   @media screen and (max-width: $tablet-width) {
     height: 40px;
   }
+}
+
+.input_block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .input {
@@ -247,6 +253,22 @@
     font-size: 0.6rem;
     padding: 0 5px;
     height: 20px;
+  }
+}
+
+.promocode {
+  border: 1px solid var(--color-light-green);
+  color: var(--color-light-green);
+  padding: 0 15px 0 5px;
+  border-radius: 5px;
+  position: relative;
+  .remove_button {
+    position: absolute;
+    top: 0;
+    right: 3px;
+    color: var(--color-light-green);
+    border: none;
+    background-color: inherit;
   }
 }
 
