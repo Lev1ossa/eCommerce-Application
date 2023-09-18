@@ -10,6 +10,7 @@ import {
 import { Loader } from '../../../../components/Loader';
 import { BuyButton } from '../../../../components/UI/BuyButton';
 import { BuyCountButton } from '../../../../components/UI/BuyCountButton';
+import { ApiRootContext } from '../../../../context/ApiRootContext';
 import { CartContext } from '../../../../context/CartContext';
 import { ToastTypes } from '../../../../types/types';
 import { showToast } from '../../../autentification/utils/showToast';
@@ -18,7 +19,6 @@ import { Modal } from '../../../modal';
 import { RemoveButton } from '../RemoveButton';
 import { Slider } from '../Slider';
 import styles from './Product.module.scss';
-import { ApiRootContext } from '../../../../context/ApiRootContext';
 
 // eslint-disable-next-line max-lines-per-function
 export function Product(props: {
@@ -212,6 +212,7 @@ export function Product(props: {
                 <div className={styles.button}>
                   {isProductInCart ? (
                     <BuyCountButton
+                      isCartLoading={isCartLoading}
                       addToCartHandler={addToCartHandler}
                       removeFromCartHandler={removeFromCartHandler}
                       productCount={productCount}
@@ -219,6 +220,7 @@ export function Product(props: {
                     />
                   ) : (
                     <BuyButton
+                      isCartLoading={isCartLoading}
                       isLoading={isCartLoading}
                       isProductInCart={isProductInCart}
                       addToCartHandler={addToCartHandler}

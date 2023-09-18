@@ -1,11 +1,13 @@
+import { ButtonLoader } from '../ButtonLoader';
 import styles from './BuyButton.module.scss';
 
 export function BuyButton(props: {
   isLoading: boolean;
   addToCartHandler: () => void;
   isProductInCart: boolean;
+  isCartLoading: boolean;
 }): React.ReactElement {
-  const { isLoading, isProductInCart, addToCartHandler } = props;
+  const { isCartLoading, isLoading, isProductInCart, addToCartHandler } = props;
 
   return (
     <button
@@ -21,7 +23,7 @@ export function BuyButton(props: {
         e.preventDefault();
       }}
     >
-      {isProductInCart ? 'Already in cart' : 'Add to cart'}
+      {isCartLoading ? <ButtonLoader /> : 'Add to cart'}
     </button>
   );
 }

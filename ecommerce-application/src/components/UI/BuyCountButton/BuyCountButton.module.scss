@@ -9,12 +9,13 @@
 
 .button {
   width: 100%;
+  max-height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: inherit;
   white-space: nowrap;
-  padding: 0.5rem 1rem;
+  padding: 0.7rem 1rem;
   border: none;
   box-shadow: var(--shadow-small);
   background-color: var(--color-banana);
@@ -35,6 +36,7 @@
 .count_button {
   font-size: inherit;
   width: 38px;
+  max-height: 40px;
   border: none;
   transition: 0.2s all ease-in;
   background-color: var(--color-banana);
