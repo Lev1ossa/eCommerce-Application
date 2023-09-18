@@ -95,6 +95,9 @@
   .price_new {
     font-size: calc(14px + (26 - 20) * ((100vw - 320px) / (1920 - 320)));
     text-decoration: none;
+    @media screen and (max-width: $tablet-width) {
+      font-size: calc(11px + (26 - 20) * ((100vw - 320px) / (1920 - 320)));
+    }
     @media screen and (max-width: $mobile-width) {
       font-size: calc(9px + (26 - 20) * ((100vw - 320px) / (1920 - 320)));
     }

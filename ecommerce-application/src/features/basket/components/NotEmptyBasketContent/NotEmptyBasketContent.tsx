@@ -1,5 +1,4 @@
-import { BsCart3 } from 'react-icons/bs';
-import { AiOutlineDelete } from 'react-icons/ai';
+import { BsCart3, BsTrash3 } from 'react-icons/bs';
 import { useEffect, useState } from 'react';
 import {
   Cart,
@@ -168,7 +167,7 @@ export function NotEmptyBasketContent(props: {
                 return elem.id === el.id;
               })?.code
             }
-            <AiOutlineDelete
+            <BsTrash3
               className={styles.remove_button}
               onClick={(): void => {
                 handleRemoveButton(el.id);
@@ -202,7 +201,7 @@ export function NotEmptyBasketContent(props: {
           disabled={isButtonsDisabled}
           onClick={handleClearButton}
         >
-          <AiOutlineDelete className={styles.button_icon} />
+          <BsTrash3 className={styles.button_icon} />
           Clear Cart
         </button>
         <div className={styles.header}>
