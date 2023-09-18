@@ -10,7 +10,7 @@ export function MainPage(): React.ReactElement {
   const [quantityProducts, setQuantityProducts] = useState<number>();
   const cartContext = useContext(CartContext);
 
-  const getCart = (cartItemsCount: number): void => {
+  const getCart = (cartItemsCount: number | undefined): void => {
     setQuantityProducts(cartItemsCount);
   };
 
