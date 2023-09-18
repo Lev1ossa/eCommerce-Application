@@ -1,26 +1,37 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
+import { getPagesArray } from '../../utils/utils';
 import styles from './Pagination.module.scss';
 
 // eslint-disable-next-line max-lines-per-function
-export function Pagination(): React.ReactElement {
-  const [currentPage, setCurrentPage] = useState(1);
-  const countOfPages = 5;
+export function Pagination(props: {
+  totalProductsCount: number;
+  setProductOffset: React.Dispatch<React.SetStateAction<number>>;
+  currentPage: number;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+}): React.ReactElement {
+  const { currentPage, setCurrentPage, setProductOffset, totalProductsCount } =
+    props;
+  const baseOffset = 10;
+  const pagesArray = getPagesArray(totalProductsCount);
 
-  const getPagesArray = (count: number): number[] => {
-    const pages = [];
-    for (let i = 0; i < count; i += 1) {
-      pages.push(i + 1);
-    }
-    return pages;
-  };
-
-  const pagesArray = getPagesArray(countOfPages);
   const changeCurrentPage = (page: number): void => {
-    if (page > 0 && page <= countOfPages) {
+    if (page > 0 && page <= pagesArray.length) {
       setCurrentPage(page);
     }
   };
+
+  useEffect(() => {
+    const offset = currentPage * baseOffset - baseOffset;
+    setProductOffset(totalProductsCount < offset ? 0 : offset);
+    setCurrentPage(currentPage > pagesArray.length ? 1 : currentPage);
+  }, [
+    currentPage,
+    setCurrentPage,
+    setProductOffset,
+    totalProductsCount,
+    pagesArray.length,
+  ]);
 
   return (
     <div className={styles.pagination}>

@@ -23,6 +23,7 @@ import {
   getRefreshTokenFlowApiRoot,
 } from './clientBuilder';
 import { getClientData, getRefreshToken } from './utils';
+import { PRODUCTS_ON_PAGE_LIMIT } from '../constants/constants';
 
 const projectKey: string = import.meta.env.VITE_PROJECT_KEY;
 
@@ -87,6 +88,7 @@ export const getFilteredProductList = async (
   filterQueryStrings: string[],
   sortQueryStrings: string[],
   searchQueryString: string,
+  productsOffset: number,
 ): Promise<ClientResponse<ProductProjectionPagedSearchResponse>> => {
   const apiRoot = getRefreshTokenFlowApiRoot(getRefreshToken());
   return apiRoot
@@ -95,7 +97,8 @@ export const getFilteredProductList = async (
     .search()
     .get({
       queryArgs: {
-        limit: 30,
+        limit: PRODUCTS_ON_PAGE_LIMIT,
+        offset: productsOffset,
         filter: filterQueryStrings,
         sort: sortQueryStrings,
         'text.en': searchQueryString,

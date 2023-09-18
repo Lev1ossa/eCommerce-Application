@@ -31,11 +31,11 @@ export function ProductCard(props: {
 
   const { prices, attributes, images } = product.masterVariant;
 
-  const price = prices ? prices[0].value.centAmount / 100 : 0;
+  const price = prices ? (prices[0].value.centAmount / 100).toFixed(2) : 0;
   const priceDiscounted =
     prices && prices[0].discounted
-      ? prices[0].discounted.value.centAmount / 100
-      : null;
+      ? (prices[0].discounted.value.centAmount / 100).toFixed(2)
+      : '';
   const image = images ? images[0].url : '';
   const tradeMark = attributes ? attributes[0].value : 'good food';
   const category = attributes ? attributes[1].value : '';
@@ -55,8 +55,8 @@ export function ProductCard(props: {
         const cartBody = cartResponse.body;
         const quantity = 1;
         addToCart(cartBody, id, quantity).then(
-          () => {
-            cart.getCart();
+          (result) => {
+            cart.setCartItems(result.body.lineItems);
             setIsLoading(false);
           },
           (error: Error) => console.log(error),
@@ -74,8 +74,8 @@ export function ProductCard(props: {
           const cartBody = cartResponse.body;
           const quantity = 1;
           removeFromCart(cartBody, lineItemID, quantity).then(
-            () => {
-              cart.getCart();
+            (result) => {
+              cart.setCartItems(result.body.lineItems);
               setIsLoading(false);
             },
             (error: Error) => console.log(error),

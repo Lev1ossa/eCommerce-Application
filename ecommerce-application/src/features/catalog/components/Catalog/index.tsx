@@ -23,6 +23,9 @@ export function Catalog(props: {
   const [products, setProducts] = useState<ProductProjection[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [brands, setBrands] = useState<string[]>([]);
+  const [totalProductsCount, setTotalProductsCount] = useState(0);
+  const [productOffset, setProductOffset] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const [productCategories, setProductCategories] = useState<CustomCategory[]>(
     [],
   );
@@ -93,6 +96,7 @@ export function Catalog(props: {
   // eslint-disable-next-line max-lines-per-function
   const getFilteredProducts = async (
     filters: Partial<ICurrentFilters>,
+    offset: number,
   ): Promise<void> => {
     setIsLoading(true);
     const sortQueryStrings: string[] = [];
@@ -146,9 +150,11 @@ export function Catalog(props: {
       filterQueryStrings,
       sortQueryStrings,
       searchQueryString,
+      offset,
     ).then(
       (result) => {
         setProducts(result.body.results);
+        if (result.body.total) setTotalProductsCount(result.body.total);
         setIsLoading(false);
       },
       (error: Error) => {
@@ -161,18 +167,20 @@ export function Catalog(props: {
   const didMount = useRef(false);
   useEffect(() => {
     if (didMount.current) {
-      getFilteredProducts(currentFilters);
+      getFilteredProducts(currentFilters, productOffset);
     } else didMount.current = true;
-  }, [currentFilters]);
+  }, [currentFilters, productOffset]);
 
   useEffect(() => {
     if (
       location.pathname === '/catalog' &&
       !Object.values(currentFilters).length
     ) {
-      getFilteredProducts(currentFilters);
+      if (!productOffset) {
+        getFilteredProducts(currentFilters, productOffset);
+      }
     }
-  }, [currentFilters, location.pathname]);
+  }, [currentFilters, location.pathname, productOffset]);
 
   return (
     <>
@@ -187,11 +195,17 @@ export function Catalog(props: {
           brands={brands}
           categorySlug={categorySlug}
           subCategorySlug={subCategorySlug}
+          setCurrentPage={setCurrentPage}
         />
         <div className={styles.catalog__content}>
           {!isLoading ? <ProductList products={products} /> : <Loader />}
           <div className={styles.pagination}>
-            {!isLoading && <Pagination />}
+            <Pagination
+              setProductOffset={setProductOffset}
+              totalProductsCount={totalProductsCount}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+            />
           </div>
         </div>
       </div>
