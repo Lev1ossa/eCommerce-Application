@@ -35,6 +35,7 @@ export function Header(props: {
         className={navLinkClass}
         userLoggedIn={userLoggedIn}
         logoutHandler={logoutHandler}
+        quantityProducts={quantityProducts}
       />
       <header className={styles.header}>
         <Link to="/">
