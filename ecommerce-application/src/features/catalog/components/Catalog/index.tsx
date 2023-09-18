@@ -31,7 +31,15 @@ export function Catalog(props: {
   );
   const [currentFilters, setcurrentFilters] = useState<
     Partial<ICurrentFilters>
-  >({});
+  >({
+    category: '',
+    trademark: [],
+    originFilter: [],
+    lowerPrice: '',
+    higherPrice: '',
+    sort: 'price asc',
+    search: '',
+  });
   const location = useLocation();
 
   const getBrandsFromProducts = (productList: ProductProjection[]): void => {

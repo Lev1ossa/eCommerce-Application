@@ -42,7 +42,7 @@ export function CatalogSidebar(props: {
   const [originFilterProps, setoriginFilterProps] = useState(['']);
   const [lowerPriceFilterProps, setLowerPriceFilterProps] = useState('');
   const [higherPriceFilterProps, setHigherPriceFilterProps] = useState('');
-  const [sortProps, setSortProps] = useState('');
+  const [sortProps, setSortProps] = useState('price asc');
   const [searchProps, setSearchProps] = useState('');
   const [currentSearchString, setCurrentSearchString] = useState('');
   const [collapsed, setCollapsed] = useState(false);
@@ -168,6 +168,8 @@ export function CatalogSidebar(props: {
   const didMount = useRef(false);
   useEffect(() => {
     if (didMount.current) {
+      console.log('mount');
+
       setcurrentFilters({
         category: categoryFilterProps,
         trademark: trademarkProps,
@@ -291,6 +293,7 @@ export function CatalogSidebar(props: {
           </div>
           <Select
             options={sortOptions}
+            defaultValue={sortOptions.find(({ value }) => value === sortProps)}
             isClearable
             placeholder="sort..."
             className={styles.sort}
