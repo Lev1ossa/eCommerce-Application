@@ -1,6 +1,6 @@
 import { MdOutlineClose } from 'react-icons/md';
 import { Cart, LineItem } from '@commercetools/platform-sdk';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import styles from './CartItem.module.scss';
 import {
   addToCart,
@@ -13,10 +13,11 @@ import { CartContext } from '../../../../context/CartContext';
 export function CartItem(props: {
   itemData: LineItem;
   setCartData: React.Dispatch<React.SetStateAction<Cart | undefined>>;
+  setIsButtonsDisabled: React.Dispatch<React.SetStateAction<boolean>>;
+  isButtonsDisabled: boolean;
 }): React.ReactElement {
-  const { itemData, setCartData } = props;
-
-  const [isButtonsDisabled, setIsButtonsDisabled] = useState(false);
+  const { itemData, setCartData, setIsButtonsDisabled, isButtonsDisabled } =
+    props;
 
   const cartContext = useContext(CartContext);
 

@@ -144,7 +144,12 @@ export function NotEmptyBasketContent(props: {
 
   const cartList = cartData?.lineItems.map((cartItemData) => (
     <li key={cartItemData.id} className={styles.item}>
-      <CartItem itemData={cartItemData} setCartData={setCartData} />
+      <CartItem
+        itemData={cartItemData}
+        setCartData={setCartData}
+        setIsButtonsDisabled={setIsButtonsDisabled}
+        isButtonsDisabled={isButtonsDisabled}
+      />
     </li>
   ));
 
