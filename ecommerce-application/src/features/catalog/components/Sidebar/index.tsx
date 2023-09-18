@@ -83,6 +83,7 @@ export function CatalogSidebar(props: {
     } else {
       setTrademarkProps(trademarkProps.filter((filter) => filter !== value));
     }
+    setCurrentPage(1);
   };
 
   const handleOriginChange = (
@@ -96,6 +97,7 @@ export function CatalogSidebar(props: {
         originFilterProps.filter((filter) => filter !== value),
       );
     }
+    setCurrentPage(1);
   };
 
   const handleLowerPriceChange = (
@@ -112,6 +114,7 @@ export function CatalogSidebar(props: {
     ) {
       setLowerPriceFilterProps(currentPriceAsNumber.toString());
     }
+    setCurrentPage(1);
   };
 
   const handleHigherPriceChange = (
@@ -128,6 +131,7 @@ export function CatalogSidebar(props: {
     ) {
       setHigherPriceFilterProps(currentPriceAsNumber.toString());
     }
+    setCurrentPage(1);
   };
 
   const handleSortChange = (
