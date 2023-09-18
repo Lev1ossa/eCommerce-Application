@@ -1,5 +1,5 @@
 import { BsCart3, BsTrash3 } from 'react-icons/bs';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import {
   Cart,
   DiscountCode,
@@ -19,6 +19,7 @@ import {
 import { showToast } from '../../../autentification/utils/showToast';
 import { ToastTypes } from '../../../../types/types';
 import { Loader } from '../../../../components/Loader';
+import { CartContext } from '../../../../context/CartContext';
 
 // eslint-disable-next-line max-lines-per-function
 export function NotEmptyBasketContent(props: {
@@ -26,6 +27,8 @@ export function NotEmptyBasketContent(props: {
   setCartData: React.Dispatch<React.SetStateAction<Cart | undefined>>;
 }): React.ReactElement {
   const { cartData, setCartData } = props;
+
+  const cartContext = useContext(CartContext);
 
   const totalCoast = cartData ? cartData.totalPrice.centAmount / 100 : null;
 
@@ -102,6 +105,7 @@ export function NotEmptyBasketContent(props: {
           (result) => {
             setCartData(result.body);
             setIsButtonsDisabled(false);
+            cartContext.setCartItems(result.body.lineItems);
             getCart();
           },
           (error: Error) => console.log(error),

@@ -1,12 +1,13 @@
 import { MdOutlineClose } from 'react-icons/md';
 import { Cart, LineItem } from '@commercetools/platform-sdk';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import styles from './CartItem.module.scss';
 import {
   addToCart,
   getActiveCart,
   removeFromCart,
 } from '../../../../api/requests';
+import { CartContext } from '../../../../context/CartContext';
 
 // eslint-disable-next-line max-lines-per-function
 export function CartItem(props: {
@@ -16,6 +17,8 @@ export function CartItem(props: {
   const { itemData, setCartData } = props;
 
   const [isButtonsDisabled, setIsButtonsDisabled] = useState(false);
+
+  const cartContext = useContext(CartContext);
 
   const validPrice = itemData.variant.prices
     ? itemData.variant.prices[0].value.centAmount / 100
@@ -51,6 +54,7 @@ export function CartItem(props: {
         addToCart(cart, productId, quantity).then(
           (result) => {
             setCartData(result.body);
+            cartContext.setCartItems(result.body.lineItems);
             setIsButtonsDisabled(false);
           },
           (error: Error) => console.log(error),
@@ -70,6 +74,7 @@ export function CartItem(props: {
         removeFromCart(cart, lineItemID, quantity).then(
           (result) => {
             setCartData(result.body);
+            cartContext.setCartItems(result.body.lineItems);
             setIsButtonsDisabled(false);
           },
           (error: Error) => console.log(error),
@@ -89,6 +94,7 @@ export function CartItem(props: {
         removeFromCart(cart, lineItemID, quantity).then(
           (result) => {
             setCartData(result.body);
+            cartContext.setCartItems(result.body.lineItems);
             setIsButtonsDisabled(false);
           },
           (error: Error) => console.log(error),
