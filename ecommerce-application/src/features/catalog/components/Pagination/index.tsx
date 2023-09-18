@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
 import { getPagesArray } from '../../utils/utils';
 import styles from './Pagination.module.scss';
@@ -7,9 +7,11 @@ import styles from './Pagination.module.scss';
 export function Pagination(props: {
   totalProductsCount: number;
   setProductOffset: React.Dispatch<React.SetStateAction<number>>;
+  currentPage: number;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
 }): React.ReactElement {
-  const { setProductOffset, totalProductsCount } = props;
-  const [currentPage, setCurrentPage] = useState(1);
+  const { currentPage, setCurrentPage, setProductOffset, totalProductsCount } =
+    props;
   const baseOffset = 10;
   const pagesArray = getPagesArray(totalProductsCount);
 
@@ -23,7 +25,13 @@ export function Pagination(props: {
     const offset = currentPage * baseOffset - baseOffset;
     setProductOffset(totalProductsCount < offset ? 0 : offset);
     setCurrentPage(currentPage > pagesArray.length ? 1 : currentPage);
-  }, [currentPage, setProductOffset, totalProductsCount, pagesArray.length]);
+  }, [
+    currentPage,
+    setCurrentPage,
+    setProductOffset,
+    totalProductsCount,
+    pagesArray.length,
+  ]);
 
   return (
     <div className={styles.pagination}>

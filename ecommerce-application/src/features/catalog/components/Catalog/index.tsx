@@ -25,6 +25,7 @@ export function Catalog(props: {
   const [brands, setBrands] = useState<string[]>([]);
   const [totalProductsCount, setTotalProductsCount] = useState(0);
   const [productOffset, setProductOffset] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const [productCategories, setProductCategories] = useState<CustomCategory[]>(
     [],
   );
@@ -175,7 +176,9 @@ export function Catalog(props: {
       location.pathname === '/catalog' &&
       !Object.values(currentFilters).length
     ) {
-      getFilteredProducts(currentFilters, productOffset);
+      if (!productOffset) {
+        getFilteredProducts(currentFilters, productOffset);
+      }
     }
   }, [currentFilters, location.pathname, productOffset]);
 
@@ -192,6 +195,7 @@ export function Catalog(props: {
           brands={brands}
           categorySlug={categorySlug}
           subCategorySlug={subCategorySlug}
+          setCurrentPage={setCurrentPage}
         />
         <div className={styles.catalog__content}>
           {!isLoading ? <ProductList products={products} /> : <Loader />}
@@ -199,6 +203,8 @@ export function Catalog(props: {
             <Pagination
               setProductOffset={setProductOffset}
               totalProductsCount={totalProductsCount}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
             />
           </div>
         </div>

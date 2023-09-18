@@ -26,6 +26,7 @@ export function CatalogSidebar(props: {
   brands: string[];
   categorySlug: string | undefined;
   subCategorySlug: string | undefined;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
 }): React.ReactElement {
   const {
     productCategories,
@@ -33,6 +34,7 @@ export function CatalogSidebar(props: {
     setcurrentFilters,
     categorySlug,
     subCategorySlug,
+    setCurrentPage,
   } = props;
   const navigate = useNavigate();
   const [categoryFilterProps, setCategoryFilterProps] = useState('');
@@ -67,6 +69,7 @@ export function CatalogSidebar(props: {
     categoryID: string,
     redirectPath: string,
   ): void => {
+    setCurrentPage(1);
     setCategoryFilterProps(`${categoryID}`);
     handleNavigate(redirectPath);
   };
@@ -130,6 +133,7 @@ export function CatalogSidebar(props: {
   const handleSortChange = (
     option: SingleValue<{ value: string; label: string }>,
   ): void => {
+    setCurrentPage(1);
     setSortProps(option ? option.value : '');
   };
 
@@ -228,6 +232,7 @@ export function CatalogSidebar(props: {
     setSearchProps('');
     setCurrentSearchString('');
     setComponentKey(componentKey + 1);
+    setCurrentPage(1);
   };
 
   return (
