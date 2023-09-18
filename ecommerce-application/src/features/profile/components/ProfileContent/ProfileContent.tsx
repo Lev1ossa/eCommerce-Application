@@ -1,5 +1,5 @@
 import { AiOutlineHome, AiOutlineLock, AiOutlineUser } from 'react-icons/ai';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Customer } from '@commercetools/platform-sdk';
 import { useNavigate } from 'react-router-dom';
 import { ProfileInfo } from '../ProfileInfo/ProfileInfo';
@@ -7,6 +7,7 @@ import styles from './ProfileContent.module.scss';
 import { getCustomerData } from '../../../../api/requests';
 import { Loader } from '../../../../components/Loader';
 import { isUserLoggedIn } from '../../../../api/tokenHandlers';
+import { ApiRootContext } from '../../../../context/ApiRootContext';
 
 // eslint-disable-next-line max-lines-per-function
 export function ProfileContent(): React.ReactElement {
@@ -15,6 +16,7 @@ export function ProfileContent(): React.ReactElement {
   const [isLoading, setIsLoading] = useState(true);
 
   const navigate = useNavigate();
+  const refreshTokenFlowApiRoot = useContext(ApiRootContext);
   const handleRedirect = (): void => {
     if (!isUserLoggedIn()) {
       navigate('/login');
@@ -36,7 +38,7 @@ export function ProfileContent(): React.ReactElement {
   };
 
   useEffect(() => {
-    getCustomerData().then(
+    getCustomerData(refreshTokenFlowApiRoot).then(
       (result) => {
         setUserData(result.body);
         setIsLoading(false);
@@ -45,7 +47,7 @@ export function ProfileContent(): React.ReactElement {
         console.log(error);
       },
     );
-  }, []);
+  }, [refreshTokenFlowApiRoot]);
 
   return (
     <main className={styles.container}>

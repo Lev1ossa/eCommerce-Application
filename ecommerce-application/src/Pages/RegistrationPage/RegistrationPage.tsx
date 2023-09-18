@@ -1,25 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Footer } from '../../components/Footer/Footer';
 import { Header } from '../../components/Header/Header';
 import { RegistrationForm } from '../../features/autentification';
 import styles from './RegistrationPage.module.css';
-import { getActiveCart } from '../../api/requests';
+import { CartContext } from '../../context/CartContext';
 
 export function RegistrationPage(): React.ReactElement {
   const [quantityProducts, setQuantityProducts] = useState<number>();
+  const cartContext = useContext(CartContext);
 
-  const getCart = (): void => {
-    getActiveCart().then(
-      (result) => {
-        setQuantityProducts(result.body.totalLineItemQuantity);
-      },
-      (error: Error) => console.log(error),
-    );
+  const getCart = (cartItemsCount: number): void => {
+    setQuantityProducts(cartItemsCount);
   };
 
   useEffect(() => {
-    getCart();
-  }, []);
+    getCart(cartContext.getCartItemsCount());
+  }, [cartContext]);
 
   return (
     <div className={styles.registration_page}>

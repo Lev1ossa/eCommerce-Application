@@ -1,5 +1,5 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { postcodeValidator } from 'postcode-validator';
 import {
   MyCustomerAddAddressAction,
@@ -21,6 +21,7 @@ import { getCustomerData, updateCustomerData } from '../../../../api/requests';
 import { showToast } from '../../../autentification/utils/showToast';
 import { generateUniqueKey } from '../../../../api/utils';
 import { InputError } from '../InputError/InputError';
+import { ApiRootContext } from '../../../../context/ApiRootContext';
 
 // eslint-disable-next-line max-lines-per-function
 export function NewAddressCard(props: {
@@ -28,6 +29,7 @@ export function NewAddressCard(props: {
   handleAddButton: () => void;
 }): React.ReactElement {
   const { styles, handleAddButton } = props;
+  const refreshTokenFlowApiRoot = useContext(ApiRootContext);
   const {
     register,
     setValue,
@@ -42,7 +44,7 @@ export function NewAddressCard(props: {
   const onSubmit: SubmitHandler<IRegistrationData> = (
     addressData: IRegistrationData,
   ): void => {
-    getCustomerData().then(
+    getCustomerData(refreshTokenFlowApiRoot).then(
       // eslint-disable-next-line max-lines-per-function
       (result) => {
         const key = generateUniqueKey();
@@ -93,7 +95,7 @@ export function NewAddressCard(props: {
           version: result.body.version,
           actions: arrActions,
         };
-        updateCustomerData(body).then(
+        updateCustomerData(body, refreshTokenFlowApiRoot).then(
           () => {
             showToast(ToastTypes.success, `Address successfully saved!`);
             handleAddButton();

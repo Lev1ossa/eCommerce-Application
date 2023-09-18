@@ -2,11 +2,13 @@ import { LineItem } from '@commercetools/platform-sdk';
 import {
   createContext,
   useCallback,
+  useContext,
   useEffect,
   useMemo,
   useState,
 } from 'react';
 import { getActiveCart } from '../api/requests';
+import { ApiRootContext } from './ApiRootContext';
 
 type CartProviderProps = {
   children: React.ReactNode;
@@ -18,6 +20,7 @@ type CartContextProps = {
   getLineItemId: (id: string) => string;
   removeItemFromCart: (id: string) => void;
   setCartItems: React.Dispatch<React.SetStateAction<LineItem[]>>;
+  getCartItemsCount: () => number;
 };
 export const CartContext = createContext({} as CartContextProps);
 
@@ -26,16 +29,18 @@ export function CartContextProvider({
   children,
 }: CartProviderProps): React.ReactElement {
   const [cartItems, setCartItems] = useState<LineItem[]>([]);
+  const refreshTokenFlowApiRoot = useContext(ApiRootContext);
 
   const getCart = useCallback(() => {
-    getActiveCart().then(
+    getActiveCart(refreshTokenFlowApiRoot).then(
       (result) => {
         console.log('CART: ', result.body.lineItems);
         setCartItems(result.body.lineItems);
+        console.log('CART UPDAAAAAAATED!!!!!!!!!!!!!');
       },
       (error: Error) => console.log(error),
     );
-  }, []);
+  }, [refreshTokenFlowApiRoot]);
 
   useEffect(() => {
     getCart();
@@ -75,6 +80,11 @@ export function CartContextProvider({
     [isItemInCart, cartItems],
   );
 
+  const getCartItemsCount = useCallback((): number => {
+    console.log('hey', cartItems);
+    return cartItems.reduce((sum, item) => sum + item.quantity, 0);
+  }, [cartItems]);
+
   const CartContextValue: CartContextProps = useMemo(
     () => ({
       removeItemFromCart,
@@ -83,6 +93,7 @@ export function CartContextProvider({
       getLineItemId,
       cartItems,
       setCartItems,
+      getCartItemsCount,
     }),
     [
       removeItemFromCart,
@@ -91,6 +102,7 @@ export function CartContextProvider({
       getLineItemId,
       cartItems,
       setCartItems,
+      getCartItemsCount,
     ],
   );
 

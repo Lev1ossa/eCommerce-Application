@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Cart } from '@commercetools/platform-sdk';
 import { Header } from '../../components/Header/Header';
 import styles from './BasketPage.module.scss';
@@ -7,13 +7,16 @@ import { NotEmptyBasketContent } from '../../features/basket/components/NotEmpty
 import { EmptyBasketContent } from '../../features/basket/components/EmptyBasketContent/EmptyBasketContent';
 import { getActiveCart } from '../../api/requests';
 import { Loader } from '../../components/Loader';
+import { ApiRootContext } from '../../context/ApiRootContext';
+import { ApiRootContextProps } from '../../types/types';
 
 export function BasketPage(): React.ReactElement {
   const [isLoading, setIsLoading] = useState(true);
   const [cartData, setCartData] = useState<Cart>();
+  const refreshTokenFlowApiRoot = useContext(ApiRootContext);
 
-  const getCart = (): void => {
-    getActiveCart().then(
+  const getCart = (apiRoot: ApiRootContextProps): void => {
+    getActiveCart(apiRoot).then(
       (result) => {
         setCartData(result.body);
         setIsLoading(false);
@@ -23,8 +26,8 @@ export function BasketPage(): React.ReactElement {
   };
 
   useEffect(() => {
-    getCart();
-  }, []);
+    getCart(refreshTokenFlowApiRoot);
+  }, [refreshTokenFlowApiRoot]);
 
   const content = !cartData?.lineItems.length ? (
     <EmptyBasketContent />

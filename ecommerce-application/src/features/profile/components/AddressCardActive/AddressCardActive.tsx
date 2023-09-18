@@ -1,5 +1,5 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { postcodeValidator } from 'postcode-validator';
 import { BiSave } from 'react-icons/bi';
 import {
@@ -26,6 +26,7 @@ import { FormCheckboxDisabled } from '../FormCheckboxDisabled/FormCheckboxDisabl
 import { getCustomerData, updateCustomerData } from '../../../../api/requests';
 import { showToast } from '../../../autentification/utils/showToast';
 import { InputError } from '../InputError/InputError';
+import { ApiRootContext } from '../../../../context/ApiRootContext';
 
 // eslint-disable-next-line max-lines-per-function
 export function AddressCardActive(props: {
@@ -34,6 +35,7 @@ export function AddressCardActive(props: {
   handleSaveButton: () => void;
 }): React.ReactElement {
   const { styles, addressData, handleSaveButton } = props;
+  const refreshTokenFlowApiRoot = useContext(ApiRootContext);
 
   const {
     register,
@@ -50,7 +52,7 @@ export function AddressCardActive(props: {
   const onSubmit: SubmitHandler<IRegistrationData> = (
     changedAddressData: IRegistrationData,
   ): void => {
-    getCustomerData().then(
+    getCustomerData(refreshTokenFlowApiRoot).then(
       // eslint-disable-next-line max-lines-per-function
       (result) => {
         const changeAddress: MyCustomerChangeAddressAction = {
@@ -120,7 +122,7 @@ export function AddressCardActive(props: {
           version: result.body.version,
           actions: arrActions,
         };
-        updateCustomerData(body).then(
+        updateCustomerData(body, refreshTokenFlowApiRoot).then(
           () => {
             showToast(ToastTypes.success, `Address successfully edited!`);
             handleSaveButton();

@@ -9,6 +9,7 @@ import {
   removeFromCart,
 } from '../../../../api/requests';
 import { CartContext } from '../../../../context/CartContext';
+import { ApiRootContext } from '../../../../context/ApiRootContext';
 
 // eslint-disable-next-line max-lines-per-function
 export function CartItem(props: {
@@ -21,6 +22,7 @@ export function CartItem(props: {
     props;
 
   const cartContext = useContext(CartContext);
+  const refreshTokenFlowApiRoot = useContext(ApiRootContext);
 
   const validPrice = itemData.variant.prices
     ? itemData.variant.prices[0].value.centAmount / 100
@@ -48,12 +50,12 @@ export function CartItem(props: {
 
   const handleIncreaseQuantityButton = (): void => {
     setIsButtonsDisabled(true);
-    getActiveCart().then(
+    getActiveCart(refreshTokenFlowApiRoot).then(
       (cartResponse) => {
         const cart = cartResponse.body;
         const { productId } = itemData;
         const quantity = 1;
-        addToCart(cart, productId, quantity).then(
+        addToCart(cart, productId, quantity, refreshTokenFlowApiRoot).then(
           (result) => {
             setCartData(result.body);
             cartContext.setCartItems(result.body.lineItems);
@@ -68,12 +70,17 @@ export function CartItem(props: {
 
   const handleDecreaseQuantityButton = (): void => {
     setIsButtonsDisabled(true);
-    getActiveCart().then(
+    getActiveCart(refreshTokenFlowApiRoot).then(
       (cartResponse) => {
         const cart = cartResponse.body;
         const lineItemID = itemData.id;
         const quantity = 1;
-        removeFromCart(cart, lineItemID, quantity).then(
+        removeFromCart(
+          cart,
+          lineItemID,
+          quantity,
+          refreshTokenFlowApiRoot,
+        ).then(
           (result) => {
             setCartData(result.body);
             cartContext.setCartItems(result.body.lineItems);
@@ -88,12 +95,17 @@ export function CartItem(props: {
 
   const handleDeleteButton = (): void => {
     setIsButtonsDisabled(true);
-    getActiveCart().then(
+    getActiveCart(refreshTokenFlowApiRoot).then(
       (cartResponse) => {
         const cart = cartResponse.body;
         const lineItemID = itemData.id;
         const quantity = currentQuantity;
-        removeFromCart(cart, lineItemID, quantity).then(
+        removeFromCart(
+          cart,
+          lineItemID,
+          quantity,
+          refreshTokenFlowApiRoot,
+        ).then(
           (result) => {
             setCartData(result.body);
             cartContext.setCartItems(result.body.lineItems);

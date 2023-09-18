@@ -18,6 +18,7 @@ import { Modal } from '../../../modal';
 import { RemoveButton } from '../RemoveButton';
 import { Slider } from '../Slider';
 import styles from './Product.module.scss';
+import { ApiRootContext } from '../../../../context/ApiRootContext';
 
 // eslint-disable-next-line max-lines-per-function
 export function Product(props: {
@@ -27,6 +28,8 @@ export function Product(props: {
 }): React.ReactElement {
   const navigate = useNavigate();
   const cart = useContext(CartContext);
+  const refreshTokenFlowApiRoot = useContext(ApiRootContext);
+
   const { categorySlug, subCategorySlug, slug } = props;
   const [modalActive, setModalActive] = useState(false);
   const [product, setProduct] = useState<ProductProjection>();
@@ -39,7 +42,7 @@ export function Product(props: {
   const productCard = useLocation();
 
   useEffect(() => {
-    getProductBySlug(slug).then(
+    getProductBySlug(slug, refreshTokenFlowApiRoot).then(
       (result) => {
         const productResult = result.body.results[0];
         if (productResult) {
@@ -54,7 +57,7 @@ export function Product(props: {
         console.log(error);
       },
     );
-  }, [productCard.state, slug, navigate]);
+  }, [productCard.state, slug, navigate, refreshTokenFlowApiRoot]);
 
   let price = '';
   let priceDiscounted = '';
@@ -97,11 +100,11 @@ export function Product(props: {
 
   const addToCartHandler = (): void => {
     setIsCartLoading(true);
-    getActiveCart().then(
+    getActiveCart(refreshTokenFlowApiRoot).then(
       (cartResponse) => {
         const cartBody = cartResponse.body;
         const quantity = 1;
-        addToCart(cartBody, productId, quantity).then(
+        addToCart(cartBody, productId, quantity, refreshTokenFlowApiRoot).then(
           (result) => {
             cart.setCartItems(result.body.lineItems);
             setIsCartLoading(false);
@@ -116,11 +119,16 @@ export function Product(props: {
   const removeFromCartHandler = (): void => {
     if (lineItemID) {
       setIsCartLoading(true);
-      getActiveCart().then(
+      getActiveCart(refreshTokenFlowApiRoot).then(
         (cartResponse) => {
           const cartBody = cartResponse.body;
           const quantity = 1;
-          removeFromCart(cartBody, lineItemID, quantity).then(
+          removeFromCart(
+            cartBody,
+            lineItemID,
+            quantity,
+            refreshTokenFlowApiRoot,
+          ).then(
             (result) => {
               cart.setCartItems(result.body.lineItems);
               setIsCartLoading(false);
@@ -136,11 +144,16 @@ export function Product(props: {
   const removeAllHandler = (): void => {
     if (lineItemID) {
       setIsCartLoading(true);
-      getActiveCart().then(
+      getActiveCart(refreshTokenFlowApiRoot).then(
         (cartResponse) => {
           const cartBody = cartResponse.body;
           const quantity = productCount;
-          removeFromCart(cartBody, lineItemID, quantity).then(
+          removeFromCart(
+            cartBody,
+            lineItemID,
+            quantity,
+            refreshTokenFlowApiRoot,
+          ).then(
             (result) => {
               cart.setCartItems(result.body.lineItems);
               setIsCartLoading(false);

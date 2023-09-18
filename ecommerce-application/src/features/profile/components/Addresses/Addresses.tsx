@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { AiOutlineHome } from 'react-icons/ai';
 import { BsHouseAdd } from 'react-icons/bs';
 import styles from './Addresses.module.scss';
@@ -8,6 +8,7 @@ import { UserAdress } from '../../../../types/types';
 import { AddressCardActive } from '../AddressCardActive/AddressCardActive';
 import { NewAddressCard } from '../NewAddressCard/NewAddressCard';
 import { getCustomerData } from '../../../../api/requests';
+import { ApiRootContext } from '../../../../context/ApiRootContext';
 
 // eslint-disable-next-line max-lines-per-function
 export function Addresses(): React.ReactElement {
@@ -16,10 +17,11 @@ export function Addresses(): React.ReactElement {
     useState(false);
   const [modalAddressId, setModalAddressId] = useState('');
   const [addressesData, setAddressesData] = useState<UserAdress[]>([]);
+  const refreshTokenFlowApiRoot = useContext(ApiRootContext);
 
   // eslint-disable-next-line max-lines-per-function
   const handleAddButton = (): void => {
-    getCustomerData().then(
+    getCustomerData(refreshTokenFlowApiRoot).then(
       (result) => {
         const customerData = result.body;
         const customerAdresses: UserAdress[] = customerData.addresses.map(
@@ -66,7 +68,7 @@ export function Addresses(): React.ReactElement {
   };
   // eslint-disable-next-line max-lines-per-function
   const handleSaveButton = (): void => {
-    getCustomerData().then(
+    getCustomerData(refreshTokenFlowApiRoot).then(
       (result) => {
         const customerData = result.body;
         const customerAdresses: UserAdress[] = customerData.addresses.map(
@@ -113,7 +115,7 @@ export function Addresses(): React.ReactElement {
   };
   // eslint-disable-next-line max-lines-per-function
   const handleDeleteButton = (): void => {
-    getCustomerData().then(
+    getCustomerData(refreshTokenFlowApiRoot).then(
       (result) => {
         const customerData = result.body;
         const customerAdresses: UserAdress[] = customerData.addresses.map(
@@ -159,7 +161,7 @@ export function Addresses(): React.ReactElement {
 
   // eslint-disable-next-line max-lines-per-function
   useEffect(() => {
-    getCustomerData().then(
+    getCustomerData(refreshTokenFlowApiRoot).then(
       (result) => {
         const customerData = result.body;
         const customerAdresses: UserAdress[] = customerData.addresses.map(
@@ -202,7 +204,7 @@ export function Addresses(): React.ReactElement {
         console.log(error);
       },
     );
-  }, []);
+  }, [refreshTokenFlowApiRoot]);
 
   const data = addressesData.find((el) => el.id === modalAddressId);
   const handleCreateAddressButton = (): void => {
