@@ -10,6 +10,7 @@ import { BuyButton } from '../../../../components/UI/BuyButton';
 import { BuyCountButton } from '../../../../components/UI/BuyCountButton';
 import { CartContext } from '../../../../context/CartContext';
 import styles from './ProductCard.module.scss';
+import { ApiRootContext } from '../../../../context/ApiRootContext';
 
 // eslint-disable-next-line max-lines-per-function
 export function ProductCard(props: {
@@ -22,6 +23,7 @@ export function ProductCard(props: {
   const [lineItemID, setLineItemID] = useState('');
 
   const cart = useContext(CartContext);
+  const refreshTokenFlowApiRoot = useContext(ApiRootContext);
 
   const { product, isLoading, setIsLoading } = props;
   const { id } = product;
@@ -50,11 +52,11 @@ export function ProductCard(props: {
 
   const addToCartHandler = (): void => {
     setIsLoading(true);
-    getActiveCart().then(
+    getActiveCart(refreshTokenFlowApiRoot).then(
       (cartResponse) => {
         const cartBody = cartResponse.body;
         const quantity = 1;
-        addToCart(cartBody, id, quantity).then(
+        addToCart(cartBody, id, quantity, refreshTokenFlowApiRoot).then(
           (result) => {
             cart.setCartItems(result.body.lineItems);
             setIsLoading(false);
@@ -69,11 +71,16 @@ export function ProductCard(props: {
   const removeFromCartHandler = (): void => {
     if (lineItemID) {
       setIsLoading(true);
-      getActiveCart().then(
+      getActiveCart(refreshTokenFlowApiRoot).then(
         (cartResponse) => {
           const cartBody = cartResponse.body;
           const quantity = 1;
-          removeFromCart(cartBody, lineItemID, quantity).then(
+          removeFromCart(
+            cartBody,
+            lineItemID,
+            quantity,
+            refreshTokenFlowApiRoot,
+          ).then(
             (result) => {
               cart.setCartItems(result.body.lineItems);
               setIsLoading(false);

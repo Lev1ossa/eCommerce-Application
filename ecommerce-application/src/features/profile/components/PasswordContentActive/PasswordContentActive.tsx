@@ -1,5 +1,5 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { AiOutlineSave } from 'react-icons/ai';
 import { MyCustomerChangePassword } from '@commercetools/platform-sdk';
 import { useNavigate } from 'react-router-dom';
@@ -14,6 +14,7 @@ import {
 import { handleLogout } from '../../../autentification';
 import { showToast } from '../../../autentification/utils/showToast';
 import { InputError } from '../InputError/InputError';
+import { ApiRootContext } from '../../../../context/ApiRootContext';
 
 // eslint-disable-next-line max-lines-per-function
 export function PasswordContentActive(props: {
@@ -21,6 +22,7 @@ export function PasswordContentActive(props: {
 }): React.ReactElement {
   const { styles } = props;
   const [newPassword, setNewPassword] = useState('');
+  const refreshTokenFlowApiRoot = useContext(ApiRootContext);
 
   const handleNewPasswordInput = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -47,16 +49,16 @@ export function PasswordContentActive(props: {
   const onSubmit: SubmitHandler<IRegistrationData> = async (
     passwordData: IRegistrationData,
   ): Promise<void> => {
-    await getCustomerData().then(
+    await getCustomerData(refreshTokenFlowApiRoot).then(
       (result) => {
         const body: MyCustomerChangePassword = {
           version: result.body.version,
           currentPassword: passwordData.currentPassword,
           newPassword: passwordData.newPassword,
         };
-        updateCustomerPassword(body).then(
+        updateCustomerPassword(body, refreshTokenFlowApiRoot).then(
           async () => {
-            await handleLogout();
+            await handleLogout(refreshTokenFlowApiRoot);
             handleRedirect();
             showToast(
               ToastTypes.success,

@@ -1,5 +1,5 @@
 import { postcodeValidator } from 'postcode-validator';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { IRegistrationData } from '../../../../types/types';
@@ -13,9 +13,11 @@ import { FormPasswordInput } from '../FormInputs/FormPasswordInput/FormPasswordI
 import { FormShippingAddressInput } from '../FormInputs/FormShippingAddressInput/FormShippingAddressInput';
 import styles from './RegistrationForm.module.scss';
 import { isUserLoggedIn } from '../../../../api/tokenHandlers';
+import { ApiRootContext } from '../../../../context/ApiRootContext';
 
 // eslint-disable-next-line max-lines-per-function
 export function RegistrationForm(): React.ReactElement {
+  const refreshTokenFlowApiRoot = useContext(ApiRootContext);
   const navigate = useNavigate();
   const handleRedirect = (): void => {
     if (isUserLoggedIn()) {
@@ -114,7 +116,7 @@ export function RegistrationForm(): React.ReactElement {
   const onSubmit: SubmitHandler<IRegistrationData> = async (
     registrationData: IRegistrationData,
   ): Promise<void> => {
-    await handleRegistration(registrationData);
+    await handleRegistration(registrationData, refreshTokenFlowApiRoot);
     handleRedirect();
   };
 

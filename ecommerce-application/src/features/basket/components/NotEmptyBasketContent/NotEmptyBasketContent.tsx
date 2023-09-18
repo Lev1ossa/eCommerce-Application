@@ -17,9 +17,10 @@ import {
   removePromocodeFromCart,
 } from '../../../../api/requests';
 import { showToast } from '../../../autentification/utils/showToast';
-import { ToastTypes } from '../../../../types/types';
+import { ApiRootContextProps, ToastTypes } from '../../../../types/types';
 import { Loader } from '../../../../components/Loader';
 import { CartContext } from '../../../../context/CartContext';
+import { ApiRootContext } from '../../../../context/ApiRootContext';
 
 // eslint-disable-next-line max-lines-per-function
 export function NotEmptyBasketContent(props: {
@@ -29,6 +30,7 @@ export function NotEmptyBasketContent(props: {
   const { cartData, setCartData } = props;
 
   const cartContext = useContext(CartContext);
+  const refreshTokenFlowApiRoot = useContext(ApiRootContext);
 
   const totalCoast = cartData ? cartData.totalPrice.centAmount / 100 : null;
 
@@ -62,8 +64,8 @@ export function NotEmptyBasketContent(props: {
 
   const [inputValue, setInputValue] = useState('');
 
-  const getPromocodes = (): void => {
-    getDiscountCodes().then(
+  const getPromocodes = (apiRoot: ApiRootContextProps): void => {
+    getDiscountCodes(apiRoot).then(
       (result) => {
         setPromocodes(result.body.results);
         setIsLoading(false);
@@ -73,11 +75,11 @@ export function NotEmptyBasketContent(props: {
   };
 
   useEffect(() => {
-    getPromocodes();
-  }, []);
+    getPromocodes(refreshTokenFlowApiRoot);
+  }, [refreshTokenFlowApiRoot]);
 
   const getCart = (): void => {
-    getActiveCart().then(
+    getActiveCart(refreshTokenFlowApiRoot).then(
       (result) => {
         setCartData(result.body);
       },
@@ -91,7 +93,7 @@ export function NotEmptyBasketContent(props: {
 
   const handleApproveButton = (): void => {
     setIsButtonsDisabled(true);
-    getActiveCart().then(
+    getActiveCart(refreshTokenFlowApiRoot).then(
       (cartResponse) => {
         const cart = cartResponse.body;
         const actions: MyCartUpdateAction[] = cart.lineItems.map((lineItem) => {
@@ -101,7 +103,7 @@ export function NotEmptyBasketContent(props: {
             quantity: lineItem.quantity,
           };
         });
-        clearCart(cart, actions).then(
+        clearCart(cart, actions, refreshTokenFlowApiRoot).then(
           (result) => {
             setCartData(result.body);
             setIsButtonsDisabled(false);
@@ -120,11 +122,11 @@ export function NotEmptyBasketContent(props: {
   };
 
   const handleApplyPromocodeButton = (): void => {
-    getActiveCart().then(
+    getActiveCart(refreshTokenFlowApiRoot).then(
       (cartResponse) => {
         const cart = cartResponse.body;
         const code = inputValue;
-        addPromocodeToCart(cart, code).then(
+        addPromocodeToCart(cart, code, refreshTokenFlowApiRoot).then(
           (result) => {
             showToast(ToastTypes.success, `Promo code was applied!`);
             setCartData(result.body);
@@ -154,11 +156,15 @@ export function NotEmptyBasketContent(props: {
   ));
 
   const handleRemoveButton = (id: string): void => {
-    getActiveCart().then(
+    getActiveCart(refreshTokenFlowApiRoot).then(
       (cartResponse) => {
         const cart = cartResponse.body;
         const discountCodeID = id;
-        removePromocodeFromCart(cart, discountCodeID).then(
+        removePromocodeFromCart(
+          cart,
+          discountCodeID,
+          refreshTokenFlowApiRoot,
+        ).then(
           (result) => setCartData(result.body),
           (error: Error) => console.log(error),
         );

@@ -1,28 +1,24 @@
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Footer } from '../../components/Footer/Footer';
 import { Header } from '../../components/Header/Header';
 import { Catalog } from '../../features/catalog';
 import styles from './CatalogPage.module.scss';
-import { getActiveCart } from '../../api/requests';
+import { CartContext } from '../../context/CartContext';
 
 export function CatalogPage(): React.ReactElement {
   const { categorySlug, subCategorySlug } = useParams();
 
   const [quantityProducts, setQuantityProducts] = useState<number>();
+  const cartContext = useContext(CartContext);
 
-  const getCart = (): void => {
-    getActiveCart().then(
-      (result) => {
-        setQuantityProducts(result.body.totalLineItemQuantity);
-      },
-      (error: Error) => console.log(error),
-    );
+  const getCart = (cartItemsCount: number): void => {
+    setQuantityProducts(cartItemsCount);
   };
 
   useEffect(() => {
-    getCart();
-  }, []);
+    getCart(cartContext.getCartItemsCount());
+  }, [cartContext]);
 
   return (
     <div className={styles.catalog_page}>

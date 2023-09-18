@@ -9,12 +9,14 @@ import {
   MyCustomerSetLastNameAction,
   MyCustomerUpdate,
 } from '@commercetools/platform-sdk';
+import { useContext } from 'react';
 import { IRegistrationData, ToastTypes } from '../../../../types/types';
 import { ServiceInputParameters } from '../../../autentification/services/inputService';
 import { FormInputProfile } from '../FormInputProfile/FormInputProfile';
 import { getCustomerData, updateCustomerData } from '../../../../api/requests';
 import { showToast } from '../../../autentification/utils/showToast';
 import { InputError } from '../InputError/InputError';
+import { ApiRootContext } from '../../../../context/ApiRootContext';
 
 // eslint-disable-next-line max-lines-per-function
 export function AccountContentActive(props: {
@@ -23,6 +25,7 @@ export function AccountContentActive(props: {
   handleSaveButton: () => void;
 }): React.ReactElement {
   const { styles, userData, handleSaveButton } = props;
+  const refreshTokenFlowApiRoot = useContext(ApiRootContext);
 
   const {
     register,
@@ -36,7 +39,7 @@ export function AccountContentActive(props: {
   const onSubmit: SubmitHandler<IRegistrationData> = (
     customerData: IRegistrationData,
   ): void => {
-    getCustomerData().then(
+    getCustomerData(refreshTokenFlowApiRoot).then(
       (result) => {
         const updateFirstName: MyCustomerSetFirstNameAction = {
           action: 'setFirstName',
@@ -63,7 +66,7 @@ export function AccountContentActive(props: {
             updateEmail,
           ],
         };
-        updateCustomerData(body).then(
+        updateCustomerData(body, refreshTokenFlowApiRoot).then(
           () => {
             showToast(ToastTypes.success, `Data successfully saved!`);
             handleSaveButton();

@@ -1,5 +1,5 @@
 import { ProductProjection } from '@commercetools/platform-sdk';
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
   getCategories,
@@ -7,12 +7,17 @@ import {
   getProductsList,
 } from '../../../../api/requests';
 import { Loader } from '../../../../components/Loader';
-import { CustomCategory, ICurrentFilters } from '../../../../types/types';
+import {
+  ApiRootContextProps,
+  CustomCategory,
+  ICurrentFilters,
+} from '../../../../types/types';
 import { Breadcrumb } from '../../../breadcrumb/components/Breadcrumps/Breadcrumb';
 import { Pagination } from '../Pagination';
 import { ProductList } from '../ProductList';
 import { CatalogSidebar } from '../Sidebar';
 import styles from './Catalog.module.scss';
+import { ApiRootContext } from '../../../../context/ApiRootContext';
 
 // eslint-disable-next-line max-lines-per-function
 export function Catalog(props: {
@@ -41,6 +46,7 @@ export function Catalog(props: {
     search: '',
   });
   const location = useLocation();
+  const refreshTokenFlowApiRoot = useContext(ApiRootContext);
 
   const getBrandsFromProducts = (productList: ProductProjection[]): void => {
     const brandsList = productList.map((product: ProductProjection) =>
@@ -52,7 +58,7 @@ export function Catalog(props: {
   };
 
   useEffect(() => {
-    getProductsList().then(
+    getProductsList(refreshTokenFlowApiRoot).then(
       (result) => {
         getBrandsFromProducts(result.body.results);
         setIsLoading(false);
@@ -61,10 +67,10 @@ export function Catalog(props: {
         console.log(error);
       },
     );
-  }, []);
+  }, [refreshTokenFlowApiRoot]);
 
   useEffect(() => {
-    getCategories().then(
+    getCategories(refreshTokenFlowApiRoot).then(
       (result) => {
         const categories: CustomCategory[] = result.body.results.map(
           (category) => {
@@ -99,12 +105,13 @@ export function Catalog(props: {
         console.log(error);
       },
     );
-  }, []);
+  }, [refreshTokenFlowApiRoot]);
 
   // eslint-disable-next-line max-lines-per-function
   const getFilteredProducts = async (
     filters: Partial<ICurrentFilters>,
     offset: number,
+    ApiRoot: ApiRootContextProps,
   ): Promise<void> => {
     setIsLoading(true);
     const sortQueryStrings: string[] = [];
@@ -159,6 +166,7 @@ export function Catalog(props: {
       sortQueryStrings,
       searchQueryString,
       offset,
+      ApiRoot,
     ).then(
       (result) => {
         setProducts(result.body.results);
@@ -175,20 +183,30 @@ export function Catalog(props: {
   const didMount = useRef(false);
   useEffect(() => {
     if (didMount.current) {
-      getFilteredProducts(currentFilters, productOffset);
+      getFilteredProducts(
+        currentFilters,
+        productOffset,
+        refreshTokenFlowApiRoot,
+      );
     } else didMount.current = true;
-  }, [currentFilters, productOffset]);
+  }, [currentFilters, productOffset, refreshTokenFlowApiRoot]);
 
   useEffect(() => {
-    if (
-      location.pathname === '/catalog' &&
-      !Object.values(currentFilters).length
-    ) {
+    if (location.pathname === '/catalog') {
       if (!productOffset) {
-        getFilteredProducts(currentFilters, productOffset);
+        getFilteredProducts(
+          currentFilters,
+          productOffset,
+          refreshTokenFlowApiRoot,
+        );
       }
     }
-  }, [currentFilters, location.pathname, productOffset]);
+  }, [
+    currentFilters,
+    location.pathname,
+    productOffset,
+    refreshTokenFlowApiRoot,
+  ]);
 
   return (
     <>
