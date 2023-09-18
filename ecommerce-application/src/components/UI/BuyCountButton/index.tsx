@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ButtonLoader } from '../ButtonLoader';
 import styles from './BuyCountButton.module.scss';
 
 // eslint-disable-next-line max-lines-per-function
@@ -8,15 +9,34 @@ export function BuyCountButton(props: {
   removeFromCartHandler: () => void;
   productCount: number;
   isLoading: boolean;
+  isCartLoading: boolean;
 }): React.ReactElement {
-  const { addToCartHandler, removeFromCartHandler, productCount, isLoading } =
-    props;
+  const {
+    addToCartHandler,
+    removeFromCartHandler,
+    productCount,
+    isLoading,
+    isCartLoading,
+  } = props;
   const [isHover, setIsHover] = useState(false);
+  const [buttonContent, setButtonContent] = useState<
+    string | React.ReactElement
+  >(`${productCount} added`);
   const navigate = useNavigate();
 
   const handleNavigate = (path: string): void => {
     navigate(path);
   };
+
+  useEffect(() => {
+    if (isHover) {
+      setButtonContent('to cart');
+    } else {
+      setButtonContent(
+        isCartLoading ? <ButtonLoader /> : `${productCount} added`,
+      );
+    }
+  }, [isCartLoading, productCount, isHover]);
 
   return (
     <div className={styles.container}>
@@ -44,8 +64,7 @@ export function BuyCountButton(props: {
             e.preventDefault();
           }}
         >
-          {/* {isLoading && <ButtonLoader />} */}
-          {isHover ? 'to cart' : `${productCount} added`}
+          {buttonContent}
         </button>
         <button
           type="button"

@@ -8,9 +8,9 @@ import {
 } from '../../../../api/requests';
 import { BuyButton } from '../../../../components/UI/BuyButton';
 import { BuyCountButton } from '../../../../components/UI/BuyCountButton';
+import { ApiRootContext } from '../../../../context/ApiRootContext';
 import { CartContext } from '../../../../context/CartContext';
 import styles from './ProductCard.module.scss';
-import { ApiRootContext } from '../../../../context/ApiRootContext';
 
 // eslint-disable-next-line max-lines-per-function
 export function ProductCard(props: {
@@ -19,6 +19,7 @@ export function ProductCard(props: {
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }): React.ReactElement {
   const [isProductInCart, setIsProductInCart] = useState(false);
+  const [isDataLoading, setIsDataLoading] = useState(false);
   const [productCount, setProductCount] = useState(1);
   const [lineItemID, setLineItemID] = useState('');
 
@@ -52,6 +53,7 @@ export function ProductCard(props: {
 
   const addToCartHandler = (): void => {
     setIsLoading(true);
+    setIsDataLoading(true);
     getActiveCart(refreshTokenFlowApiRoot).then(
       (cartResponse) => {
         const cartBody = cartResponse.body;
@@ -60,6 +62,7 @@ export function ProductCard(props: {
           (result) => {
             cart.setCartItems(result.body.lineItems);
             setIsLoading(false);
+            setIsDataLoading(false);
           },
           (error: Error) => console.log(error),
         );
@@ -71,6 +74,7 @@ export function ProductCard(props: {
   const removeFromCartHandler = (): void => {
     if (lineItemID) {
       setIsLoading(true);
+      setIsDataLoading(true);
       getActiveCart(refreshTokenFlowApiRoot).then(
         (cartResponse) => {
           const cartBody = cartResponse.body;
@@ -84,6 +88,7 @@ export function ProductCard(props: {
             (result) => {
               cart.setCartItems(result.body.lineItems);
               setIsLoading(false);
+              setIsDataLoading(false);
             },
             (error: Error) => console.log(error),
           );
@@ -125,6 +130,7 @@ export function ProductCard(props: {
         {isProductInCart ? (
           <BuyCountButton
             isLoading={isLoading}
+            isCartLoading={isDataLoading}
             addToCartHandler={addToCartHandler}
             removeFromCartHandler={removeFromCartHandler}
             productCount={productCount}
@@ -132,6 +138,7 @@ export function ProductCard(props: {
         ) : (
           <BuyButton
             isLoading={isLoading}
+            isCartLoading={isDataLoading}
             isProductInCart={isProductInCart}
             addToCartHandler={addToCartHandler}
           />
