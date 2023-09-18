@@ -178,14 +178,16 @@ export function NotEmptyBasketContent(props: {
       })
     : null;
 
-  const subtotalContent = cartData?.discountCodes.length ? (
-    <div className={styles.prices_container}>
+  const subtotalContent =
+    cartData?.discountCodes.length &&
+    totalCoast?.toFixed(2) !== totalOldCoast?.toFixed(2) ? (
+      <div className={styles.prices_container}>
+        <div className={styles.price_new}>$ {totalCoast?.toFixed(2)}</div>
+        <div className={styles.price}>$ {totalOldCoast?.toFixed(2)}</div>
+      </div>
+    ) : (
       <div className={styles.price_new}>$ {totalCoast?.toFixed(2)}</div>
-      <div className={styles.price}>$ {totalOldCoast?.toFixed(2)}</div>
-    </div>
-  ) : (
-    <div className={styles.price_new}>$ {totalCoast?.toFixed(2)}</div>
-  );
+    );
 
   return (
     <main className={styles.main}>
