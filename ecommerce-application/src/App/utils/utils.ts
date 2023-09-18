@@ -1,11 +1,11 @@
 import { createAnonymousToken } from '../../api/tokenHandlers';
 
 const isUserExists = (): boolean => {
-  return !!localStorage.getItem('AAA-Ecom-refreshToken');
+  return !!localStorage.getItem('AAA-Ecom-authData');
 };
 
-export const initializeApp = (): void => {
+export const initializeApp = async (): Promise<void> => {
   if (!isUserExists()) {
-    createAnonymousToken();
+    await createAnonymousToken();
   }
 };

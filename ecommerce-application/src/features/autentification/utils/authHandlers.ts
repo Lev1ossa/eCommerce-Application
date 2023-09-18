@@ -35,9 +35,7 @@ export const handleLogin = async (
         getRefreshTokenFlowApiRoot(getRefreshToken()),
       );
       getActiveCart(refreshTokenFlowApiRoot)
-        .then((result) => {
-          console.log(result);
-        })
+        .then(() => {})
         .catch(() => createCart(refreshTokenFlowApiRoot))
         .catch((error: Error) => console.log(error));
     },

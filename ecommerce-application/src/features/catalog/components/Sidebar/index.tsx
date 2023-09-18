@@ -168,8 +168,6 @@ export function CatalogSidebar(props: {
   const didMount = useRef(false);
   useEffect(() => {
     if (didMount.current) {
-      console.log('mount');
-
       setcurrentFilters({
         category: categoryFilterProps,
         trademark: trademarkProps,

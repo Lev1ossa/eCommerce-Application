@@ -6,7 +6,7 @@ import { getAnonymousUser } from './requests';
 import { getRefreshToken } from './utils';
 
 export const changeToken = (refreshToken: UserLogin): void => {
-  localStorage.setItem('AAA-Ecom-refreshToken', JSON.stringify(refreshToken));
+  localStorage.setItem('AAA-Ecom-authData', JSON.stringify(refreshToken));
 };
 
 export const createAnonymousToken = async (
@@ -14,8 +14,7 @@ export const createAnonymousToken = async (
 ): Promise<void> => {
   const tokenCache = new CustomTokenCache();
   await getAnonymousUser(tokenCache).then(
-    (result) => {
-      console.log('CART', result);
+    () => {
       const { refreshToken } = tokenCache.get();
       if (refreshToken) {
         changeToken({
@@ -36,7 +35,7 @@ export const createAnonymousToken = async (
 };
 
 export const isUserLoggedIn = (): boolean => {
-  const userLoginJson = localStorage.getItem('AAA-Ecom-refreshToken');
+  const userLoginJson = localStorage.getItem('AAA-Ecom-authData');
   if (userLoginJson) {
     const userLogin: UserLogin = JSON.parse(userLoginJson);
     return userLogin.isLogin;

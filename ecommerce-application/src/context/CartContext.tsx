@@ -34,9 +34,7 @@ export function CartContextProvider({
   const getCart = useCallback(() => {
     getActiveCart(refreshTokenFlowApiRoot).then(
       (result) => {
-        console.log('CART: ', result.body.lineItems);
         setCartItems(result.body.lineItems);
-        console.log('CART UPDAAAAAAATED!!!!!!!!!!!!!');
       },
       (error: Error) => console.log(error),
     );
