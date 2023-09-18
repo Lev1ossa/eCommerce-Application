@@ -11,18 +11,11 @@ export function BuyCountButton(props: {
 }): React.ReactElement {
   const { addToCartHandler, removeFromCartHandler, productCount, isLoading } =
     props;
-  const [buttonText, setButtonText] = useState(`${productCount} added`);
+  const [isHover, setIsHover] = useState(false);
   const navigate = useNavigate();
 
   const handleNavigate = (path: string): void => {
     navigate(path);
-  };
-  const handleButtonHover = (): void => {
-    setButtonText('to cart ');
-  };
-
-  const handleButtonLeave = (): void => {
-    setButtonText(`${productCount} added`);
   };
 
   return (
@@ -44,14 +37,14 @@ export function BuyCountButton(props: {
           className={styles.button}
           disabled={isLoading}
           onFocus={(): number => 0}
-          onMouseOver={handleButtonHover}
-          onMouseLeave={handleButtonLeave}
+          onMouseOver={(): void => setIsHover(true)}
+          onMouseLeave={(): void => setIsHover(false)}
           onClick={(e): void => {
             handleNavigate('/cart');
             e.preventDefault();
           }}
         >
-          {buttonText}
+          {isHover ? 'to cart' : `${productCount} added`}
         </button>
         <button
           type="button"
