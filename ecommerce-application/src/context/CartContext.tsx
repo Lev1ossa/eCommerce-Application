@@ -20,7 +20,7 @@ type CartContextProps = {
   getLineItemId: (id: string) => string;
   removeItemFromCart: (id: string) => void;
   setCartItems: React.Dispatch<React.SetStateAction<LineItem[]>>;
-  getCartItemsCount: () => number;
+  getCartItemsCount: () => number | undefined;
 };
 export const CartContext = createContext({} as CartContextProps);
 
@@ -80,9 +80,12 @@ export function CartContextProvider({
     [isItemInCart, cartItems],
   );
 
-  const getCartItemsCount = useCallback((): number => {
-    console.log('hey', cartItems);
-    return cartItems.reduce((sum, item) => sum + item.quantity, 0);
+  const getCartItemsCount = useCallback((): number | undefined => {
+    const cartItemsCount = cartItems.reduce(
+      (sum, item) => sum + item.quantity,
+      0,
+    );
+    return cartItemsCount || undefined;
   }, [cartItems]);
 
   const CartContextValue: CartContextProps = useMemo(
