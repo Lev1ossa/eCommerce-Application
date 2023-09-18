@@ -7,8 +7,11 @@ import { Sidebar } from './Sidebar/Sidebar';
 import { Nav } from './Nav/Nav';
 import { isUserLoggedIn } from '../../api/tokenHandlers';
 
-export function Header(): React.ReactElement {
+export function Header(props: {
+  quantityProducts: number | undefined;
+}): React.ReactElement {
   const [userLoggedIn, setUserLoggedIn] = useState(isUserLoggedIn());
+  const { quantityProducts } = props;
   const navigate = useNavigate();
   const handleRedirect = (): void => {
     if (!isUserLoggedIn()) {
@@ -38,6 +41,7 @@ export function Header(): React.ReactElement {
           className={navLinkClass}
           userLoggedIn={userLoggedIn}
           logoutHandler={logoutHandler}
+          quantityProducts={quantityProducts}
         />
       </header>
     </>

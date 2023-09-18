@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { MyCartUpdateAction } from '@commercetools/platform-sdk';
 import {
@@ -138,6 +138,21 @@ const getDiscountCodeByIDHandler = (): void => {
 export function MainPage(): React.ReactElement {
   const apiRoot = useContext(ApiRootContext);
 
+  const [quantityProducts, setQuantityProducts] = useState<number>();
+
+  const getCart = (): void => {
+    getActiveCart().then(
+      (result) => {
+        setQuantityProducts(result.body.totalLineItemQuantity);
+      },
+      (error: Error) => console.log(error),
+    );
+  };
+
+  useEffect(() => {
+    getCart();
+  }, []);
+
   const testClientCridentialsFlowApiRoot = (): void => {
     const root = getClientCridentialsFlowApiRoot();
     console.log('ClientCridentialsFlowApiRoot', root);
@@ -160,7 +175,7 @@ export function MainPage(): React.ReactElement {
   ).href;
   return (
     <div className={styles.main_page}>
-      <Header />
+      <Header quantityProducts={quantityProducts} />
       <main className={styles.main}>
         <section className={styles.section_main}>
           <div className={styles.main_text_block}>
