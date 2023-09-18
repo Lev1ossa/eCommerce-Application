@@ -56,8 +56,8 @@ export function Product(props: {
     );
   }, [productCard.state, slug, navigate]);
 
-  let price = 0;
-  let priceDiscounted: number | null = null;
+  let price = '';
+  let priceDiscounted = '';
   let productId = '';
   let productName = '';
   let trademark = '';
@@ -70,11 +70,11 @@ export function Product(props: {
     const { prices, attributes, images } = product.masterVariant;
     productId = product.id;
     productName = product.name.en;
-    price = prices ? prices[0].value.centAmount / 100 : 0;
+    price = prices ? (prices[0].value.centAmount / 100).toFixed(2) : '0';
     priceDiscounted =
       prices && prices[0].discounted
-        ? prices[0].discounted.value.centAmount / 100
-        : null;
+        ? (prices[0].discounted.value.centAmount / 100).toFixed(2)
+        : '';
     trademark = attributes ? attributes[0].value : '';
     category = attributes ? attributes[1].value : '';
     origin = attributes ? attributes[3].value.label : '';
