@@ -34,7 +34,7 @@ export function BasketPage(): React.ReactElement {
 
   return (
     <div className={styles.main_page}>
-      <Header />
+      <Header quantityProducts={cartData?.totalLineItemQuantity} />
       {!isLoading ? content : <Loader />}
       <Footer />
     </div>

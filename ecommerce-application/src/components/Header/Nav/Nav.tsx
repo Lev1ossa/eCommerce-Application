@@ -9,9 +9,10 @@ export function Nav(props: {
   className: ({ isActive }: { isActive: boolean }) => string;
   userLoggedIn: boolean;
   logoutHandler: () => Promise<void>;
+  quantityProducts: number | undefined;
 }): React.ReactElement {
-  const { className, userLoggedIn, logoutHandler } = props;
-  const cartCount = 10; // mock data
+  const { className, userLoggedIn, logoutHandler, quantityProducts } = props;
+
   return (
     <nav>
       <ul className={styles.links}>
@@ -41,8 +42,8 @@ export function Nav(props: {
           <NavLink className={className} to="/cart">
             <div className={styles.icon_container}>
               <BsCart3 className={styles.header_icon} />
-              {cartCount > 0 && (
-                <span className={styles.count_label}>{cartCount}</span>
+              {quantityProducts && quantityProducts > 0 && (
+                <span className={styles.count_label}>{quantityProducts}</span>
               )}
             </div>
           </NavLink>
