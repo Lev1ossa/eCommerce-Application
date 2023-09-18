@@ -67,12 +67,56 @@
   }
 }
 
-.image {
-  background: url('/src/assets/img/medium-shot-woman-holding-bananas.jpg') center no-repeat;
+.image_anton {
   background-size: cover;
   width: 100%;
   height: 250px;
   margin-bottom: 10px;
+  background: var(--color-banana) url('/src/assets/img/Anton.png') center no-repeat;
+  background-size: cover;
+
+  @media screen and (max-width: $tablet-width) {
+    width: 200px;
+    height: 300px;
+    margin-bottom: 5px;
+    margin-right: 10px;
+  }
+  @media screen and (max-width: $mobile-width) {
+    background-size: contain;
+    width: 100%;
+    height: 150px;
+  }
+}
+
+.image_alyona {
+  background-size: cover;
+  width: 100%;
+  height: 250px;
+  margin-bottom: 10px;
+  background: var(--color-banana) url('/src/assets/img/Alena.png') center no-repeat;
+  background-size: cover;
+
+  @media screen and (max-width: $tablet-width) {
+    width: 200px;
+    height: 300px;
+    margin-bottom: 5px;
+    margin-right: 10px;
+  }
+  @media screen and (max-width: $mobile-width) {
+    background-size: contain;
+    width: 100%;
+    height: 150px;
+  }
+}
+
+.image_alex {
+  background-size: cover;
+  width: 100%;
+  height: 250px;
+  margin-bottom: 10px;
+  background: var(--color-banana) url('/src/assets/img/Alex.png') center no-repeat;
+  background-size: cover;
+
   @media screen and (max-width: $tablet-width) {
     width: 200px;
     height: 300px;
