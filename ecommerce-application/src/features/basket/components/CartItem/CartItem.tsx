@@ -1,6 +1,7 @@
 import { MdOutlineClose } from 'react-icons/md';
 import { Cart, LineItem } from '@commercetools/platform-sdk';
 import { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import styles from './CartItem.module.scss';
 import {
   addToCart,
@@ -119,12 +120,23 @@ export function CartItem(props: {
     <div className={styles.price_new}>$ {validTotalPrice.toFixed(2)}</div>
   );
 
+  const categorySlug: string | undefined = itemData.variant.attributes
+    ?.find((value) => value.name === 'category')
+    ?.value.toLowerCase();
+  const subcategorySlug: string | undefined = itemData.variant.attributes
+    ?.find((value) => value.name === 'subcategory')
+    ?.value.toLowerCase();
+  const productSlug: string | undefined = itemData.productSlug?.en;
+  const productPath = `/catalog/${categorySlug}/${subcategorySlug}/${productSlug}`;
+
   return (
     <>
-      <div className={styles.product_block}>
-        <img src={imageSrc} className={styles.image} alt="product" />
-        <p className={styles.name}>{itemData.name.en}</p>
-      </div>
+      <Link to={productPath}>
+        <div className={styles.product_block}>
+          <img src={imageSrc} className={styles.image} alt="product" />
+          <p className={styles.name}>{itemData.name.en}</p>
+        </div>
+      </Link>
       <div className={styles.quantity_block}>
         <button
           className={styles.quantity_button}
