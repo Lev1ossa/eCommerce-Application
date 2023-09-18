@@ -2,8 +2,11 @@
 
 .main {
   flex-grow: 1;
-  padding: 0 1rem 1rem;
+  padding: 0 5px 1rem;
   height: 100%;
+  @media screen and (max-width: $mobile-width) {
+    padding: 0 0 1rem;
+  }
 }
 
 .container {
@@ -13,7 +16,7 @@
   flex-direction: column;
   position: relative;
   @media screen and (max-width: $small-width) {
-    max-width: 97%;
+    max-width: 100%;
   }
 }
 
@@ -75,7 +78,6 @@
   justify-content: space-between;
   width: 100%;
   height: 50px;
-  padding: 0 5px;
   border-bottom: 1px solid var(--color-light-gray);
   color: var(--color-text-gray);
   box-shadow: inset 0px 2px 2px rgba(0,0,0,0.15), 
@@ -83,13 +85,12 @@
   align-items: center;
   @media screen and (max-width: $tablet-width) {
     height: 30px;
-    font-size: 0.6rem;
   }
 }
 
 .subtotal {
   color: var(--color-dark);
-  font-size: 16px;
+  font-size: calc(18px + (26 - 20) * ((100vw - 320px) / (1920 - 320)));
   font-weight: 500;
   display: flex;
   justify-content: space-between;
@@ -97,7 +98,10 @@
   padding: 20px 20px 0;
   border-top: 2px solid var(--color-light-gray); 
   @media screen and (max-width: $tablet-width) {
-    font-size: 0.6rem;
+    padding: 10px 5px 0;
+  }
+  @media screen and (max-width: $mobile-width) {
+    font-size: calc(14px + (26 - 20) * ((100vw - 320px) / (1920 - 320)));
     padding: 10px 5px 0;
   }
 }
@@ -105,51 +109,42 @@
 .prices_container {
   display: flex;
   align-items: center;
-  width: 150px;
-  justify-content: center;
+  width: 250px;
+  justify-content: right;
   font-weight: 400;
   text-align: center;
-  @media screen and (max-width: $tablet-width) {
-    width: 100px;
-  }
+  font-size: calc(18px + (26 - 20) * ((100vw - 320px) / (1920 - 320)));
   @media screen and (max-width: $mobile-width) {
-    width: 70px;
+    font-size: calc(14px + (26 - 20) * ((100vw - 320px) / (1920 - 320)));
+  }
+  .price_new {
+    color: var(--color-error);
+  }
+  .price {
+    font-size: calc(14px + (26 - 20) * ((100vw - 320px) / (1920 - 320)));
+    @media screen and (max-width: $mobile-width) {
+      font-size: calc(10px + (26 - 20) * ((100vw - 320px) / (1920 - 320)));
+    }
   }
 }
 
-.price_old {
+.price {
   align-self: start;
-  width: 30%;
   text-decoration: line-through;
-  @media screen and (max-width: $tablet-width) {
-    font-size: 0.9rem;
-  }
-  @media screen and (max-width: $tablet-width) {
-    font-size: 0.6rem;
+  @media screen and (max-width: $mobile-width) {
+    width: initial;
   }
 }
 
 .price_new {
-  font-size: 24px;
-  color: var(--color-error);
   margin-right: 3px;
-  @media screen and (max-width: $tablet-width) {
-    font-size: 1rem;
-  }
-  @media screen and (max-width: $tablet-width) {
-    font-size: 0.8rem;
-  }
 }
 
 .header_title {
-  font-size: 0.8rem;
+  font-size: calc(10px + (26 - 20) * ((100vw - 320px) / (1920 - 320)));
   width: 150px;
   &:not(:first-child) {
     text-align: center;
-  }
-  @media screen and (max-width: $tablet-width) {
-    width: 100px;
-    font-size: 0.6rem;
   }
   @media screen and (max-width: $mobile-width) {
     width: 70px;
@@ -157,7 +152,8 @@
 }
 
 .header_title:first-child {
-  width: 250px;
+  width: 200px;
+  padding-left: 5px;
   @media screen and (max-width: $mobile-width) {
     width: 140px;
   }
@@ -170,18 +166,18 @@
   justify-content: space-between;
   align-items: center;
   font-size: 1.2rem;
-  row-gap: 1rem;
-  list-style-type: none;
   position: relative;
   text-align: center;
+  font-size: calc(14px + (26 - 20) * ((100vw - 320px) / (1920 - 320)));
   &:not(:last-child) {
     border-bottom: 1px solid var(--color-light-gray);
   }
   @media screen and (max-width: $tablet-width) {
-    font-size: 1rem;
+    font-size: calc(11px + (26 - 20) * ((100vw - 320px) / (1920 - 320)));
     min-height: 50px;
   }
   @media screen and (max-width: $mobile-width) {
+    font-size: calc(9px + (26 - 20) * ((100vw - 320px) / (1920 - 320)));
     min-height: 40px;
   }
 }
@@ -197,9 +193,6 @@
   background-color: #ebe9e921;
   align-items: center;
   padding: 8px 5px;
-  @media screen and (max-width: $tablet-width) {
-    height: 40px;
-  }
 }
 
 .input_block {
@@ -246,6 +239,9 @@
   font-family: inherit;
   height: 30px;
   padding: 0 10px;
+  &:disabled {
+    opacity: 0.8;
+  }
   &:not(:disabled):hover {
     background-color: var(--color-orange);
     color: var(--color-text-light);
@@ -258,6 +254,7 @@
 }
 
 .promocode {
+  font-size: calc(12px + (26 - 20) * ((100vw - 320px) / (1920 - 320)));
   border: 1px solid var(--color-light-green);
   color: var(--color-light-green);
   padding: 0 5px;
@@ -329,7 +326,6 @@
     width: 50%;
     height: 50%;
   }
-
   @media screen and (max-height: 490px) {
     display: none;
   }

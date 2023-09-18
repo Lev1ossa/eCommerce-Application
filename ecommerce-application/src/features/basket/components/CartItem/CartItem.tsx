@@ -99,15 +99,17 @@ export function CartItem(props: {
   };
 
   const unitPrice = validDiscountedPrice ? (
-    <div className={styles.price}>$ {validDiscountedPrice}</div>
+    <div className={styles.price}>$ {validDiscountedPrice.toFixed(2)}</div>
   ) : (
-    <div className={styles.price}>$ {validPrice}</div>
+    <div className={styles.price}>$ {validPrice.toFixed(2)}</div>
   );
 
   const totalPrice = validTotalDiscountedPrice ? (
-    <div className={styles.price_new}>$ {validTotalDiscountedPrice}</div>
+    <div className={styles.price_new}>
+      $ {validTotalDiscountedPrice.toFixed(2)}
+    </div>
   ) : (
-    <div className={styles.price_new}>$ {validTotalPrice}</div>
+    <div className={styles.price_new}>$ {validTotalPrice.toFixed(2)}</div>
   );
 
   return (
@@ -144,11 +146,11 @@ export function CartItem(props: {
       {!promoPrice && unitPrice}
       {promoPrice && (
         <div className={styles.prices_container}>
-          <div className={styles.price_new}>$ {totalPrice}</div>
+          {totalPrice}
           <div className={styles.price}>$ {totalOldPrice}</div>
         </div>
       )}
-      {!promoPrice && totalPrice}
+      {!promoPrice && <div className={styles.price}>$ {totalOldPrice}</div>}
       <button
         className={styles.delete_button}
         onClick={handleDeleteButton}
