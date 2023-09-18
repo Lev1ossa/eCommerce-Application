@@ -156,6 +156,10 @@ export function Product(props: {
           ).then(
             (result) => {
               cart.setCartItems(result.body.lineItems);
+              showToast(
+                ToastTypes.success,
+                `This product was successfully deleted from cart!`,
+              );
               setIsCartLoading(false);
             },
             (error: Error) => console.log(error),
