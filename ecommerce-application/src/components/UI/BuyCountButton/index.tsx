@@ -44,6 +44,7 @@ export function BuyCountButton(props: {
             e.preventDefault();
           }}
         >
+          {/* {isLoading && <ButtonLoader />} */}
           {isHover ? 'to cart' : `${productCount} added`}
         </button>
         <button
