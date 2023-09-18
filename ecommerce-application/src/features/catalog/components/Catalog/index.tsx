@@ -162,7 +162,11 @@ export function Catalog(props: {
     ).then(
       (result) => {
         setProducts(result.body.results);
-        if (result.body.total) setTotalProductsCount(result.body.total);
+        if (result.body.total) {
+          setTotalProductsCount(result.body.total);
+        } else {
+          setTotalProductsCount(0);
+        }
         setIsLoading(false);
       },
       (error: Error) => {

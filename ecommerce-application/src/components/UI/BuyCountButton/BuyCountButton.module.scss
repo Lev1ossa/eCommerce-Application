@@ -16,7 +16,6 @@
   white-space: nowrap;
   padding: 0.5rem 1rem;
   border: none;
-  border-radius: 0.2rem;
   box-shadow: var(--shadow-small);
   background-color: var(--color-banana);
   transition: 0.2s all ease-in;
@@ -25,26 +24,20 @@
   }
 }
 
-.counter_container{
+.counter_container {
   display: flex;
   justify-content: center;
-  column-gap: 5px;
-}
-
-.counter {
-  align-self: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: var(--color-dark);
+  border-radius: 0.2rem;
+  overflow: hidden;
+  width: 100%;
 }
 
 .count_button {
   font-size: inherit;
   width: 38px;
   border: none;
-  border-radius: 0.2rem;
   transition: 0.2s all ease-in;
+  background-color: var(--color-banana);
   &:hover {
     background-color: var(--color-light-green);
   }

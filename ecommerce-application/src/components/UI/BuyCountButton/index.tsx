@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './BuyCountButton.module.scss';
 
@@ -10,7 +11,7 @@ export function BuyCountButton(props: {
 }): React.ReactElement {
   const { addToCartHandler, removeFromCartHandler, productCount, isLoading } =
     props;
-
+  const [isHover, setIsHover] = useState(false);
   const navigate = useNavigate();
 
   const handleNavigate = (path: string): void => {
@@ -19,17 +20,6 @@ export function BuyCountButton(props: {
 
   return (
     <div className={styles.container}>
-      <button
-        type="button"
-        className={styles.button}
-        disabled={isLoading}
-        onClick={(e): void => {
-          handleNavigate('/cart');
-          e.preventDefault();
-        }}
-      >
-        to cart
-      </button>
       <div className={styles.counter_container}>
         <button
           type="button"
@@ -42,7 +32,21 @@ export function BuyCountButton(props: {
         >
           -
         </button>
-        <div className={styles.counter}>{productCount}</div>
+        <button
+          type="button"
+          className={styles.button}
+          disabled={isLoading}
+          onFocus={(): number => 0}
+          onMouseOver={(): void => setIsHover(true)}
+          onMouseLeave={(): void => setIsHover(false)}
+          onClick={(e): void => {
+            handleNavigate('/cart');
+            e.preventDefault();
+          }}
+        >
+          {/* {isLoading && <ButtonLoader />} */}
+          {isHover ? 'to cart' : `${productCount} added`}
+        </button>
         <button
           type="button"
           className={styles.count_button}
