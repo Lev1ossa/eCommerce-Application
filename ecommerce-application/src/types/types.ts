@@ -1,3 +1,4 @@
+import { ApiRoot } from '@commercetools/platform-sdk';
 import {
   PathString,
   RegisterOptions,
@@ -154,3 +155,12 @@ export interface IItemData {
   totalPrice: number;
   totalPriceDiscounted: number;
 }
+
+export type ApiRootProviderProps = {
+  children: React.ReactNode;
+};
+
+export type ApiRootContextProps = {
+  flowApiRoot: ApiRoot | undefined;
+  setFlowApiRoot: React.Dispatch<React.SetStateAction<ApiRoot | undefined>>;
+};

@@ -18,7 +18,7 @@ import { TokenCache } from '@commercetools/sdk-client-v2';
 import { ILoginData, IRegistrationData } from '../types/types';
 import {
   getAnonymousFlowApiRoot,
-  getClientCridentialsFlowApiRoot,
+  // getClientCridentialsFlowApiRoot,
   getPasswordFlowApiRoot,
   getRefreshTokenFlowApiRoot,
 } from './clientBuilder';
@@ -30,7 +30,8 @@ const projectKey: string = import.meta.env.VITE_PROJECT_KEY;
 export const createUser = async (
   registrationData: IRegistrationData,
 ): Promise<ClientResponse<CustomerSignInResult>> => {
-  const apiRoot = getClientCridentialsFlowApiRoot();
+  // const apiRoot = getClientCridentialsFlowApiRoot();
+  const apiRoot = getRefreshTokenFlowApiRoot(getRefreshToken());
   const clientData = getClientData(registrationData);
   return apiRoot
     .withProjectKey({ projectKey })
@@ -42,18 +43,31 @@ export const createUser = async (
 export const getUser = async (
   loginData: ILoginData,
   tokenCache: TokenCache,
-): Promise<ClientResponse<CustomerSignInResult>> => {
+): Promise<ClientResponse<Customer>> => {
   const { email, password } = loginData;
-  const apiRoot = getPasswordFlowApiRoot(email, password, tokenCache);
+  const refreshFlowApiRoot = getRefreshTokenFlowApiRoot(getRefreshToken());
   const clientData: MyCustomerSignin = {
     email,
     password,
+    activeCartSignInMode: 'MergeWithExistingCustomerCart',
   };
-  return apiRoot
+  await refreshFlowApiRoot
     .withProjectKey({ projectKey })
     .me()
     .login()
     .post({ body: clientData })
+    .execute();
+
+  const passwordFlowApiRoot = getPasswordFlowApiRoot(
+    email,
+    password,
+    tokenCache,
+  );
+
+  return passwordFlowApiRoot
+    .withProjectKey({ projectKey })
+    .me()
+    .get()
     .execute();
 };
 
