@@ -1,7 +1,10 @@
-import { BsCart3 } from 'react-icons/bs';
-import { AiOutlineDelete } from 'react-icons/ai';
-import { useState } from 'react';
-import { Cart, MyCartUpdateAction } from '@commercetools/platform-sdk';
+import { BsCart3, BsTrash3 } from 'react-icons/bs';
+import { useContext, useEffect, useState } from 'react';
+import {
+  Cart,
+  DiscountCode,
+  MyCartUpdateAction,
+} from '@commercetools/platform-sdk';
 import { CartItem } from '../CartItem/CartItem';
 import styles from './NotEmptyBasketContent.module.scss';
 import { Modal } from '../../../modal';
@@ -10,9 +13,13 @@ import {
   addPromocodeToCart,
   clearCart,
   getActiveCart,
+  getDiscountCodes,
+  removePromocodeFromCart,
 } from '../../../../api/requests';
 import { showToast } from '../../../autentification/utils/showToast';
 import { ToastTypes } from '../../../../types/types';
+import { Loader } from '../../../../components/Loader';
+import { CartContext } from '../../../../context/CartContext';
 
 // eslint-disable-next-line max-lines-per-function
 export function NotEmptyBasketContent(props: {
@@ -20,19 +27,54 @@ export function NotEmptyBasketContent(props: {
   setCartData: React.Dispatch<React.SetStateAction<Cart | undefined>>;
 }): React.ReactElement {
   const { cartData, setCartData } = props;
+
+  const cartContext = useContext(CartContext);
+
   const totalCoast = cartData ? cartData.totalPrice.centAmount / 100 : null;
+
+  const totalOldCoast = cartData?.lineItems.reduce((acc, currentVal) => {
+    if (currentVal.price.discounted) {
+      return (
+        acc +
+        (currentVal.price.discounted.value.centAmount * currentVal.quantity) /
+          100
+      );
+    }
+    return (
+      acc + (currentVal.price.value.centAmount * currentVal.quantity) / 100
+    );
+  }, 0);
+
   const promocodesId = cartData?.discountCodes.map((el) => {
     return {
       id: el.discountCode.id,
-      name: 'citrus_summer',
+      name: '',
     };
   });
 
   const [isButtonsDisabled, setIsButtonsDisabled] = useState(false);
 
+  const [isLoading, setIsLoading] = useState(true);
+
+  const [promocodes, setPromocodes] = useState<DiscountCode[]>();
+
   const [modalActive, setModalActive] = useState(false);
 
   const [inputValue, setInputValue] = useState('');
+
+  const getPromocodes = (): void => {
+    getDiscountCodes().then(
+      (result) => {
+        setPromocodes(result.body.results);
+        setIsLoading(false);
+      },
+      (error: Error) => console.log(error),
+    );
+  };
+
+  useEffect(() => {
+    getPromocodes();
+  }, []);
 
   const getCart = (): void => {
     getActiveCart().then(
@@ -63,6 +105,7 @@ export function NotEmptyBasketContent(props: {
           (result) => {
             setCartData(result.body);
             setIsButtonsDisabled(false);
+            cartContext.setCartItems(result.body.lineItems);
             getCart();
           },
           (error: Error) => console.log(error),
@@ -84,7 +127,7 @@ export function NotEmptyBasketContent(props: {
         addPromocodeToCart(cart, code).then(
           (result) => {
             showToast(ToastTypes.success, `Promo code was applied!`);
-            console.log('Add to cart result: ', result);
+            setCartData(result.body);
           },
           () => showToast(ToastTypes.error, 'Such promo code was not found!'),
         );
@@ -101,32 +144,59 @@ export function NotEmptyBasketContent(props: {
 
   const cartList = cartData?.lineItems.map((cartItemData) => (
     <li key={cartItemData.id} className={styles.item}>
-      <CartItem itemData={cartItemData} setCartData={setCartData} />
+      <CartItem
+        itemData={cartItemData}
+        setCartData={setCartData}
+        setIsButtonsDisabled={setIsButtonsDisabled}
+        isButtonsDisabled={isButtonsDisabled}
+      />
     </li>
   ));
 
   const handleRemoveButton = (id: string): void => {
-    console.log(id);
+    getActiveCart().then(
+      (cartResponse) => {
+        const cart = cartResponse.body;
+        const discountCodeID = id;
+        removePromocodeFromCart(cart, discountCodeID).then(
+          (result) => setCartData(result.body),
+          (error: Error) => console.log(error),
+        );
+      },
+      (error: Error) => console.log(error),
+    );
   };
 
   const promoBlockContent = promocodesId
     ? promocodesId.map((el) => {
         return (
           <span className={styles.promocode} key={el.id}>
-            {el.name}
-            <button
+            {
+              promocodes?.find((elem) => {
+                return elem.id === el.id;
+              })?.code
+            }
+            <BsTrash3
               className={styles.remove_button}
               onClick={(): void => {
                 handleRemoveButton(el.id);
               }}
-              type="button"
-            >
-              x
-            </button>
+            />
           </span>
         );
       })
     : null;
+
+  const subtotalContent =
+    cartData?.discountCodes.length &&
+    totalCoast?.toFixed(2) !== totalOldCoast?.toFixed(2) ? (
+      <div className={styles.prices_container}>
+        <div className={styles.price_new}>$ {totalCoast?.toFixed(2)}</div>
+        <div className={styles.price}>$ {totalOldCoast?.toFixed(2)}</div>
+      </div>
+    ) : (
+      <div className={styles.price_new}>$ {totalCoast?.toFixed(2)}</div>
+    );
 
   return (
     <main className={styles.main}>
@@ -142,7 +212,7 @@ export function NotEmptyBasketContent(props: {
           disabled={isButtonsDisabled}
           onClick={handleClearButton}
         >
-          <AiOutlineDelete className={styles.button_icon} />
+          <BsTrash3 className={styles.button_icon} />
           Clear Cart
         </button>
         <div className={styles.header}>
@@ -153,7 +223,7 @@ export function NotEmptyBasketContent(props: {
         </div>
         <ul className={styles.list}>{cartList}</ul>
         <div className={styles.promocode_container}>
-          <div className={styles.input_block}>
+          <form className={styles.input_block}>
             <input
               value={inputValue}
               className={styles.input}
@@ -166,19 +236,18 @@ export function NotEmptyBasketContent(props: {
               className={styles.input_button}
               onClick={handleApplyPromocodeButton}
               disabled={!inputValue}
-              type="button"
+              type="submit"
             >
               APPLY PROMO CODE
             </button>
+          </form>
+          <div className={styles.promocodesBlock}>
+            {!isLoading ? promoBlockContent : <Loader />}
           </div>
-          <div className={styles.promocodesBlock}>{promoBlockContent}</div>
         </div>
         <div className={styles.subtotal}>
           <div className={styles.subtotal_title}>SUBTOTAL</div>
-          <div className={styles.prices_container}>
-            <div className={styles.price_new}>$ {totalCoast}</div>
-            <div className={styles.price_old}>$ {totalCoast}</div>
-          </div>
+          {subtotalContent}
         </div>
       </div>
       {modalActive && (

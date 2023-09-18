@@ -1,25 +1,35 @@
 import { MdOutlineClose } from 'react-icons/md';
 import { Cart, LineItem } from '@commercetools/platform-sdk';
-import { useState } from 'react';
+import { useContext } from 'react';
 import styles from './CartItem.module.scss';
 import {
   addToCart,
   getActiveCart,
   removeFromCart,
 } from '../../../../api/requests';
+import { CartContext } from '../../../../context/CartContext';
 
 // eslint-disable-next-line max-lines-per-function
 export function CartItem(props: {
   itemData: LineItem;
   setCartData: React.Dispatch<React.SetStateAction<Cart | undefined>>;
+  setIsButtonsDisabled: React.Dispatch<React.SetStateAction<boolean>>;
+  isButtonsDisabled: boolean;
 }): React.ReactElement {
-  const { itemData, setCartData } = props;
+  const { itemData, setCartData, setIsButtonsDisabled, isButtonsDisabled } =
+    props;
 
-  const [isButtonsDisabled, setIsButtonsDisabled] = useState(false);
+  const cartContext = useContext(CartContext);
 
   const validPrice = itemData.variant.prices
     ? itemData.variant.prices[0].value.centAmount / 100
+    : 0;
+
+  const promoPrice = itemData.discountedPricePerQuantity.length
+    ? itemData.discountedPricePerQuantity[0].discountedPrice.value.centAmount /
+      100
     : null;
+
   const validDiscountedPrice =
     itemData.variant.prices && itemData.variant.prices[0].discounted
       ? itemData.variant.prices[0].discounted.value.centAmount / 100
@@ -31,6 +41,10 @@ export function CartItem(props: {
     : '';
   const currentQuantity = itemData.quantity;
 
+  const totalOldPrice = validDiscountedPrice
+    ? (validDiscountedPrice * currentQuantity).toFixed(2)
+    : (validPrice * currentQuantity).toFixed(2);
+
   const handleIncreaseQuantityButton = (): void => {
     setIsButtonsDisabled(true);
     getActiveCart().then(
@@ -41,6 +55,7 @@ export function CartItem(props: {
         addToCart(cart, productId, quantity).then(
           (result) => {
             setCartData(result.body);
+            cartContext.setCartItems(result.body.lineItems);
             setIsButtonsDisabled(false);
           },
           (error: Error) => console.log(error),
@@ -60,6 +75,7 @@ export function CartItem(props: {
         removeFromCart(cart, lineItemID, quantity).then(
           (result) => {
             setCartData(result.body);
+            cartContext.setCartItems(result.body.lineItems);
             setIsButtonsDisabled(false);
           },
           (error: Error) => console.log(error),
@@ -79,6 +95,7 @@ export function CartItem(props: {
         removeFromCart(cart, lineItemID, quantity).then(
           (result) => {
             setCartData(result.body);
+            cartContext.setCartItems(result.body.lineItems);
             setIsButtonsDisabled(false);
           },
           (error: Error) => console.log(error),
@@ -87,6 +104,20 @@ export function CartItem(props: {
       (error: Error) => console.log(error),
     );
   };
+
+  const unitPrice = validDiscountedPrice ? (
+    <div className={styles.price}>$ {validDiscountedPrice.toFixed(2)}</div>
+  ) : (
+    <div className={styles.price}>$ {validPrice.toFixed(2)}</div>
+  );
+
+  const totalPrice = validTotalDiscountedPrice ? (
+    <div className={styles.price_new}>
+      $ {validTotalDiscountedPrice.toFixed(2)}
+    </div>
+  ) : (
+    <div className={styles.price_new}>$ {validTotalPrice.toFixed(2)}</div>
+  );
 
   return (
     <>
@@ -113,24 +144,20 @@ export function CartItem(props: {
           +
         </button>
       </div>
-      {validDiscountedPrice && (
+      {promoPrice && (
         <div className={styles.prices_container}>
-          <div className={styles.price_new}>$ {validDiscountedPrice}</div>
-          <div className={styles.price_old}>$ {validPrice}</div>
+          <div className={styles.price_new}>$ {promoPrice}</div>
+          {unitPrice}
         </div>
       )}
-      {!validDiscountedPrice && (
-        <div className={styles.price}>$ {validPrice}</div>
-      )}
-      {validTotalDiscountedPrice && (
+      {!promoPrice && unitPrice}
+      {promoPrice && (
         <div className={styles.prices_container}>
-          <div className={styles.price_new}>$ {validTotalDiscountedPrice}</div>
-          <div className={styles.price_old}>$ {validTotalPrice}</div>
+          {totalPrice}
+          <div className={styles.price}>$ {totalOldPrice}</div>
         </div>
       )}
-      {!validTotalDiscountedPrice && (
-        <div className={styles.price}>$ {validTotalPrice}</div>
-      )}
+      {!promoPrice && <div className={styles.price}>$ {totalOldPrice}</div>}
       <button
         className={styles.delete_button}
         onClick={handleDeleteButton}
