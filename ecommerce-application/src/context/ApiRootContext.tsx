@@ -10,15 +10,6 @@ import { getRefreshTokenFlowApiRoot } from '../api/clientBuilder';
 import { getRefreshToken } from '../api/utils';
 import { ApiRootContextProps, ApiRootProviderProps } from '../types/types';
 
-// type ApiRootProviderProps = {
-//   children: React.ReactNode;
-// };
-
-// type ApiRootContextProps = {
-//   flowApiRoot: ApiRoot | undefined;
-//   setFlowApiRoot: React.Dispatch<React.SetStateAction<ApiRoot | undefined>>;
-// };
-
 export const ApiRootContext = createContext({} as ApiRootContextProps);
 
 export function ApiRootContextProvider({
