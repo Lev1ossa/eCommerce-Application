@@ -21,6 +21,7 @@ export const getStartCategoryID = (
 };
 
 export const getPagesArray = (count: number): number[] => {
+  if (!count) return [1];
   const pagesCount = Math.ceil(count / PRODUCTS_ON_PAGE_LIMIT);
   const pages = [];
   for (let i = 0; i < pagesCount; i += 1) {
