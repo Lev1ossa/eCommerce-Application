@@ -18,7 +18,7 @@ export default function BrandsList(props: {
             type="checkbox"
             onChange={(event): void => handleBrandsClick(event, brand)}
           />
-          <span className="text">{brand}</span>
+          <span className={styles.label}>{brand}</span>
         </li>
       ))}
     </ul>
