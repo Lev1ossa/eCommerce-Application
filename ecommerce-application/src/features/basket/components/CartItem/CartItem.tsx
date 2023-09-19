@@ -50,72 +50,75 @@ export function CartItem(props: {
 
   const handleIncreaseQuantityButton = (): void => {
     setIsButtonsDisabled(true);
-    getActiveCart(refreshTokenFlowApiRoot).then(
-      (cartResponse) => {
-        const cart = cartResponse.body;
-        const { productId } = itemData;
-        const quantity = 1;
-        addToCart(cart, productId, quantity, refreshTokenFlowApiRoot).then(
-          (result) => {
-            setCartData(result.body);
-            cartContext.setCartItems(result.body.lineItems);
-            setIsButtonsDisabled(false);
-          },
-          (error: Error) => console.log(error),
-        );
-      },
-      (error: Error) => console.log(error),
-    );
+    getActiveCart(refreshTokenFlowApiRoot)
+      .then(
+        (cartResponse) => {
+          const cart = cartResponse.body;
+          const { productId } = itemData;
+          const quantity = 1;
+          addToCart(cart, productId, quantity, refreshTokenFlowApiRoot).then(
+            (result) => {
+              setCartData(result.body);
+              cartContext.setCartItems(result.body.lineItems);
+            },
+            (error: Error) => console.log(error),
+          );
+        },
+        (error: Error) => console.log(error),
+      )
+      .finally(() => setIsButtonsDisabled(false));
   };
 
   const handleDecreaseQuantityButton = (): void => {
     setIsButtonsDisabled(true);
-    getActiveCart(refreshTokenFlowApiRoot).then(
-      (cartResponse) => {
-        const cart = cartResponse.body;
-        const lineItemID = itemData.id;
-        const quantity = 1;
-        removeFromCart(
-          cart,
-          lineItemID,
-          quantity,
-          refreshTokenFlowApiRoot,
-        ).then(
-          (result) => {
-            setCartData(result.body);
-            cartContext.setCartItems(result.body.lineItems);
-            setIsButtonsDisabled(false);
-          },
-          (error: Error) => console.log(error),
-        );
-      },
-      (error: Error) => console.log(error),
-    );
+    getActiveCart(refreshTokenFlowApiRoot)
+      .then(
+        (cartResponse) => {
+          const cart = cartResponse.body;
+          const lineItemID = itemData.id;
+          const quantity = 1;
+          removeFromCart(
+            cart,
+            lineItemID,
+            quantity,
+            refreshTokenFlowApiRoot,
+          ).then(
+            (result) => {
+              setCartData(result.body);
+              cartContext.setCartItems(result.body.lineItems);
+            },
+            (error: Error) => console.log(error),
+          );
+        },
+        (error: Error) => console.log(error),
+      )
+      .finally(() => setIsButtonsDisabled(false));
   };
 
   const handleDeleteButton = (): void => {
     setIsButtonsDisabled(true);
-    getActiveCart(refreshTokenFlowApiRoot).then(
-      (cartResponse) => {
-        const cart = cartResponse.body;
-        const lineItemID = itemData.id;
-        const quantity = currentQuantity;
-        removeFromCart(
-          cart,
-          lineItemID,
-          quantity,
-          refreshTokenFlowApiRoot,
-        ).then(
-          (result) => {
-            setCartData(result.body);
-            cartContext.setCartItems(result.body.lineItems);
-            setIsButtonsDisabled(false);
-          },
-          (error: Error) => console.log(error),
-        );
-      },
-      (error: Error) => console.log(error),
-    );
+    getActiveCart(refreshTokenFlowApiRoot)
+      .then(
+        (cartResponse) => {
+          const cart = cartResponse.body;
+          const lineItemID = itemData.id;
+          const quantity = currentQuantity;
+          removeFromCart(
+            cart,
+            lineItemID,
+            quantity,
+            refreshTokenFlowApiRoot,
+          ).then(
+            (result) => {
+              setCartData(result.body);
+              cartContext.setCartItems(result.body.lineItems);
+            },
+            (error: Error) => console.log(error),
+          );
+        },
+        (error: Error) => console.log(error),
+      )
+      .finally(() => setIsButtonsDisabled(false));
   };
 
   const unitPrice = validDiscountedPrice ? (

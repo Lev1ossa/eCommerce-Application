@@ -93,28 +93,31 @@ export function NotEmptyBasketContent(props: {
 
   const handleApproveButton = (): void => {
     setIsButtonsDisabled(true);
-    getActiveCart(refreshTokenFlowApiRoot).then(
-      (cartResponse) => {
-        const cart = cartResponse.body;
-        const actions: MyCartUpdateAction[] = cart.lineItems.map((lineItem) => {
-          return {
-            action: 'removeLineItem',
-            lineItemId: lineItem.id,
-            quantity: lineItem.quantity,
-          };
-        });
-        clearCart(cart, actions, refreshTokenFlowApiRoot).then(
-          (result) => {
-            setCartData(result.body);
-            setIsButtonsDisabled(false);
-            cartContext.setCartItems(result.body.lineItems);
-            getCart();
-          },
-          (error: Error) => console.log(error),
-        );
-      },
-      (error: Error) => console.log(error),
-    );
+    getActiveCart(refreshTokenFlowApiRoot)
+      .then(
+        (cartResponse) => {
+          const cart = cartResponse.body;
+          const actions: MyCartUpdateAction[] = cart.lineItems.map(
+            (lineItem) => {
+              return {
+                action: 'removeLineItem',
+                lineItemId: lineItem.id,
+                quantity: lineItem.quantity,
+              };
+            },
+          );
+          clearCart(cart, actions, refreshTokenFlowApiRoot).then(
+            (result) => {
+              setCartData(result.body);
+              cartContext.setCartItems(result.body.lineItems);
+              getCart();
+            },
+            (error: Error) => console.log(error),
+          );
+        },
+        (error: Error) => console.log(error),
+      )
+      .finally(() => setIsButtonsDisabled(false));
   };
 
   const handleCancelButton = (): void => {
