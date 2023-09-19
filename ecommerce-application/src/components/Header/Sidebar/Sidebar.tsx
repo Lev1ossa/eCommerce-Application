@@ -40,7 +40,8 @@ export function Sidebar(props: {
         customCrossIcon={<img alt="arrow" src={burgerArrowUrl} />}
       >
         <NavLink className={`menu-item ${className}`} to="/">
-          <AiOutlineHome className="icon" /> Main
+          <AiOutlineHome className="icon" />
+          Main
         </NavLink>
         <NavLink className={`menu-item ${className}`} to="/catalog">
           <LuApple className="icon" />
@@ -75,7 +76,7 @@ export function Sidebar(props: {
         </NavLink>
         {userLoggedIn && (
           <NavLink className={`menu-item ${className}`} to="/profile">
-            <AiOutlineUser />
+            <AiOutlineUser className="icon" />
             Profile
           </NavLink>
         )}

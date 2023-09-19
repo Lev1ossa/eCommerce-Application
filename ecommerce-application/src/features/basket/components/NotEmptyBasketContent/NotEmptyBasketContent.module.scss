@@ -97,6 +97,7 @@
   width: 100%;
   padding: 20px 20px 0;
   border-top: 2px solid var(--color-light-gray); 
+  margin-bottom: 15px;
   @media screen and (max-width: $tablet-width) {
     padding: 10px 5px 0;
   }
@@ -230,7 +231,7 @@
   }
 }
 
-.input_button {
+.input_button, .checkout_button {
   border: none;
   border-radius: 5px;
   margin-left: 5px;
@@ -273,6 +274,16 @@
       color: var(--color-light-green);
     }
   }
+}
+
+.button_block {
+  display: flex;
+  justify-content: right;
+}
+
+.checkout_button {
+  width: initial;
+  margin-right: 5px;
 }
 
 .block {
