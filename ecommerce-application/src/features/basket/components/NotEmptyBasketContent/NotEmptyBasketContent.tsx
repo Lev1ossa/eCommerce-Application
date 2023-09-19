@@ -173,6 +173,13 @@ export function NotEmptyBasketContent(props: {
     );
   };
 
+  const handleCheckoutButton = (): void => {
+    showToast(
+      ToastTypes.info,
+      'We are sorry, but checkout page is temporary unavailable',
+    );
+  };
+
   const promoBlockContent = promocodesId
     ? promocodesId.map((el) => {
         return (
@@ -254,6 +261,15 @@ export function NotEmptyBasketContent(props: {
         <div className={styles.subtotal}>
           <div className={styles.subtotal_title}>SUBTOTAL</div>
           {subtotalContent}
+        </div>
+        <div className={styles.button_block}>
+          <button
+            className={styles.checkout_button}
+            onClick={handleCheckoutButton}
+            type="button"
+          >
+            CHECKOUT
+          </button>
         </div>
       </div>
       {modalActive && (
