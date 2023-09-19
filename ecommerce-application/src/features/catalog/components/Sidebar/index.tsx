@@ -240,9 +240,14 @@ export function CatalogSidebar(props: {
   };
 
   return (
-    <div key={componentKey} style={{ display: 'flex' }}>
+    <div
+      key={componentKey}
+      className={styles.container}
+      style={{ display: 'flex' }}
+    >
       <Sidebar
         collapsed={collapsed}
+        width="100%"
         collapsedWidth="130px"
         className={styles.sidebar}
         rootStyles={{
