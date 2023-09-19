@@ -64,7 +64,9 @@ button {
 a {
   text-decoration: none;
   color: var(--color-dark);
+  transition: 0.2s all ease-in;
   &:hover {
+    transition: 0.2s all ease-in;
     color: var(--color-orange);
   }
 }

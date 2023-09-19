@@ -135,82 +135,124 @@ export function RegistrationForm(): React.ReactElement {
         >
           <div className={styles.info_container}>
             <p className={styles.address_title}>User Info</p>
-            <FormInput
-              input={inputService.createInputParams('email').input}
-              type={inputService.createInputParams('email').type}
-              label={inputService.createInputParams('email').label}
-            />
-            <Error errors={errors} name="email" />
-            <FormPasswordInput
-              input={inputService.createInputParams('password').input}
-              type={inputService.createInputParams('email').type}
-              label={inputService.createInputParams('password').label}
-            />
-            <Error errors={errors} name="password" />
-            <FormInput
-              input={inputService.createInputParams('userFirstName').input}
-              type={inputService.createInputParams('userFirstName').type}
-              label={inputService.createInputParams('userFirstName').label}
-            />
-            <Error errors={errors} name="userFirstName" />
-            <FormInput
-              input={inputService.createInputParams('userLastName').input}
-              type={inputService.createInputParams('userLastName').type}
-              label={inputService.createInputParams('userLastName').label}
-            />
-            <Error errors={errors} name="userLastName" />
-            <FormInput
-              input={inputService.createInputParams('birthDate').input}
-              type={inputService.createInputParams('birthDate').type}
-              label={inputService.createInputParams('birthDate').label}
-            />
-            <Error errors={errors} name="birthDate" />
+            <div className={styles.input_block}>
+              <FormInput
+                input={inputService.createInputParams('email').input}
+                type={inputService.createInputParams('email').type}
+                label={inputService.createInputParams('email').label}
+              />
+              <Error className="error" errors={errors} name="email" />
+            </div>
+            <div className={styles.input_block}>
+              <FormPasswordInput
+                input={inputService.createInputParams('password').input}
+                type={inputService.createInputParams('email').type}
+                label={inputService.createInputParams('password').label}
+              />
+              <Error className="error" errors={errors} name="password" />
+            </div>
+            <div className={styles.input_block}>
+              <FormInput
+                input={inputService.createInputParams('userFirstName').input}
+                type={inputService.createInputParams('userFirstName').type}
+                label={inputService.createInputParams('userFirstName').label}
+              />
+              <Error className="error" errors={errors} name="userFirstName" />
+            </div>
+            <div className={styles.input_block}>
+              <FormInput
+                input={inputService.createInputParams('userLastName').input}
+                type={inputService.createInputParams('userLastName').type}
+                label={inputService.createInputParams('userLastName').label}
+              />
+              <Error className="error" errors={errors} name="userLastName" />
+            </div>
+            <div className={styles.input_block}>
+              <FormInput
+                input={inputService.createInputParams('birthDate').input}
+                type={inputService.createInputParams('birthDate').type}
+                label={inputService.createInputParams('birthDate').label}
+              />
+              <Error className="error" errors={errors} name="birthDate" />
+            </div>
           </div>
           <div className={styles.info_container}>
             <div className={styles.address_container}>
               <p className={styles.address_title}>Shipping Address</p>
-              <FormShippingAddressInput
-                input={inputService.createInputParams('shippingStreet').input}
-                type={inputService.createInputParams('shippingStreet').type}
-                label={inputService.createInputParams('shippingStreet').label}
-                onInput={handleShippingAddressChange}
-              />
-              <Error errors={errors} name="shippingStreet" />
-              <FormShippingAddressInput
-                input={inputService.createInputParams('shippingCity').input}
-                type={inputService.createInputParams('shippingCity').type}
-                label={inputService.createInputParams('shippingCity').label}
-                onInput={handleShippingAddressChange}
-              />
-              <Error errors={errors} name="shippingCity" />
-              <CountryInput
-                value={shippingCountry}
-                onSelect={handleShippingCountryChange}
-                input={inputService.createInputParams('shippingCountry').input}
-                label={inputService.createInputParams('shippingCountry').label}
-                isMatching={false}
-              />
-              <Error errors={errors} name="shippingCountry" />
-              {shippingCountry && (
+              <div className={styles.input_block}>
                 <FormShippingAddressInput
-                  input={register('shippingPostalCode', {
-                    validate: {
-                      postalCode: (inputValue: string): string | boolean =>
-                        postcodeValidator(inputValue, shippingCountry) ||
-                        'Incorrect postal code',
-                    },
-                    required: 'Field cannot be empty',
-                  })}
-                  type={
-                    inputService.createInputParams('shippingPostalCode').type
-                  }
-                  label={
-                    inputService.createInputParams('shippingPostalCode').label
-                  }
+                  input={inputService.createInputParams('shippingStreet').input}
+                  type={inputService.createInputParams('shippingStreet').type}
+                  label={inputService.createInputParams('shippingStreet').label}
                   onInput={handleShippingAddressChange}
                 />
-              )}
-              <Error errors={errors} name="shippingPostalCode" />
+                <Error
+                  className="address_error"
+                  errors={errors}
+                  name="shippingStreet"
+                />
+              </div>
+
+              <div className={styles.input_block}>
+                <FormShippingAddressInput
+                  input={inputService.createInputParams('shippingCity').input}
+                  type={inputService.createInputParams('shippingCity').type}
+                  label={inputService.createInputParams('shippingCity').label}
+                  onInput={handleShippingAddressChange}
+                />
+                <Error
+                  className="address_error"
+                  errors={errors}
+                  name="shippingCity"
+                />
+              </div>
+
+              <div className={styles.input_block}>
+                <CountryInput
+                  value={shippingCountry}
+                  onSelect={handleShippingCountryChange}
+                  input={
+                    inputService.createInputParams('shippingCountry').input
+                  }
+                  label={
+                    inputService.createInputParams('shippingCountry').label
+                  }
+                  isMatching={false}
+                />
+                <Error
+                  className="address_error"
+                  errors={errors}
+                  name="shippingCountry"
+                />
+              </div>
+
+              <div className={styles.input_block}>
+                {shippingCountry && (
+                  <FormShippingAddressInput
+                    input={register('shippingPostalCode', {
+                      validate: {
+                        postalCode: (inputValue: string): string | boolean =>
+                          postcodeValidator(inputValue, shippingCountry) ||
+                          'Incorrect postal code',
+                      },
+                      required: 'Field cannot be empty',
+                    })}
+                    type={
+                      inputService.createInputParams('shippingPostalCode').type
+                    }
+                    label={
+                      inputService.createInputParams('shippingPostalCode').label
+                    }
+                    onInput={handleShippingAddressChange}
+                  />
+                )}
+                <Error
+                  className="address_error"
+                  errors={errors}
+                  name="shippingPostalCode"
+                />
+              </div>
+
               <FormInput
                 input={register('isShippingAddressDefault')}
                 type="checkbox"
@@ -226,59 +268,89 @@ export function RegistrationForm(): React.ReactElement {
                 label="Bill to Shipping Address"
                 onInput={handleMatchingCheckbox}
               />
-              <FormBillingAddressInput
-                type={inputService.createInputParams('billingStreet').type}
-                label={inputService.createInputParams('billingStreet').label}
-                input={inputService.createInputParams('billingStreet').input}
-                value={billingAddress.billingStreet}
-                isMatching={matchingAddress}
-                onInput={handleBillingAddressChange}
-              />
-              {!matchingAddress && (
-                <Error errors={errors} name="billingStreet" />
-              )}
-              <FormBillingAddressInput
-                type={inputService.createInputParams('billingCity').type}
-                label={inputService.createInputParams('billingCity').label}
-                input={inputService.createInputParams('billingCity').input}
-                value={billingAddress.billingCity}
-                isMatching={matchingAddress}
-                onInput={handleBillingAddressChange}
-              />
-              {!matchingAddress && <Error errors={errors} name="billingCity" />}
-              <CountryInput
-                value={billingCountry}
-                onSelect={handleBillingCountryChange}
-                input={inputService.createInputParams('billingCountry').input}
-                label={inputService.createInputParams('billingCountry').label}
-                isMatching={matchingAddress}
-              />
-              {!matchingAddress && (
-                <Error errors={errors} name="billingCountry" />
-              )}
-              {billingCountry && (
+              <div className={styles.input_block}>
                 <FormBillingAddressInput
-                  type={
-                    inputService.createInputParams('billingPostalCode').type
-                  }
-                  label={
-                    inputService.createInputParams('billingPostalCode').label
-                  }
-                  input={register('billingPostalCode', {
-                    validate: {
-                      postalCode: (inputValue: string): string | boolean =>
-                        postcodeValidator(inputValue, billingCountry) ||
-                        'Incorrect postal code',
-                    },
-                  })}
-                  value={billingAddress.billingPostalCode}
+                  type={inputService.createInputParams('billingStreet').type}
+                  label={inputService.createInputParams('billingStreet').label}
+                  input={inputService.createInputParams('billingStreet').input}
+                  value={billingAddress.billingStreet}
                   isMatching={matchingAddress}
                   onInput={handleBillingAddressChange}
                 />
-              )}
-              {!matchingAddress && (
-                <Error errors={errors} name="billingPostalCode" />
-              )}
+                {!matchingAddress && (
+                  <Error
+                    className="address_error"
+                    errors={errors}
+                    name="billingStreet"
+                  />
+                )}
+              </div>
+
+              <div className={styles.input_block}>
+                <FormBillingAddressInput
+                  type={inputService.createInputParams('billingCity').type}
+                  label={inputService.createInputParams('billingCity').label}
+                  input={inputService.createInputParams('billingCity').input}
+                  value={billingAddress.billingCity}
+                  isMatching={matchingAddress}
+                  onInput={handleBillingAddressChange}
+                />
+                {!matchingAddress && (
+                  <Error
+                    className="address_error"
+                    errors={errors}
+                    name="billingCity"
+                  />
+                )}
+              </div>
+
+              <div className={styles.input_block}>
+                <CountryInput
+                  value={billingCountry}
+                  onSelect={handleBillingCountryChange}
+                  input={inputService.createInputParams('billingCountry').input}
+                  label={inputService.createInputParams('billingCountry').label}
+                  isMatching={matchingAddress}
+                />
+                {!matchingAddress && (
+                  <Error
+                    className="address_error"
+                    errors={errors}
+                    name="billingCountry"
+                  />
+                )}
+              </div>
+
+              <div className={styles.input_block}>
+                {billingCountry && (
+                  <FormBillingAddressInput
+                    type={
+                      inputService.createInputParams('billingPostalCode').type
+                    }
+                    label={
+                      inputService.createInputParams('billingPostalCode').label
+                    }
+                    input={register('billingPostalCode', {
+                      validate: {
+                        postalCode: (inputValue: string): string | boolean =>
+                          postcodeValidator(inputValue, billingCountry) ||
+                          'Incorrect postal code',
+                      },
+                    })}
+                    value={billingAddress.billingPostalCode}
+                    isMatching={matchingAddress}
+                    onInput={handleBillingAddressChange}
+                  />
+                )}
+                {!matchingAddress && (
+                  <Error
+                    className="address_error"
+                    errors={errors}
+                    name="billingPostalCode"
+                  />
+                )}
+              </div>
+
               <FormInput
                 input={register('isBillingAddressDefault')}
                 type="checkbox"

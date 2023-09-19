@@ -4,10 +4,11 @@
   align-items: start;
   flex-grow: 1;
   padding: 0 1rem;
-  background: var(--color-background-main-block);
+  background: var(--color-background-container);
 }
 
 .container {
+  box-shadow:  var(--shadow-light);
   background-color: var(--color-background-container);
   border-radius: 1rem;
   padding: 1rem 0.7rem;
@@ -19,7 +20,7 @@
 .title {
   font-size: calc(27px + (28 - 27) * ((100vw - 320px) / (1920 - 320)));
   margin-bottom: calc(20px + (30 - 20) * ((100vw - 320px) / (1920 - 320)));
-  color: var(--color-dark-green);
+  color: var(--color-light-green);
 }
 
 .form {
@@ -29,20 +30,28 @@
 }
 
 .login_btn {
+  font-family: inherit;
   padding: 5px;
   font-size: 18px;
-  color: var(--color-background-container);;
   border-radius: 5px;
   border: 0;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   width: 100%;
-  background-color: var(--color-dark-green);
+  background-color: var(--color-light-green);
+  color: var(--color-dark);
+  background-color: var(--color-light-green);
+  transition: 0.2s all ease-in;
+  &:hover {
+    transition: 0.2s all ease-in;
+    color: var(--color-text-light);;
+    background-color: var(--color-orange);
+  }
 }
 
 .signup_btn {
   border: none;
   background-color: inherit;
-  color: var(--color-dark-green);
+  color: var(--color-light-green);
   font-size: 18px;
 }
 
@@ -50,10 +59,11 @@
   display: inline-block;
   font-size: 16px;
   margin-right: 5px;
+  color: var(--color-text-gray);
 }
 
 .error {
-  color: var(--color-dark-green);
+  color: var(--color-light-green);
   font-size: 16px;
 }
 
@@ -62,11 +72,16 @@
   content: '⚠ ';
 }
 
-.button_registration {
+.link_block {
+  display: flex;
+  justify-content: space-around;
+}
+
+.link {
   * {
     border: none;
     background-color: inherit;
-    color: var(--color-dark-green);
+    color: var(--color-light-green);
     font-size: 18px;
   }
 }

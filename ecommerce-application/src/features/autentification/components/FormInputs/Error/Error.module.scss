@@ -1,0 +1,23 @@
+.error, .address_error {
+  color: var(--color-orange);
+  font-size: 12px;
+  position: absolute;
+  z-index: 1;
+  background-color: var(--color-background-container);
+  padding: 0 5px;
+}
+
+.error {
+  top: 18px;
+  left: 10px;
+}
+
+.address_error {
+  top: -10px;
+  left: 92px;
+}
+
+.error::before, .address_error::before {
+  display: inline;
+  content: '⚠ ';
+}
