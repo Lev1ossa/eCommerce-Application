@@ -14,18 +14,24 @@
   .wrapper {
     background-color: var(--color-background-container);
     border-radius: 10px;
-    padding: 20px 20px;
+    padding: 20px;
     margin: 20px 0;
     width: 70%;
     box-shadow:  var(--shadow-light);
     @media (max-width: 1100px) {
-      width: 95%;
-    }
-    @media screen and (max-width: 768px) {
       width: 80%;
     }
-    @media screen and (max-width: 560px) {
+    @media (max-width: 970px) {
       width: 95%;
+    }
+    @media (max-width: 830px) {
+      width: 70%;
+    }
+    @media screen and (max-width: 610px) {
+      width: 95%;
+    }
+    @media screen and (max-width: 450px) {
+      padding: 10px;
     }
     .button_login {
       transition: 0.2s all ease-in;
@@ -55,7 +61,7 @@
     flex-direction: column;
     margin-bottom: 20px;
     
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: 830px) {
       flex: 1 0 100%;
     }
   }
@@ -65,8 +71,11 @@
     margin-right: 10px;
     padding: 15px;
     position: relative;
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: 830px) {
       margin-right: 0px;
+    }
+    @media screen and (max-width: 450px) {
+      padding: 10px;
     }
   }
 
