@@ -29,6 +29,10 @@
   row-gap: 1rem;
 }
 
+.form_item {
+  position: relative;
+}
+
 .login_btn {
   font-family: inherit;
   padding: 5px;
@@ -60,16 +64,6 @@
   font-size: 16px;
   margin-right: 5px;
   color: var(--color-text-gray);
-}
-
-.error {
-  color: var(--color-light-green);
-  font-size: 16px;
-}
-
-.error::before {
-  display: inline;
-  content: '⚠ ';
 }
 
 .link_block {
