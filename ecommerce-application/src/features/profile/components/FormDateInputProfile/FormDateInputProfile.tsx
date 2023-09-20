@@ -30,6 +30,7 @@ export function FormDateInputProfile(props: {
                 token: {
                   colorBorder: '#808080',
                   fontSize: 16,
+                  colorTextPlaceholder: '#242424',
                 },
                 components: {
                   DatePicker: {
