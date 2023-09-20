@@ -87,12 +87,6 @@
   .ant_picker {
     width: 100%;
     max-height: 28px;
-    border: 1px solid var(--color-text-gray);
-    input:focus {
-      .ant_picker {
-        border: 1px solid var(--color-light-green);
-      }
-    }
   }
 
   .address_container {
@@ -157,11 +151,3 @@
   }
 }
 
-.ant_picker {
-  width: 100%;
-}
-
-.label {
-  font-weight: 500;
-  margin-bottom: 10px;
-}
