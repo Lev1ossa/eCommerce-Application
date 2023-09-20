@@ -18,19 +18,19 @@
     margin: 20px 0;
     width: 70%;
     box-shadow:  var(--shadow-light);
-    @media (max-width: 1100px) {
+    @media (max-width: 1120px) {
       width: 80%;
     }
-    @media (max-width: 970px) {
+    @media (max-width: 1050px) {
       width: 95%;
     }
-    @media (max-width: 830px) {
+    @media (max-width: 900px) {
       width: 70%;
     }
-    @media screen and (max-width: 610px) {
+    @media screen and (max-width: 630px) {
       width: 95%;
     }
-    @media screen and (max-width: 450px) {
+    @media screen and (max-width: 466px) {
       padding: 10px;
     }
     .button_login {
@@ -61,7 +61,7 @@
     flex-direction: column;
     margin-bottom: 20px;
     
-    @media screen and (max-width: 830px) {
+    @media screen and (max-width: 900px) {
       flex: 1 0 100%;
     }
   }
@@ -71,7 +71,7 @@
     margin-right: 10px;
     padding: 15px;
     position: relative;
-    @media screen and (max-width: 830px) {
+    @media screen and (max-width: 900px) {
       margin-right: 0px;
     }
     @media screen and (max-width: 450px) {
