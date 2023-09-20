@@ -1,6 +1,11 @@
 .label:has(.input[type='checkbox']) {
   position: relative;
   padding-left: 20px;
+  font-style: italic;
+}
+
+.label {
+  font-weight: 500;
 }
 
 .input {
@@ -8,10 +13,21 @@
   height: 27px;
   width: 100%;
   font-size: 20px;
-  margin: 10px 0;
+  margin: 10px 0 20px;
   font-family: inherit;
   border-radius: 5px;
   border: 1px solid var(--color-text-gray);
+  &:focus {
+    animation: blink .5s 3;
+    border: 2px solid var(--color-light-green);
+    outline: none;
+  }
+}
+
+@keyframes blink {
+  50% {
+    border-color: var(--color-background-main-block);
+  }
 }
 
 .input[type='checkbox'] {

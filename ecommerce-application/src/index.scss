@@ -10,6 +10,10 @@ body {
   height: 100%;
 }
 
+input :-internal-autofill-selected {
+  background-color: var(--color-background-container);
+}
+
 @font-face {
   font-family: 'Rubik';
   src:
@@ -64,7 +68,9 @@ button {
 a {
   text-decoration: none;
   color: var(--color-dark);
+  transition: 0.2s all ease-in;
   &:hover {
+    transition: 0.2s all ease-in;
     color: var(--color-orange);
   }
 }

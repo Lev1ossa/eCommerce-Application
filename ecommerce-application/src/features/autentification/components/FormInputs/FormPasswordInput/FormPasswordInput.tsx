@@ -17,7 +17,7 @@ export function FormPasswordInput(props: {
   const id = `${name}Input`;
   type = showPassword ? 'text' : 'password';
   return (
-    <label htmlFor={id}>
+    <label className={styles.label} htmlFor={id}>
       {label}
       <div className={styles.container}>
         <input

@@ -54,7 +54,7 @@ export function LoginForm(): React.ReactElement {
               type={inputService.createInputParams('email').type}
               label={inputService.createInputParams('email').label}
             />
-            <Error errors={errors} name="email" />
+            <Error className="error" errors={errors} name="email" />
           </div>
           <div className={styles.form_item}>
             <FormPasswordInput
@@ -62,15 +62,15 @@ export function LoginForm(): React.ReactElement {
               type={inputService.createInputParams('email').type}
               label={inputService.createInputParams('password').label}
             />
-            <Error errors={errors} name="password" />
+            <Error className="error" errors={errors} name="password" />
           </div>
           <button className={styles.login_btn} type="submit">
             Log in
           </button>
         </form>
-        <div>
+        <div className={styles.link_block}>
           <p className={styles.text}>Don&apos;t have an account yet?</p>
-          <p className={styles.button_registration}>
+          <p className={styles.link}>
             <Link to="/registration">Sign up now</Link>
           </p>
         </div>

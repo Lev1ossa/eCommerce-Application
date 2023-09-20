@@ -61,10 +61,16 @@ export function CartItem(props: {
             cartContext.setCartItems(result.body.lineItems);
             setIsButtonsDisabled(false);
           },
-          (error: Error) => console.log(error),
+          (error: Error) => {
+            setIsButtonsDisabled(false);
+            console.log(error);
+          },
         );
       },
-      (error: Error) => console.log(error),
+      (error: Error) => {
+        setIsButtonsDisabled(false);
+        console.log(error);
+      },
     );
   };
 
@@ -86,10 +92,16 @@ export function CartItem(props: {
             cartContext.setCartItems(result.body.lineItems);
             setIsButtonsDisabled(false);
           },
-          (error: Error) => console.log(error),
+          (error: Error) => {
+            setIsButtonsDisabled(false);
+            console.log(error);
+          },
         );
       },
-      (error: Error) => console.log(error),
+      (error: Error) => {
+        setIsButtonsDisabled(false);
+        console.log(error);
+      },
     );
   };
 
@@ -111,10 +123,16 @@ export function CartItem(props: {
             cartContext.setCartItems(result.body.lineItems);
             setIsButtonsDisabled(false);
           },
-          (error: Error) => console.log(error),
+          (error: Error) => {
+            setIsButtonsDisabled(false);
+            console.log(error);
+          },
         );
       },
-      (error: Error) => console.log(error),
+      (error: Error) => {
+        setIsButtonsDisabled(false);
+        console.log(error);
+      },
     );
   };
 

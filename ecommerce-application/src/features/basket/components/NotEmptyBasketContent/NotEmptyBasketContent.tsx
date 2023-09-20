@@ -106,14 +106,20 @@ export function NotEmptyBasketContent(props: {
         clearCart(cart, actions, refreshTokenFlowApiRoot).then(
           (result) => {
             setCartData(result.body);
-            setIsButtonsDisabled(false);
             cartContext.setCartItems(result.body.lineItems);
+            setIsButtonsDisabled(false);
             getCart();
           },
-          (error: Error) => console.log(error),
+          (error: Error) => {
+            setIsButtonsDisabled(false);
+            console.log(error);
+          },
         );
       },
-      (error: Error) => console.log(error),
+      (error: Error) => {
+        setIsButtonsDisabled(false);
+        console.log(error);
+      },
     );
   };
 
