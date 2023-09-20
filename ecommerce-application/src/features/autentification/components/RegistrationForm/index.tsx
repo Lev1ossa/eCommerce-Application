@@ -1,6 +1,8 @@
 import { postcodeValidator } from 'postcode-validator';
 import { useContext, useEffect, useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import 'antd/dist/reset.css';
+import { DatePicker } from 'antd';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { IRegistrationData } from '../../../../types/types';
 import { ServiceInputParameters } from '../../services/inputService';
@@ -14,6 +16,7 @@ import { FormShippingAddressInput } from '../FormInputs/FormShippingAddressInput
 import styles from './RegistrationForm.module.scss';
 import { isUserLoggedIn } from '../../../../api/tokenHandlers';
 import { ApiRootContext } from '../../../../context/ApiRootContext';
+import { checkDateValidity } from '../../utils/utils';
 
 // eslint-disable-next-line max-lines-per-function
 export function RegistrationForm(): React.ReactElement {
@@ -42,6 +45,7 @@ export function RegistrationForm(): React.ReactElement {
   const {
     register,
     setValue,
+    control,
     formState: { errors },
     handleSubmit,
   } = useForm<IRegistrationData>({
@@ -168,11 +172,26 @@ export function RegistrationForm(): React.ReactElement {
               <Error className="error" errors={errors} name="userLastName" />
             </div>
             <div className={styles.input_block}>
-              <FormInput
+              <div className={styles.label}>Date of Birth</div>
+              <Controller
+                name="birthDate"
+                control={control}
+                rules={{ validate: { checkDateValidity } }}
+                render={({ field: { onChange } }): React.ReactElement => {
+                  return (
+                    <DatePicker
+                      format="DD.MM.YYYY"
+                      placeholder="01-01-2023"
+                      onChange={onChange}
+                    />
+                  );
+                }}
+              />
+              {/* <FormInput
                 input={inputService.createInputParams('birthDate').input}
                 type={inputService.createInputParams('birthDate').type}
                 label={inputService.createInputParams('birthDate').label}
-              />
+  /> */}
               <Error className="error" errors={errors} name="birthDate" />
             </div>
           </div>
