@@ -42,6 +42,7 @@ export function AccountContentActive(props: {
     customerData: IRegistrationData,
   ): void => {
     getCustomerData(refreshTokenFlowApiRoot).then(
+      // eslint-disable-next-line max-lines-per-function
       (result) => {
         const updateFirstName: MyCustomerSetFirstNameAction = {
           action: 'setFirstName',
@@ -51,9 +52,18 @@ export function AccountContentActive(props: {
           action: 'setLastName',
           lastName: customerData.userLastName,
         };
+        const clientDateOfBirth = new Date(customerData.birthDate)
+          .toLocaleString('ru-RU', {
+            year: 'numeric',
+            month: 'numeric',
+            day: 'numeric',
+          })
+          .split('.')
+          .reverse()
+          .join('-');
         const updateDateOfBirth: MyCustomerSetDateOfBirthAction = {
           action: 'setDateOfBirth',
-          dateOfBirth: customerData.birthDate,
+          dateOfBirth: clientDateOfBirth,
         };
         const updateEmail: MyCustomerChangeEmailAction = {
           action: 'changeEmail',
