@@ -12,8 +12,7 @@
     row-gap: 2rem;
   }
   @media #{$mq-medium} {
-    // font-size: $base-font-size*1.05;
-    // line-height: $base-line-height*1.1;
+    line-height: $base-line-height*1.1;
   }
   
   @media #{$mq-large} {

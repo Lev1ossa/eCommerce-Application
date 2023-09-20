@@ -6,6 +6,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   align-content: start;
+  // grid-auto-rows: auto;
   justify-content: space-around;
   padding: 0 0 3em 0.5em;
   column-gap: 1rem;
@@ -19,28 +20,31 @@
   @media #{$mq-small} {
     grid-template-columns: repeat(auto-fit, minmax(20%, 250px));
     column-gap: 0.5em;
+    grid-auto-rows: 420px;
   }
 
   @media #{$mq-medium} {
     grid-template-columns: repeat(auto-fit, minmax(20%, 200px));
     column-gap: 0.8em;
+    grid-auto-rows: 480px;
   }
 
   @media #{$mq-large} {
     grid-template-columns: repeat(4, minmax(20%, 250px));
     column-gap: 1em;
+    grid-auto-rows: 520px;
   }
 
   @media #{$mq-xlarge} {
     grid-template-columns: repeat(4, minmax(20%, 350px));
     column-gap: 1.5em;
-    grid-auto-rows: 580px;
+    grid-auto-rows: 650px;
   }
 
   @media #{$mq-xxlarge} {
     grid-template-columns: repeat(4, minmax(20%, 400px));
     column-gap: 3em;
-    grid-auto-rows: 770px;
+    grid-auto-rows: 860px;
   }
 }
 
