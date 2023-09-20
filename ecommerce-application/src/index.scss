@@ -1,3 +1,4 @@
+@import '/src/App/styles/vars.scss';
 * {
   margin: 0;
   padding: 0;
@@ -34,7 +35,6 @@ input :-internal-autofill-selected {
   font-display: swap;
 }
 
-
 @font-face {
   font-family: 'Rubik';
   src:
@@ -44,7 +44,6 @@ input :-internal-autofill-selected {
   font-style: normal;
   font-display: swap;
 }
-
 
 @font-face {
   font-family: 'Rubik';
@@ -56,10 +55,10 @@ input :-internal-autofill-selected {
   font-display: swap;
 }
 
-
 body {
   font-family: 'Rubik';
   font-weight: normal;
+  font-size: $base-font-size;
 }
 button {
   cursor: pointer;
@@ -74,5 +73,3 @@ a {
     color: var(--color-orange);
   }
 }
-
-

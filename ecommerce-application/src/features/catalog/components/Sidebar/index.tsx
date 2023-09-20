@@ -192,6 +192,7 @@ export function CatalogSidebar(props: {
   const categories = productCategories.map((category) => (
     // <Link to={`/catalog/${category.slug}`} key={category.id}>
     <SubMenu
+      className={styles.category}
       active={
         window.location.pathname === `/catalog/${category.slug}` ||
         window.location.pathname === `/catalog/${category.slug}/`
@@ -205,6 +206,7 @@ export function CatalogSidebar(props: {
       {category.children.map((child) => (
         // <Link to={`/catalog/${category.slug}/${child.slug}`} key={child.id}>
         <MenuItem
+          className={styles.subcategory}
           active={
             window.location.pathname ===
               `/catalog/${category.slug}/${child.slug}` ||
@@ -240,9 +242,11 @@ export function CatalogSidebar(props: {
   };
 
   return (
-    <div key={componentKey} style={{ display: 'flex' }}>
+    <div key={componentKey} className={styles.container}>
       <Sidebar
         collapsed={collapsed}
+        width="100px"
+        style={{ width: '100%' }}
         collapsedWidth="130px"
         className={styles.sidebar}
         rootStyles={{
@@ -252,6 +256,7 @@ export function CatalogSidebar(props: {
         }}
       >
         <Menu
+          className={styles.menu}
           rootStyles={{
             [`.${menuClasses.button}`]: {
               ':hover': {
@@ -305,8 +310,8 @@ export function CatalogSidebar(props: {
                   borderColor: state.isFocused ? '#ededed' : '#ededed',
                 },
                 border: '1px solid #ededed',
-                fontSize: '14px',
-                height: '2rem',
+                fontSize: '0.9em',
+                height: '2em',
                 margin: '5px',
                 padding: '0',
               }),
@@ -328,21 +333,25 @@ export function CatalogSidebar(props: {
           <SubMenu label="Filters" defaultOpen>
             <ul className={styles.list}>
               <li className={styles.price}>
-                <strong>Price: </strong>
-                <span>from</span>
-                <input
-                  type="text"
-                  placeholder="min"
-                  onChange={(event): void => handleLowerPriceChange(event)}
-                />
-                <span>to</span>
-                <input
-                  type="text"
-                  placeholder="max"
-                  onChange={(event): void => handleHigherPriceChange(event)}
-                />
+                <strong className={styles.price_name}>Price: </strong>
+                <div className={styles.price_item}>
+                  <span>from</span>
+                  <input
+                    type="text"
+                    placeholder="min"
+                    onChange={(event): void => handleLowerPriceChange(event)}
+                  />
+                </div>
+                <div className={styles.price_item}>
+                  <span>to</span>
+                  <input
+                    type="text"
+                    placeholder="max"
+                    onChange={(event): void => handleHigherPriceChange(event)}
+                  />
+                </div>
               </li>
-              <li className={styles.brand}>
+              <li>
                 <BrandsList
                   brands={brands}
                   handleBrandsClick={handleBrandsClick}
@@ -350,7 +359,7 @@ export function CatalogSidebar(props: {
               </li>
               <li className={styles.brand}>
                 <ul className={styles.origin_list}>
-                  <strong>Origin</strong>
+                  <strong className={styles.origin_header}>Origin</strong>
                   <li>
                     <input
                       type="checkbox"
@@ -358,7 +367,7 @@ export function CatalogSidebar(props: {
                         handleOriginChange(event, 'local')
                       }
                     />
-                    <span className="text">Local</span>
+                    <span className={styles.origin_label}>Local</span>
                   </li>
                   <li>
                     <input
@@ -367,19 +376,19 @@ export function CatalogSidebar(props: {
                         handleOriginChange(event, 'foreign')
                       }
                     />
-                    <span className="text">Foreign</span>
+                    <span className={styles.origin_label}>Foreign</span>
                   </li>
                 </ul>
               </li>
+              <button
+                type="button"
+                className={styles.reset}
+                onClick={handleResetFilters}
+              >
+                Reset Filters
+              </button>
             </ul>
           </SubMenu>
-          <button
-            type="button"
-            className={styles.reset}
-            onClick={handleResetFilters}
-          >
-            Reset Filters
-          </button>
         </Menu>
       </Sidebar>
     </div>
