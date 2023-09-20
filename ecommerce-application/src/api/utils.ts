@@ -32,8 +32,14 @@ export const getClientData = (
     : undefined;
 
   const clientDateOfBirth = new Date(registrationData.birthDate)
-    .toISOString()
-    .slice(0, 10);
+    .toLocaleString('ru-RU', {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+    })
+    .split('.')
+    .reverse()
+    .join('-');
   return {
     email: registrationData.email,
     password: registrationData.password,

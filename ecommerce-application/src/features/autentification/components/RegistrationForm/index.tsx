@@ -175,13 +175,15 @@ export function RegistrationForm(): React.ReactElement {
               <div className={styles.label}>Date of Birth</div>
               <Controller
                 name="birthDate"
+                defaultValue="01.01.2023"
                 control={control}
                 rules={{ validate: { checkDateValidity } }}
                 render={({ field: { onChange } }): React.ReactElement => {
                   return (
                     <DatePicker
-                      format="DD.MM.YYYY"
+                      className={styles.ant_picker}
                       placeholder="01-01-2023"
+                      format="DD-MM-YYYY"
                       onChange={onChange}
                     />
                   );
