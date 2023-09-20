@@ -30,12 +30,16 @@ export const getClientData = (
   const clientDefaultBillingAddress = registrationData.isBillingAddressDefault
     ? clientBillingAdressID
     : undefined;
+
+  const clientDateOfBirth = new Date(registrationData.birthDate)
+    .toISOString()
+    .slice(0, 10);
   return {
     email: registrationData.email,
     password: registrationData.password,
     firstName: registrationData.userFirstName,
     lastName: registrationData.userLastName,
-    dateOfBirth: registrationData.birthDate,
+    dateOfBirth: clientDateOfBirth,
     addresses: clientAddresses,
     shippingAddresses: [clientShippingAdressID],
     billingAddresses: [clientBillingAdressID],
