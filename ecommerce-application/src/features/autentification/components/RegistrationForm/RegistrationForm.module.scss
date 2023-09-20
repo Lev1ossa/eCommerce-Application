@@ -5,11 +5,50 @@
   background: var(--color-background-container);
   flex-grow: 1;
   color: var(--color-dark);
+  flex-wrap: wrap;
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .wrapper {
+    background-color: var(--color-background-container);
+    border-radius: 10px;
+    padding: 20px 20px;
+    margin: 20px 0;
+    width: 70%;
+    box-shadow:  var(--shadow-light);
+    @media (max-width: 1100px) {
+      width: 95%;
+    }
+    @media screen and (max-width: 768px) {
+      width: 80%;
+    }
+    @media screen and (max-width: 560px) {
+      width: 95%;
+    }
+    .button_login {
+      transition: 0.2s all ease-in;
+      a:hover {
+        transition: 0.2s all ease-in;
+        color: var(--color-orange);
+      }
+  
+      * {
+        border: none;
+        background-color: inherit;
+        color: var(--color-light-green);
+        font-size: 18px;
+      }
+    }
+  }
+  
   .title {
     font-size: calc(27px + (28 - 27) * ((100vw - 320px) / (1920 - 320)));
     margin-bottom: calc(20px + (30 - 20) * ((100vw - 320px) / (1920 - 320)));
     color: var(--color-light-green);
   }
+
   .info_container {
     flex: 1 0 47%;
     display: flex;
@@ -17,7 +56,7 @@
     margin-bottom: 20px;
     
     @media screen and (max-width: 768px) {
-      flex: 1 0 50%;
+      flex: 1 0 100%;
     }
   }
   .info_container:first-child {
@@ -96,34 +135,3 @@
   }
 }
 
-.wrapper {
-  background-color: var(--color-background-container);
-  border-radius: 10px;
-  padding: 20px 20px;
-  margin: 20px 0;
-  width: 70%;
-  box-shadow:  var(--shadow-light);
-  @media screen and (max-width: 1010px) {
-    width: 95%;
-  }
-  @media screen and (max-width: 768px) {
-    width: 70%;
-  }
-  @media screen and (max-width: 560px) {
-    width: 95%;
-  }
-  .button_login {
-    transition: 0.2s all ease-in;
-    a:hover {
-      transition: 0.2s all ease-in;
-      color: var(--color-orange);
-    }
-
-    * {
-      border: none;
-      background-color: inherit;
-      color: var(--color-light-green);
-      font-size: 18px;
-    }
-  }
-}

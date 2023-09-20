@@ -10,6 +10,10 @@ body {
   height: 100%;
 }
 
+input :-internal-autofill-selected {
+  background-color: var(--color-background-container);
+}
+
 @font-face {
   font-family: 'Rubik';
   src:
