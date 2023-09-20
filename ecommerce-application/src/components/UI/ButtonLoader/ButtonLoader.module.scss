@@ -1,3 +1,5 @@
+@import '/src/App/styles/vars.scss';
+
 .loader {
   flex-grow: 1;
   display: flex;
@@ -6,6 +8,10 @@
   height: 23px;
   align-items: center;
   animation: rotate 1s linear infinite both;
+  @media #{$mq-xlarge} {
+    width: 1.5em;
+    height: 1.5em;
+  }
 }
 
 @keyframes rotate {
