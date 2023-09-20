@@ -192,6 +192,7 @@ export function CatalogSidebar(props: {
   const categories = productCategories.map((category) => (
     // <Link to={`/catalog/${category.slug}`} key={category.id}>
     <SubMenu
+      className={styles.category}
       active={
         window.location.pathname === `/catalog/${category.slug}` ||
         window.location.pathname === `/catalog/${category.slug}/`
@@ -205,6 +206,7 @@ export function CatalogSidebar(props: {
       {category.children.map((child) => (
         // <Link to={`/catalog/${category.slug}/${child.slug}`} key={child.id}>
         <MenuItem
+          className={styles.subcategory}
           active={
             window.location.pathname ===
               `/catalog/${category.slug}/${child.slug}` ||
@@ -240,14 +242,11 @@ export function CatalogSidebar(props: {
   };
 
   return (
-    <div
-      key={componentKey}
-      className={styles.container}
-      style={{ display: 'flex' }}
-    >
+    <div key={componentKey} className={styles.container}>
       <Sidebar
         collapsed={collapsed}
-        width="100%"
+        width="100px"
+        style={{ width: '100%' }}
         collapsedWidth="130px"
         className={styles.sidebar}
         rootStyles={{
@@ -360,7 +359,7 @@ export function CatalogSidebar(props: {
               </li>
               <li className={styles.brand}>
                 <ul className={styles.origin_list}>
-                  <strong>Origin</strong>
+                  <strong className={styles.origin_header}>Origin</strong>
                   <li>
                     <input
                       type="checkbox"
@@ -368,7 +367,7 @@ export function CatalogSidebar(props: {
                         handleOriginChange(event, 'local')
                       }
                     />
-                    <span className="text">Local</span>
+                    <span className={styles.origin_label}>Local</span>
                   </li>
                   <li>
                     <input
@@ -377,7 +376,7 @@ export function CatalogSidebar(props: {
                         handleOriginChange(event, 'foreign')
                       }
                     />
-                    <span className="text">Foreign</span>
+                    <span className={styles.origin_label}>Foreign</span>
                   </li>
                 </ul>
               </li>

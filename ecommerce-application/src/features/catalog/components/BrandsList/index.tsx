@@ -11,7 +11,7 @@ export default function BrandsList(props: {
   const { brands, handleBrandsClick } = props;
   return (
     <ul className={styles.brand_list}>
-      <strong>Brands</strong>
+      <strong className={styles.header}>Brands</strong>
       {brands.map((brand: string) => (
         <li key={brand}>
           <input

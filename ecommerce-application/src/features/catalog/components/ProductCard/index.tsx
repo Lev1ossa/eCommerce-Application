@@ -102,6 +102,7 @@ export function ProductCard(props: {
     <Link
       to={`/catalog/${category.toLowerCase()}/${subCategory.toLowerCase()}/${slug}`}
       state={id}
+      className={styles.container}
     >
       <div className={styles.card}>
         <img src={image} className={styles.image} alt="product" />
@@ -127,22 +128,24 @@ export function ProductCard(props: {
             <p className={styles.info}>{description}</p>
           </div>
         </div>
-        {isProductInCart ? (
-          <BuyCountButton
-            isLoading={isLoading}
-            isCartLoading={isDataLoading}
-            addToCartHandler={addToCartHandler}
-            removeFromCartHandler={removeFromCartHandler}
-            productCount={productCount}
-          />
-        ) : (
-          <BuyButton
-            isLoading={isLoading}
-            isCartLoading={isDataLoading}
-            isProductInCart={isProductInCart}
-            addToCartHandler={addToCartHandler}
-          />
-        )}
+        <div className={styles.button}>
+          {isProductInCart ? (
+            <BuyCountButton
+              isLoading={isLoading}
+              isCartLoading={isDataLoading}
+              addToCartHandler={addToCartHandler}
+              removeFromCartHandler={removeFromCartHandler}
+              productCount={productCount}
+            />
+          ) : (
+            <BuyButton
+              isLoading={isLoading}
+              isCartLoading={isDataLoading}
+              isProductInCart={isProductInCart}
+              addToCartHandler={addToCartHandler}
+            />
+          )}
+        </div>
       </div>
     </Link>
   );
