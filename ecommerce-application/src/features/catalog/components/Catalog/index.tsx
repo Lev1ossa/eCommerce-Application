@@ -228,7 +228,13 @@ export function Catalog(props: {
           setCurrentPage={setCurrentPage}
         />
         <div className={styles.catalog__content}>
-          {!isLoading ? <ProductList products={products} /> : <Loader />}
+          {!isLoading ? (
+            <ProductList products={products} />
+          ) : (
+            <div className={styles.loader}>
+              <Loader />
+            </div>
+          )}
           <div className={styles.pagination}>
             <Pagination
               setProductOffset={setProductOffset}

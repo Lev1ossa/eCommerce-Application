@@ -31,3 +31,10 @@
   margin-right: 1rem;
 }
 
+.loader {
+  position: sticky;
+  top: 45vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
