@@ -141,7 +141,6 @@ export function ProductCard(props: {
             <BuyButton
               isLoading={isLoading}
               isCartLoading={isDataLoading}
-              isProductInCart={isProductInCart}
               addToCartHandler={addToCartHandler}
             />
           )}
