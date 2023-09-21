@@ -73,6 +73,7 @@
 .logout_button {
   border: none;
   background-color: inherit;
+  color: var(--color-dark);
   &:hover {
     color: var(--color-orange);
   }

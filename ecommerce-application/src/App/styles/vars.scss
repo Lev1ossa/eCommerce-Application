@@ -3,6 +3,7 @@
   --color-text-middle-light: #e5e5e5;
   --color-text-gray: #808080;
   --color-light-gray: #bebebe;
+  --color-button-text: #242424;
   --color-dark: #242424;
   --color-light-dark: rgb(36, 36, 36, 0.3);
   --color-blue: #108ee9;
@@ -16,6 +17,7 @@
   --color-error: #e22454;
   --color-banana: #FFE700;
 
+  --color-background-main-image: url('/src/assets/img/main_backgroud.jpg');
   --color-background-main-block: #f0f3f8;
   --color-background-container: #ffffff;
   --color-background-text-block: rgba(35, 35, 35, 0.8);
@@ -30,11 +32,12 @@
 }
 
 :root[theme='dark'] {
-  --color-text-light: #ffffff;
+  --color-text-light: #242424;
   --color-text-middle-light: #e5e5e5;
   --color-text-gray: #808080;
   --color-light-gray: #bebebe;
-  --color-dark: #242424;
+  --color-dark: #efefef;
+  --color-button-text: #242424;
   --color-light-dark: rgb(36, 36, 36, 0.3);
   --color-blue: #108ee9;
   --color-green: #019362;
@@ -47,10 +50,11 @@
   --color-error: #e22454;
   --color-banana: #FFE700;
 
+  --color-background-main-image: url('/src/assets/img/background_dark.jpg');
   --color-background-main-block: #f0f3f8;
-  --color-background-container: #ffffff;
-  --color-background-text-block: rgba(35, 35, 35, 0.8);
-  --gradient-ligth-green: linear-gradient(to right, #ff7878, #787fff);
+  --color-background-container: #010502;
+  --color-background-text-block: rgba(209, 207, 207, 0.7);
+  --gradient-ligth-green: linear-gradient(to bottom, #010502, #042509);
 
   --shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   --shadow-light: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;

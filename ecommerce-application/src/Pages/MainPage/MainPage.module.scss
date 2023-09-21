@@ -5,6 +5,7 @@
   min-height: 100%;
   display: flex;
   flex-direction: column;
+  background-color: var(--color-background-container);
 }
 
 .main {
@@ -14,7 +15,7 @@
 }
 
 .section_main {
-  background-image: url('/src/assets/img/main_backgroud.jpg');
+  background-image: var(--color-background-main-image);
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
@@ -40,6 +41,7 @@
   flex-direction: column;
   justify-content: center;
   z-index: 2;
+  color: var(--color-dark);
   @media (max-width: $medium_width) {
     left: 20px;
   }
@@ -112,6 +114,7 @@
   border-radius: 5px;
   transition: 0.2s all ease-in;
   text-align: center;
+  color: var( --color-button-text);
   &:hover {
     background-color: var(--color-orange);
     color: var(--color-text-light);
