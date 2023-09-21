@@ -3,6 +3,7 @@ import { CgProfile } from 'react-icons/cg';
 import { AiOutlineLogin, AiOutlineLogout } from 'react-icons/ai';
 import { BsCart3 } from 'react-icons/bs';
 import styles from './Nav.module.scss';
+import { toggleTheme } from '../../../App/utils/utils';
 
 // eslint-disable-next-line max-lines-per-function
 export function Nav(props: {
@@ -16,6 +17,15 @@ export function Nav(props: {
   return (
     <nav>
       <ul className={styles.links}>
+        <li>
+          <button
+            className={styles.theme_button}
+            onClick={toggleTheme}
+            type="button"
+          >
+            Theme
+          </button>
+        </li>
         <li>
           <NavLink className={className} to="/">
             Main
