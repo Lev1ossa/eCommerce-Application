@@ -60,8 +60,14 @@ body {
   font-weight: normal;
   font-size: $base-font-size;
 }
+
 button {
   cursor: pointer;
+  color: initial;
+  &:disabled {
+    color: var(--color-light-dark);
+    cursor: progress;
+  }
 }
 
 a {
