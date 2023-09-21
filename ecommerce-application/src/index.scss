@@ -66,6 +66,7 @@ button {
   color: initial;
   &:disabled {
     color: var(--color-light-dark);
+    cursor: progress;
   }
 }
 
