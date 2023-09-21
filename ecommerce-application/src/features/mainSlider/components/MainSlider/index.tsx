@@ -2,74 +2,25 @@ import { NavLink } from 'react-router-dom';
 import { Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import styles from './MainSlider.module.scss';
+import { sliderContent } from '../../constants/constants';
 
 // eslint-disable-next-line max-lines-per-function
 export function MainSlider(): React.ReactElement {
-  const slider = [
-    {
-      title: 'Fresh & Tasty',
-      subtitle: 'Fruits & Vegetables',
-      text: 'every day',
-      url: '/src/assets/img/lemon14.png',
-    },
-    {
-      title: 'Vitamins and minerals',
-      subtitle: 'For good health',
-      text: 'can help you',
-      url: '/src/assets/img/lemon7.png',
-    },
-    {
-      title: 'Fruit and vegetables',
-      subtitle: 'Is powerful antioxidants',
-      text: 'and tasting great',
-      url: '/src/assets/img/lemon4.png',
-    },
-    {
-      title: 'Lots and lots of fiber',
-      subtitle: 'Boost gut health',
-      text: 'for good health',
-      url: '/src/assets/img/lemon5.png',
-    },
-    {
-      title: 'Low-calories',
-      subtitle: 'And low-fat',
-      text: 'you can eat more',
-      url: '/src/assets/img/lemon8.png',
-    },
-    {
-      title: 'Low in sodium',
-      subtitle: 'And cholesterol',
-      text: 'cholesterol free',
-      url: '/src/assets/img/lemon13.png',
-    },
-    {
-      title: 'Quick & Easy',
-      subtitle: 'don’t need any packaging',
-      text: 'easily grab and eat',
-      url: '/src/assets/img/lemon10.png',
-    },
-    {
-      title: 'Smoothies!',
-      subtitle: 'If you have a blender',
-      text: 'your favorite flavors',
-      url: '/src/assets/img/lemon12.png',
-    },
-  ];
-  const images = slider.map(
+  const images = sliderContent.map(
     (slide) => new URL(slide.url, import.meta.url).href,
   );
   return (
     <Swiper
       className={styles.swiper}
       centeredSlides
-      // autoplay={{
-      //   delay: 3000,
-      //   disableOnInteraction: false,
-      // }}
-      // loop
+      autoplay={{
+        delay: 3000,
+        disableOnInteraction: false,
+      }}
+      loop
       modules={[Autoplay]}
     >
-      {slider.map((slide, i) => (
+      {sliderContent.map((slide, i) => (
         <SwiperSlide key={slide.title}>
           <section className={styles.section_main}>
             <div className={styles.main_text_block}>
