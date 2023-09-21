@@ -1,19 +1,19 @@
 @import '/src/App/styles/vars.scss';
 .container {
   @media #{$mq-small} {
-    height: 420px;
+    height: 450px;
   }
   @media #{$mq-medium} {
-    height: 440px;
+    height: 460px;
   }
   @media #{$mq-large} {
-    height: 470px;
+    height: 490px;
   }
   @media #{$mq-xlarge} {
     height: 650px;
   }
   @media #{$mq-xxlarge} {
-    height: 880px;
+    height: 960px;
   }
 }
 .card {

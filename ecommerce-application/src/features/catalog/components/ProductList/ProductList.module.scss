@@ -19,19 +19,19 @@
   @media #{$mq-small} {
     grid-template-columns: repeat(auto-fit, minmax(20%, 200px));
     column-gap: 0.5em;
-    grid-auto-rows: 420px;
+    grid-auto-rows: 450px;
   }
 
   @media #{$mq-medium} {
     grid-template-columns: repeat(auto-fit, minmax(20%, 200px));
     column-gap: 0.8em;
-    grid-auto-rows: 450px;
+    grid-auto-rows: 475px;
   }
 
   @media #{$mq-large} {
     grid-template-columns: repeat(4, minmax(20%, 250px));
     column-gap: 1em;
-    grid-auto-rows: 480px;
+    grid-auto-rows: 500px;
   }
 
   @media #{$mq-xlarge} {
@@ -43,7 +43,8 @@
   @media #{$mq-xxlarge} {
     grid-template-columns: repeat(4, minmax(20%, 400px));
     column-gap: 3em;
-    grid-auto-rows: 880px;
+    row-gap: 2em;
+    grid-auto-rows: 970px;
   }
 }
 
