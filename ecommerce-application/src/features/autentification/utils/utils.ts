@@ -20,11 +20,11 @@ export const checkDateValidity = (date: string): boolean | string => {
   );
 };
 
-export const changeDateView = (date: string | undefined): string | null => {
+export const changeDateView = (date: string | undefined): string => {
   if (date) {
-    return date.split('-').reverse().join('. ');
+    return date.split('-').reverse().join('-');
   }
-  return null;
+  return '';
 };
 
 export const getCountryName = (code: string): string | null => {

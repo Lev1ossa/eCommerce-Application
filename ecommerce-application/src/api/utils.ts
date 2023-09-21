@@ -30,12 +30,22 @@ export const getClientData = (
   const clientDefaultBillingAddress = registrationData.isBillingAddressDefault
     ? clientBillingAdressID
     : undefined;
+
+  const clientDateOfBirth = new Date(registrationData.birthDate)
+    .toLocaleString('ru-RU', {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+    })
+    .split('.')
+    .reverse()
+    .join('-');
   return {
     email: registrationData.email,
     password: registrationData.password,
     firstName: registrationData.userFirstName,
     lastName: registrationData.userLastName,
-    dateOfBirth: registrationData.birthDate,
+    dateOfBirth: clientDateOfBirth,
     addresses: clientAddresses,
     shippingAddresses: [clientShippingAdressID],
     billingAddresses: [clientBillingAdressID],

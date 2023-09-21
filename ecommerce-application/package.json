@@ -20,6 +20,7 @@
     "@commercetools/platform-sdk": "^5.0.0",
     "@commercetools/sdk-client-v2": "^2.2.0",
     "@hookform/error-message": "^2.0.1",
+    "antd": "^5.9.2",
     "eslint-config-airbnb-typescript": "^17.1.0",
     "isomorphic-fetch": "^3.0.0",
     "node-sass": "^9.0.0",

@@ -17,6 +17,7 @@ import { getCustomerData, updateCustomerData } from '../../../../api/requests';
 import { showToast } from '../../../autentification/utils/showToast';
 import { InputError } from '../InputError/InputError';
 import { ApiRootContext } from '../../../../context/ApiRootContext';
+import { FormDateInputProfile } from '../FormDateInputProfile/FormDateInputProfile';
 
 // eslint-disable-next-line max-lines-per-function
 export function AccountContentActive(props: {
@@ -29,6 +30,7 @@ export function AccountContentActive(props: {
 
   const {
     register,
+    control,
     formState: { errors },
     handleSubmit,
   } = useForm<IRegistrationData>({
@@ -40,6 +42,7 @@ export function AccountContentActive(props: {
     customerData: IRegistrationData,
   ): void => {
     getCustomerData(refreshTokenFlowApiRoot).then(
+      // eslint-disable-next-line max-lines-per-function
       (result) => {
         const updateFirstName: MyCustomerSetFirstNameAction = {
           action: 'setFirstName',
@@ -49,9 +52,18 @@ export function AccountContentActive(props: {
           action: 'setLastName',
           lastName: customerData.userLastName,
         };
+        const clientDateOfBirth = new Date(customerData.birthDate)
+          .toLocaleString('ru-RU', {
+            year: 'numeric',
+            month: 'numeric',
+            day: 'numeric',
+          })
+          .split('.')
+          .reverse()
+          .join('-');
         const updateDateOfBirth: MyCustomerSetDateOfBirthAction = {
           action: 'setDateOfBirth',
-          dateOfBirth: customerData.birthDate,
+          dateOfBirth: clientDateOfBirth,
         };
         const updateEmail: MyCustomerChangeEmailAction = {
           action: 'changeEmail',
@@ -107,14 +119,7 @@ export function AccountContentActive(props: {
         <InputError styles={styles} errors={errors} name="userLastName" />
       </div>
       <div className={styles.input_block}>
-        <FormInputProfile
-          input={inputService.createInputParams('birthDate').input}
-          type={inputService.createInputParams('birthDate').type}
-          label={inputService.createInputParams('birthDate').label}
-          styles={styles}
-          value={userData.dateOfBirth}
-          checked={false}
-        />
+        <FormDateInputProfile control={control} value={userData.dateOfBirth} />
         <InputError styles={styles} errors={errors} name="birthDate" />
       </div>
       <div className={styles.input_block}>
