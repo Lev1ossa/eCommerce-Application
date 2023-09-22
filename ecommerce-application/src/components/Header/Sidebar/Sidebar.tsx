@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { slide as Menu } from 'react-burger-menu';
 import { NavLink } from 'react-router-dom';
 import './Sidebar.scss';
@@ -12,7 +12,8 @@ import {
 import { LuApple } from 'react-icons/lu';
 import { RiTeamLine } from 'react-icons/ri';
 import { BsCart3, BsMoonStars, BsSun } from 'react-icons/bs';
-import { toggleTheme } from '../../../App/utils/utils';
+import { getTheme, toggleTheme } from '../../../App/utils/utils';
+import { themeContext } from '../../../context/themeContext';
 
 // eslint-disable-next-line max-lines-per-function
 export function Sidebar(props: {
@@ -31,12 +32,14 @@ export function Sidebar(props: {
     import.meta.url,
   ).href;
 
-  const [currentTheme, setCurrentTheme] = useState(
-    localStorage.getItem('AAA-Ecom-theme'),
-  );
+  // const [currentTheme, setCurrentTheme] = useState(
+  //   localStorage.getItem('AAA-Ecom-theme'),
+  // );
+
+  const theme = useContext(themeContext);
 
   const buttonIcon =
-    currentTheme === 'dark' ? (
+    theme.theme === 'dark' ? (
       <BsMoonStars className="icon" />
     ) : (
       <BsSun className="icon" />
@@ -120,7 +123,7 @@ export function Sidebar(props: {
           className="logout_button"
           onClick={(): void => {
             toggleTheme();
-            setCurrentTheme(localStorage.getItem('AAA-Ecom-theme'));
+            theme.setTheme(getTheme());
           }}
           type="button"
         >

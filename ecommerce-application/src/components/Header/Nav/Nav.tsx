@@ -2,9 +2,10 @@ import { NavLink } from 'react-router-dom';
 import { CgProfile } from 'react-icons/cg';
 import { AiOutlineLogin, AiOutlineLogout } from 'react-icons/ai';
 import { BsCart3, BsMoonStars, BsSun } from 'react-icons/bs';
-import { useState } from 'react';
+import { useContext } from 'react';
 import styles from './Nav.module.scss';
-import { toggleTheme } from '../../../App/utils/utils';
+import { getTheme, toggleTheme } from '../../../App/utils/utils';
+import { themeContext } from '../../../context/themeContext';
 
 // eslint-disable-next-line max-lines-per-function
 export function Nav(props: {
@@ -15,12 +16,14 @@ export function Nav(props: {
 }): React.ReactElement {
   const { className, userLoggedIn, logoutHandler, quantityProducts } = props;
 
-  const [currentTheme, setCurrentTheme] = useState(
-    localStorage.getItem('AAA-Ecom-theme'),
-  );
+  // const [currentTheme, setCurrentTheme] = useState(
+  //   localStorage.getItem('AAA-Ecom-theme'),
+  // );
+
+  const theme = useContext(themeContext);
 
   const buttonIcon =
-    currentTheme === 'dark' ? (
+    theme.theme === 'dark' ? (
       <BsMoonStars className={styles.button_icon} />
     ) : (
       <BsSun className={styles.button_icon} />
@@ -34,7 +37,7 @@ export function Nav(props: {
             className={styles.theme_button}
             onClick={(): void => {
               toggleTheme();
-              setCurrentTheme(localStorage.getItem('AAA-Ecom-theme'));
+              theme.setTheme(getTheme());
             }}
             type="button"
           >

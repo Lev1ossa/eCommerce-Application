@@ -9,6 +9,7 @@ import './styles/app.scss';
 import './styles/vars.scss';
 import { initializeApp } from './utils/utils';
 import { Loader } from '../components/Loader';
+import { ThemeContextProvider } from '../context/themeContext';
 
 export function App(): React.ReactElement {
   const [isLoading, setIsLoading] = useState(true);
@@ -19,7 +20,9 @@ export function App(): React.ReactElement {
     <>
       <ApiRootContextProvider>
         <CartContextProvider>
-          <RouterProvider router={router} />
+          <ThemeContextProvider>
+            <RouterProvider router={router} />
+          </ThemeContextProvider>
         </CartContextProvider>
       </ApiRootContextProvider>
       <Toast />
