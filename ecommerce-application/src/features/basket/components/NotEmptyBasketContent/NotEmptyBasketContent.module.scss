@@ -4,6 +4,8 @@
   flex-grow: 1;
   padding: 0 5px 1rem;
   height: 100%;
+  background-color: var(--color-background-container);
+  color: var(--color-dark);
   @media screen and (max-width: $mobile-width) {
     padding: 0 0 1rem;
   }
@@ -22,6 +24,7 @@
 
 .clear_button {
   position: absolute;
+  z-index: 3;
   top: 17px;
   right: 5px;
   background-color: var(--color-light-green);
@@ -58,6 +61,7 @@
   align-items: center;
   font-size: calc(20px + (26 - 20) * ((100vw - 320px) / (1920 - 320)));
   position: relative;
+  z-index: 3;
   .title_icon {
     width: 30px;
     height: 30px;
@@ -68,6 +72,7 @@
   margin: 0 0 0 10px;
   font-weight: 500;
   line-height: 1.2;
+  z-index: 3;
   @media screen and (max-width: $tablet-width) {
     text-align: justify;
   }
@@ -78,6 +83,7 @@
   justify-content: space-between;
   width: 100%;
   height: 50px;
+  border-top: 1px solid var(--color-light-gray);
   border-bottom: 1px solid var(--color-light-gray);
   color: var(--color-text-gray);
   box-shadow: inset 0px 2px 2px rgba(0,0,0,0.15), 
@@ -191,11 +197,11 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
+  border-top: 1px solid var(--color-light-gray);
   box-shadow: inset -1px 2px 2px rgba(0,0,0,0.15), 
   inset -1px 0px 2px rgba(0,0,0,0.15);
   box-shadow: inset 0px 2px 2px rgba(0,0,0,0.15), 
   inset 0px -2px 2px rgba(0,0,0,0.15);
-  background-color: #ebe9e921;
   align-items: center;
   padding: 8px 5px;
 }
@@ -214,6 +220,7 @@
   margin-right: 10px;
   padding-left: 5px;
   font-size: 20px;
+  background-color: inherit;
   &:focus {
     animation: blink .5s 3;
     border: 2px solid var(--color-light-green);

@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useContext, useEffect, useRef, useState } from 'react';
 import { FiSearch } from 'react-icons/fi';
 import {
   CSSObject,
@@ -16,6 +16,7 @@ import { sortOptions } from '../../constants/constants';
 import { getStartCategoryID } from '../../utils/utils';
 import BrandsList from '../BrandsList';
 import styles from './Sidebar.module.scss';
+import { themeContext } from '../../../../context/themeContext';
 
 // eslint-disable-next-line max-lines-per-function
 export function CatalogSidebar(props: {
@@ -48,6 +49,8 @@ export function CatalogSidebar(props: {
   const [collapsed, setCollapsed] = useState(false);
   const [width, setWidth] = useState(0);
   const [componentKey, setComponentKey] = useState(0);
+
+  const currentTheme = useContext(themeContext);
 
   const handleNavigate = (path: string): void => {
     navigate(path);
@@ -190,7 +193,6 @@ export function CatalogSidebar(props: {
   ]);
 
   const categories = productCategories.map((category) => (
-    // <Link to={`/catalog/${category.slug}`} key={category.id}>
     <SubMenu
       className={styles.category}
       active={
@@ -204,7 +206,6 @@ export function CatalogSidebar(props: {
       }
     >
       {category.children.map((child) => (
-        // <Link to={`/catalog/${category.slug}/${child.slug}`} key={child.id}>
         <MenuItem
           className={styles.subcategory}
           active={
@@ -223,10 +224,8 @@ export function CatalogSidebar(props: {
         >
           {child.name.replace('_', ' ')}
         </MenuItem>
-        /* </Link> */
       ))}
     </SubMenu>
-    // </Link>
   ));
 
   const handleResetFilters = (): void => {
@@ -252,6 +251,7 @@ export function CatalogSidebar(props: {
         rootStyles={{
           [`.${sidebarClasses.container}`]: {
             overflow: 'visible',
+            backgroundColor: 'black',
           },
         }}
       >
@@ -260,7 +260,8 @@ export function CatalogSidebar(props: {
           rootStyles={{
             [`.${menuClasses.button}`]: {
               ':hover': {
-                backgroundColor: '#fdff8d',
+                backgroundColor:
+                  currentTheme.theme === 'light' ? '#fdff8d' : '#fd7107',
               },
             },
             position: 'sticky',
@@ -269,13 +270,25 @@ export function CatalogSidebar(props: {
           menuItemStyles={{
             button: ({ level, active }): CSSObject | undefined => {
               if (level === 0)
-                return {
-                  backgroundColor: active ? '#64e44c' : undefined,
-                };
+                return currentTheme.theme === 'light'
+                  ? {
+                      color: '#000',
+                      backgroundColor: active ? '#64e44c' : '#fff',
+                    }
+                  : {
+                      color: '#fff',
+                      backgroundColor: active ? '#64e44c' : '#000',
+                    };
               if (level === 1)
-                return {
-                  backgroundColor: active ? '#fdff8d' : undefined,
-                };
+                return currentTheme.theme === 'light'
+                  ? {
+                      color: '#000',
+                      backgroundColor: active ? '#fdff8d' : '#fff',
+                    }
+                  : {
+                      color: '#fff',
+                      backgroundColor: active ? '#fd7107' : '#000',
+                    };
               return undefined;
             },
           }}
@@ -295,6 +308,7 @@ export function CatalogSidebar(props: {
             />
           </div>
           <Select
+            inputId="hello"
             options={sortOptions}
             defaultValue={sortOptions.find(({ value }) => value === sortProps)}
             isClearable
@@ -325,6 +339,10 @@ export function CatalogSidebar(props: {
                   color: '#000',
                   backgroundColor: '#fdff8d',
                 },
+              }),
+              singleValue: (base) => ({
+                ...base,
+                color: currentTheme.theme === 'light' ? '#000' : '#fff',
               }),
             }}
           />

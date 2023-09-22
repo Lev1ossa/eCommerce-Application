@@ -5,6 +5,7 @@
   flex-grow: 1;
   padding: 0 1rem;
   background: var(--color-background-container);
+  color: var(--color-dark);
 }
 
 .container {
@@ -42,8 +43,7 @@
   margin-bottom: 20px;
   width: 100%;
   background-color: var(--color-light-green);
-  color: var(--color-dark);
-  background-color: var(--color-light-green);
+  color: var(--color-text-light);
   transition: 0.2s all ease-in;
   &:hover {
     transition: 0.2s all ease-in;

@@ -18,14 +18,6 @@ export function MainPage(): React.ReactElement {
     getCart(cartContext.getCartItemsCount());
   }, [cartContext]);
 
-  const promoCode1Url = new URL(
-    '/src/assets/img/background_promo1.png',
-    import.meta.url,
-  ).href;
-  const promoCode2Url = new URL(
-    '/src/assets/img/background_promo2.jpg',
-    import.meta.url,
-  ).href;
   return (
     <div className={styles.main_page}>
       <Header quantityProducts={quantityProducts} />
@@ -47,11 +39,7 @@ export function MainPage(): React.ReactElement {
         <section className={styles.promocodes_block}>
           <h3 className={styles.title}>PROMO CODES</h3>
           <div className={styles.image_block}>
-            <img
-              className={styles.image}
-              src={promoCode1Url}
-              alt="promo_code"
-            />
+            <div className={styles.image_lemon} />
             <div className={styles.text_block}>
               <h4 className={styles.subtitle}>Citrus</h4>
               <p className={styles.text}>Get Up to 30% Off Citrus</p>
@@ -62,11 +50,7 @@ export function MainPage(): React.ReactElement {
             </div>
           </div>
           <div className={styles.image_block}>
-            <img
-              className={styles.image}
-              src={promoCode2Url}
-              alt="promo_code"
-            />
+            <div className={styles.image_broccoli} />
             <div className={styles.text_block}>
               <h4 className={styles.subtitle}>Broccoli</h4>
               <p className={styles.text}>Get Up to 25% Off Broccoli</p>

@@ -66,6 +66,37 @@
     max-width: 500px;
   }
 }
+
+.menu {
+  color: var(--color-dark);
+  background: var(--color-background-container);
+  .input {
+    color: var(--color-dark);
+    background: var(--color-background-container);
+  }
+
+  .sort > div {
+    color: var(--color-dark);
+    background: var(--color-background-container);
+  }
+
+  .sort > div > div {
+    color: var(--color-dark);
+    background: var(--color-background-container);
+  }
+
+  .list {
+    color: var(--color-dark);
+    background: var(--color-background-container);
+    margin: 0px;
+  }
+
+  .price input {
+    color: var(--color-dark);
+    background: var(--color-background-container);
+  }
+}
+
 .menu ul {
   box-sizing: border-box;
   display: flex;

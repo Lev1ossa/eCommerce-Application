@@ -1,8 +1,11 @@
 import { NavLink } from 'react-router-dom';
 import { CgProfile } from 'react-icons/cg';
 import { AiOutlineLogin, AiOutlineLogout } from 'react-icons/ai';
-import { BsCart3 } from 'react-icons/bs';
+import { BsCart3, BsMoonStars, BsSun } from 'react-icons/bs';
+import { useContext } from 'react';
 import styles from './Nav.module.scss';
+import { getTheme, toggleTheme } from '../../../App/utils/utils';
+import { themeContext } from '../../../context/themeContext';
 
 // eslint-disable-next-line max-lines-per-function
 export function Nav(props: {
@@ -13,9 +16,34 @@ export function Nav(props: {
 }): React.ReactElement {
   const { className, userLoggedIn, logoutHandler, quantityProducts } = props;
 
+  // const [currentTheme, setCurrentTheme] = useState(
+  //   localStorage.getItem('AAA-Ecom-theme'),
+  // );
+
+  const theme = useContext(themeContext);
+
+  const buttonIcon =
+    theme.theme === 'dark' ? (
+      <BsMoonStars className={styles.button_icon} />
+    ) : (
+      <BsSun className={styles.button_icon} />
+    );
+
   return (
     <nav>
       <ul className={styles.links}>
+        <li>
+          <button
+            className={styles.theme_button}
+            onClick={(): void => {
+              toggleTheme();
+              theme.setTheme(getTheme());
+            }}
+            type="button"
+          >
+            {buttonIcon}
+          </button>
+        </li>
         <li>
           <NavLink className={className} to="/">
             Main

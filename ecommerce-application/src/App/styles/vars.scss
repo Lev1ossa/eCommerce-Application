@@ -1,8 +1,9 @@
-:root {
-  --color-text-light: #ffffff;
+:root[theme='light'] {
+  --color-text-light: rgb(255, 255, 255);
   --color-text-middle-light: #e5e5e5;
   --color-text-gray: #808080;
   --color-light-gray: #bebebe;
+  --color-button-text: #242424;
   --color-dark: #242424;
   --color-light-dark: rgb(36, 36, 36, 0.3);
   --color-blue: #108ee9;
@@ -15,9 +16,16 @@
   --color-background-orange: #fd682d;
   --color-error: #e22454;
   --color-banana: #FFE700;
-
+  --color-background-text-block-light: rgba(35, 35, 35, 0.4);
+  --color-background-main-image: url('/src/assets/img/main_backgroud.jpg');
+  --image_logo: url('https://app.rs.school/static/images/logo-rsschool3.png');
+  --image_promo_lemon: url('/src/assets/img/background_promo1.png');
+  --image_promo_broccoli: url('/src/assets/img/background_promo2.jpg');
   --color-background-main-block: #f0f3f8;
   --color-background-container: #ffffff;
+  --color-background-modal:  rgba(0, 0, 0, 0.3);
+  --color-background-profile-button:  #f0f3f8;
+  --color-profile-button-border:  #f0f3f8;
   --color-background-text-block: rgba(35, 35, 35, 0.8);
   --gradient-ligth-green: linear-gradient(to right, #78ffd6, #a8ff78);
 
@@ -25,6 +33,48 @@
   --shadow-light: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   --shadow-small: rgba(102, 93, 93, 0.15) 1.95px 1.95px 2.6px;
   --shadow-middle: rgba(0, 0, 0, 0.2) 0px 60px 40px -7px;
+
+  --button-theme-background: #a200ff;
+}
+
+:root[theme='dark'] {
+  --color-text-light: #242424;
+  --color-text-middle-light: #e5e5e5;
+  --color-text-gray: #808080;
+  --color-light-gray: #bebebe;
+  --color-dark: #efefef;
+  --color-button-text: #242424;
+  --color-light-dark: rgb(36, 36, 36, 0.3);
+  --color-blue: #108ee9;
+  --color-green: #019362;
+  --color-light-green: #64e44c;
+  --color-orange: #fd7107;
+  --color-light-orange: #fdb024;
+  --color-light: #ededed;
+  --color-middle-light: rgb(205, 205, 205);
+  --color-background-orange: #fd682d;
+  --color-error: #e22454;
+  --color-banana: #FFE700;
+
+  --color-background-main-image: url('/src/assets/img/background_dark.jpg');
+  --image_logo: url('/src/assets/img/logo_white.png');
+  --image_promo_lemon: url('/src/assets/img/lemon_promo_dark.png');
+  --image_promo_broccoli: url('/src/assets/img/broccoli_promo_dark.png');
+  --color-background-main-block: #f0f3f8;
+  --color-background-container: #010502;
+  --color-background-text-block-light: rgba(35, 35, 35, 0.4);
+  --color-background-profile-button: #010502;
+  --color-profile-button-border:  #64e44c;
+  --color-background-modal:  rgba(252, 252, 252, 0.3);
+  --color-background-text-block: rgba(209, 207, 207, 0.7);
+  --gradient-ligth-green: linear-gradient(to bottom, #010502, #042509);
+
+  --shadow: rgba(247, 247, 247, 0.35) 0px 5px 15px;
+  --shadow-light: rgba(225, 225, 248, 0.2) 0px 7px 29px 0px;
+  --shadow-small: rgba(241, 224, 224, 0.15) 1.95px 1.95px 2.6px;
+  --shadow-middle: rgba(255, 255, 255, 0.2) 0px 60px 40px -7px;
+
+  --button-theme-background: #1eff00;
 }
 
 $medium_width: 1200px;

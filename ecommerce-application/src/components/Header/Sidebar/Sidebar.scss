@@ -6,7 +6,7 @@
 
 .bm-burger-button {
   display: none;
-  @media screen and (max-width: $tablet-width) {
+  @media screen and (max-width: 800px) {
     display: inline-block;
     position: absolute;
     width: 40px;
@@ -73,6 +73,7 @@
 .logout_button {
   border: none;
   background-color: inherit;
+  color: var(--color-dark);
   &:hover {
     color: var(--color-orange);
   }
