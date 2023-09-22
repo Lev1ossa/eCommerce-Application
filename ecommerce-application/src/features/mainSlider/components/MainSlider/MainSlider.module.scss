@@ -48,28 +48,20 @@
   left: 45px;
   width: 100%;
   height: 100%;
+  padding: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   z-index: 5;
   @media (max-width: $medium_width) {
-    left: 20px;
+    left: 0;
   }
   @media screen and (max-width: $tablet-width) {
-    background-color: var(--color-background-text-block);
-    width: 50%;
-    height: 220px;
-    margin: 0 auto;
+    background-color: var(--color-background-text-block-light);
     align-items: center;
     color: var(--color-text-light);
-    left: 25%;
-    top: 40%;
   }
   @media screen and (max-width: $mobile-width) {
-    width: 60%;
-    left: 20%;
-    top: 30%;
-    height: 200px;
   }
 }
 
@@ -111,6 +103,9 @@
     margin-left: 0;
     margin-bottom: 20px;
     text-align: justify;
+  }
+  @media screen and (max-width: $mobile-width) {
+    text-align: center;
   }
 }
 
@@ -158,7 +153,7 @@
   @media screen and (max-width: $tablet-width) {
     top: 0;
     right: 0;
-    right: -25%;
+    right: -15%;
     height: 750px;
   }
 }
@@ -203,12 +198,12 @@
     right: 10%;
   }
   @media screen and (max-width: $tablet-width) {
-    right: 40%;
+    right: 35%;
     width: 400px;
     height: 400px;
   }
   @media screen and (max-width: $mobile-width) {
-    right: 10%;
+    right: 20%;
   }
 }
 
