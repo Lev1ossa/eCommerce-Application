@@ -6,19 +6,19 @@ export const sliderContent = [
     url: '/src/features/mainSlider/assets/img1.png',
   },
   {
-    title: 'Vitamins and minerals',
+    title: 'Vitamins & minerals',
     subtitle: 'For good health',
     text: 'can help you',
     url: '/src/features/mainSlider/assets/img2.png',
   },
   {
-    title: 'Fruit and vegetables',
+    title: 'Fruit & vegetables',
     subtitle: 'Is powerful antioxidants',
     text: 'and tasting great',
     url: '/src/features/mainSlider/assets/img3.png',
   },
   {
-    title: 'Lots and lots of fiber',
+    title: 'Lots & lots of fiber',
     subtitle: 'Boost gut health',
     text: 'for good health',
     url: '/src/features/mainSlider/assets/img4.png',
@@ -48,7 +48,7 @@ export const sliderContent = [
     url: '/src/features/mainSlider/assets/img8.png',
   },
   {
-    title: 'Color and texture',
+    title: 'Color & texture',
     subtitle: 'And vitamins and minerals',
     text: 'add colors to your plate',
     url: '/src/features/mainSlider/assets/img9.png',
@@ -66,7 +66,7 @@ export const sliderContent = [
     url: '/src/features/mainSlider/assets/img11.png',
   },
   {
-    title: 'Juiciness',
+    title: 'Juiciness!',
     subtitle: 'Is all you need',
     text: 'for a good mood',
     url: '/src/features/mainSlider/assets/img12.png',
