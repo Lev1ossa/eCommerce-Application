@@ -6,7 +6,7 @@
     margin: 10px auto 0;
     text-align: center;
     justify-content: center;
-
+    background-color: var(--color-background-container);
     @media screen and (max-width: $tablet-width) {
     flex-direction: column;
     }
@@ -57,7 +57,7 @@
     &:hover {
         transform: scale(1.05);
         transition: 0.3s;
-        color: inherit;
+        color: var(--color-text-light);
         .icon {
            color:var( --color-blue);
         }

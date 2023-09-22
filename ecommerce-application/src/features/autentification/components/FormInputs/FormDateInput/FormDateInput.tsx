@@ -12,12 +12,12 @@ export function FormDateInput(props: {
 
   const textColor: string =
     localStorage.getItem('AAA-Ecom-theme') === 'dark'
-      ? 'rgba(255, 255, 255, 0.88);'
+      ? 'rgba(255, 255, 255, 0.88)'
       : 'rgba(0, 0, 0, 0.88)';
 
   const placeholderColor: string =
     localStorage.getItem('AAA-Ecom-theme') === 'dark'
-      ? 'rgba(255, 255, 255, 0.25);'
+      ? 'rgba(255, 255, 255, 0.25)'
       : 'rgba(0, 0, 0, 0.25)';
   return (
     <>

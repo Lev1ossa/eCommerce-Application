@@ -15,6 +15,17 @@ export function FormDateInputProfile(props: {
   const { control, value } = props;
 
   const validDate: string = changeDateView(value);
+
+  const textColor: string =
+    localStorage.getItem('AAA-Ecom-theme') === 'dark'
+      ? 'rgba(255, 255, 255, 0.88)'
+      : 'rgba(0, 0, 0, 0.88)';
+
+  const placeholderColor: string =
+    localStorage.getItem('AAA-Ecom-theme') === 'dark'
+      ? 'rgba(255, 255, 255, 1)'
+      : 'rgba(0, 0, 0, 0.25)';
+
   return (
     <>
       <div className={styles.label}>Date of Birth</div>
@@ -29,8 +40,10 @@ export function FormDateInputProfile(props: {
               theme={{
                 token: {
                   colorBorder: '#808080',
-                  fontSize: 16,
-                  colorTextPlaceholder: '#242424',
+                  fontSize: 18,
+                  colorText: textColor,
+                  colorTextPlaceholder: placeholderColor,
+                  colorBgElevated: 'rgba(0, 0, 0, 0.25)',
                 },
                 components: {
                   DatePicker: {

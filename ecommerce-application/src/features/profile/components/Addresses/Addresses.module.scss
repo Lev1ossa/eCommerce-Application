@@ -31,6 +31,7 @@
     font-family: inherit;
     border-radius: 5px;
     transition: 0.3s;
+    color: var(--color-text-light);
     &:hover {
         background-color: var(--color-orange);
         border: 2px solid var(--color-orange);
@@ -100,7 +101,7 @@
     font-size: inherit;
     height: 30px;
     width: 151px;
-    background-color: var(--color-background-main-block);
+    background-color: inherit;
     animation: blink .5s 3;
     &:focus {
         border: 2px solid var(--color-light-green);

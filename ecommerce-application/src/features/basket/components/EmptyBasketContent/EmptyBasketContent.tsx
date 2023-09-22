@@ -5,7 +5,7 @@ import { AnimationBlock } from '../../../animationBlock/AnimationBlock';
 
 export function EmptyBasketContent(): React.ReactElement {
   const cartImageUrl = new URL(
-    '/src/assets/img/cart_image.jpg',
+    '/src/assets/img/cart_image.png',
     import.meta.url,
   ).href;
   return (
