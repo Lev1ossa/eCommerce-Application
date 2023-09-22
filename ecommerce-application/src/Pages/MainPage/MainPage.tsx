@@ -2,8 +2,8 @@ import { useContext, useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Footer } from '../../components/Footer/Footer';
 import { Header } from '../../components/Header/Header';
-import styles from './MainPage.module.scss';
 import { CartContext } from '../../context/CartContext';
+import styles from './MainPage.module.scss';
 
 // eslint-disable-next-line max-lines-per-function
 export function MainPage(): React.ReactElement {
