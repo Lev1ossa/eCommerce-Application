@@ -66,6 +66,17 @@
     max-width: 500px;
   }
 }
+
+:global(.ps-menu-root) {
+  background-color: var(--color-background-container);
+  color: var(--color-dark);
+}
+
+:global(.ps-submenu-content) {
+  background-color: var(--color-background-container);
+  color: var(--color-dark);
+}
+
 .menu ul {
   box-sizing: border-box;
   display: flex;

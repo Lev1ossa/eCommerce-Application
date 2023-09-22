@@ -16,9 +16,11 @@
   --color-background-orange: #fd682d;
   --color-error: #e22454;
   --color-banana: #FFE700;
-
+  --color-background-text-block-light: rgba(35, 35, 35, 0.4);
   --color-background-main-image: url('/src/assets/img/main_backgroud.jpg');
   --image_logo: url('https://app.rs.school/static/images/logo-rsschool3.png');
+  --image_promo_lemon: url('/src/assets/img/background_promo1.png');
+  --image_promo_broccoli: url('/src/assets/img/background_promo2.jpg');
   --color-background-main-block: #f0f3f8;
   --color-background-container: #ffffff;
   --color-background-modal:  rgba(0, 0, 0, 0.3);
@@ -56,8 +58,11 @@
 
   --color-background-main-image: url('/src/assets/img/background_dark.jpg');
   --image_logo: url('/src/assets/img/logo_white.png');
+  --image_promo_lemon: url('/src/assets/img/lemon_promo_dark.png');
+  --image_promo_broccoli: url('/src/assets/img/broccoli_promo_dark.png');
   --color-background-main-block: #f0f3f8;
   --color-background-container: #010502;
+  --color-background-text-block-light: rgba(35, 35, 35, 0.4);
   --color-background-profile-button: #010502;
   --color-profile-button-border:  #64e44c;
   --color-background-modal:  rgba(252, 252, 252, 0.3);
