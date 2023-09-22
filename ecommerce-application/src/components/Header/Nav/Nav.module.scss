@@ -4,8 +4,9 @@
   display: flex;
   align-items: center;
   column-gap: 2rem;
+  margin-bottom: 0;
   
-  @media (max-width: $tablet-width) {
+  @media (max-width: 800px) {
     display: none;
   }
 
@@ -49,5 +50,16 @@
 }
 
 .theme_button {
-  background-color: var(--button-theme-background);
+  background-color: inherit;
+  border: none;
+  color: var(--color-dark);
+  .button_icon {
+    width: 25px;
+    height: 25px;
+    transition: 0.2s all ease-in;
+    &:hover {
+      transition: 0.2s all ease-in;
+      color: var(--color-orange);
+    }
+  }
 }

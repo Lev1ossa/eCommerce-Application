@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { slide as Menu } from 'react-burger-menu';
 import { NavLink } from 'react-router-dom';
 import './Sidebar.scss';
@@ -11,7 +11,8 @@ import {
 } from 'react-icons/ai';
 import { LuApple } from 'react-icons/lu';
 import { RiTeamLine } from 'react-icons/ri';
-import { BsCart3 } from 'react-icons/bs';
+import { BsCart3, BsMoonStars, BsSun } from 'react-icons/bs';
+import { toggleTheme } from '../../../App/utils/utils';
 
 // eslint-disable-next-line max-lines-per-function
 export function Sidebar(props: {
@@ -30,10 +31,35 @@ export function Sidebar(props: {
     import.meta.url,
   ).href;
 
+  const [currentTheme, setCurrentTheme] = useState(
+    localStorage.getItem('AAA-Ecom-theme'),
+  );
+
+  const buttonIcon =
+    currentTheme === 'dark' ? (
+      <BsMoonStars className="icon" />
+    ) : (
+      <BsSun className="icon" />
+    );
+
+  const filter: string =
+    localStorage.getItem('AAA-Ecom-theme') === 'dark'
+      ? 'invert(80%)'
+      : 'invert(0%)';
+
   return (
     <nav>
       <Menu
-        styles={{ bmCrossButton: { width: '40px', height: '40px' } }}
+        styles={{
+          bmCrossButton: {
+            width: '40px',
+            height: '40px',
+            filter,
+          },
+          bmBurgerButton: {
+            filter,
+          },
+        }}
         right
         disableCloseOnEsc
         customBurgerIcon={<img alt="burger_icon" src={burgerIconUrl} />}
@@ -90,6 +116,16 @@ export function Sidebar(props: {
             Logout
           </button>
         )}
+        <button
+          className="logout_button"
+          onClick={(): void => {
+            toggleTheme();
+            setCurrentTheme(localStorage.getItem('AAA-Ecom-theme'));
+          }}
+          type="button"
+        >
+          {buttonIcon}Theme
+        </button>
       </Menu>
     </nav>
   );

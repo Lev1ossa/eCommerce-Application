@@ -1,7 +1,8 @@
 import { NavLink } from 'react-router-dom';
 import { CgProfile } from 'react-icons/cg';
 import { AiOutlineLogin, AiOutlineLogout } from 'react-icons/ai';
-import { BsCart3 } from 'react-icons/bs';
+import { BsCart3, BsMoonStars, BsSun } from 'react-icons/bs';
+import { useState } from 'react';
 import styles from './Nav.module.scss';
 import { toggleTheme } from '../../../App/utils/utils';
 
@@ -14,16 +15,30 @@ export function Nav(props: {
 }): React.ReactElement {
   const { className, userLoggedIn, logoutHandler, quantityProducts } = props;
 
+  const [currentTheme, setCurrentTheme] = useState(
+    localStorage.getItem('AAA-Ecom-theme'),
+  );
+
+  const buttonIcon =
+    currentTheme === 'dark' ? (
+      <BsMoonStars className={styles.button_icon} />
+    ) : (
+      <BsSun className={styles.button_icon} />
+    );
+
   return (
     <nav>
       <ul className={styles.links}>
         <li>
           <button
             className={styles.theme_button}
-            onClick={toggleTheme}
+            onClick={(): void => {
+              toggleTheme();
+              setCurrentTheme(localStorage.getItem('AAA-Ecom-theme'));
+            }}
             type="button"
           >
-            Theme
+            {buttonIcon}
           </button>
         </li>
         <li>
