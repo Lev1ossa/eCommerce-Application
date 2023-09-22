@@ -3,7 +3,6 @@ import { NavLink } from 'react-router-dom';
 import { Footer } from '../../components/Footer/Footer';
 import { Header } from '../../components/Header/Header';
 import { CartContext } from '../../context/CartContext';
-import { MainSlider } from '../../features/mainSlider';
 import styles from './MainPage.module.scss';
 
 // eslint-disable-next-line max-lines-per-function
@@ -30,7 +29,6 @@ export function MainPage(): React.ReactElement {
   return (
     <div className={styles.main_page}>
       <Header quantityProducts={quantityProducts} />
-      <MainSlider />
       <main className={styles.main}>
         <section className={styles.section_main}>
           <div className={styles.main_text_block}>
