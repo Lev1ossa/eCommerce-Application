@@ -193,7 +193,6 @@ export function CatalogSidebar(props: {
   ]);
 
   const categories = productCategories.map((category) => (
-    // <Link to={`/catalog/${category.slug}`} key={category.id}>
     <SubMenu
       className={styles.category}
       active={
@@ -207,7 +206,6 @@ export function CatalogSidebar(props: {
       }
     >
       {category.children.map((child) => (
-        // <Link to={`/catalog/${category.slug}/${child.slug}`} key={child.id}>
         <MenuItem
           className={styles.subcategory}
           active={
@@ -226,10 +224,8 @@ export function CatalogSidebar(props: {
         >
           {child.name.replace('_', ' ')}
         </MenuItem>
-        /* </Link> */
       ))}
     </SubMenu>
-    // </Link>
   ));
 
   const handleResetFilters = (): void => {
@@ -265,7 +261,7 @@ export function CatalogSidebar(props: {
             [`.${menuClasses.button}`]: {
               ':hover': {
                 backgroundColor:
-                  currentTheme.theme === 'light' ? '#fdff8d' : '#fd7107', // жёлтая кнопка #fd7107
+                  currentTheme.theme === 'light' ? '#fdff8d' : '#fd7107',
               },
             },
             position: 'sticky',
@@ -277,21 +273,21 @@ export function CatalogSidebar(props: {
                 return currentTheme.theme === 'light'
                   ? {
                       color: '#000',
-                      backgroundColor: active ? '#64e44c' : '#fff', // button category background #000 во второй
+                      backgroundColor: active ? '#64e44c' : '#fff',
                     }
                   : {
                       color: '#fff',
-                      backgroundColor: active ? '#64e44c' : '#000', // button category background #000 во второй
+                      backgroundColor: active ? '#64e44c' : '#000',
                     };
               if (level === 1)
                 return currentTheme.theme === 'light'
                   ? {
                       color: '#000',
-                      backgroundColor: active ? '#fdff8d' : '#fff', // button category background #fd7107 в первый, #000 во второй
+                      backgroundColor: active ? '#fdff8d' : '#fff',
                     }
                   : {
                       color: '#fff',
-                      backgroundColor: active ? '#fd7107' : '#000', // button category background #fd7107 в первый, #000 во второй
+                      backgroundColor: active ? '#fd7107' : '#000',
                     };
               return undefined;
             },
@@ -346,12 +342,8 @@ export function CatalogSidebar(props: {
               }),
               singleValue: (base) => ({
                 ...base,
-                color: currentTheme.theme === 'light' ? '#000' : '#fff', // #000
+                color: currentTheme.theme === 'light' ? '#000' : '#fff',
               }),
-              // menuList: (base) => ({
-              //   ...base,
-              //   color: '#f0f0f0',
-              // }),
             }}
           />
 
