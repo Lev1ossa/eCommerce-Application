@@ -4,6 +4,7 @@ import { Footer } from '../../components/Footer/Footer';
 import { Header } from '../../components/Header/Header';
 import { CartContext } from '../../context/CartContext';
 import styles from './MainPage.module.scss';
+import { MainSlider } from '../../features/mainSlider/components/MainSlider';
 
 // eslint-disable-next-line max-lines-per-function
 export function MainPage(): React.ReactElement {
@@ -61,6 +62,10 @@ export function MainPage(): React.ReactElement {
             </div>
           </div>
         </section>
+        <div className={styles.title_container}>
+          <h3 className={styles.title_slider}>FRESH MOOD</h3>
+        </div>
+        <MainSlider />
       </main>
       <Footer />
     </div>
