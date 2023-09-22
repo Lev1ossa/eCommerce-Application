@@ -14,7 +14,7 @@ export function MainSlider(): React.ReactElement {
       className={styles.swiper}
       centeredSlides
       autoplay={{
-        delay: 3000,
+        delay: 4000,
         disableOnInteraction: false,
       }}
       loop
