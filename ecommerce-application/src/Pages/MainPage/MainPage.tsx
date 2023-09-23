@@ -23,20 +23,7 @@ export function MainPage(): React.ReactElement {
     <div className={styles.main_page}>
       <Header quantityProducts={quantityProducts} />
       <main className={styles.main}>
-        <section className={styles.section_main}>
-          <div className={styles.main_text_block}>
-            <p className={styles.text_bold}>Fresh & Tasty</p>
-            <p className={styles.text_normal}>Fruits & Vegetables</p>
-            <p className={styles.text_small}>every day</p>
-            <NavLink className={styles.link} to="/catalog">
-              Start Shopping
-            </NavLink>
-          </div>
-          <div className={styles.circle_container}>
-            <div className={styles.circle} />
-          </div>
-          <div className={styles.fruit_image} />
-        </section>
+        <MainSlider />
         <section className={styles.promocodes_block}>
           <h3 className={styles.title}>PROMO CODES</h3>
           <div className={styles.image_block}>
@@ -65,7 +52,20 @@ export function MainPage(): React.ReactElement {
         <div className={styles.title_container}>
           <h3 className={styles.title_slider}>FRESH MOOD</h3>
         </div>
-        <MainSlider />
+        <section className={styles.section_main}>
+          <div className={styles.main_text_block}>
+            <p className={styles.text_bold}>Fresh & Tasty</p>
+            <p className={styles.text_normal}>Fruits & Vegetables</p>
+            <p className={styles.text_small}>every day</p>
+            <NavLink className={styles.link} to="/catalog">
+              Start Shopping
+            </NavLink>
+          </div>
+          <div className={styles.circle_container}>
+            <div className={styles.circle} />
+          </div>
+          <div className={styles.fruit_image} />
+        </section>
       </main>
       <Footer />
     </div>

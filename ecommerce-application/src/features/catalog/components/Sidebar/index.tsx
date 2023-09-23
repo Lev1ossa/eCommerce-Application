@@ -251,7 +251,7 @@ export function CatalogSidebar(props: {
         rootStyles={{
           [`.${sidebarClasses.container}`]: {
             overflow: 'visible',
-            backgroundColor: 'black',
+            backgroundColor: currentTheme.theme === 'light' ? '#fff' : '#000',
           },
         }}
       >
