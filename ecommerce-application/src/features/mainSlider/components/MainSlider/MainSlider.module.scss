@@ -234,11 +234,10 @@
     position: relative;
     width: 80vw;
     margin: 0 auto;
-    height: 450px;
+    height: 460px;
   }
   @media screen and (max-width: $mobile-width) {
-    right: 0;
-    height: 350px;
+    height: 400px;
   }
 }
 
