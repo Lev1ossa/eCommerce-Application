@@ -61,8 +61,8 @@ export function MainPage(): React.ReactElement {
             <p className={styles.text_bold}>Fresh & Tasty</p>
             <p className={styles.text_normal}>Fruits & Vegetables</p>
             <p className={styles.text_small}>every day</p>
-            <NavLink className={styles.link} to="/catalog">
-              Start Shopping
+            <NavLink className={styles.link} to="/registration">
+              Become Our Client
             </NavLink>
           </div>
           <div className={styles.circle_container}>
