@@ -1,15 +1,10 @@
-import { render } from '@testing-library/react';
 import { describe, it } from 'vitest';
-
-import { BrowserRouter } from 'react-router-dom';
+import { shallow } from 'enzyme';
+import '../setupTests';
 import { LoginPage } from '../Pages/LoginPage/LoginPage';
 
-describe('Renders LoginPageMain correctly', async () => {
-  it('Should render the LoginPageMain correctly', async () => {
-    render(
-      <BrowserRouter>
-        <LoginPage />
-      </BrowserRouter>,
-    );
+describe('LoginPage', () => {
+  it('Should render the LoginPage correctly', () => {
+    shallow(<LoginPage />);
   });
 });

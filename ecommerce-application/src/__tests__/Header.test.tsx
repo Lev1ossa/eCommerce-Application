@@ -8,7 +8,7 @@ describe('Renders Header correctly', async () => {
   it('Should render the Header component correctly', async () => {
     render(
       <BrowserRouter>
-        <Header />
+        <Header quantityProducts={10} />
       </BrowserRouter>,
     );
   });
