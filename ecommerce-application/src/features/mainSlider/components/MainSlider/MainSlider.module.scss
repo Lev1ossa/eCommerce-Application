@@ -45,6 +45,8 @@
   height: 500px;
   margin-bottom: 20px;
   @media screen and (max-width: $tablet-width) {
+    display: flex;
+    justify-content: center;
     height: 400px;
   }
   @media screen and (max-width: $mobile-width) {
@@ -69,6 +71,9 @@
   }
   @media screen and (max-width: $tablet-width) {
     background-color: var(--color-background-text-block-light);
+    position: static;
+    width: 55vw;
+    height: 35vw;
     align-items: center;
     color: var(--color-text-light);
   }
@@ -85,6 +90,11 @@
   @media (max-width: $medium_width) {
     margin-left: 0;
   }
+
+  @media screen and (max-width: $mobile-width) {
+    margin-bottom: 10px;
+    font-size: calc(16px + (70 - 23) * ((100vw - 320px) / (1920 - 320)));
+  }
 }
 
 .text_normal {
@@ -94,11 +104,13 @@
   margin-left: 15%;
   @media (max-width: $medium_width) {
     margin-left: 10%;
+    line-height: 1;
   }
   @media screen and (max-width: $tablet-width) {
     margin-bottom: 10px;
     margin-left: 0;
   }
+ 
 }
 
 .text_small {
@@ -113,10 +125,13 @@
   @media screen and (max-width: $tablet-width) {
     margin-left: 0;
     margin-bottom: 20px;
-    text-align: justify;
+    text-align: center;
   }
   @media screen and (max-width: $mobile-width) {
     text-align: center;
+    margin-bottom: 10px;
+    font-size: 16px;
+    letter-spacing: 3px;
   }
 }
 
@@ -210,12 +225,13 @@
     right: 10%;
   }
   @media screen and (max-width: $tablet-width) {
-    right: 35%;
-    width: 400px;
-    height: 400px;
+    vertical-align: baseline;
+    position: relative;
+    width: 80vw;
+    margin: 0 auto;
   }
   @media screen and (max-width: $mobile-width) {
-    right: 20%;
+    right: 0;
   }
 }
 
