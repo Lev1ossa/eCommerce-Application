@@ -7,7 +7,7 @@ import { sliderContent } from '../../constants/constants';
 // eslint-disable-next-line max-lines-per-function
 export function MainSlider(): React.ReactElement {
   const images = sliderContent.map(
-    (slide) => new URL(slide.url, import.meta.url).href,
+    (slide) => new URL(`../../assets/${slide.img}`, import.meta.url).href,
   );
   return (
     <Swiper
