@@ -12,7 +12,6 @@ import { ApiRootContext } from '../../../../context/ApiRootContext';
 import { CartContext } from '../../../../context/CartContext';
 import styles from './ProductCard.module.scss';
 
-// eslint-disable-next-line max-lines-per-function
 export function ProductCard(props: {
   product: ProductProjection;
   isLoading: boolean;

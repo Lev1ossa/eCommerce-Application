@@ -23,7 +23,6 @@ import { generateUniqueKey } from '../../../../api/utils';
 import { InputError } from '../InputError/InputError';
 import { ApiRootContext } from '../../../../context/ApiRootContext';
 
-// eslint-disable-next-line max-lines-per-function
 export function NewAddressCard(props: {
   styles: CSSModuleClasses;
   handleAddButton: () => void;
@@ -40,12 +39,10 @@ export function NewAddressCard(props: {
   });
   const inputService = new ServiceInputParameters(register);
 
-  // eslint-disable-next-line max-lines-per-function
   const onSubmit: SubmitHandler<IRegistrationData> = (
     addressData: IRegistrationData,
   ): void => {
     getCustomerData(refreshTokenFlowApiRoot).then(
-      // eslint-disable-next-line max-lines-per-function
       (result) => {
         const key = generateUniqueKey();
         const addAddress: MyCustomerAddAddressAction = {

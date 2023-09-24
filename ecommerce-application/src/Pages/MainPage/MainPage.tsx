@@ -6,7 +6,6 @@ import { CartContext } from '../../context/CartContext';
 import styles from './MainPage.module.scss';
 import { MainSlider } from '../../features/mainSlider/components/MainSlider';
 
-// eslint-disable-next-line max-lines-per-function
 export function MainPage(): React.ReactElement {
   const [quantityProducts, setQuantityProducts] = useState<number>();
   const cartContext = useContext(CartContext);

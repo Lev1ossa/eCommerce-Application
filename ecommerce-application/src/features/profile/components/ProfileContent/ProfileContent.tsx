@@ -9,7 +9,6 @@ import { Loader } from '../../../../components/Loader';
 import { isUserLoggedIn } from '../../../../api/tokenHandlers';
 import { ApiRootContext } from '../../../../context/ApiRootContext';
 
-// eslint-disable-next-line max-lines-per-function
 export function ProfileContent(): React.ReactElement {
   const [activeArticle, setActiveArticle] = useState('account');
   const [userData, setUserData] = useState<Customer>();

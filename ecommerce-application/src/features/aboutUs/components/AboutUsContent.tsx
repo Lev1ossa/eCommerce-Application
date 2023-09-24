@@ -1,7 +1,6 @@
 import { AnimationBlock } from '../../animationBlock/AnimationBlock';
 import styles from './AboutUsContent.module.scss';
 
-// eslint-disable-next-line max-lines-per-function
 export function AboutUsContent(): React.ReactElement {
   return (
     <main className={styles.main}>

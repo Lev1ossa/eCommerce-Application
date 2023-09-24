@@ -18,7 +18,6 @@ import BrandsList from '../BrandsList';
 import styles from './Sidebar.module.scss';
 import { themeContext } from '../../../../context/themeContext';
 
-// eslint-disable-next-line max-lines-per-function
 export function CatalogSidebar(props: {
   setcurrentFilters: React.Dispatch<
     React.SetStateAction<Partial<ICurrentFilters>>

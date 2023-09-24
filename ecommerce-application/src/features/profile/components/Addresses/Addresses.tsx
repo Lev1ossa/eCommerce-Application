@@ -10,7 +10,6 @@ import { NewAddressCard } from '../NewAddressCard/NewAddressCard';
 import { getCustomerData } from '../../../../api/requests';
 import { ApiRootContext } from '../../../../context/ApiRootContext';
 
-// eslint-disable-next-line max-lines-per-function
 export function Addresses(): React.ReactElement {
   const [modalActive, setModalActive] = useState(false);
   const [modalCreateAddressActive, setModalCreateAddressActive] =
@@ -19,7 +18,6 @@ export function Addresses(): React.ReactElement {
   const [addressesData, setAddressesData] = useState<UserAdress[]>([]);
   const refreshTokenFlowApiRoot = useContext(ApiRootContext);
 
-  // eslint-disable-next-line max-lines-per-function
   const handleAddButton = (): void => {
     getCustomerData(refreshTokenFlowApiRoot).then(
       (result) => {
@@ -66,7 +64,6 @@ export function Addresses(): React.ReactElement {
       },
     );
   };
-  // eslint-disable-next-line max-lines-per-function
   const handleSaveButton = (): void => {
     getCustomerData(refreshTokenFlowApiRoot).then(
       (result) => {
@@ -113,7 +110,6 @@ export function Addresses(): React.ReactElement {
       },
     );
   };
-  // eslint-disable-next-line max-lines-per-function
   const handleDeleteButton = (): void => {
     getCustomerData(refreshTokenFlowApiRoot).then(
       (result) => {
@@ -159,7 +155,6 @@ export function Addresses(): React.ReactElement {
     );
   };
 
-  // eslint-disable-next-line max-lines-per-function
   useEffect(() => {
     getCustomerData(refreshTokenFlowApiRoot).then(
       (result) => {

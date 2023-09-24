@@ -11,7 +11,6 @@ import styles from './LoginForm.module.scss';
 import { isUserLoggedIn } from '../../../../api/tokenHandlers';
 import { ApiRootContext } from '../../../../context/ApiRootContext';
 
-// eslint-disable-next-line max-lines-per-function
 export function LoginForm(): React.ReactElement {
   const refreshTokenFlowApiRoot = useContext(ApiRootContext);
   const navigate = useNavigate();

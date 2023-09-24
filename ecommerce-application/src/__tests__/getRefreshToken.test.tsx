@@ -7,13 +7,13 @@ describe('Function getRefreshToken works correctly', () => {
       token: '111111',
       isLogin: false,
     };
-    localStorage.setItem('AAA-Ecom-authData', JSON.stringify(userLogin));
+    localStorage.setItem('AAA-Ecom-authTokenData', JSON.stringify(userLogin));
     const result = getRefreshToken();
     expect(result).toEqual('111111');
   });
 
   it('should return an empty string if the refresh token does not exist in local storage', () => {
-    localStorage.removeItem('AAA-Ecom-authData');
+    localStorage.removeItem('AAA-Ecom-authTokenData');
     const result = getRefreshToken();
     expect(result).toEqual('');
   });

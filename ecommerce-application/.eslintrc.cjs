@@ -35,7 +35,6 @@ module.exports = {
         default: 'array',
       },
     ],
-    'max-lines-per-function': ['error', 40],
     '@typescript-eslint/explicit-function-return-type': 'error',
     '@typescript-eslint/no-non-null-assertion': 'error',
     'prettier/prettier': [

@@ -8,7 +8,6 @@ import { AccountContentActive } from '../AccountContentActive/AccountContentActi
 import { getCustomerData } from '../../../../api/requests';
 import { ApiRootContext } from '../../../../context/ApiRootContext';
 
-// eslint-disable-next-line max-lines-per-function
 export function Account(props: {
   userData: Customer;
   setUserData: React.Dispatch<React.SetStateAction<Customer | undefined>>;

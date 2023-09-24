@@ -17,7 +17,6 @@ import { isUserLoggedIn } from '../../../../api/tokenHandlers';
 import { ApiRootContext } from '../../../../context/ApiRootContext';
 import { FormDateInput } from '../FormInputs/FormDateInput/FormDateInput';
 
-// eslint-disable-next-line max-lines-per-function
 export function RegistrationForm(): React.ReactElement {
   const refreshTokenFlowApiRoot = useContext(ApiRootContext);
   const navigate = useNavigate();

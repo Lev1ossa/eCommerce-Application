@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { ButtonLoader } from '../ButtonLoader';
 import styles from './BuyCountButton.module.scss';
 
-// eslint-disable-next-line max-lines-per-function
 export function BuyCountButton(props: {
   addToCartHandler: () => void;
   removeFromCartHandler: () => void;

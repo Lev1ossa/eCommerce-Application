@@ -28,7 +28,6 @@ import { showToast } from '../../../autentification/utils/showToast';
 import { InputError } from '../InputError/InputError';
 import { ApiRootContext } from '../../../../context/ApiRootContext';
 
-// eslint-disable-next-line max-lines-per-function
 export function AddressCardActive(props: {
   styles: CSSModuleClasses;
   addressData: UserAdress;
@@ -48,12 +47,10 @@ export function AddressCardActive(props: {
 
   const inputService = new ServiceInputParameters(register);
 
-  // eslint-disable-next-line max-lines-per-function
   const onSubmit: SubmitHandler<IRegistrationData> = (
     changedAddressData: IRegistrationData,
   ): void => {
     getCustomerData(refreshTokenFlowApiRoot).then(
-      // eslint-disable-next-line max-lines-per-function
       (result) => {
         const changeAddress: MyCustomerChangeAddressAction = {
           action: 'changeAddress',

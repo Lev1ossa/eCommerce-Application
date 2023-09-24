@@ -8,7 +8,6 @@ import { Nav } from './Nav/Nav';
 import { isUserLoggedIn } from '../../api/tokenHandlers';
 import { ApiRootContext } from '../../context/ApiRootContext';
 
-// eslint-disable-next-line max-lines-per-function
 export function Header(props: {
   quantityProducts: number | undefined;
 }): React.ReactElement {

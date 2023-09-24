@@ -3,7 +3,6 @@ import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
 import { getPagesArray } from '../../utils/utils';
 import styles from './Pagination.module.scss';
 
-// eslint-disable-next-line max-lines-per-function
 export function Pagination(props: {
   totalProductsCount: number;
   setProductOffset: React.Dispatch<React.SetStateAction<number>>;

@@ -1,7 +1,6 @@
 import { BaseAddress, CustomerDraft } from '@commercetools/platform-sdk';
 import { IRegistrationData, UserLogin } from '../types/types';
 
-// eslint-disable-next-line max-lines-per-function
 export const getClientData = (
   registrationData: IRegistrationData,
 ): CustomerDraft => {
@@ -55,7 +54,7 @@ export const getClientData = (
 };
 
 export const getRefreshToken = (): string => {
-  const userLoginJson = localStorage.getItem('AAA-Ecom-authData');
+  const userLoginJson = localStorage.getItem('AAA-Ecom-authTokenData');
   if (userLoginJson) {
     const userLogin: UserLogin = JSON.parse(userLoginJson);
     return userLogin.token;

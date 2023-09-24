@@ -24,7 +24,6 @@ type CartContextProps = {
 };
 export const CartContext = createContext({} as CartContextProps);
 
-// eslint-disable-next-line max-lines-per-function
 export function CartContextProvider({
   children,
 }: CartProviderProps): React.ReactElement {
