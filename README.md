@@ -22,13 +22,29 @@ This e-commerce application has been developed by **AAA** team.
 - Prettier
 - SPA
 
+## Used npm packages
+
+- react-router-dom
+- react-hook-form
+- react-burger-menu
+- react-pro-sidebar
+- react-select
+- react-icons
+- react-toastify
+- antd
+- enzyme
+- swiper
+- postcode-validator
+- commercetools/sdk 
+
 ## Setup instructions
 
 1. Clone the repository from GitHub. For example, use command **git clone https://github.com/Lev1ossa/eCommerce-Application.git** in terminal.
 2. Open folder ecommerce-application in cloned eCommerce-Application.
 3. Install the required dependencies using command **npm install** in terminal.
-4. Start the server using command **npm run dev** in terminal.
-5. Access the application by navigating to address specified in the terminal, for example http://localhost:5173.
+4. Add values from CommerceTools API for variables VITE_API_REGION, VITE_PROJECT_KEY, VITE_CLIENT_ID, VITE_CLIENT_SECRET, VITE_SCOPE in .env.development and .env.production files.
+5. Start the server using command **npm run dev** in terminal.
+6. Access the application by navigating to address specified in the terminal, for example http://localhost:5173.
 
 ## Available Scripts
 
