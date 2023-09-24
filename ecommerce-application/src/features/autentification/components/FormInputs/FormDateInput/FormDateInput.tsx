@@ -4,7 +4,6 @@ import styles from './FormDateInput.module.scss';
 import { checkDateValidity } from '../../../utils/utils';
 import { IRegistrationData } from '../../../../../types/types';
 
-// eslint-disable-next-line max-lines-per-function
 export function FormDateInput(props: {
   control: Control<IRegistrationData>;
 }): React.ReactElement {

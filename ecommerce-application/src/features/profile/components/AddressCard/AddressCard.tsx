@@ -11,7 +11,6 @@ import { getCustomerData, updateCustomerData } from '../../../../api/requests';
 import { showToast } from '../../../autentification/utils/showToast';
 import { ApiRootContext } from '../../../../context/ApiRootContext';
 
-// eslint-disable-next-line max-lines-per-function
 export function AddressCard(props: {
   styles: CSSModuleClasses;
   addressData: UserAdress;

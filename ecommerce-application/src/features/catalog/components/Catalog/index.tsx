@@ -19,7 +19,6 @@ import { CatalogSidebar } from '../Sidebar';
 import styles from './Catalog.module.scss';
 import { ApiRootContext } from '../../../../context/ApiRootContext';
 
-// eslint-disable-next-line max-lines-per-function
 export function Catalog(props: {
   categorySlug: string | undefined;
   subCategorySlug: string | undefined;
@@ -107,7 +106,6 @@ export function Catalog(props: {
     );
   }, [refreshTokenFlowApiRoot]);
 
-  // eslint-disable-next-line max-lines-per-function
   const getFilteredProducts = async (
     filters: Partial<ICurrentFilters>,
     offset: number,

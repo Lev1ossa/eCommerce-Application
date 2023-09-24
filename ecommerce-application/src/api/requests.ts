@@ -22,7 +22,6 @@ import {
 } from '../types/types';
 import {
   getAnonymousFlowApiRoot,
-  // getClientCridentialsFlowApiRoot,
   getPasswordFlowApiRoot,
   getRefreshTokenFlowApiRoot,
 } from './clientBuilder';
@@ -35,7 +34,6 @@ export const createUser = async (
   registrationData: IRegistrationData,
   refreshTokenFlowApiRoot: ApiRootContextProps,
 ): Promise<ClientResponse<CustomerSignInResult>> => {
-  // const apiRoot = getClientCridentialsFlowApiRoot();
   const apiRoot = refreshTokenFlowApiRoot.flowApiRoot
     ? refreshTokenFlowApiRoot.flowApiRoot
     : getRefreshTokenFlowApiRoot(getRefreshToken());

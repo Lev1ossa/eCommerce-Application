@@ -20,7 +20,6 @@ import { RemoveButton } from '../RemoveButton';
 import { Slider } from '../Slider';
 import styles from './Product.module.scss';
 
-// eslint-disable-next-line max-lines-per-function
 export function Product(props: {
   categorySlug: string;
   subCategorySlug: string;
@@ -226,7 +225,6 @@ export function Product(props: {
                     <BuyButton
                       isCartLoading={isCartLoading}
                       isLoading={isCartLoading}
-                      isProductInCart={isProductInCart}
                       addToCartHandler={addToCartHandler}
                     />
                   )}

@@ -16,7 +16,6 @@ import { showToast } from '../../../autentification/utils/showToast';
 import { InputError } from '../InputError/InputError';
 import { ApiRootContext } from '../../../../context/ApiRootContext';
 
-// eslint-disable-next-line max-lines-per-function
 export function PasswordContentActive(props: {
   styles: CSSModuleClasses;
 }): React.ReactElement {

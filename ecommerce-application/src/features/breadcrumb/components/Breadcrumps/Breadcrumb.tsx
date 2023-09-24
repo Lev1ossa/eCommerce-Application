@@ -3,7 +3,6 @@ import { FiChevronsRight } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
 import styles from './Breadcrumb.module.scss';
 
-// eslint-disable-next-line max-lines-per-function
 export function Breadcrumb(
   props: Record<string, string | undefined>,
 ): React.ReactElement {

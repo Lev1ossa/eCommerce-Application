@@ -19,7 +19,6 @@ import { InputError } from '../InputError/InputError';
 import { ApiRootContext } from '../../../../context/ApiRootContext';
 import { FormDateInputProfile } from '../FormDateInputProfile/FormDateInputProfile';
 
-// eslint-disable-next-line max-lines-per-function
 export function AccountContentActive(props: {
   styles: CSSModuleClasses;
   userData: Customer;
@@ -37,12 +36,10 @@ export function AccountContentActive(props: {
     mode: 'onChange',
   });
   const inputService = new ServiceInputParameters(register);
-  // eslint-disable-next-line max-lines-per-function
   const onSubmit: SubmitHandler<IRegistrationData> = (
     customerData: IRegistrationData,
   ): void => {
     getCustomerData(refreshTokenFlowApiRoot).then(
-      // eslint-disable-next-line max-lines-per-function
       (result) => {
         const updateFirstName: MyCustomerSetFirstNameAction = {
           action: 'setFirstName',

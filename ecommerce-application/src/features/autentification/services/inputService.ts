@@ -15,7 +15,6 @@ export class ServiceInputParameters {
   validationRules: IValidationRules;
   labels: Record<string, string>;
 
-  // eslint-disable-next-line max-lines-per-function
   constructor(register: UseFormRegister<IRegistrationData>) {
     this.register = register;
     this.type = {

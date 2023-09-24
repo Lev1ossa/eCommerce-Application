@@ -22,7 +22,6 @@ import { Loader } from '../../../../components/Loader';
 import { CartContext } from '../../../../context/CartContext';
 import { ApiRootContext } from '../../../../context/ApiRootContext';
 
-// eslint-disable-next-line max-lines-per-function
 export function NotEmptyBasketContent(props: {
   cartData: Cart | undefined;
   setCartData: React.Dispatch<React.SetStateAction<Cart | undefined>>;

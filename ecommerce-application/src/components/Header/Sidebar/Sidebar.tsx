@@ -15,7 +15,6 @@ import { BsCart3, BsMoonStars, BsSun } from 'react-icons/bs';
 import { getTheme, toggleTheme } from '../../../App/utils/utils';
 import { themeContext } from '../../../context/themeContext';
 
-// eslint-disable-next-line max-lines-per-function
 export function Sidebar(props: {
   className: ({ isActive }: { isActive: boolean }) => string;
   userLoggedIn: boolean;
@@ -31,10 +30,6 @@ export function Sidebar(props: {
     '../../../assets/img/burger-arrow.png',
     import.meta.url,
   ).href;
-
-  // const [currentTheme, setCurrentTheme] = useState(
-  //   localStorage.getItem('AAA-Ecom-theme'),
-  // );
 
   const theme = useContext(themeContext);
 

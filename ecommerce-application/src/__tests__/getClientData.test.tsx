@@ -1,9 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { getClientData } from '../api/utils';
 
-// eslint-disable-next-line max-lines-per-function
 describe('Function getClientData works correctly', () => {
-  // eslint-disable-next-line max-lines-per-function
   it('should return the expected data', () => {
     const registrationData = {
       shippingCountry: 'Belarus',

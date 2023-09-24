@@ -7,7 +7,6 @@ import {
 } from '../../../autentification/utils/utils';
 import { IRegistrationData } from '../../../../types/types';
 
-// eslint-disable-next-line max-lines-per-function
 export function FormDateInputProfile(props: {
   control: Control<IRegistrationData>;
   value: string | undefined;

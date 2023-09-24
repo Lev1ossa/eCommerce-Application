@@ -11,7 +11,6 @@ import {
 import { CartContext } from '../../../../context/CartContext';
 import { ApiRootContext } from '../../../../context/ApiRootContext';
 
-// eslint-disable-next-line max-lines-per-function
 export function CartItem(props: {
   itemData: LineItem;
   setCartData: React.Dispatch<React.SetStateAction<Cart | undefined>>;

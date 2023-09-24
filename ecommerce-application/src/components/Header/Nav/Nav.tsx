@@ -7,7 +7,6 @@ import styles from './Nav.module.scss';
 import { getTheme, toggleTheme } from '../../../App/utils/utils';
 import { themeContext } from '../../../context/themeContext';
 
-// eslint-disable-next-line max-lines-per-function
 export function Nav(props: {
   className: ({ isActive }: { isActive: boolean }) => string;
   userLoggedIn: boolean;
@@ -15,10 +14,6 @@ export function Nav(props: {
   quantityProducts: number | undefined;
 }): React.ReactElement {
   const { className, userLoggedIn, logoutHandler, quantityProducts } = props;
-
-  // const [currentTheme, setCurrentTheme] = useState(
-  //   localStorage.getItem('AAA-Ecom-theme'),
-  // );
 
   const theme = useContext(themeContext);
 

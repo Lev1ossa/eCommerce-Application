@@ -1,7 +1,6 @@
 import { BaseAddress, CustomerDraft } from '@commercetools/platform-sdk';
 import { IRegistrationData, UserLogin } from '../types/types';
 
-// eslint-disable-next-line max-lines-per-function
 export const getClientData = (
   registrationData: IRegistrationData,
 ): CustomerDraft => {
