@@ -230,14 +230,12 @@
     right: 10%;
   }
   @media screen and (max-width: $tablet-width) {
-    vertical-align: baseline;
-    position: relative;
-    width: 80vw;
-    margin: 0 auto;
-    height: 460px;
+    right: 35%;
+    width: 400px;
+    height: 400px;
   }
   @media screen and (max-width: $mobile-width) {
-    height: 400px;
+    right: 20%;
   }
 }
 
