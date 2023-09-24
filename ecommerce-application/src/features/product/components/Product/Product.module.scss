@@ -10,7 +10,8 @@
   justify-content: center;
   grid-template-columns: 25% 50%;
   height: 100%;
-  margin: 0 auto;
+  margin: 0 auto 20px;
+  column-gap: 20px;
 }
 
 .slider,
@@ -54,6 +55,7 @@
   text-align: justify;
   border-radius: 10px;
   box-shadow: var(--shadow-light);
+  color: var(--color-dark);
 }
 
 .description {
@@ -62,22 +64,7 @@
 
 .button {
   width: 100%;
-  align-self: center;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0.5rem 2rem;
-  font-size: 1.5rem;
-  height: 3rem;
-  border: none;
-  border-radius: 0.2rem;
-  box-shadow: var(--shadow-small);
-  background-color: var(--color-light-green);
-  transition: 0.2s all ease-in;
-  &:hover {
-    color: var(--color-light);
-    background-color: var(--color-orange);
-  }
 }
 
 @media (max-width: 991.98px) {

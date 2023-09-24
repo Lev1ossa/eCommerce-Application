@@ -1,9 +1,0 @@
-.error {
-  color: var(--color-error);
-  font-size: 16px;
-}
-
-.error::before {
-  display: inline;
-  content: '⚠ ';
-}

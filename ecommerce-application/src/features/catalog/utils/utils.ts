@@ -1,3 +1,4 @@
+import { PRODUCTS_ON_PAGE_LIMIT } from '../../../constants/constants';
 import { CustomCategory } from '../../../types/types';
 
 export const getStartCategoryID = (
@@ -17,4 +18,14 @@ export const getStartCategoryID = (
   }
 
   return '';
+};
+
+export const getPagesArray = (count: number): number[] => {
+  if (!count) return [1];
+  const pagesCount = Math.ceil(count / PRODUCTS_ON_PAGE_LIMIT);
+  const pages = [];
+  for (let i = 0; i < pagesCount; i += 1) {
+    pages.push(i + 1);
+  }
+  return pages;
 };

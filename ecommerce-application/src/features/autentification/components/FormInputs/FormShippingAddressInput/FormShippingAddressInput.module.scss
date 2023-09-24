@@ -1,13 +1,22 @@
-.label {
+.label:has(.input[type='text']) {
   display: flex;
   margin-right: 5px;
   align-items: center;
-  margin-bottom: 10px;
-
+  margin: 0 5px 13px 0;
+  font-weight: 500;
+  max-height: 27px;
+  &:has(.iput[type='checkbox']) {
+    margin: 0 5px 5px 0;
+  }
   .label_block {
     display: inline-block;
     width: 80px;
   }
+}
+
+.label:has(.input[type='checkbox']) {
+  margin: 0 5px 10px 0;
+  font-weight: 500;
 }
 
 .input {
@@ -16,10 +25,14 @@
   height: 27px;
   font-size: 18px;
   flex: 1 0 auto;
-  margin-left: 5px;
   width: 20px;
   border-radius: 5px;
+  background-color: inherit;
   border: 1px solid var(--color-text-gray);
+  &:focus {
+    border: 2px solid var(--color-light-green);
+    outline: none;
+  }
 }
 
 .input[type='checkbox'] {
@@ -39,5 +52,6 @@
   .label_block {
     display: inline-block;
     width: initial;
+    font-style: italic;
   }
 }

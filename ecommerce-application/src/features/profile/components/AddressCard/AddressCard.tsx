@@ -4,12 +4,13 @@ import {
   MyCustomerUpdate,
 } from '@commercetools/platform-sdk';
 import { BsHouseDash } from 'react-icons/bs';
+import { useContext } from 'react';
 import { ToastTypes, UserAdress } from '../../../../types/types';
 import { getCountryName } from '../../../autentification/utils/utils';
 import { getCustomerData, updateCustomerData } from '../../../../api/requests';
 import { showToast } from '../../../autentification/utils/showToast';
+import { ApiRootContext } from '../../../../context/ApiRootContext';
 
-// eslint-disable-next-line max-lines-per-function
 export function AddressCard(props: {
   styles: CSSModuleClasses;
   addressData: UserAdress;
@@ -24,6 +25,7 @@ export function AddressCard(props: {
     setModalAddressId,
     handleDeleteButton,
   } = props;
+  const refreshTokenFlowApiRoot = useContext(ApiRootContext);
   let countryInputValue = '';
   if (addressData?.country) {
     const countryName = getCountryName(addressData?.country);
@@ -31,7 +33,7 @@ export function AddressCard(props: {
   }
 
   const onClick = (): void => {
-    getCustomerData().then(
+    getCustomerData(refreshTokenFlowApiRoot).then(
       (result) => {
         const removeAddress: MyCustomerRemoveAddressAction = {
           action: 'removeAddress',
@@ -41,7 +43,7 @@ export function AddressCard(props: {
           version: result.body.version,
           actions: [removeAddress],
         };
-        updateCustomerData(body).then(
+        updateCustomerData(body, refreshTokenFlowApiRoot).then(
           () => {
             showToast(ToastTypes.success, `Address successfully removed!`);
             handleDeleteButton();

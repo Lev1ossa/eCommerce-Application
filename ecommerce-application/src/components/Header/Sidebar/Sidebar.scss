@@ -1,19 +1,23 @@
 @import "/src/App/styles/vars.scss";
 
+.icon {
+  margin: 0 15px -3px 0;
+}
+
 .bm-burger-button {
   display: none;
-  @media screen and (max-width: $tablet-width) {
-      display: inline-block;
-      position: absolute;
-  width: 40px;
-  height: 40px;
-  right: 42px;
-  top: 30px;
+  @media screen and (max-width: 800px) {
+    display: inline-block;
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    right: 42px;
+    top: 30px;
   }
 }
   
 .bm-burger-bars {
-  background: var(--color-dark-green);
+  background: var(--color-light-green);
 }
 
 .bm-burger-bars-hover {
@@ -42,9 +46,8 @@
 
 .bm-menu {
   background: var(--gradient-ligth-green);
-  padding: 2.5em 1.5em 0;
+  padding: 2.5em 0.5em 0;
   font-size: 1.15em;
-  
 }
 
 .bm-item-list {
@@ -70,7 +73,28 @@
 .logout_button {
   border: none;
   background-color: inherit;
+  color: var(--color-dark);
   &:hover {
     color: var(--color-orange);
   }
+}
+
+.icon_container{
+  display: inline-block;
+  position: relative;
+  text-align: center;
+}
+
+.count_label {
+  padding: 3px;
+  height: 20px;
+  background-color: var(--color-orange);
+  position: absolute;
+  font-weight: 400;
+  right: 3px;
+  top: -11px;
+  font-size: 12px;
+  border-radius: 50%;
+  color: var(--color-text-light);
+  min-width: 20px;
 }

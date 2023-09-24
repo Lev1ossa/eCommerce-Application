@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
 import { PiEyeBold, PiEyeClosedBold } from 'react-icons/pi';
 
-// eslint-disable-next-line max-lines-per-function
 export function FormNewPassword(props: {
   label: string;
   input: UseFormRegisterReturn;

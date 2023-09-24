@@ -1,3 +1,4 @@
+import { ChangeEvent, useContext, useEffect, useRef, useState } from 'react';
 import { FiSearch } from 'react-icons/fi';
 import {
   CSSObject,
@@ -8,15 +9,15 @@ import {
   menuClasses,
   sidebarClasses,
 } from 'react-pro-sidebar';
-import Select, { SingleValue } from 'react-select';
-import { ChangeEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { sortOptions } from '../../constants/constants';
-import styles from './Sidebar.module.scss';
+import Select, { SingleValue } from 'react-select';
 import { CustomCategory, ICurrentFilters } from '../../../../types/types';
-import { getStartCategoryID } from '../../constants/utils';
+import { sortOptions } from '../../constants/constants';
+import { getStartCategoryID } from '../../utils/utils';
+import BrandsList from '../BrandsList';
+import styles from './Sidebar.module.scss';
+import { themeContext } from '../../../../context/themeContext';
 
-// eslint-disable-next-line max-lines-per-function
 export function CatalogSidebar(props: {
   setcurrentFilters: React.Dispatch<
     React.SetStateAction<Partial<ICurrentFilters>>
@@ -25,6 +26,7 @@ export function CatalogSidebar(props: {
   brands: string[];
   categorySlug: string | undefined;
   subCategorySlug: string | undefined;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
 }): React.ReactElement {
   const {
     productCategories,
@@ -32,6 +34,7 @@ export function CatalogSidebar(props: {
     setcurrentFilters,
     categorySlug,
     subCategorySlug,
+    setCurrentPage,
   } = props;
   const navigate = useNavigate();
   const [categoryFilterProps, setCategoryFilterProps] = useState('');
@@ -39,12 +42,14 @@ export function CatalogSidebar(props: {
   const [originFilterProps, setoriginFilterProps] = useState(['']);
   const [lowerPriceFilterProps, setLowerPriceFilterProps] = useState('');
   const [higherPriceFilterProps, setHigherPriceFilterProps] = useState('');
-  const [sortProps, setSortProps] = useState('');
+  const [sortProps, setSortProps] = useState('price asc');
   const [searchProps, setSearchProps] = useState('');
   const [currentSearchString, setCurrentSearchString] = useState('');
   const [collapsed, setCollapsed] = useState(false);
   const [width, setWidth] = useState(0);
   const [componentKey, setComponentKey] = useState(0);
+
+  const currentTheme = useContext(themeContext);
 
   const handleNavigate = (path: string): void => {
     navigate(path);
@@ -66,6 +71,7 @@ export function CatalogSidebar(props: {
     categoryID: string,
     redirectPath: string,
   ): void => {
+    setCurrentPage(1);
     setCategoryFilterProps(`${categoryID}`);
     handleNavigate(redirectPath);
   };
@@ -79,6 +85,7 @@ export function CatalogSidebar(props: {
     } else {
       setTrademarkProps(trademarkProps.filter((filter) => filter !== value));
     }
+    setCurrentPage(1);
   };
 
   const handleOriginChange = (
@@ -92,6 +99,7 @@ export function CatalogSidebar(props: {
         originFilterProps.filter((filter) => filter !== value),
       );
     }
+    setCurrentPage(1);
   };
 
   const handleLowerPriceChange = (
@@ -108,6 +116,7 @@ export function CatalogSidebar(props: {
     ) {
       setLowerPriceFilterProps(currentPriceAsNumber.toString());
     }
+    setCurrentPage(1);
   };
 
   const handleHigherPriceChange = (
@@ -124,11 +133,13 @@ export function CatalogSidebar(props: {
     ) {
       setHigherPriceFilterProps(currentPriceAsNumber.toString());
     }
+    setCurrentPage(1);
   };
 
   const handleSortChange = (
     option: SingleValue<{ value: string; label: string }>,
   ): void => {
+    setCurrentPage(1);
     setSortProps(option ? option.value : '');
   };
 
@@ -156,16 +167,19 @@ export function CatalogSidebar(props: {
     };
   }, [width]);
 
+  const didMount = useRef(false);
   useEffect(() => {
-    setcurrentFilters({
-      category: categoryFilterProps,
-      trademark: trademarkProps,
-      originFilter: originFilterProps,
-      lowerPrice: lowerPriceFilterProps,
-      higherPrice: higherPriceFilterProps,
-      sort: sortProps,
-      search: searchProps,
-    });
+    if (didMount.current) {
+      setcurrentFilters({
+        category: categoryFilterProps,
+        trademark: trademarkProps,
+        originFilter: originFilterProps,
+        lowerPrice: lowerPriceFilterProps,
+        higherPrice: higherPriceFilterProps,
+        sort: sortProps,
+        search: searchProps,
+      });
+    } else didMount.current = true;
   }, [
     setcurrentFilters,
     categoryFilterProps,
@@ -178,8 +192,8 @@ export function CatalogSidebar(props: {
   ]);
 
   const categories = productCategories.map((category) => (
-    // <Link to={`/catalog/${category.slug}`} key={category.id}>
     <SubMenu
+      className={styles.category}
       active={
         window.location.pathname === `/catalog/${category.slug}` ||
         window.location.pathname === `/catalog/${category.slug}/`
@@ -191,8 +205,8 @@ export function CatalogSidebar(props: {
       }
     >
       {category.children.map((child) => (
-        // <Link to={`/catalog/${category.slug}/${child.slug}`} key={child.id}>
         <MenuItem
+          className={styles.subcategory}
           active={
             window.location.pathname ===
               `/catalog/${category.slug}/${child.slug}` ||
@@ -209,20 +223,8 @@ export function CatalogSidebar(props: {
         >
           {child.name.replace('_', ' ')}
         </MenuItem>
-        /* </Link> */
       ))}
     </SubMenu>
-    // </Link>
-  ));
-
-  const brandsList = brands.map((brand: string) => (
-    <li key={brand}>
-      <input
-        type="checkbox"
-        onChange={(event): void => handleBrandsClick(event, brand)}
-      />
-      <span className="text">{brand}</span>
-    </li>
   ));
 
   const handleResetFilters = (): void => {
@@ -234,25 +236,31 @@ export function CatalogSidebar(props: {
     setSearchProps('');
     setCurrentSearchString('');
     setComponentKey(componentKey + 1);
+    setCurrentPage(1);
   };
 
   return (
-    <div key={componentKey} style={{ display: 'flex' }}>
+    <div key={componentKey} className={styles.container}>
       <Sidebar
         collapsed={collapsed}
+        width="100px"
+        style={{ width: '100%' }}
         collapsedWidth="130px"
         className={styles.sidebar}
         rootStyles={{
           [`.${sidebarClasses.container}`]: {
             overflow: 'visible',
+            backgroundColor: currentTheme.theme === 'light' ? '#fff' : '#000',
           },
         }}
       >
         <Menu
+          className={styles.menu}
           rootStyles={{
             [`.${menuClasses.button}`]: {
               ':hover': {
-                backgroundColor: '#fdff8d',
+                backgroundColor:
+                  currentTheme.theme === 'light' ? '#fdff8d' : '#fd7107',
               },
             },
             position: 'sticky',
@@ -261,13 +269,25 @@ export function CatalogSidebar(props: {
           menuItemStyles={{
             button: ({ level, active }): CSSObject | undefined => {
               if (level === 0)
-                return {
-                  backgroundColor: active ? '#64e44c' : undefined,
-                };
+                return currentTheme.theme === 'light'
+                  ? {
+                      color: '#000',
+                      backgroundColor: active ? '#64e44c' : '#fff',
+                    }
+                  : {
+                      color: '#fff',
+                      backgroundColor: active ? '#64e44c' : '#000',
+                    };
               if (level === 1)
-                return {
-                  backgroundColor: active ? '#fdff8d' : undefined,
-                };
+                return currentTheme.theme === 'light'
+                  ? {
+                      color: '#000',
+                      backgroundColor: active ? '#fdff8d' : '#fff',
+                    }
+                  : {
+                      color: '#fff',
+                      backgroundColor: active ? '#fd7107' : '#000',
+                    };
               return undefined;
             },
           }}
@@ -287,7 +307,9 @@ export function CatalogSidebar(props: {
             />
           </div>
           <Select
+            inputId="hello"
             options={sortOptions}
+            defaultValue={sortOptions.find(({ value }) => value === sortProps)}
             isClearable
             placeholder="sort..."
             className={styles.sort}
@@ -301,8 +323,8 @@ export function CatalogSidebar(props: {
                   borderColor: state.isFocused ? '#ededed' : '#ededed',
                 },
                 border: '1px solid #ededed',
-                fontSize: '14px',
-                height: '2rem',
+                fontSize: '0.9em',
+                height: '2em',
                 margin: '5px',
                 padding: '0',
               }),
@@ -317,6 +339,10 @@ export function CatalogSidebar(props: {
                   backgroundColor: '#fdff8d',
                 },
               }),
+              singleValue: (base) => ({
+                ...base,
+                color: currentTheme.theme === 'light' ? '#000' : '#fff',
+              }),
             }}
           />
 
@@ -324,29 +350,33 @@ export function CatalogSidebar(props: {
           <SubMenu label="Filters" defaultOpen>
             <ul className={styles.list}>
               <li className={styles.price}>
-                <strong>Price: </strong>
-                <span>from</span>
-                <input
-                  type="text"
-                  placeholder="min"
-                  onChange={(event): void => handleLowerPriceChange(event)}
-                />
-                <span>to</span>
-                <input
-                  type="text"
-                  placeholder="max"
-                  onChange={(event): void => handleHigherPriceChange(event)}
+                <strong className={styles.price_name}>Price: </strong>
+                <div className={styles.price_item}>
+                  <span>from</span>
+                  <input
+                    type="text"
+                    placeholder="min"
+                    onChange={(event): void => handleLowerPriceChange(event)}
+                  />
+                </div>
+                <div className={styles.price_item}>
+                  <span>to</span>
+                  <input
+                    type="text"
+                    placeholder="max"
+                    onChange={(event): void => handleHigherPriceChange(event)}
+                  />
+                </div>
+              </li>
+              <li>
+                <BrandsList
+                  brands={brands}
+                  handleBrandsClick={handleBrandsClick}
                 />
               </li>
               <li className={styles.brand}>
-                <ul className={styles.brand_list}>
-                  <strong>Brands</strong>
-                  {brandsList}
-                </ul>
-              </li>
-              <li className={styles.brand}>
-                <ul className={styles.brand_list}>
-                  <strong>Origin</strong>
+                <ul className={styles.origin_list}>
+                  <strong className={styles.origin_header}>Origin</strong>
                   <li>
                     <input
                       type="checkbox"
@@ -354,7 +384,7 @@ export function CatalogSidebar(props: {
                         handleOriginChange(event, 'local')
                       }
                     />
-                    <span className="text">Local</span>
+                    <span className={styles.origin_label}>Local</span>
                   </li>
                   <li>
                     <input
@@ -363,19 +393,19 @@ export function CatalogSidebar(props: {
                         handleOriginChange(event, 'foreign')
                       }
                     />
-                    <span className="text">Foreign</span>
+                    <span className={styles.origin_label}>Foreign</span>
                   </li>
                 </ul>
               </li>
+              <button
+                type="button"
+                className={styles.reset}
+                onClick={handleResetFilters}
+              >
+                Reset Filters
+              </button>
             </ul>
           </SubMenu>
-          <button
-            type="button"
-            className={styles.reset}
-            onClick={handleResetFilters}
-          >
-            Reset Filters
-          </button>
         </Menu>
       </Sidebar>
     </div>

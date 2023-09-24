@@ -1,0 +1,202 @@
+@import "/src/App/styles/vars.scss";
+
+.main {
+  flex-grow: 1;
+  padding: 0 1rem 1rem;
+  height: 100%;
+  background-color: var(--color-background-container);
+}
+  
+.container {
+  max-width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  text-align: justify;
+}
+
+.title_container {
+  height: 70px;
+  font-size: calc(20px + (26 - 20) * ((100vw - 320px) / (1920 - 320)));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3;
+}
+
+.page_title {
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.page_subtitle {
+  margin-bottom: 10px;
+  font-weight: 400;
+  font-style: oblique;
+  line-height: 1.2;
+  text-align: center;
+  position: relative;
+  z-index: 3;
+  @media screen and (max-width: $tablet-width) {
+    line-height: 1.1;
+    font-size: 12px;
+  }
+  @media screen and (max-width: $mobile-width) {
+    line-height: 1;
+    font-size: 10px;
+  }
+
+}
+
+.rs_logo {
+  background: var(--image_logo) center no-repeat;
+  background-size: contain;
+  margin-bottom: -5px;
+  display: inline-block;
+  margin-left: 15px;
+  height: 30px;
+  width: 70px;
+  transition: 0.3s;
+  &:hover {
+    transition: 0.3s;
+    transform: scale(1.1);
+  }
+  @media screen and (max-width: $mobile-width) {
+    margin-left: 5px;
+    margin-bottom: -6px;
+    height: 30px;
+    width: 50px;
+  }
+}
+
+.image_anton {
+  background-size: cover;
+  width: 100%;
+  height: 250px;
+  margin-bottom: 10px;
+  background: var(--color-banana) url('/src/assets/img/Anton.png') center no-repeat;
+  background-size: cover;
+  @media screen and (min-width: 1500px) {
+    background-size: contain;
+  }
+  @media screen and (max-width: $tablet-width) {
+    width: 200px;
+    height: 300px;
+    margin-bottom: 5px;
+    margin-right: 10px;
+  }
+  @media screen and (max-width: $mobile-width) {
+    background-size: contain;
+    width: 100%;
+    height: 150px;
+  }
+}
+
+.image_alyona {
+  background-size: cover;
+  width: 100%;
+  height: 250px;
+  margin-bottom: 10px;
+  background: var(--color-banana) url('/src/assets/img/Alena.png') center no-repeat;
+  background-size: cover;
+  @media screen and (min-width: 1500px) {
+    background-size: contain;
+  }
+  @media screen and (max-width: $tablet-width) {
+    width: 200px;
+    height: 300px;
+    margin-bottom: 5px;
+    margin-right: 10px;
+  }
+  @media screen and (max-width: $mobile-width) {
+    background-size: contain;
+    width: 100%;
+    height: 150px;
+  }
+}
+
+.image_alex {
+  background-size: cover;
+  width: 100%;
+  height: 250px;
+  margin-bottom: 10px;
+  background: var(--color-banana) url('/src/assets/img/Alex.png') center no-repeat;
+  background-size: cover;
+  @media screen and (min-width: 1500px) {
+    background-size: contain;
+  }
+  @media screen and (max-width: $tablet-width) {
+    width: 200px;
+    height: 300px;
+    margin-bottom: 5px;
+    margin-right: 10px;
+  }
+  @media screen and (max-width: $mobile-width) {
+    background-size: contain;
+    width: 100%;
+    height: 150px;
+  }
+}
+
+.info_container {
+  @media screen and (max-width: $tablet-width) {
+    width: 60%;
+  }
+  @media screen and (max-width: $mobile-width) {
+    width: 100%;
+  }
+}
+
+.text {
+  font-size: calc(16px + (26 - 20) * ((100vw - 320px) / (1920 - 320)));
+  text-align: justify;
+  position: relative;
+  z-index: 3;
+  .link {
+    color: var(--color-orange);
+    transition: 0.3s;
+    &:hover {
+      color: var(--color-light-green);
+      transition: 0.3s;
+    }
+  }
+}
+
+.cards_block {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 0 40px;
+  @media screen and (max-width: $tablet-width) {
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+  @media screen and (max-width: $mobile-width) {
+    flex-direction: row;
+    flex-wrap: nwrap;
+  }
+}
+
+.card {
+  box-shadow: var(--shadow-light);
+  width: 31%;
+  padding: 5px;
+  .text {
+    font-size: calc(12px + (26 - 20) * ((100vw - 320px) / (1920 - 320)));
+    margin-bottom: 5px;
+  }
+  @media screen and (max-width: $tablet-width) {
+    width: 100%;
+    display: flex;
+    margin-bottom: 10px;
+  }
+  @media screen and (max-width: $mobile-width) {
+    display: block;
+  }
+
+}
+
+.text_bold {
+  font-weight: bold;
+  margin-right: 5px;
+}

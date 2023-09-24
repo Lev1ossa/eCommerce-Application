@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 import logo from '../../assets/img/logo.png';
 import styles from './NotFound.module.scss';
 
-// eslint-disable-next-line max-lines-per-function
 export function NotFoundPage(): React.ReactElement {
   return (
     <main className={styles.container}>

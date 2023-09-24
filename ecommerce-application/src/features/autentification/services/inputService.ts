@@ -15,7 +15,6 @@ export class ServiceInputParameters {
   validationRules: IValidationRules;
   labels: Record<string, string>;
 
-  // eslint-disable-next-line max-lines-per-function
   constructor(register: UseFormRegister<IRegistrationData>) {
     this.register = register;
     this.type = {
@@ -39,10 +38,10 @@ export class ServiceInputParameters {
         'Field must not contain leading or trailing whitespace',
       insideSpace: (inputValue: string): string | boolean =>
         !inputValue.trim().match(/\s+/g) ||
-        'Email address must be properly formatted (e.g., user@example.com)',
+        'Email address must be properly formatted',
       format: (inputValue: string): string | boolean =>
         !!inputValue.match(emailRegExp) ||
-        'Email address must be properly formatted (e.g., user@example.com)',
+        'Email address must be properly formatted',
       number: (inputValue: string): string | boolean =>
         !!inputValue.match(/[0-9]/g) || 'At least one number',
       uppercase: (inputValue: string): string | boolean =>

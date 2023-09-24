@@ -1,0 +1,143 @@
+@import "/src/App/styles/vars.scss";
+
+.product_block {
+  display: flex;
+  align-items: center;
+  width: 200px;
+  padding-left: 5px;
+  @media screen and (max-width: $mobile-width) {
+    width: 140px;
+    font-size: 0.6rem;
+  }
+}
+  
+.image {
+  max-width: 50px;
+  max-height: 50px;
+  height: 100%;
+  margin-right: 15px;
+  @media screen and (max-width: $tablet-width) {
+    margin-right: 10px;
+  }
+  @media screen and (max-width: $mobile-width) {
+    margin-right: 5px;
+  }
+}
+
+.name {
+  text-align: start;
+}
+
+.quantity{
+  margin: 0 10px;
+  display: inline-block;
+  width: 30px;
+  @media screen and (max-width: $tablet-width) {
+    width: 20px;
+    margin: 0 5px;
+  }
+  @media screen and (max-width: $mobile-width) {
+    width: 15px;
+    margin: 0 2px;
+  }
+}
+
+.quantity_block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  @media screen and (max-width: $mobile-width) {
+    width: 70px;
+  }
+}
+
+.quantity_button {
+  width: 20px;
+  height: 20px;
+  border: none;
+  border-radius: 50%;
+  background-color: (--color-text-gray);
+  opacity: 0.8;
+  @media screen and (max-width: $tablet-width) {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+.price_old {
+  align-self: start;
+  width: 30%;
+  text-decoration: line-through;
+}
+
+.price_new {
+  font-size: 24px;
+  color: var(--color-error);
+  margin-right: 3px;
+}
+
+.prices_container {
+  display: flex;
+  width: 150px;
+  justify-content: center;
+  text-align: center;
+  @media screen and (max-width: $mobile-width) {
+    width: 70px;
+  }
+  .price {
+    width: initial;
+    text-decoration: line-through;
+    font-size: calc(9px + (26 - 20) * ((100vw - 320px) / (1920 - 320)));
+    @media screen and (max-width: $mobile-width) {
+      font-size: calc(7px + (26 - 20) * ((100vw - 320px) / (1920 - 320)));
+    }
+  }
+  .price_new {
+    font-size: calc(14px + (26 - 20) * ((100vw - 320px) / (1920 - 320)));
+    text-decoration: none;
+    @media screen and (max-width: $tablet-width) {
+      font-size: calc(11px + (26 - 20) * ((100vw - 320px) / (1920 - 320)));
+    }
+    @media screen and (max-width: $mobile-width) {
+      font-size: calc(9px + (26 - 20) * ((100vw - 320px) / (1920 - 320)));
+    }
+  }
+}
+
+.price {
+  width: 150px;
+  @media screen and (max-width: $mobile-width) {
+    width: 70px;
+  }
+}
+
+.delete_button {
+  background-color: inherit;
+  position: absolute;
+  right: 0;
+  top: 2px;
+  border: none;
+  &:disabled {
+    cursor: not-allowed;
+    .delete_icon {
+      color: var(--color-light-gray);
+    }
+  }
+}
+
+.delete_icon {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease; 
+  color: var(--color-error);
+  &:hover {
+    color: var(--color-orange);
+  }
+  @media screen and (max-width: $tablet-width) {
+    width: 15px;
+    height: 15px;
+  }
+}
+    

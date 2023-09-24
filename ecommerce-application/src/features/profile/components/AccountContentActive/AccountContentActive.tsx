@@ -9,34 +9,37 @@ import {
   MyCustomerSetLastNameAction,
   MyCustomerUpdate,
 } from '@commercetools/platform-sdk';
+import { useContext } from 'react';
 import { IRegistrationData, ToastTypes } from '../../../../types/types';
 import { ServiceInputParameters } from '../../../autentification/services/inputService';
 import { FormInputProfile } from '../FormInputProfile/FormInputProfile';
 import { getCustomerData, updateCustomerData } from '../../../../api/requests';
 import { showToast } from '../../../autentification/utils/showToast';
 import { InputError } from '../InputError/InputError';
+import { ApiRootContext } from '../../../../context/ApiRootContext';
+import { FormDateInputProfile } from '../FormDateInputProfile/FormDateInputProfile';
 
-// eslint-disable-next-line max-lines-per-function
 export function AccountContentActive(props: {
   styles: CSSModuleClasses;
   userData: Customer;
   handleSaveButton: () => void;
 }): React.ReactElement {
   const { styles, userData, handleSaveButton } = props;
+  const refreshTokenFlowApiRoot = useContext(ApiRootContext);
 
   const {
     register,
+    control,
     formState: { errors },
     handleSubmit,
   } = useForm<IRegistrationData>({
     mode: 'onChange',
   });
   const inputService = new ServiceInputParameters(register);
-  // eslint-disable-next-line max-lines-per-function
   const onSubmit: SubmitHandler<IRegistrationData> = (
     customerData: IRegistrationData,
   ): void => {
-    getCustomerData().then(
+    getCustomerData(refreshTokenFlowApiRoot).then(
       (result) => {
         const updateFirstName: MyCustomerSetFirstNameAction = {
           action: 'setFirstName',
@@ -46,9 +49,18 @@ export function AccountContentActive(props: {
           action: 'setLastName',
           lastName: customerData.userLastName,
         };
+        const clientDateOfBirth = new Date(customerData.birthDate)
+          .toLocaleString('ru-RU', {
+            year: 'numeric',
+            month: 'numeric',
+            day: 'numeric',
+          })
+          .split('.')
+          .reverse()
+          .join('-');
         const updateDateOfBirth: MyCustomerSetDateOfBirthAction = {
           action: 'setDateOfBirth',
-          dateOfBirth: customerData.birthDate,
+          dateOfBirth: clientDateOfBirth,
         };
         const updateEmail: MyCustomerChangeEmailAction = {
           action: 'changeEmail',
@@ -63,7 +75,7 @@ export function AccountContentActive(props: {
             updateEmail,
           ],
         };
-        updateCustomerData(body).then(
+        updateCustomerData(body, refreshTokenFlowApiRoot).then(
           () => {
             showToast(ToastTypes.success, `Data successfully saved!`);
             handleSaveButton();
@@ -104,14 +116,7 @@ export function AccountContentActive(props: {
         <InputError styles={styles} errors={errors} name="userLastName" />
       </div>
       <div className={styles.input_block}>
-        <FormInputProfile
-          input={inputService.createInputParams('birthDate').input}
-          type={inputService.createInputParams('birthDate').type}
-          label={inputService.createInputParams('birthDate').label}
-          styles={styles}
-          value={userData.dateOfBirth}
-          checked={false}
-        />
+        <FormDateInputProfile control={control} value={userData.dateOfBirth} />
         <InputError styles={styles} errors={errors} name="birthDate" />
       </div>
       <div className={styles.input_block}>

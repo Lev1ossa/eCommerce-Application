@@ -10,7 +10,6 @@ import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 import styles from './Slider.module.scss';
 
-// eslint-disable-next-line max-lines-per-function
 export function Slider(props: {
   setActive: Dispatch<SetStateAction<boolean>>;
   images: Image[] | undefined;

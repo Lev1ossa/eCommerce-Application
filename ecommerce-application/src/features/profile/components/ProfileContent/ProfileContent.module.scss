@@ -6,7 +6,7 @@
     margin: 10px auto 0;
     text-align: center;
     justify-content: center;
-
+    background-color: var(--color-background-container);
     @media screen and (max-width: $tablet-width) {
     flex-direction: column;
     }
@@ -53,11 +53,14 @@
     margin-bottom: 5px;
     position: relative;
     transition: 0.3s;
-    color: var(--color-text-gray);
+    border: 1px solid var(--color-profile-button-border);
+    opacity: 0.8;
+    background-color: var(--color-background-profile-button);
+    color: var(--color-dark);
     &:hover {
         transform: scale(1.05);
         transition: 0.3s;
-        color: inherit;
+        opacity: 1;
         .icon {
            color:var( --color-blue);
         }

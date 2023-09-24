@@ -1,9 +1,12 @@
 import {
-  CartPagedQueryResponse,
+  Cart,
   CategoryPagedQueryResponse,
   ClientResponse,
   Customer,
   CustomerSignInResult,
+  DiscountCode,
+  DiscountCodePagedQueryResponse,
+  MyCartUpdateAction,
   MyCustomerChangePassword,
   MyCustomerSignin,
   MyCustomerUpdate,
@@ -12,21 +15,28 @@ import {
   ProductProjectionPagedSearchResponse,
 } from '@commercetools/platform-sdk';
 import { TokenCache } from '@commercetools/sdk-client-v2';
-import { ILoginData, IRegistrationData } from '../types/types';
+import {
+  ApiRootContextProps,
+  ILoginData,
+  IRegistrationData,
+} from '../types/types';
 import {
   getAnonymousFlowApiRoot,
-  getClientCridentialsFlowApiRoot,
   getPasswordFlowApiRoot,
   getRefreshTokenFlowApiRoot,
 } from './clientBuilder';
 import { getClientData, getRefreshToken } from './utils';
+import { PRODUCTS_ON_PAGE_LIMIT } from '../constants/constants';
 
 const projectKey: string = import.meta.env.VITE_PROJECT_KEY;
 
 export const createUser = async (
   registrationData: IRegistrationData,
+  refreshTokenFlowApiRoot: ApiRootContextProps,
 ): Promise<ClientResponse<CustomerSignInResult>> => {
-  const apiRoot = getClientCridentialsFlowApiRoot();
+  const apiRoot = refreshTokenFlowApiRoot.flowApiRoot
+    ? refreshTokenFlowApiRoot.flowApiRoot
+    : getRefreshTokenFlowApiRoot(getRefreshToken());
   const clientData = getClientData(registrationData);
   return apiRoot
     .withProjectKey({ projectKey })
@@ -38,32 +48,56 @@ export const createUser = async (
 export const getUser = async (
   loginData: ILoginData,
   tokenCache: TokenCache,
-): Promise<ClientResponse<CustomerSignInResult>> => {
+  refreshTokenFlowApiRoot: ApiRootContextProps,
+): Promise<ClientResponse<Customer>> => {
   const { email, password } = loginData;
-  const apiRoot = getPasswordFlowApiRoot(email, password, tokenCache);
+  const refreshFlowApiRoot = refreshTokenFlowApiRoot.flowApiRoot
+    ? refreshTokenFlowApiRoot.flowApiRoot
+    : getRefreshTokenFlowApiRoot(getRefreshToken());
   const clientData: MyCustomerSignin = {
     email,
     password,
+    activeCartSignInMode: 'MergeWithExistingCustomerCart',
   };
-  return apiRoot
+  await refreshFlowApiRoot
     .withProjectKey({ projectKey })
     .me()
     .login()
     .post({ body: clientData })
     .execute();
+
+  const passwordFlowApiRoot = getPasswordFlowApiRoot(
+    email,
+    password,
+    tokenCache,
+  );
+
+  return passwordFlowApiRoot
+    .withProjectKey({ projectKey })
+    .me()
+    .get()
+    .execute()
+    .then();
 };
 
 export const getAnonymousUser = async (
   tokenCache: TokenCache,
-): Promise<ClientResponse<CartPagedQueryResponse>> => {
+): Promise<ClientResponse<Cart>> => {
   const apiRoot = getAnonymousFlowApiRoot(tokenCache);
-  return apiRoot.withProjectKey({ projectKey }).me().carts().get().execute();
+  return apiRoot
+    .withProjectKey({ projectKey })
+    .me()
+    .carts()
+    .post({ body: { currency: 'USD', country: 'RU' } })
+    .execute();
 };
 
-export const getProductsList = async (): Promise<
-  ClientResponse<ProductProjectionPagedQueryResponse>
-> => {
-  const apiRoot = getRefreshTokenFlowApiRoot(getRefreshToken());
+export const getProductsList = async (
+  refreshTokenFlowApiRoot: ApiRootContextProps,
+): Promise<ClientResponse<ProductProjectionPagedQueryResponse>> => {
+  const apiRoot = refreshTokenFlowApiRoot.flowApiRoot
+    ? refreshTokenFlowApiRoot.flowApiRoot
+    : getRefreshTokenFlowApiRoot(getRefreshToken());
   return apiRoot
     .withProjectKey({ projectKey })
     .productProjections()
@@ -79,15 +113,20 @@ export const getFilteredProductList = async (
   filterQueryStrings: string[],
   sortQueryStrings: string[],
   searchQueryString: string,
+  productsOffset: number,
+  refreshTokenFlowApiRoot: ApiRootContextProps,
 ): Promise<ClientResponse<ProductProjectionPagedSearchResponse>> => {
-  const apiRoot = getRefreshTokenFlowApiRoot(getRefreshToken());
+  const apiRoot = refreshTokenFlowApiRoot.flowApiRoot
+    ? refreshTokenFlowApiRoot.flowApiRoot
+    : getRefreshTokenFlowApiRoot(getRefreshToken());
   return apiRoot
     .withProjectKey({ projectKey })
     .productProjections()
     .search()
     .get({
       queryArgs: {
-        limit: 30,
+        limit: PRODUCTS_ON_PAGE_LIMIT,
+        offset: productsOffset,
         filter: filterQueryStrings,
         sort: sortQueryStrings,
         'text.en': searchQueryString,
@@ -98,8 +137,11 @@ export const getFilteredProductList = async (
 
 export const getProductByID = async (
   productId: string,
+  refreshTokenFlowApiRoot: ApiRootContextProps,
 ): Promise<ClientResponse<ProductProjection>> => {
-  const apiRoot = getRefreshTokenFlowApiRoot(getRefreshToken());
+  const apiRoot = refreshTokenFlowApiRoot.flowApiRoot
+    ? refreshTokenFlowApiRoot.flowApiRoot
+    : getRefreshTokenFlowApiRoot(getRefreshToken());
   return apiRoot
     .withProjectKey({ projectKey })
     .productProjections()
@@ -110,8 +152,11 @@ export const getProductByID = async (
 
 export const getProductByKey = async (
   productKey: string,
+  refreshTokenFlowApiRoot: ApiRootContextProps,
 ): Promise<ClientResponse<ProductProjection>> => {
-  const apiRoot = getRefreshTokenFlowApiRoot(getRefreshToken());
+  const apiRoot = refreshTokenFlowApiRoot.flowApiRoot
+    ? refreshTokenFlowApiRoot.flowApiRoot
+    : getRefreshTokenFlowApiRoot(getRefreshToken());
   return apiRoot
     .withProjectKey({ projectKey })
     .productProjections()
@@ -122,8 +167,11 @@ export const getProductByKey = async (
 
 export const getProductBySlug = async (
   productSlug: string,
+  refreshTokenFlowApiRoot: ApiRootContextProps,
 ): Promise<ClientResponse<ProductProjectionPagedSearchResponse>> => {
-  const apiRoot = getRefreshTokenFlowApiRoot(getRefreshToken());
+  const apiRoot = refreshTokenFlowApiRoot.flowApiRoot
+    ? refreshTokenFlowApiRoot.flowApiRoot
+    : getRefreshTokenFlowApiRoot(getRefreshToken());
   return apiRoot
     .withProjectKey({ projectKey })
     .productProjections()
@@ -136,10 +184,12 @@ export const getProductBySlug = async (
     .execute();
 };
 
-export const getCategories = async (): Promise<
-  ClientResponse<CategoryPagedQueryResponse>
-> => {
-  const apiRoot = getRefreshTokenFlowApiRoot(getRefreshToken());
+export const getCategories = async (
+  refreshTokenFlowApiRoot: ApiRootContextProps,
+): Promise<ClientResponse<CategoryPagedQueryResponse>> => {
+  const apiRoot = refreshTokenFlowApiRoot.flowApiRoot
+    ? refreshTokenFlowApiRoot.flowApiRoot
+    : getRefreshTokenFlowApiRoot(getRefreshToken());
   return apiRoot
     .withProjectKey({ projectKey })
     .categories()
@@ -151,26 +201,225 @@ export const getCategories = async (): Promise<
     .execute();
 };
 
-export const getCustomerData = async (): Promise<ClientResponse<Customer>> => {
-  const apiRoot = getRefreshTokenFlowApiRoot(getRefreshToken());
+export const getCustomerData = async (
+  refreshTokenFlowApiRoot: ApiRootContextProps,
+): Promise<ClientResponse<Customer>> => {
+  const apiRoot = refreshTokenFlowApiRoot.flowApiRoot
+    ? refreshTokenFlowApiRoot.flowApiRoot
+    : getRefreshTokenFlowApiRoot(getRefreshToken());
   return apiRoot.withProjectKey({ projectKey }).me().get().execute();
 };
 
 export const updateCustomerData = async (
   body: MyCustomerUpdate,
+  refreshTokenFlowApiRoot: ApiRootContextProps,
 ): Promise<ClientResponse<Customer>> => {
-  const apiRoot = getRefreshTokenFlowApiRoot(getRefreshToken());
+  const apiRoot = refreshTokenFlowApiRoot.flowApiRoot
+    ? refreshTokenFlowApiRoot.flowApiRoot
+    : getRefreshTokenFlowApiRoot(getRefreshToken());
   return apiRoot.withProjectKey({ projectKey }).me().post({ body }).execute();
 };
 
 export const updateCustomerPassword = async (
   body: MyCustomerChangePassword,
+  refreshTokenFlowApiRoot: ApiRootContextProps,
 ): Promise<ClientResponse<Customer>> => {
-  const apiRoot = getRefreshTokenFlowApiRoot(getRefreshToken());
+  const apiRoot = refreshTokenFlowApiRoot.flowApiRoot
+    ? refreshTokenFlowApiRoot.flowApiRoot
+    : getRefreshTokenFlowApiRoot(getRefreshToken());
   return apiRoot
     .withProjectKey({ projectKey })
     .me()
     .password()
     .post({ body })
+    .execute();
+};
+
+export const getActiveCart = async (
+  refreshTokenFlowApiRoot: ApiRootContextProps,
+): Promise<ClientResponse<Cart>> => {
+  const apiRoot = refreshTokenFlowApiRoot.flowApiRoot
+    ? refreshTokenFlowApiRoot.flowApiRoot
+    : getRefreshTokenFlowApiRoot(getRefreshToken());
+  return apiRoot
+    .withProjectKey({ projectKey })
+    .me()
+    .activeCart()
+    .get()
+    .execute();
+};
+
+export const createCart = async (
+  refreshTokenFlowApiRoot: ApiRootContextProps,
+): Promise<ClientResponse<Cart>> => {
+  const apiRoot = refreshTokenFlowApiRoot.flowApiRoot
+    ? refreshTokenFlowApiRoot.flowApiRoot
+    : getRefreshTokenFlowApiRoot(getRefreshToken());
+  return apiRoot
+    .withProjectKey({ projectKey })
+    .me()
+    .carts()
+    .post({ body: { currency: 'USD', country: 'RU' } })
+    .execute();
+};
+
+export const addToCart = async (
+  cart: Cart,
+  productId: string,
+  quantity: number,
+  refreshTokenFlowApiRoot: ApiRootContextProps,
+): Promise<ClientResponse<Cart>> => {
+  const apiRoot = refreshTokenFlowApiRoot.flowApiRoot
+    ? refreshTokenFlowApiRoot.flowApiRoot
+    : getRefreshTokenFlowApiRoot(getRefreshToken());
+  return apiRoot
+    .withProjectKey({ projectKey })
+    .me()
+    .carts()
+    .withId({ ID: cart.id })
+    .post({
+      body: {
+        version: cart.version,
+        actions: [
+          {
+            action: 'addLineItem',
+            productId,
+            quantity,
+          },
+        ],
+      },
+    })
+    .execute();
+};
+
+export const removeFromCart = async (
+  cart: Cart,
+  lineItemId: string,
+  quantity: number,
+  refreshTokenFlowApiRoot: ApiRootContextProps,
+): Promise<ClientResponse<Cart>> => {
+  const apiRoot = refreshTokenFlowApiRoot.flowApiRoot
+    ? refreshTokenFlowApiRoot.flowApiRoot
+    : getRefreshTokenFlowApiRoot(getRefreshToken());
+  return apiRoot
+    .withProjectKey({ projectKey })
+    .me()
+    .carts()
+    .withId({ ID: cart.id })
+    .post({
+      body: {
+        version: cart.version,
+        actions: [
+          {
+            action: 'removeLineItem',
+            lineItemId,
+            quantity,
+          },
+        ],
+      },
+    })
+    .execute();
+};
+
+export const addPromocodeToCart = async (
+  cart: Cart,
+  code: string,
+  refreshTokenFlowApiRoot: ApiRootContextProps,
+): Promise<ClientResponse<Cart>> => {
+  const apiRoot = refreshTokenFlowApiRoot.flowApiRoot
+    ? refreshTokenFlowApiRoot.flowApiRoot
+    : getRefreshTokenFlowApiRoot(getRefreshToken());
+  return apiRoot
+    .withProjectKey({ projectKey })
+    .me()
+    .carts()
+    .withId({ ID: cart.id })
+    .post({
+      body: {
+        version: cart.version,
+        actions: [
+          {
+            action: 'addDiscountCode',
+            code,
+          },
+        ],
+      },
+    })
+    .execute();
+};
+
+export const removePromocodeFromCart = async (
+  cart: Cart,
+  discountCodeID: string,
+  refreshTokenFlowApiRoot: ApiRootContextProps,
+): Promise<ClientResponse<Cart>> => {
+  const apiRoot = refreshTokenFlowApiRoot.flowApiRoot
+    ? refreshTokenFlowApiRoot.flowApiRoot
+    : getRefreshTokenFlowApiRoot(getRefreshToken());
+  return apiRoot
+    .withProjectKey({ projectKey })
+    .me()
+    .carts()
+    .withId({ ID: cart.id })
+    .post({
+      body: {
+        version: cart.version,
+        actions: [
+          {
+            action: 'removeDiscountCode',
+            discountCode: {
+              typeId: 'discount-code',
+              id: discountCodeID,
+            },
+          },
+        ],
+      },
+    })
+    .execute();
+};
+
+export const clearCart = async (
+  cart: Cart,
+  actions: MyCartUpdateAction[],
+  refreshTokenFlowApiRoot: ApiRootContextProps,
+): Promise<ClientResponse<Cart>> => {
+  const apiRoot = refreshTokenFlowApiRoot.flowApiRoot
+    ? refreshTokenFlowApiRoot.flowApiRoot
+    : getRefreshTokenFlowApiRoot(getRefreshToken());
+  return apiRoot
+    .withProjectKey({ projectKey })
+    .me()
+    .carts()
+    .withId({ ID: cart.id })
+    .post({
+      body: {
+        version: cart.version,
+        actions,
+      },
+    })
+    .execute();
+};
+
+export const getDiscountCodes = async (
+  refreshTokenFlowApiRoot: ApiRootContextProps,
+): Promise<ClientResponse<DiscountCodePagedQueryResponse>> => {
+  const apiRoot = refreshTokenFlowApiRoot.flowApiRoot
+    ? refreshTokenFlowApiRoot.flowApiRoot
+    : getRefreshTokenFlowApiRoot(getRefreshToken());
+  return apiRoot.withProjectKey({ projectKey }).discountCodes().get().execute();
+};
+
+export const getDiscountCodeByID = async (
+  discountID: string,
+  refreshTokenFlowApiRoot: ApiRootContextProps,
+): Promise<ClientResponse<DiscountCode>> => {
+  const apiRoot = refreshTokenFlowApiRoot.flowApiRoot
+    ? refreshTokenFlowApiRoot.flowApiRoot
+    : getRefreshTokenFlowApiRoot(getRefreshToken());
+  return apiRoot
+    .withProjectKey({ projectKey })
+    .discountCodes()
+    .withId({ ID: discountID })
+    .get()
     .execute();
 };

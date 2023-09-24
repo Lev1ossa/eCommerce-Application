@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { handleLogout } from '../../features/autentification';
 import logo from '../../assets/img/logo.png';
@@ -6,9 +6,14 @@ import styles from './Header.module.scss';
 import { Sidebar } from './Sidebar/Sidebar';
 import { Nav } from './Nav/Nav';
 import { isUserLoggedIn } from '../../api/tokenHandlers';
+import { ApiRootContext } from '../../context/ApiRootContext';
 
-export function Header(): React.ReactElement {
+export function Header(props: {
+  quantityProducts: number | undefined;
+}): React.ReactElement {
   const [userLoggedIn, setUserLoggedIn] = useState(isUserLoggedIn());
+  const { quantityProducts } = props;
+  const refreshTokenFlowApiRoot = useContext(ApiRootContext);
   const navigate = useNavigate();
   const handleRedirect = (): void => {
     if (!isUserLoggedIn()) {
@@ -16,7 +21,7 @@ export function Header(): React.ReactElement {
     }
   };
   const logoutHandler = async (): Promise<void> => {
-    await handleLogout();
+    await handleLogout(refreshTokenFlowApiRoot);
     setUserLoggedIn(isUserLoggedIn());
     handleRedirect();
   };
@@ -29,6 +34,7 @@ export function Header(): React.ReactElement {
         className={navLinkClass}
         userLoggedIn={userLoggedIn}
         logoutHandler={logoutHandler}
+        quantityProducts={quantityProducts}
       />
       <header className={styles.header}>
         <Link to="/">
@@ -38,6 +44,7 @@ export function Header(): React.ReactElement {
           className={navLinkClass}
           userLoggedIn={userLoggedIn}
           logoutHandler={logoutHandler}
+          quantityProducts={quantityProducts}
         />
       </header>
     </>

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { ILoginData, IRegistrationData } from '../../../../types/types';
@@ -9,9 +9,10 @@ import { FormInput } from '../FormInputs/FormInput/FormInput';
 import { FormPasswordInput } from '../FormInputs/FormPasswordInput/FormPasswordInput';
 import styles from './LoginForm.module.scss';
 import { isUserLoggedIn } from '../../../../api/tokenHandlers';
+import { ApiRootContext } from '../../../../context/ApiRootContext';
 
-// eslint-disable-next-line max-lines-per-function
 export function LoginForm(): React.ReactElement {
+  const refreshTokenFlowApiRoot = useContext(ApiRootContext);
   const navigate = useNavigate();
   const handleRedirect = (): void => {
     if (isUserLoggedIn()) {
@@ -27,7 +28,7 @@ export function LoginForm(): React.ReactElement {
   const onSubmit: SubmitHandler<ILoginData> = async (
     loginData: ILoginData,
   ): Promise<void> => {
-    await handleLogin(loginData).then(
+    await handleLogin(loginData, refreshTokenFlowApiRoot).then(
       () => {},
       () => {},
     );
@@ -52,7 +53,7 @@ export function LoginForm(): React.ReactElement {
               type={inputService.createInputParams('email').type}
               label={inputService.createInputParams('email').label}
             />
-            <Error errors={errors} name="email" />
+            <Error className="error" errors={errors} name="email" />
           </div>
           <div className={styles.form_item}>
             <FormPasswordInput
@@ -60,15 +61,15 @@ export function LoginForm(): React.ReactElement {
               type={inputService.createInputParams('email').type}
               label={inputService.createInputParams('password').label}
             />
-            <Error errors={errors} name="password" />
+            <Error className="error" errors={errors} name="password" />
           </div>
           <button className={styles.login_btn} type="submit">
             Log in
           </button>
         </form>
-        <div>
+        <div className={styles.link_block}>
           <p className={styles.text}>Don&apos;t have an account yet?</p>
-          <p className={styles.button_registration}>
+          <p className={styles.link}>
             <Link to="/registration">Sign up now</Link>
           </p>
         </div>

@@ -1,13 +1,13 @@
 import { BiEditAlt } from 'react-icons/bi';
 import { AiOutlineUser } from 'react-icons/ai';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Customer } from '@commercetools/platform-sdk';
 import styles from './Account.module.scss';
 import { AccountContentInactive } from '../AccountContentInactive/AccountContentInactive';
 import { AccountContentActive } from '../AccountContentActive/AccountContentActive';
 import { getCustomerData } from '../../../../api/requests';
+import { ApiRootContext } from '../../../../context/ApiRootContext';
 
-// eslint-disable-next-line max-lines-per-function
 export function Account(props: {
   userData: Customer;
   setUserData: React.Dispatch<React.SetStateAction<Customer | undefined>>;
@@ -15,12 +15,14 @@ export function Account(props: {
   const { userData, setUserData } = props;
   const [editMode, setEditMode] = useState(false);
 
+  const refreshTokenFlowApiRoot = useContext(ApiRootContext);
+
   const handleEditButton = (): void => {
     setEditMode(!editMode);
   };
 
   const handleSaveButton = (): void => {
-    getCustomerData().then(
+    getCustomerData(refreshTokenFlowApiRoot).then(
       (result) => {
         setUserData(result.body);
       },

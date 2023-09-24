@@ -1,18 +1,50 @@
+@import '/src/App/styles/vars.scss';
+.container {
+  @media #{$mq-small} {
+    height: 450px;
+  }
+  @media #{$mq-medium} {
+    height: 460px;
+  }
+  @media #{$mq-large} {
+    height: 490px;
+  }
+  @media #{$mq-xlarge} {
+    height: 650px;
+  }
+  @media #{$mq-xxlarge} {
+    height: 960px;
+  }
+}
 .card {
   width: 100%;
   height: 100%;
-  min-height: 430px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-direction: column;
-  font-size: 1.2rem;
   row-gap: 1rem;
   padding: 1rem;
   border-radius: 1.5rem;
+  border: 1px solid #eeeeee;
   transition: all 0.2s ease;
   &:hover {
     box-shadow: var(--shadow-light);
+  }
+
+  @media #{$mq-xlarge} {
+    font-size: 1.1em;
+    .image {
+      max-width: 250px;
+      max-height: 250px;
+    }
+  }
+  @media #{$mq-xxlarge} {
+    font-size: 1.3em;
+    .image {
+      max-width: 350px;
+      max-height: 350px;
+    }
   }
 }
 .image {
@@ -29,6 +61,7 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
+  margin-bottom: 1em;
 }
 .name {
   white-space: nowrap;
@@ -42,25 +75,7 @@
   row-gap: 5px;
 }
 .info {
-  font-size: 12px;
-}
-.button {
-  width: 100%;
-  align-self: end;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0.5rem 2rem;
-  height: 2rem;
-  border: none;
-  border-radius: 0.2rem;
-  box-shadow: var(--shadow-small);
-  background-color: var(--color-light-green);
-  transition: 0.2s all ease-in;
-  &:hover {
-    color: var(--color-light);
-    background-color: var(--color-orange);
-  }
+  font-size: 0.7em;
 }
 .prices_container {
   display: flex;
@@ -72,6 +87,10 @@
   text-decoration: line-through;
 }
 .price_new {
-  font-size: 24px;
   color: var(--color-error);
+}
+
+.button {
+  align-self: end;
+  width: 100%;
 }

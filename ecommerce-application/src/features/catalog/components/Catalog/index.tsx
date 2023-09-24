@@ -1,18 +1,24 @@
 import { ProductProjection } from '@commercetools/platform-sdk';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import {
+  getCategories,
   getFilteredProductList,
   getProductsList,
-  getCategories,
 } from '../../../../api/requests';
 import { Loader } from '../../../../components/Loader';
-import { CustomCategory, ICurrentFilters } from '../../../../types/types';
-import { ProductCard } from '../ProductCard';
+import {
+  ApiRootContextProps,
+  CustomCategory,
+  ICurrentFilters,
+} from '../../../../types/types';
+import { Breadcrumb } from '../../../breadcrumb/components/Breadcrumps/Breadcrumb';
+import { Pagination } from '../Pagination';
+import { ProductList } from '../ProductList';
 import { CatalogSidebar } from '../Sidebar';
 import styles from './Catalog.module.scss';
-import { Breadcrumb } from '../../../breadcrumb/components/Breadcrumps/Breadcrumb';
+import { ApiRootContext } from '../../../../context/ApiRootContext';
 
-// eslint-disable-next-line max-lines-per-function
 export function Catalog(props: {
   categorySlug: string | undefined;
   subCategorySlug: string | undefined;
@@ -21,12 +27,25 @@ export function Catalog(props: {
   const [products, setProducts] = useState<ProductProjection[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [brands, setBrands] = useState<string[]>([]);
+  const [totalProductsCount, setTotalProductsCount] = useState(0);
+  const [productOffset, setProductOffset] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const [productCategories, setProductCategories] = useState<CustomCategory[]>(
     [],
   );
   const [currentFilters, setcurrentFilters] = useState<
     Partial<ICurrentFilters>
-  >({});
+  >({
+    category: '',
+    trademark: [],
+    originFilter: [],
+    lowerPrice: '',
+    higherPrice: '',
+    sort: 'price asc',
+    search: '',
+  });
+  const location = useLocation();
+  const refreshTokenFlowApiRoot = useContext(ApiRootContext);
 
   const getBrandsFromProducts = (productList: ProductProjection[]): void => {
     const brandsList = productList.map((product: ProductProjection) =>
@@ -38,20 +57,19 @@ export function Catalog(props: {
   };
 
   useEffect(() => {
-    getProductsList().then(
+    getProductsList(refreshTokenFlowApiRoot).then(
       (result) => {
-        setProducts(result.body.results);
-        setIsLoading(false);
         getBrandsFromProducts(result.body.results);
+        setIsLoading(false);
       },
       (error: Error) => {
         console.log(error);
       },
     );
-  }, []);
+  }, [refreshTokenFlowApiRoot]);
 
   useEffect(() => {
-    getCategories().then(
+    getCategories(refreshTokenFlowApiRoot).then(
       (result) => {
         const categories: CustomCategory[] = result.body.results.map(
           (category) => {
@@ -86,19 +104,12 @@ export function Catalog(props: {
         console.log(error);
       },
     );
-  }, []);
+  }, [refreshTokenFlowApiRoot]);
 
-  const catalog = products
-    ? products.map((product) => (
-        <li key={product.id} className={styles.item}>
-          <ProductCard product={product} />
-        </li>
-      ))
-    : [<h1 key={0}>No Products Found</h1>];
-
-  // eslint-disable-next-line max-lines-per-function
   const getFilteredProducts = async (
     filters: Partial<ICurrentFilters>,
+    offset: number,
+    ApiRoot: ApiRootContextProps,
   ): Promise<void> => {
     setIsLoading(true);
     const sortQueryStrings: string[] = [];
@@ -152,9 +163,16 @@ export function Catalog(props: {
       filterQueryStrings,
       sortQueryStrings,
       searchQueryString,
+      offset,
+      ApiRoot,
     ).then(
       (result) => {
         setProducts(result.body.results);
+        if (result.body.total) {
+          setTotalProductsCount(result.body.total);
+        } else {
+          setTotalProductsCount(0);
+        }
         setIsLoading(false);
       },
       (error: Error) => {
@@ -164,9 +182,33 @@ export function Catalog(props: {
     );
   };
 
+  const didMount = useRef(false);
   useEffect(() => {
-    getFilteredProducts(currentFilters);
-  }, [currentFilters]);
+    if (didMount.current) {
+      getFilteredProducts(
+        currentFilters,
+        productOffset,
+        refreshTokenFlowApiRoot,
+      );
+    } else didMount.current = true;
+  }, [currentFilters, productOffset, refreshTokenFlowApiRoot]);
+
+  useEffect(() => {
+    if (location.pathname === '/catalog') {
+      if (!productOffset) {
+        getFilteredProducts(
+          currentFilters,
+          productOffset,
+          refreshTokenFlowApiRoot,
+        );
+      }
+    }
+  }, [
+    currentFilters,
+    location.pathname,
+    productOffset,
+    refreshTokenFlowApiRoot,
+  ]);
 
   return (
     <>
@@ -181,8 +223,25 @@ export function Catalog(props: {
           brands={brands}
           categorySlug={categorySlug}
           subCategorySlug={subCategorySlug}
+          setCurrentPage={setCurrentPage}
         />
-        <ul className={styles.grid}>{!isLoading ? catalog : <Loader />}</ul>
+        <div className={styles.catalog__content}>
+          {!isLoading ? (
+            <ProductList products={products} />
+          ) : (
+            <div className={styles.loader}>
+              <Loader />
+            </div>
+          )}
+          <div className={styles.pagination}>
+            <Pagination
+              setProductOffset={setProductOffset}
+              totalProductsCount={totalProductsCount}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+            />
+          </div>
+        </div>
       </div>
     </>
   );
