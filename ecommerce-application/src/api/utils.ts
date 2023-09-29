@@ -54,7 +54,7 @@ export const getClientData = (
 };
 
 export const getRefreshToken = (): string => {
-  const userLoginJson = localStorage.getItem('AAA-Ecom-authTokenData');
+  const userLoginJson = localStorage.getItem('AAA-Ecom-refreshTokenData');
   if (userLoginJson) {
     const userLogin: UserLogin = JSON.parse(userLoginJson);
     return userLogin.token;
