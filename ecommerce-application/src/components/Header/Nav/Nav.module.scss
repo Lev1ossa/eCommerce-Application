@@ -1,0 +1,65 @@
+@import "/src/App/styles/vars.scss";
+
+.links {
+  display: flex;
+  align-items: center;
+  column-gap: 2rem;
+  margin-bottom: 0;
+  
+  @media (max-width: 800px) {
+    display: none;
+  }
+
+  li {
+    list-style-type: none;
+  }
+}
+
+
+.header_icon {
+  width: 30px;
+  height: 30px;
+}
+
+.logout_button {
+  border: none;
+  background-color: inherit;
+  color: var(--color-dark);
+  &:hover {
+    color: var(--color-orange);
+  }
+}
+
+.icon_container{
+  position: relative;
+  text-align: center;
+}
+
+.count_label {
+  padding: 3px;
+  height: 20px;
+  background-color: var(--color-orange);
+  position: absolute;
+  font-weight: 400;
+  right: -7px;
+  top: -10px;
+  font-size: 12px;
+  border-radius: 50%;
+  color: var(--color-text-light);
+  min-width: 20px;
+}
+
+.theme_button {
+  background-color: inherit;
+  border: none;
+  color: var(--color-dark);
+  .button_icon {
+    width: 25px;
+    height: 25px;
+    transition: 0.2s all ease-in;
+    &:hover {
+      transition: 0.2s all ease-in;
+      color: var(--color-orange);
+    }
+  }
+}

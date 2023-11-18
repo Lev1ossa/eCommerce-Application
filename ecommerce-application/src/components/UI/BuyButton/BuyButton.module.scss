@@ -1,0 +1,26 @@
+.button {
+  width: 100%;
+  align-self: end;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.7rem 1rem;
+  font-size: inherit;
+  white-space: nowrap;
+  height: 2em;
+  border: none;
+  border-radius: 0.2rem;
+  box-shadow: var(--shadow-small);
+  background-color: var(--color-light-green);
+  transition: 0.2s all ease-in;
+  &:hover {
+    background-color: var(--color-banana);
+  }
+}
+
+.button_active {
+  background-color: var(--color-banana);
+  &:hover {
+    background-color: var(--color-banana);
+  }
+}

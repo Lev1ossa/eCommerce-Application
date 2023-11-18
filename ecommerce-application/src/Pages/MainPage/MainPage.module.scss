@@ -1,0 +1,401 @@
+@import "/src/App/styles/vars.scss";
+
+.main_page {
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-background-container);
+}
+
+.main {
+  flex-grow: 1;
+  padding: 1rem;
+  height: 100%;
+}
+
+.section_main {
+  background-image: var(--color-background-main-image);
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 500px;
+  margin-bottom: 20px;
+  @media screen and (max-width: $tablet-width) {
+    height: 400px;
+  }
+  @media screen and (max-width: $mobile-width) {
+    height: 350px;
+  }
+}
+
+.main_text_block {
+  align-self: center;
+  position: absolute;
+  left: 45px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 2;
+  color: var(--color-dark);
+  @media (max-width: $medium_width) {
+    left: 20px;
+  }
+  @media screen and (max-width: $tablet-width) {
+    background-color: var(--color-background-text-block);
+    width: 50%;
+    height: 220px;
+    margin: 0 auto;
+    align-items: center;
+    color: var(--color-text-light);
+    left: 25%;
+    top: 40%;
+  }
+  @media screen and (max-width: $mobile-width) {
+    width: 60%;
+    left: 20%;
+    top: 30%;
+    height: 200px;
+  }
+}
+
+.text_bold {
+  line-height: 1.2;
+  font-size: calc(23px + (70 - 23) * ((100vw - 320px) / (1920 - 320)));
+  font-weight: bold;
+  margin-bottom: 20px;
+  margin-left: 3%;
+  @media (max-width: $medium_width) {
+    margin-left: 0;
+  }
+}
+
+.text_normal {
+  line-height: 1.2;
+  font-size: calc(14px + (70 - 23) * ((100vw - 320px) / (1920 - 320)));
+  margin-bottom: 30px;
+  margin-left: 15%;
+  @media (max-width: $medium_width) {
+    margin-left: 10%;
+  }
+  @media screen and (max-width: $tablet-width) {
+    margin-bottom: 10px;
+    margin-left: 0;
+  }
+}
+
+.text_small {
+  letter-spacing: 10px;
+  font-size: 20px;
+  line-height: 22px;
+  margin-left: 10vw;
+  margin-bottom: 30px;
+  @media (max-width: $medium_width) {
+    margin-left: 5vw;
+  }
+  @media screen and (max-width: $tablet-width) {
+    margin-left: 0;
+    margin-bottom: 20px;
+    text-align: justify;
+  }
+}
+
+.link {
+  margin-left: 240px;
+  width: 200px;
+  font-family: inherit;
+  padding: 5px 0;
+  font-size: 1rem;
+  background-color: var(--color-light-green);
+  border-radius: 5px;
+  transition: 0.2s all ease-in;
+  text-align: center;
+  color: var( --color-button-text);
+  &:hover {
+    background-color: var(--color-orange);
+    color: var(--color-text-light);
+    transition: 0.2s all ease-in;
+  }
+  @media (max-width: $medium_width) {
+    margin-left: 15vw;
+  }
+  @media screen and (max-width: $mobile-width) {
+    margin-bottom: 10px;
+  }
+  @media screen and (max-width: $tablet-width) {
+    margin-left: 0;
+  }
+  @media screen and (max-width: $mobile-width) {
+    width: 160px;
+  }
+}
+
+.circle_container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 500px;
+  width: 100%;
+  @media (max-width: $medium_width) {
+    right: -10%;
+  }
+  @media screen and (max-width: $small_width) {
+    right: -15%;
+  }
+  @media screen and (max-width: $tablet-width) {
+    top: 0;
+    right: 0;
+    right: -25%;
+    height: 750px;
+  }
+}
+
+.circle {
+  position: absolute;
+  right: 0;
+  background-image: url('/src/assets/img/circle.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 750px;
+  height: 750px;
+  animation: rounded 20s infinite linear;
+  @media (max-width: $medium_width) {
+    right: -10%;
+  }
+  @media screen and (max-width: $small_width) {
+    right: -15%;
+  }
+  @media screen and (max-width: $tablet-width) {
+    width: 750px;
+    height: 750px;
+    right: 15%;
+    margin: 0 auto;
+  }
+  @media screen and (max-width: $mobile-width) {
+    width: 500px;
+    height: 500px;
+    right: 0;
+  }
+}
+
+.fruit_image {
+  background-image: url('/src/assets/img/lemon.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 750px;
+  position: absolute;
+  right: 0;
+  margin-top: 4%;
+  height: 500px;
+  vertical-align: middle;
+  animation: rotate-flower 45s infinite linear;
+  @media (max-width: $medium_width) {
+    margin-top: 5%;
+    right: -10%;
+  }
+  @media screen and (max-width: $small_width) {
+    margin-top: 7%;
+    right: -20%;
+  }
+  @media screen and (max-width: $tablet-width) {
+    right: 0;
+    margin-top: 0;
+    height: 440px;
+    width: 100%;
+  }
+  @media screen and (max-width: $mobile-width) {
+    height: 120%;
+  }
+}
+
+@keyframes rounded {
+  0% {
+      transform: rotate(0deg);
+  }
+  50% {
+      transform: rotate(180deg);
+  }
+  100% {
+      transform: rotate(360deg);
+  }
+}
+
+@keyframes rotate-flower {
+  0% {
+      transform: rotate(0deg);
+      transform-origin: bottom;
+  }
+  25% {
+      transform: rotate(8deg);
+  }
+  50% {
+      transform: rotate(0deg);
+  }
+
+  75% {
+      transform: rotate(-8deg);
+  }
+  100% {
+      transform: rotate(0deg);
+  }
+}
+
+.promocodes_block {
+  position: relative;
+  text-align: center;
+  .title_container {
+    border-top: 1px solid var(--color-light-green);
+    margin-bottom: 0;
+    .title {
+      position: absolute;
+      color: var(--color-light-green);
+      font-weight: normal;
+      background: var(--color-background-container);
+      top: -12px;
+      z-index: 1;
+      padding: 0 10px;
+    }
+  }
+}
+
+
+
+.images_container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding-top: 20px;
+  position: relative;
+  margin-bottom: 20px;
+  @media (max-width: $tablet-width) {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.title_slider {
+  position: absolute;
+  text-align: center;
+  color: var(--color-light-green);
+  font-weight: normal;
+  background: var(--color-background-container);
+  top: -12px;
+  z-index: 1;
+  padding: 0 10px;
+  margin-bottom: 0;
+}
+
+.title_container {
+  border-top: 1px solid var(--color-light-green);
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.image_block {
+  position: relative;
+  width: 49%;
+  @media (max-width: $tablet-width) {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 5px;
+  }
+    &:hover {
+    .text_block {
+      transition: 0.2s all ease;
+      background: var(--color-light-green);
+      opacity: 0.9;
+    }
+    .discount_color {
+      transition: 0.2s all ease;
+      color: var(--color-light-green);
+    }
+  }
+}
+
+.image_lemon {
+  background: var(--image_promo_lemon) center no-repeat;
+  background-size: 100%;
+  width: 100%;
+  height: 30vw;
+  @media (max-width: $tablet-width) {
+    height: 60vw;
+  }
+}
+
+.image_broccoli {
+  background: var(--image_promo_broccoli) center no-repeat;
+  background-size: 100%;
+  width: 100%;
+  height: 30vw;
+  @media (max-width: $tablet-width) {
+    height: 60vw;
+  }
+}
+
+.text_block {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  position: absolute;
+  top: 35%;
+  left: 20%;
+  background: var(--color-background-text-block);
+  z-index: 2;
+  width: 60%;
+  height: 35%;
+  text-align: center;
+  transition: 0.2s all ease;
+  .subtitle {
+    color: var(--color-text-light);
+    font-weight: 400;
+    font-size: 25px;
+    margin-bottom: 0;
+    @media (max-width: $small_width) {
+      font-size: 18px;
+    }
+    @media (max-width: $tablet-width) {
+      font-size: 25px;
+    }
+    @media (max-width: $mobile-width) {
+      font-size: 18px;
+    }
+  }
+  .text {
+    color: var(--color-text-light);
+    @media (max-width: $small_width) {
+      font-size: 14px;
+    }
+    @media (max-width: $tablet-width) {
+      font-size: 18px;
+    }
+    @media (max-width: $mobile-width) {
+      font-size: 14px;
+    }
+  }
+  .text_color {
+    color: var(--color-banana);
+    @media (max-width: $small_width) {
+      font-size: 14px;
+    }
+    @media (max-width: $tablet-width) {
+      font-size: 18px;
+    }
+    @media (max-width: $mobile-width) {
+      font-size: 14px;
+    }
+  }
+}
+
+.discount {
+  color: var(--color-dark);
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}

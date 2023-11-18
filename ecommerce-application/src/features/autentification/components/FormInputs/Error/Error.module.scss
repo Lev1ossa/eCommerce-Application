@@ -1,0 +1,35 @@
+.error, .address_error {
+  color: var(--color-orange);
+  font-size: 12px;
+  position: absolute;
+  z-index: 1;
+  background-color: var(--color-background-container);
+  padding: 0 5px;
+  @media (max-width: 437px) {
+    font-size: 11px;
+    padding: 0 2px;
+  }
+}
+
+.error {
+  top: 18px;
+  left: 10px;
+  @media (max-width: 437px) {
+    left: 5px;
+    top: 20px;
+  }
+}
+
+.address_error {
+  top: -10px;
+  left: 92px;
+  @media (max-width: 437px) {
+    left: 85px;
+    top: -10px;
+  }
+}
+
+.error::before, .address_error::before {
+  display: inline;
+  content: '⚠ ';
+}

@@ -1,0 +1,57 @@
+.label:has(.input[type='text']) {
+  display: flex;
+  margin-right: 5px;
+  align-items: center;
+  margin: 0 5px 13px 0;
+  font-weight: 500;
+  max-height: 27px;
+  &:has(.iput[type='checkbox']) {
+    margin: 0 5px 5px 0;
+  }
+  .label_block {
+    display: inline-block;
+    width: 80px;
+  }
+}
+
+.label:has(.input[type='checkbox']) {
+  margin: 0 5px 10px 0;
+  font-weight: 500;
+}
+
+.input {
+  padding-left: 5px;
+  font-family: inherit;
+  height: 27px;
+  font-size: 18px;
+  flex: 1 0 auto;
+  width: 20px;
+  border-radius: 5px;
+  background-color: inherit;
+  border: 1px solid var(--color-text-gray);
+  &:focus {
+    border: 2px solid var(--color-light-green);
+    outline: none;
+  }
+}
+
+.input[type='checkbox'] {
+  width: initial;
+  height: initial;
+  position: absolute;
+  left: 0;
+  top: 3px;
+  margin-top: 0;
+  margin-left: 0;
+}
+
+.label:has(.input[type='checkbox']) {
+  position: relative;
+  padding-left: 20px;
+
+  .label_block {
+    display: inline-block;
+    width: initial;
+    font-style: italic;
+  }
+}

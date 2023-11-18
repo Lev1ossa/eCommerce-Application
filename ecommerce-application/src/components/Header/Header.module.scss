@@ -1,0 +1,19 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-height: 6rem;
+  padding: 1rem 3rem;
+  background-color: var(--color-light-green);
+  background: var(--gradient-ligth-green);
+}
+
+.logo {
+  width: 12rem;
+  height: 5rem;
+}
+
+.active {
+  font-weight: bold;
+  color: var(--color-orange);
+}

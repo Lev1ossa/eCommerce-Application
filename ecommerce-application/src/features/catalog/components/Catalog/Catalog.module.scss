@@ -1,0 +1,40 @@
+@import '/src/App/styles/vars.scss';
+.catalog {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  column-gap: 0.4rem;
+  padding: 2rem 1rem;
+  &__content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    row-gap: 2rem;
+  }
+  
+  @media #{$mq-large} {
+    font-size: $base-font-size*1.2;
+  }
+  
+  @media #{$mq-xlarge} {
+    font-size: $base-font-size*1.4;
+  }
+  
+  @media #{$mq-xxlarge} {
+    font-size: $base-font-size*1.9;
+  }
+}
+
+.pagination {
+  align-self: end;
+  margin-right: 1rem;
+}
+
+.loader {
+  position: sticky;
+  top: 45vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

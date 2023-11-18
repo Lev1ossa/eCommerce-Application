@@ -1,0 +1,47 @@
+
+.container {
+  align-self: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  column-gap: 5px;
+  width: 100%;
+}
+
+.button {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: inherit;
+  white-space: nowrap;
+  padding: 0.7em 1em;
+  height: 2em;
+  border: none;
+  box-shadow: var(--shadow-small);
+  background-color: var(--color-banana);
+  transition: 0.2s all ease-in;
+  &:hover {
+    background-color: var(--color-light-green);
+  }
+}
+
+.counter_container {
+  display: flex;
+  justify-content: center;
+  border-radius: 0.2rem;
+  overflow: hidden;
+  width: 100%;
+}
+
+.count_button {
+  font-size: inherit;
+  width: 38px;
+  height: 2em;
+  border: none;
+  transition: 0.2s all ease-in;
+  background-color: var(--color-banana);
+  &:hover {
+    background-color: var(--color-light-green);
+  }
+}
